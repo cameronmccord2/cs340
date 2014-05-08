@@ -1,0 +1,243 @@
+{
+    "apiVersion": "1",
+    "swaggerVersion": "1.2",
+    "basePath": "http://localhost:8081",
+    "resourcePath": "/games",
+    "apis": [
+        {
+            "path": "/games/list",
+            "operations": [
+                {
+                    "httpMethod": "GET",
+                    "summary": "Get a list of all games in progress.",
+                    "responseClass": "GameList",
+                    "nickname": "list",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "path": "/games/create",
+            "description": "Creates a game",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "summary": "Creates a game. Returns a game JSON stub.",
+                    "responseClass": "String",
+                    "nickname": "create",
+                    "consumes":"application/json",
+                    "parameters": [
+                    {
+                        "description": "The name and settings to use for the new game. Can be sent as form encoded key-value pairs as well. Read the game id from the response stub.",
+                        "paramType": "body",
+                        "required": true,
+                        "dataType": "CreateGameRequest"
+                    }
+                  ]
+                }
+            ]
+        },
+        {
+            "path": "/games/join",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "summary": "Join or re-join a game (set's your game cookie)",
+					"notes":"This method will work on games that a) are empty OR b) you are already in (rejoining). It set's your cookie so your client knows which game it's in. It also adds to or updates you in the player list on the server for that game (in the model)",
+                    "responseClass": "void",
+                    "nickname": "join",
+                    "consumes":"application/json","parameters": [{
+                        "description": "The id of the game you want to join, and what color you want.",
+                        "paramType": "body",
+                        "required": true,
+                        "dataType": "JoinGameRequest"
+                    }]
+                }
+            ]
+        },
+        {
+            "path": "/games/save",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "summary": "Save a game",
+					"notes":"This will save the game - it looks it up by id, and saves it with the given name.",
+                    "responseClass": "void",
+                    "nickname": "join",
+                    "consumes":"application/json",
+                    "parameters": [{
+                        "description": "The id of the game to save and the save file name (no extensions please).",
+                        "paramType": "body",
+                        "required": true,
+                        "dataType": "SaveGameRequest"
+                    }]
+                }
+            ]
+        },
+        {
+            "path": "/games/load",
+            "operations": [
+                {
+                    "httpMethod": "POST",
+                    "summary": "Load a game",
+					"notes":"Loads a game by the name you saved it under (note - that allows you to save multiple versions of the same game.) The id is the same as the original game id.",
+                    "responseClass": "void",
+                    "nickname": "join",
+                    "consumes":"application/json",
+                    "parameters": [{
+                        "description": "The game save name to load.",
+                        "paramType": "body",
+                        "required": true,
+                        "dataType": "LoadGameRequest"
+                    }]
+                }
+            ]
+        }
+    ],
+    "models": {
+      "Player": {
+            "id": "Player",
+            "description": "A stub for player representation",
+            "required": [
+                "color",
+                "name",
+                "id"
+            ],
+            "properties": {
+                "color": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "JoinGameRequest": {
+          "id": "JoinGameRequest",
+          "required":["id","color"],
+          "properties": {
+            "id": {
+              "description": "The id of the game to join",
+              "type": "integer"
+            },
+            "color": {
+              "description": "What color you want to join (or rejoin) as.",
+              "type": "string",
+              "enum": [
+                "red",
+                "green",
+                "blue",
+                "yellow",
+                "puce",
+                "brown",
+                "white",
+                "purple",
+                "orange"
+              ]
+            }
+          }
+        },
+        "SaveGameRequest": {
+          "id": "SaveGameRequest",
+          "required":["id","name"],
+          "properties": {
+            "id": {
+              "description": "The id of the game to save",
+              "type": "integer"
+            },
+            "name": {
+              "description": "What name you want to save it under",
+              "type": "string"
+            }
+          }
+        },
+        "LoadGameRequest": {
+          "id": "LoadGameRequest",
+          "required":["name"],
+          "properties": {
+            "name": {
+              "description": "The name of the saved game you want to restore. (The id is restored as well.)",
+              "type": "string"
+            }
+          }
+        },
+        "Game": {
+            "id": "Game",
+            "description": "A stub for game representation",
+            "required": [
+                "id",
+                "title"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Player"
+                    }
+                }
+            }
+        },
+        "GameJoinRequest": {
+            "id": "GameJoinRequest",
+            "description": "A request to join a game",
+            "required": [
+                "id",
+                "title"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Player"
+                    }
+                }
+            }
+        },
+        "CreateGameRequest": {
+            "id": "CreateGameRequest",
+            "description": "A game creation request.",
+            "required": [
+                "name",
+                "randomTiles",
+                "randomPorts",
+                "randomNumbers"
+            ],
+            "properties": { 
+                        "randomTiles":{
+                            "description": "whether the tiles should be randomly placed",
+                            "type": "boolean"
+                        },
+                        "randomNumbers":{
+                            "description": "whether the numbers should be randomly placed",
+                            "type": "boolean"
+                        },
+                        "randomPorts":{
+                            "description": "whether the port should be randomly placed",
+                            "type":"boolean"
+                        },
+                        "name":{
+                            "description": "The name of the game",
+                            "type": "string"
+                        }
+            }
+        }
+    }
+}

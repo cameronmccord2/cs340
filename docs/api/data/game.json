@@ -1,0 +1,526 @@
+{
+  "apiVersion": "1",
+  "swaggerVersion": "1.2",
+  "basePath": "http:\/\/localhost:8081",
+  "resourcePath": "\/game",
+  "apis": [
+    {
+      "path": "\/game\/model",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "summary": "Fetch the model",
+          "notes": "This (like the other rest api calls in this section) requires a valid game cookie to be set. It returns a json model of the current game set in your coookie.",
+          "responseClass": "ClientModel",
+          "nickname": "login",
+          "parameters": [
+            {
+              "name":"revision",
+              "paramType": "form",
+              "dataType": "integer",
+              "description":"The version number of this model. It goes up by one for each command that is applied. If you send this parameter you will get a model back iff the model is newer than the version number you sent. Otherwise it sends you the string \"true\" to let you know your model is up to date."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "\/game\/reset",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "summary": "Resets the current game",
+          "notes": "This method is for resetting the current game (ie the moves played). For the default game, this resets it to after the initial placement. This returns the JSON for the model after it's been reset.",
+          "responseClass": "The 'Client Model' JSON (identical to game/model)",
+          "nickname": "login",
+          "parameters": []
+        }
+      ]
+    },{
+      "path": "\/game\/commands",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "summary": "Send a list of moves to the server",
+          "notes": "This method should be used for testing; you can apply a list of commands to the current game using this call. This is under \/game and not \/moves because this method should never be called from within the client model. You have to send a json list of objects - you can use the output from game\/commands. It returns the JSON for the model after the commands have been applied.",
+          "responseClass": "Return's the 'Client Model' JSON (identical to game/model)",
+          "nickname": "listCommands",
+          "consumes":"application/json",
+          "parameters": [
+          {
+            "description": "The moves to be sent",
+            "paramType": "body",
+            "required": true,
+            "dataType": "List of Commands"
+            }
+          ]
+        },
+         {
+          "httpMethod": "GET",
+          "summary": "Fetch a list of commands for your current game.",
+          "notes": "This gets all the commands that were applied to the initial client model. These will be removed if you call \/game\/reset",
+          "responseClass": "List of Commands",
+          "nickname": "login",
+          "parameters": []
+        }
+      ]
+    },{
+      "path": "\/game\/addAI",
+      "operations": [
+        {
+          "httpMethod": "POST",
+	      "summary": "Add an AI player to your game",
+	      "notes": "You'll need to have your cookie set for this game in order for this game to work.",
+          "responseClass": "void",
+          "nickname": "addAI",
+          "consumes":"application/json",
+          "parameters": [
+          {
+            "description": "The name of the AI player to add",
+            "paramType": "body",
+            "required": true,
+            "dataType": "AddAIRequest"
+            }
+          ]
+        }
+      ]
+    },{
+      "path": "\/game\/listAI",
+      "operations": [
+        {
+          "httpMethod": "GET",
+	      "summary": "Get a list of the AI players",
+          "responseClass": "",
+          "nickname": "addAI"
+        }
+      ]
+    }
+  ],
+  "models": {
+    "AddAIRequest":{
+      "id": "ResourceList",
+      "properties": {
+        "AIType": {
+          "type": "string",
+          "required":"true",
+          "description":"Only strings returned by \/game\/listAI are valid."
+         }
+       }
+    },
+    "ResourceList": {
+      "id": "ResourceList",
+      "required":["brick","ore","sheep","wheat","wood"],
+      "properties": {
+        "brick": {
+          "type": "integer"
+        },
+        "ore": {
+          "type": "integer"
+        },
+        "sheep": {
+          "type": "integer"
+        },
+        "wheat": {
+          "type": "integer"
+        },
+        "wood": {
+          "type": "integer"
+        }
+      }
+    },
+    "MessageLine": {
+      "id": "MessageLine",
+      "required":["message","source"],
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "MessageList": {
+      "id": "MessageList",
+      "properties": {
+        "lines": {
+          "type": "array",
+          "required":true,
+          "items": {
+            "$ref": "MessageLine"
+          }
+        }
+      }
+    },
+    "ClientModel": {
+      "id": "ClientModel",
+      "description": "The top level client model",
+      "required":["bank","biggestArmy","chat","log","longestRoad","map","players","turnTracker","winner"],
+      "properties": {
+        "bank": {
+          "description": "The cards available to be distributed to the players.",
+          "type": "ResourceList"
+        },
+        "chat": {
+          "description": "All the chat messages.",
+          "type": "MessageList"
+        },
+        "log": {
+          "description": "All the log messages.",
+          "type": "MessageList"
+        },
+        "map": {
+          "type": "Map"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "Player"
+          }
+        },
+        "tradeOffer":{
+          "description":"The current trade offer, if there is one.",
+          "type": "TradeOffer"
+        },
+        "turnTracker": {
+          "description":"This tracks who's turn it is and what action's being done.",
+          "type": "TurnTracker"
+        },
+        "version": {
+          "description": "The version of the model. This is incremented whenever anyone makes a move.",
+          "type": "index",
+          "required": true
+        },
+        "winner": {
+          "description": "This is -1 when nobody's won yet. When they have, it's their order index [0-3]",
+          "type": "index",
+          "required": true
+        }
+      }
+    },
+    "TurnTracker": {
+      "id": "TurnTracker",
+      "required": ["currentTurn","status"],
+      "properties": {
+        "currentTurn": {
+          "description":"Who's turn it is (0-3)",
+          "type": "index",
+          "required": false
+        },
+        "status": {
+          "description":"What's happening now",
+          "type": "string",
+          "required": false,
+          "enum": [
+            "Rolling","Robbing","Playing","Discarding","FirstRound","SecondRound"
+          ]
+        },
+        "longestRoad": {
+          "description":"The index of who has the longest road",
+          "type": "index",
+          "required": false
+        },
+        "largestArmy": {
+          "description":"The index of who has the biggest army (3 or more)",
+          "type": "index",
+          "required": false
+        }
+      }
+    },
+    "DevCardList": {
+      "type": "object",
+      "id": "DevCardList",
+      "required": ["monopoly","monument","roadBuilding","soldier","yearOfPlenty"],
+      "properties": {
+        "monopoly": {
+          "type": "index"
+        },
+        "monument": {
+          "type": "index"
+        },
+        "roadBuilding": {
+          "type": "index"
+        },
+        "soldier": {
+          "type": "index"
+        },
+        "yearOfPlenty": {
+          "type": "index"
+        }
+      }
+    },
+    "Player": {
+      "id": "Player",
+      "required": ["cities","color","discarded","monuments","name","newDevCards","oldDevCards","playerIndex","playedDevCard","playerID","resources","roads","settlements","soldiers","victoryPoints"],
+      "properties": {
+        "cities": {
+          "description":"How many cities this player has left to play",
+          "type": "index"
+        },
+        "color": {
+          "description":"The color of this player.",
+          "type": "string"
+        },
+        "discarded": {
+          "description":"Whether this player has discarded or not already this discard phase.",
+          "type": "boolean"
+        },
+        "monuments": {
+          "description":"How many monuments this player has played.",
+          "type": "index"
+        },
+        "name": {
+          "type": "string"
+        },
+        "newDevCards": {
+          "description":"The dev cards the player bought this turn.",
+          "type": "DevCardList"
+        },
+        "oldDevCards": {
+          "description":"The dev cards the player had when the turn started.",
+          "type": "DevCardList"
+        },
+        "playerIndex": {
+          "description":"What place in the array is this player? 0-3. It determines their turn order. This is used often everywhere.",
+          "type": "index"
+        },
+        "playedDevCard": {
+          "description":"Whether the player has played a dev card this turn.",
+          "type": "boolean"
+        },
+        "playerID": {
+          "description":"The unique playerID. This is used to pick the client player apart from the others. This is only used here and in your cookie.",
+          "type": "integer"
+        },
+        "resources": {
+          "description":"The resource cards this player has.",
+          "type": "ResourceList"
+        },
+        "roads": {
+          "type": "index"
+        },
+        "settlements": {
+          "type": "integer"
+        },
+        "soldiers": {
+          "type": "integer"
+        },
+        "victoryPoints": {
+          "type": "integer"
+        }
+      }
+    },
+    "Map": {
+      "id": "Map",
+      "required":["hexes","roads","settlements","cities","ports","radius","robber"],
+      "properties": {
+        "hexes": {
+          "description":"A list of all the hexes on the grid - it's only land tiles",
+          "type": "array",
+          "items": {
+              "$ref": "Hex"
+          }
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "Port"
+          }
+        },
+        "roads": {
+          "type": "array",
+          "items": {
+            "$ref": "Road"
+          }
+        },
+        "settlements": {
+          "type": "array",
+          "items": {
+            "$ref": "VertexObject"
+          }
+        },
+        "cities": {
+          "type": "array",
+          "items": {
+            "$ref": "VertexObject"
+          }
+        },
+        "radius": {
+          "description":"The radius of the map (it includes the center hex, and the ocean hexes; pass this into the hexgrid constructor)",
+          "type": "integer"
+        },
+        "robber": {
+          "description":"The current location of the robber",
+          "type": "HexLocation"
+        }
+      }
+    },
+    "Port": {
+      "id": "Port",
+      "required":["location","direction","ratio"],
+      "properties": {
+        "resource": {
+          "type": "string",
+          "description" : "What type resource this port trades for. If it's omitted, then it's for any resource.",
+          "enum": [
+            "Wood",
+            "Brick",
+            "Sheep",
+            "Wheat",
+            "Ore"
+          ]
+        },
+        "location": {
+          "description" : "Which hex this port is on. This shows the (ocean/non-existent) hex to draw the port on.",
+          "type": "HexLocation"
+        },
+        "direction": {
+          "description" : "Which edge this port is on.",
+          "type": "string",
+          "enum": [
+            "NW",
+            "N",
+            "NE",
+            "E",
+            "SE",
+            "SW"
+          ]
+        },
+        "ratio": {
+          "description" : "The ratio for trade in (ie, if this is 2, then it's a 2:1 port.",
+          "type": "integer"
+        }
+      }
+    },
+    "HexLocation": {
+      "id": "HexLocation",
+      "required":["x","y"],
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      }
+    },
+    "TradeOffer": {
+      "id": "TradeOffer",
+      "required":["sender","receiver","offer"],
+      "properties": {
+        "sender": { 
+          "description":"The index of the person offering the trade",
+          "type": "integer"
+        },
+        "receiver": {
+          "description":"The index of the person the trade was offered to.",
+          "type": "integer"
+        },
+        "offer": {
+          "description":"Positive numbers are resources being offered. Negative are resources being asked for.",
+          "type": "ResourceList"
+        }
+      }
+    },
+    "VertexLocation": {
+      "id": "VertexLocation",
+      "required":["x","y","direction"],
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "W",
+            "NW",
+            "NE",
+            "E",
+            "SE",
+            "SW"
+          ]
+        }
+      }
+    },
+    "EdgeLocation": {
+      "id": "EdgeLocation",
+      "required":["x","y","direction"],
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "NW",
+            "N",
+            "NE",
+            "SW",
+            "S",
+            "SE"
+          ]
+        }
+      }
+    },
+    "Hex": {
+      "id": "Hex",
+      "properties": {
+        "location": {
+          "type": "HexLocation",
+          "required":"true"
+        },
+        "resource": {
+          "type": "string",
+          "description": "What resource this tile gives - it's only here if the tile is not desert.",
+          "enum": [
+            "Wood",
+            "Brick",
+            "Sheep",
+            "Wheat",
+            "Ore"
+          ]
+        },
+        "number":{
+          "type":"integer",
+          "description":"What number is on this tile. It's omitted if this is a desert hex."
+        }
+      }
+    },
+    "Road": {
+      "id": "EdgeValue",
+      "properties": {
+        "owner":{
+          "description":"The index (not id) of the player who owns this piece (0-3)",
+          "type":"index",
+          "required":"true"
+        },
+        "location":{
+          "type":"EdgeLocation",
+          "description":"The location of this road.",
+          "required":"true"
+        }
+      }
+    },
+    "VertexObject": {
+      "id": "VertexObject",
+      "properties": {
+        "owner":{
+          "description":"The index (not id) of the player who owns thie piece (0-3)",
+          "type":"index",
+          "required":"true"
+        },
+        "location":{
+          "type":"EdgeLocation",
+          "description":"The location of this road.",
+          "required":"true"
+        }
+      }
+    }
+  }
+}
