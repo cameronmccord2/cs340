@@ -2,7 +2,10 @@
 /build/
 /bin/
 target/
- 
+java/build/ 
+/java/build/
+/java/build
+
 # OS Files #
 .DS_Store
  
