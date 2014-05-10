@@ -9,77 +9,77 @@ import java.util.List;
 public interface ITrade {
 
 	/**
-	 * Gets the from.
+	 * Gets the from participant for the trade.
 	 *
-	 * @return the from
+	 * @return the from participant
 	 */
 	public IParticipant getFrom();
 	
 	/**
-	 * Sets the from.
+	 * Sets the from participant.
 	 *
-	 * @param from the new from
+	 * @param from the new from participant
 	 */
 	public void setFrom(IParticipant from);
 	
 	/**
-	 * Gets the to.
+	 * Gets the to participant.
 	 *
-	 * @return the to
+	 * @return the to participant
 	 */
 	public IParticipant getTo();
 	
 	/**
-	 * Sets the to.
+	 * Sets the to participant.
 	 *
-	 * @param to the new to
+	 * @param to the new to participant
 	 */
 	public void setTo(IParticipant to);
 	
 	/**
-	 * Gets the send.
+	 * Gets the resource cards from the from participant.
 	 *
-	 * @return the send
+	 * @return the send resource cards
 	 */
 	public List<IResourceCard> getSend();
 	
 	/**
-	 * Sets the send.
+	 * Sets the send resource cards.
 	 *
-	 * @param send the new send
+	 * @param send the new send resource cards
 	 */
 	public void setSend(List<IResourceCard> send);
 	
 	/**
-	 * Gets the recieve.
+	 * Gets the recieve resource cards.
 	 *
-	 * @return the recieve
+	 * @return the recieve resource cards
 	 */
 	public List<IResourceCard> getRecieve();
 	
 	/**
-	 * Sets the recieve.
+	 * Sets the recieve resource cards.
 	 *
-	 * @param recieve the new recieve
+	 * @param recieve the new recieve resource cards
 	 */
 	public void setRecieve(List<IResourceCard> recieve);
 	
 	/**
-	 * Checks if is accepted.
+	 * Checks if the trade is accepted.
 	 *
-	 * @return true, if is accepted
+	 * @return true, if the trade has been accepted
 	 */
 	public boolean isAccepted();
 	
 	/**
-	 * Accept trade.
+	 * Accept trade. This accepts the trade.
 	 */
 	public void acceptTrade();
 	
 	/**
-	 * Can do.
+	 * Can do tests to see if the trade is valid and ok to do.
 	 *
-	 * @return true, if successful
+	 * @return true, if the trade is ok to do
 	 */
 	public boolean canDo();
 }

@@ -1,13 +1,12 @@
 package client.models;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface IBank.
  */
 public interface IBank extends IParticipant {
 
 	/**
-	 * Sets the up new bank.
+	 * Sets up new bank. This initializes the bank with the correct resource and development cards.
 	 */
 	void setUpNewBank();
 

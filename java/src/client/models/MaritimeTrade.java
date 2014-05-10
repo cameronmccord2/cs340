@@ -2,7 +2,8 @@ package client.models;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
+import client.exceptions.InvalidTradeException;
+
 /**
  * The Class MaritimeTrade.
  */
@@ -18,11 +19,12 @@ public class MaritimeTrade extends Trade implements IMaritimeTrade {
 	 * @param to the to
 	 * @param sendResources the send resources
 	 * @param recieveResources the recieve resources
-	 * @param sendRatio the send ratio
+	 * @param sendRatio the send ratio, must be 2, 3, or 4
+	 * @throws InvalidTradeException 
 	 */
-	public MaritimeTrade(IParticipant from, IParticipant to, List<IResourceCard> sendResources, List<IResourceCard> recieveResources, Integer sendRatio) {
+	public MaritimeTrade(IParticipant from, IParticipant to, List<IResourceCard> sendResources, List<IResourceCard> recieveResources, Integer sendRatio) throws InvalidTradeException {
 		super(from, to, sendResources, recieveResources);
-		this.sendRatio = sendRatio;
+		this.setSendRatio(sendRatio);
 	}
 
 	/* (non-Javadoc)
@@ -46,7 +48,16 @@ public class MaritimeTrade extends Trade implements IMaritimeTrade {
 	 * @see client.models.IMaritimeTrade#setSendRatio(java.lang.Integer)
 	 */
 	@Override
-	public void setSendRatio(Integer sendRatio) {
+	public void setSendRatio(Integer sendRatio) throws InvalidTradeException {
+		switch(sendRatio){
+		case 2:
+		case 3:
+		case 4:
+			break;
+			
+		default:
+			throw new InvalidTradeException("You must specify a ratio of 2, 3, or 4");
+		}
 		if(this.sendRatio == 0)
 			this.sendRatio = sendRatio;
 	}

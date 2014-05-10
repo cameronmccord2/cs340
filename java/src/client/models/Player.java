@@ -5,7 +5,6 @@ import java.util.List;
 
 import client.data.PlayerInfo;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Player.
  */
@@ -112,5 +111,17 @@ public class Player extends Participant implements IPlayer {
 	public boolean willAcceptTrade(ITrade trade) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void addSettlement(ISettlement settlement) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addRoad(IRoad road) {
+		// TODO Auto-generated method stub
+		
 	}
 }

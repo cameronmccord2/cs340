@@ -9,38 +9,38 @@ import java.util.List;
 public interface IParticipant {
 
 	/**
-	 * Gets the development cards.
+	 * Gets the development cards for this participant.
 	 *
 	 * @return the development cards
 	 */
 	List<IDevelopmentCard> getDevelopmentCards();
 
 	/**
-	 * Sets the resource cards.
+	 * Sets the resource cards for this participant.
 	 *
 	 * @param resourceCards the new resource cards
 	 */
 	void setResourceCards(List<IResourceCard> resourceCards);
 
 	/**
-	 * Gets the resource cards.
+	 * Gets the resource cards for this participant.
 	 *
 	 * @return the resource cards
 	 */
 	List<IResourceCard> getResourceCards();
 
 	/**
-	 * Sets the development cards.
+	 * Sets the development cards for this participant.
 	 *
 	 * @param developmentCards the new development cards
 	 */
 	void setDevelopmentCards(List<IDevelopmentCard> developmentCards);
 	
 	/**
-	 * Will accept trade.
+	 * Will accept trade. Asks the player if they will accept this trade.
 	 *
 	 * @param trade the trade
-	 * @return true, if successful
+	 * @return true, if accepted
 	 */
 	boolean willAcceptTrade(ITrade trade);
 
