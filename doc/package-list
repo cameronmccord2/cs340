@@ -5,6 +5,7 @@ client.data
 client.devcards
 client.discard
 client.domestic
+client.exceptions
 client.join
 client.login
 client.main
