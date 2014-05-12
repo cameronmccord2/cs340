@@ -5,6 +5,8 @@ package client.models;
 
 import java.util.Map;
 
+import client.data.GameInfo;
+
 /**
  * The Game class will hold the map, a dice object, and the list of participants.
  * @author scottdaly
@@ -12,8 +14,8 @@ import java.util.Map;
  */
 public class Game implements IGame{
 	
+	private GameInfo gameInfo;
 	private Map map;
-	private Die die;
 	private Participant participants[];
 	
 	public Game() {
@@ -22,9 +24,24 @@ public class Game implements IGame{
 
 	@Override
 	public int rollDie() {
+		return 0;
 		
 	}
 	
+	/**
+	 * @return the gameInfo
+	 */
+	public GameInfo getGameInfo() {
+		return gameInfo;
+	}
+
+	/**
+	 * @param gameInfo the gameInfo to set
+	 */
+	public void setGameInfo(GameInfo gameInfo) {
+		this.gameInfo = gameInfo;
+	}
+
 	/**
 	 * @return the map
 	 */
@@ -37,20 +54,6 @@ public class Game implements IGame{
 	 */
 	public void setMap(Map map) {
 		this.map = map;
-	}
-
-	/**
-	 * @return the dice
-	 */
-	public Die getDie() {
-		return die;
-	}
-
-	/**
-	 * @param dice the dice to set
-	 */
-	public void setDie(Die die) {
-		this.die = die;
 	}
 
 	/**
