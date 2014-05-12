@@ -115,13 +115,11 @@ public class Player extends Participant implements IPlayer {
 
 	@Override
 	public void addSettlement(ISettlement settlement) {
-		// TODO Auto-generated method stub
-		
+		this.settlements.add(settlement);
 	}
 
 	@Override
 	public void addRoad(IRoad road) {
-		// TODO Auto-generated method stub
-		
+		this.roads.add(road);
 	}
 }

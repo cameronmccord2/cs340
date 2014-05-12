@@ -24,7 +24,10 @@ public class DomesticTrade extends Trade implements IDomesticTrade {
 	 */
 	@Override
 	public boolean canDo() {
-		return true;
+		if(this.from != null && this.to != null && this.send != null && this.recieve != null && 
+				(this.send.size() != 0 || this.recieve.size() != 0))
+			return true;
+		return false;
 	}
 
 }
