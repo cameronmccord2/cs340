@@ -1,5 +1,5 @@
 package client.models;
 
-public class IHex {
+public interface IHex {
 
 }
