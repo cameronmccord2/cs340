@@ -6,6 +6,7 @@ import client.catan.*;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
+import client.models.Poller;
 import client.base.*;
 
 
@@ -41,6 +42,7 @@ public class Catan extends JFrame {
 	//
 	
     public static void main(final String[] args) {
+    	Poller poller = new Poller();
      	try {
     		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     	}

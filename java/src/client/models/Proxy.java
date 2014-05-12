@@ -1,5 +1,13 @@
 package client.models;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import client.data.PlayerInfo;
 
 /**
@@ -7,111 +15,115 @@ import client.data.PlayerInfo;
  * @author scottdaly
  *
  */
-public class Proxy {
+public class Proxy implements IProxy {
 
 	public Proxy() {
-		
+		System.out.println("PROXY STARTED");
 	}
 	
 	/**
 	 * calls the user login method on the server 
 	 * @param the User object that is being logged in 
 	 */
-	public void postUserLogin(User user){
-		
+	@Override
+	public String postUserLogin(PlayerInfo player){
+		Object obj = doPost("/user/login", player);
+		return null;
 	}
 	
 	/**
 	 * this calls the method on the server to register a new user
 	 * @param the User object that will be registered
 	 */
-	public void postUserRegister(User user){
+	@Override
+	public void postUserRegister(PlayerInfo player){
 		
 	}
 	
-	/**
-	 * This will retrieve all current games on the server
-	 * @return an array of Game objects
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#getGamesList()
 	 */
+	@Override
 	public Game[] getGamesList(){
 		return null;
 	}
 	
-	/**
-	 * Posts a new game that has just been created
-	 * @param the Game object that was just created to start a new game
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postGamesCreate(client.models.Game)
 	 */
+	@Override
 	public void postGamesCreate(Game game){
 		
 	}
 	
-	/**
-	 * Joins the game on the server
-	 * @param The Game that this client wants to join
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postGamesJoin(client.models.Game)
 	 */
+	@Override
 	public void postGamesJoin(Game game){
 		
 	}
 	
-	/**
-	 * Saves the game state
-	 * @param the game state to be saved
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postGamesSave(client.models.Game)
 	 */
+	@Override
 	public void postGamesSave(Game game){
 		
 	}
 	
-	/**
-	 * Loads the game that the client wants to start and sends it to the server
-	 * @param the game that needs to be loaded
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postGamesLoad(client.models.Game)
 	 */
+	@Override
 	public void postGamesLoad(Game game){
 		
 	}
 	
-	/**
-	 * Retrieves the latest game state
-	 * @return the Game object that holds all the updated game state
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#getGameModel()
 	 */
+	@Override
 	public Game getGameModel(){
 		return null;
 	}
 	
-	/**
-	 * Sends a game to reset it on the server
-	 * @param the game that needs to be reset
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postGameReset(client.models.Game)
 	 */
+	@Override
 	public void postGameReset(Game game){
 		
 	}
 	
-	/**
-	 * Not sure what this one does...
-	 * @param game
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postGameCommands(client.models.Game)
 	 */
+	@Override
 	public void postGameCommands(Game game){
 		
 	}
 	
-	/**
-	 * Not sure what this one does...
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#getGameCommands()
 	 */
+	@Override
 	public void getGameCommands(){
 		
 	}
 	
-	/**
-	 * This will post an AI participant
-	 * @param the participant AI that needs to be posted
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#postAddAI(client.models.Participant)
 	 */
+	@Override
 	public void postAddAI(Participant participant){
 		
 	}
 	
-	/**
-	 * returns a list of AI participants
-	 * @return the list of AI participants
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#getListAI()
 	 */
+	@Override
 	public Participant[] getListAI(){
 		return null;
 	}
@@ -120,14 +132,15 @@ public class Proxy {
 	 * posts a chat message to the server
 	 * @param the Chat object that needs to be posted
 	 */
-	public void movesSendChat(Chat chat){
+	@Override
+	public void movesSendChat(ChatMessage chat){
 		
 	}
 	
-	/**
-	 * Rolls the dice for you and returns the number rolled
-	 * @return the integer rolled
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesRollNumber()
 	 */
+	@Override
 	public int movesRollNumber(){
 		return 0;
 	}
@@ -137,14 +150,15 @@ public class Proxy {
 	 * @param the current thief object
 	 * @param the player object being robbed
 	 */
+	@Override
 	public void moveRobPlayer(Thief thief, PlayerInfo player){
 		
 	}
 	
-	/**
-	 * Sends the player indicating that player has finsihed their turn
-	 * @param the player object who is finishing their turn
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesFinishTurn(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesFinishTurn(PlayerInfo player){
 		
 	}
@@ -154,46 +168,48 @@ public class Proxy {
 	 * @param the player object that is buying a dev card
 	 * @return returns the DevCard object just bought
 	 */
-	public DevCard movesBuyDevCard(PlayerInfo player){
+	@Override
+	public DevelopmentCard movesBuyDevCard(PlayerInfo player){
+		return null;
 		
 	}
 	
-	/**
-	 * Plays a Year of Plenty card for the player passed in
-	 * @param the player object playing the Year of Plenty card
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesYear_of_Plenty(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesYear_of_Plenty(PlayerInfo player){
 		
 	}
 	
-	/**
-	 * Plays a Road Building card for the specified player
-	 * @param the player object that is using a Road Building card
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesRoad_Building(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesRoad_Building(PlayerInfo player){
 		
 	}
 	
-	/**
-	 * PLays a Soldier card for the specified player
-	 * @param the player object that is playing the Soldier card
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesSoldier(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesSoldier(PlayerInfo player){
 		
 	}
 	
-	/**
-	 * Plays a monopoly card for the specified user
-	 * @param the player object that is using the Monopoly card
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesMonopoly(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesMonopoly(PlayerInfo player){
 		
 	}
 	
-	/**
-	 * Plays a Monument card for the specified user
-	 * @param the player object that is using a Monument card
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesMonument(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesMonument(PlayerInfo player){
 		
 	}
@@ -202,6 +218,7 @@ public class Proxy {
 	 * sends a Road object to the server to build it
 	 * @param the road object that is to be built
 	 */
+	@Override
 	public void movesBuildRoad(Road road){
 		
 	}
@@ -210,6 +227,7 @@ public class Proxy {
 	 * Sends a settlement to be built
 	 * @param the settlement object to be built
 	 */
+	@Override
 	public void movesBuildSettlement(Settlement settlement){
 		
 	}
@@ -218,38 +236,39 @@ public class Proxy {
 	 * Sends a city to built on the server
 	 * @param the city object to be built 
 	 */
+	@Override
 	public void movesBuildCity(City city){
 		
 	}
 	
-	/**
-	 * Sends a Domestic Trade object from a user that wants to trade
-	 * @param the Domestic Trade object that holds the info for the potential trade
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesOfferTrade(client.models.DomesticTrade)
 	 */
+	@Override
 	public void movesOfferTrade(DomesticTrade dTrade){
 		
 	}
 	
-	/**
-	 * Sends the Domestic Trade object to signify the user accepts the trade
-	 * @param the domestic trade object that is being accepted
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesAcceptTrade(client.models.DomesticTrade)
 	 */
+	@Override
 	public void movesAcceptTrade(DomesticTrade dTrade){
 		
 	}
 	
-	/**
-	 * Conducts a Maritime trade by sending the maritime trade object
-	 * @param the meritime trade object that holds the info for the trade
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesMaritimeTrade(client.models.MaritimeTrade)
 	 */
+	@Override
 	public void movesMaritimeTrade(MaritimeTrade mTrade){
 		
 	}
 	
-	/**
-	 * Discards cards because a 7 was rolled
-	 * @param the player object that has to discard cards
+	/* (non-Javadoc)
+	 * @see client.models.IProxy#movesdiscardCards(client.data.PlayerInfo)
 	 */
+	@Override
 	public void movesdiscardCards(PlayerInfo player){
 		
 	}
@@ -258,7 +277,49 @@ public class Proxy {
 	 * Sets the log level of the server
 	 * @param the loglevel object
 	 */
+	@Override
 	public void utilChangeLogLevel(LogLevel loglevel){
 		
+	}
+	
+	private Object doPost(String urlPath, Object postData) {
+		try { 
+			System.out.println("trying to connect");
+			 URL url = new URL("http://localhost:8081" + urlPath); 
+			 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			 System.out.println("1");
+			 connection.setRequestMethod("POST");
+			 System.out.println("2");
+			 connection.setDoOutput(true);
+			 connection.connect();
+			 System.out.println("3");
+			 
+			 XStream xstream = new XStream(new DomDriver());
+			 
+			 //Write request body to OutputStream
+			 OutputStream requestBody = connection.getOutputStream();  
+			 xstream.toXML(postData,requestBody);
+			 requestBody.close();
+			 System.out.println("4");
+			 
+			 int response = connection.getResponseCode();
+			 System.out.println("5");
+			 if (response == HttpURLConnection.HTTP_OK) { 
+				 System.out.println("ok");
+				 //Read response body from InputStream
+				 InputStream responseBody = connection.getInputStream(); 
+				 Object obj = xstream.fromXML(responseBody);
+				 responseBody.close();
+				 return obj;
+			 } 
+			 else if(response == -1){
+				 System.out.println("nope");
+				 return null;
+			 } 
+		}catch(Exception e){
+			//e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 }
