@@ -1,12 +1,10 @@
-/**
- * 
- */
 package client.models;
 
 /**
- * @author scottdaly
+ * @author Craig Call
  *
  */
-public class Road {
+public class Road
+{
 
 }

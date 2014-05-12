@@ -1,16 +1,14 @@
-/**
- * 
- */
 package client.models;
 
 /**
- * @author scottdaly
+ * @author Craig Call
  *
  */
 public class Settlement implements ISettlement
 {
-	private IPlayer player;
-	private VertexLocation location;
+	protected IPlayer player;
+	protected VertexLocation location;
+	protected int pointValue;
 	
 	public Settlement()
 	{
@@ -19,26 +17,26 @@ public class Settlement implements ISettlement
 	
 	public VertexLocation getVertexLocation()
 	{
-		return null;
+		return location;
 	}
 	
 	public void setVertexLocation(VertexLocation location)
 	{
-		
+		this.location = location;
 	}
 	
 	public IPlayer getPlayer()
 	{
-		return null;
+		return player;
 	}
 	
 	public void setPlayer(IPlayer player)
 	{
-		
+		this.player = player;
 	}
 	
 	public int getPointValue()
 	{
-		return 1;
+		return pointValue;
 	}
 }

@@ -1,11 +1,14 @@
 package client.models;
 
 import java.util.*;
+import shared.locations.*;
 
 public interface ICatanMap {
 	public boolean canPlaceSegment(IRoadSegment segment);
 	public boolean canPlaceSettlement(ISettlement settlement);
 	public boolean canPlaceCity(ICity city);
+	public boolean canMoveRobber(IPlayer player);
+	
 	
 	public Collection<IHex> getHexes();
 	public void addHex(IHex hex);
