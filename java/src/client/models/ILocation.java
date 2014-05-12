@@ -1,5 +1,9 @@
 package client.models;
 
-public interface ILocation {
+import shared.locations.*;
+import shared.definitions.*;
 
+public interface ILocation 
+{
+	
 }
