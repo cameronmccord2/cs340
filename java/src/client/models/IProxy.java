@@ -1,6 +1,5 @@
 package client.models;
 
-import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.server.CreateGame;
 import client.server.GameServer;
@@ -54,7 +53,7 @@ public interface IProxy {
 	 * Retrieves the latest game state
 	 * @return the Game object that holds all the updated game state
 	 */
-	public abstract Game getGameModel();
+	public abstract IGame getGameModel();
 
 	/**
 	 * Sends a game to reset it on the server

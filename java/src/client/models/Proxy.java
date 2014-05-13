@@ -12,14 +12,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import sun.misc.IOUtils;
 
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.models.exceptions.InvalidTranslatorModelException;
+import client.models.translator.ClientModel;
 import client.server.CreateGame;
 import client.server.GameServer;
 import client.server.User;
@@ -32,9 +37,15 @@ import client.server.User;
 public class Proxy implements IProxy {
 
 	private HttpURLConnection connection;
+
 	private Gson gson = new Gson();
+	private Translator translator;
+	private List<IGame> games;
 	
-	public Proxy() {}
+	public Proxy() {
+		this.translator = new Translator();
+		this.games = new ArrayList<IGame>();
+	}
 	
 	@Override
 	public String postUserLogin(User user){
@@ -51,6 +62,7 @@ public class Proxy implements IProxy {
 		String response = doGet("/games/list");
 		GameServer gameServer = gson.fromJson(response, GameServer.class);
 		System.out.println();
+		return null;
 	}
 	
 	@Override
@@ -78,9 +90,17 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public Game getGameModel(){
-		//ClientModel.isValid()
-		return null;
+	public IGame getGameModel(){
+		String response = this.doGet("/game/state");
+		Gson gson = new Gson();
+		ClientModel cm = gson.fromJson(response, ClientModel.class);
+		try {
+			cm.isValid();
+		} catch (InvalidTranslatorModelException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		IGame g = this.translator.convertClientModelToGame(cm);
+		return g;
 	}
 	
 	/* (non-Javadoc)
