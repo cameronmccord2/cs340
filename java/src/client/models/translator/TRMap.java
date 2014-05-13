@@ -10,6 +10,31 @@ public class TRMap  implements IModelValid{
 	protected TRVertexObject[] cities;
 	protected Integer radius;
 	protected TRHexLocation robber;
+	
+	@Override
+	public void isValid() throws InvalidTranslatorModelException{
+		if(this.hexes == null || this.ports == null || this.roads == null || this.settlements == null || this.cities == null)
+			throw new InvalidTranslatorModelException(this.toString());
+		for (TRHex hex : this.hexes) {
+			hex.isValid();
+		}
+		for (TRPort port : this.ports) {
+			port.isValid();
+		}
+		for (TRRoad road : this.roads) {
+			road.isValid();
+		}
+		for (TRVertexObject sett : this.settlements) {
+			sett.isValid();
+		}
+		for (TRVertexObject city : this.cities) {
+			city.isValid();
+		}
+		this.robber.isValid();
+		if(radius < 0)
+			throw new InvalidTranslatorModelException(this.toString());
+	}
+	
 	public TRHex[] getHexes() {
 		return hexes;
 	}
@@ -52,11 +77,28 @@ public class TRMap  implements IModelValid{
 	public void setRobber(TRHexLocation robber) {
 		this.robber = robber;
 	}
+
 	@Override
-	public boolean isValid() throws InvalidTranslatorModelException{
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRMap [hexes=");
+		builder.append(hexes);
+		builder.append(", ports=");
+		builder.append(ports);
+		builder.append(", roads=");
+		builder.append(roads);
+		builder.append(", settlements=");
+		builder.append(settlements);
+		builder.append(", cities=");
+		builder.append(cities);
+		builder.append(", radius=");
+		builder.append(radius);
+		builder.append(", robber=");
+		builder.append(robber);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 }
 /*
 hexes (array[Hex]): A list of all the hexes on the grid - it's only land tiles, 

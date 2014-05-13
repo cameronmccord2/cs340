@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRResourceList implements IModelValid {
 	protected Integer wood;
 	protected Integer brick;
@@ -37,8 +39,24 @@ public class TRResourceList implements IModelValid {
 		this.wheat = wheat;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		if(this.wood < 0 || this.brick < 0 || this.ore < 0 || this.sheep < 0 || this.wheat < 0)
+			throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRResourceList [wood=");
+		builder.append(wood);
+		builder.append(", brick=");
+		builder.append(brick);
+		builder.append(", ore=");
+		builder.append(ore);
+		builder.append(", sheep=");
+		builder.append(sheep);
+		builder.append(", wheat=");
+		builder.append(wheat);
+		builder.append("]");
+		return builder.toString();
 	}
 }

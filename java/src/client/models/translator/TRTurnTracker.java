@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRTurnTracker implements IModelValid {
 	protected Integer currentTurn;
 	protected String status;
@@ -30,9 +32,27 @@ public class TRTurnTracker implements IModelValid {
 		this.largestArmy = largestArmy;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		if(this.currentTurn < 0 || this.status == null || this.status.length() < 0)
+			throw new InvalidTranslatorModelException(this.toString());
+		if(this.status.equals("Rolling") || this.status.equals("Robbing") || this.status.equals("Playing") || this.status.equals("Discarding")
+				|| this.status.equals("FirstRound") || this.status.equals("SecondRound"))
+			return;
+		throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRTurnTracker [currentTurn=");
+		builder.append(currentTurn);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", longestRoad=");
+		builder.append(longestRoad);
+		builder.append(", largestArmy=");
+		builder.append(largestArmy);
+		builder.append("]");
+		return builder.toString();
 	}
 }
 /*

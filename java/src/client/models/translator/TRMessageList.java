@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRMessageList  implements IModelValid{
 	protected TRMessageLine[] lines;
 
@@ -12,8 +14,20 @@ public class TRMessageList  implements IModelValid{
 	}
 
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		if(lines == null)
+			throw new InvalidTranslatorModelException(this.toString());
+		for (TRMessageLine line : this.lines) {
+			line.isValid();
+		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRMessageList [lines=");
+		builder.append(lines);
+		builder.append("]");
+		return builder.toString();
 	}
 }

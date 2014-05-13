@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRPlayer implements IModelValid {
 	TRResourceList resources;
 	  TRDevCardList oldDevCards;
@@ -16,6 +18,18 @@ public class TRPlayer implements IModelValid {
 	  int playerIndex;
 	  String name;
 	  protected String color;
+	  
+	  @Override
+		public void isValid() throws InvalidTranslatorModelException{
+			if(resources == null || this.oldDevCards == null || this.newDevCards == null)
+				throw new InvalidTranslatorModelException(this.toString());
+			this.resources.isValid();
+			this.oldDevCards.isValid();
+			this.newDevCards.isValid();
+			if(this.color == null || this.color.length() == 0 || this.roads < 0 || cities < 0 || settlements < 0 || soldiers < 0 || victoryPoints < 0 || monuments < 0 || this.playerID < 0 || name == null || name.length() == 0)
+				throw new InvalidTranslatorModelException(this.toString());
+		}
+	  
 	public TRResourceList getResources() {
 		return resources;
 	}
@@ -106,9 +120,42 @@ public class TRPlayer implements IModelValid {
 	public void setColor(String color) {
 		this.color = color;
 	}
+
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRPlayer [resources=");
+		builder.append(resources);
+		builder.append(", oldDevCards=");
+		builder.append(oldDevCards);
+		builder.append(", newDevCards=");
+		builder.append(newDevCards);
+		builder.append(", roads=");
+		builder.append(roads);
+		builder.append(", cities=");
+		builder.append(cities);
+		builder.append(", settlements=");
+		builder.append(settlements);
+		builder.append(", soldiers=");
+		builder.append(soldiers);
+		builder.append(", victoryPoints=");
+		builder.append(victoryPoints);
+		builder.append(", monuments=");
+		builder.append(monuments);
+		builder.append(", playedDevCard=");
+		builder.append(playedDevCard);
+		builder.append(", discarded=");
+		builder.append(discarded);
+		builder.append(", playerID=");
+		builder.append(playerID);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", color=");
+		builder.append(color);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 }
