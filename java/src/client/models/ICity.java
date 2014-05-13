@@ -1,5 +1,6 @@
 package client.models;
 
-public interface ICity extends ISettlement {
+public interface ICity extends ISettlement
+{
 
 }

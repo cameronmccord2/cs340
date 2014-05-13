@@ -1,12 +1,9 @@
-/**
- * 
- */
 package client.models;
 
 /**
  * @author scottdaly
  *
  */
-public class Thief {
+public class Robber {
 
 }

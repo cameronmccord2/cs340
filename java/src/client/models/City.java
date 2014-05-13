@@ -1,12 +1,13 @@
-/**
- * 
- */
 package client.models;
 
 /**
- * @author scottdaly
+ * @author Craig Call
  *
  */
-public class City {
-
+public class City extends Settlement
+{
+	public City()
+	{
+		this.pointValue = 2;
+	}
 }
