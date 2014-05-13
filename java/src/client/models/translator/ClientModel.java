@@ -67,7 +67,7 @@ public class ClientModel implements IModelValid{
 		this.version = version;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public boolean isValid() throws InvalidTranslatorModelException {
 		try {
 			map.isValid();
 			for (TRPlayer p : this.players) {
@@ -79,8 +79,10 @@ public class ClientModel implements IModelValid{
 			this.turnTracker.isValid();
 			if(this.tradeOffer != null)
 				this.tradeOffer.isValid();
+			
 		} catch (InvalidTranslatorModelException e) {
 			throw new InvalidTranslatorModelException(e.getLocalizedMessage() + ", ClientModel is not valid");
 		}
+		return false;
 	}
 }

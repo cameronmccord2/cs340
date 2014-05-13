@@ -1,38 +1,39 @@
 package client.models;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 
 public interface IProxy {
 
 	/**
 	 * calls the user login method on the server 
-	 * @param the User object that is being logged in 
+	 * @param the User object that is being logged in. Holds the username and password
 	 */
-	public abstract String postUserLogin(PlayerInfo player);
+	public String postUserLogin(User user);
 
 	/**
 	 * this calls the method on the server to register a new user
 	 * @param the User object that will be registered
 	 */
-	public abstract void postUserRegister(PlayerInfo player);
+	public String postUserRegister(User user);
 
 	/**
 	 * This will retrieve all current games on the server
 	 * @return an array of Game objects
 	 */
-	public abstract Game[] getGamesList();
+	public Game[] getGamesList();
 
 	/**
 	 * Posts a new game that has just been created
 	 * @param the Game object that was just created to start a new game
 	 */
-	public abstract void postGamesCreate(Game game);
+	public String postGamesCreate(CreateGame game);
 
 	/**
 	 * Joins the game on the server
 	 * @param The Game that this client wants to join
 	 */
-	public abstract void postGamesJoin(Game game);
+	public String postGamesJoin(String game);
 
 	/**
 	 * Saves the game state
@@ -98,7 +99,7 @@ public interface IProxy {
 	 * @param the current thief object
 	 * @param the player object being robbed
 	 */
-	public abstract void moveRobPlayer(Thief thief, PlayerInfo player);
+	public abstract void moveRobPlayer(PlayerInfo player);
 
 	/**
 	 * Sends the player indicating that player has finsihed their turn

@@ -55,7 +55,6 @@ public class Poller {
 	}
 	
 	public void endTImer(){
-		System.out.println("end");
 		t.cancel();
 	}
 

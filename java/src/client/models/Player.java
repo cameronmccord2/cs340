@@ -21,7 +21,6 @@ public class Player extends Participant implements IPlayer {
 	
 	/**
 	 * Instantiates a new player.
-	 *
 	 * @param playerInfo the player info
 	 */
 	public Player(PlayerInfo playerInfo){

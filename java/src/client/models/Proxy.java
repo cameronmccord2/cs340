@@ -1,13 +1,21 @@
 package client.models;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
+
+import sun.misc.IOUtils;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 
 /**
@@ -17,74 +25,62 @@ import client.data.PlayerInfo;
  */
 public class Proxy implements IProxy {
 
+	private Translator translator;
+	private HttpURLConnection connection;
+	
 	public Proxy() {
-		System.out.println("PROXY STARTED");
+		translator = new Translator();
 	}
 	
-	/**
-	 * calls the user login method on the server 
-	 * @param the User object that is being logged in 
-	 */
 	@Override
-	public String postUserLogin(PlayerInfo player){
-		Object obj = doPost("/user/login", player);
-		return null;
+	public String postUserLogin(User user){
+		String json = translator.convertToJSON(user);
+		System.out.println(json);
+		String response = doPost("/user/login", json);
+		return response;
 	}
 	
-	/**
-	 * this calls the method on the server to register a new user
-	 * @param the User object that will be registered
-	 */
 	@Override
-	public void postUserRegister(PlayerInfo player){
-		
+	public String postUserRegister(User user){
+		String json = translator.convertToJSON(user);
+		System.out.println(json);
+		String response = doPost("/user/register", json);
+		return response;
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#getGamesList()
-	 */
 	@Override
 	public Game[] getGamesList(){
+		String response = doGet("/games/list");
 		return null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postGamesCreate(client.models.Game)
-	 */
 	@Override
-	public void postGamesCreate(Game game){
-		
+	public String postGamesCreate(CreateGame game){
+		String json = translator.convertToJSON(game);
+		System.out.println(json);
+		String response = doPost("/games/create", json);
+		return null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postGamesJoin(client.models.Game)
-	 */
 	@Override
-	public void postGamesJoin(Game game){
-		
+	public String postGamesJoin(String game){
+		String response = doPost("/games/join", game);
+		return null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postGamesSave(client.models.Game)
-	 */
 	@Override
 	public void postGamesSave(Game game){
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postGamesLoad(client.models.Game)
-	 */
 	@Override
 	public void postGamesLoad(Game game){
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#getGameModel()
-	 */
 	@Override
 	public Game getGameModel(){
+		ClientModel.isValid()
 		return null;
 	}
 	
@@ -151,7 +147,7 @@ public class Proxy implements IProxy {
 	 * @param the player object being robbed
 	 */
 	@Override
-	public void moveRobPlayer(Thief thief, PlayerInfo player){
+	public void moveRobPlayer(PlayerInfo player){
 		
 	}
 	
@@ -282,44 +278,105 @@ public class Proxy implements IProxy {
 		
 	}
 	
-	private Object doPost(String urlPath, Object postData) {
+	private String doGet(String urlPath){
+		URL url;
+		try {
+			url = new URL("http://localhost:8081" + urlPath);
+			connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+			
+			int response = connection.getResponseCode();
+			System.out.println(response);
+			if (response == HttpURLConnection.HTTP_OK) { 
+				
+				 //Read response body from InputStream
+				 InputStream responseBody = connection.getInputStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 }
+				 System.out.println(out.toString());  
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 } 
+			 else{
+				//Read response body from InputStream
+				 InputStream responseBody = connection.getErrorStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 }
+				 System.out.println(out.toString());  
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 }
+	    }catch(Exception e){
+			e.printStackTrace();
+	    }
+		return "";
+	}
+	
+	private String doPost(String urlPath, String postData) {
 		try { 
-			System.out.println("trying to connect");
 			 URL url = new URL("http://localhost:8081" + urlPath); 
-			 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			 System.out.println("1");
+			 connection = (HttpURLConnection)url.openConnection();
 			 connection.setRequestMethod("POST");
-			 System.out.println("2");
 			 connection.setDoOutput(true);
 			 connection.connect();
-			 System.out.println("3");
-			 
-			 XStream xstream = new XStream(new DomDriver());
 			 
 			 //Write request body to OutputStream
 			 OutputStream requestBody = connection.getOutputStream();  
-			 xstream.toXML(postData,requestBody);
+			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
 			 requestBody.close();
-			 System.out.println("4");
 			 
 			 int response = connection.getResponseCode();
-			 System.out.println("5");
+	
 			 if (response == HttpURLConnection.HTTP_OK) { 
-				 System.out.println("ok");
 				 //Read response body from InputStream
 				 InputStream responseBody = connection.getInputStream(); 
-				 Object obj = xstream.fromXML(responseBody);
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 }
+				 System.out.println(out.toString());  
+				 reader.close();
 				 responseBody.close();
-				 return obj;
+				 return out.toString();
 			 } 
-			 else if(response == -1){
-				 System.out.println("nope");
-				 return null;
-			 } 
-		}catch(Exception e){
-			//e.printStackTrace();
-			return null;
-		}
-		return null;
+			 else{
+				//Read response body from InputStream
+				 InputStream responseBody = connection.getErrorStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 }
+				 System.out.println(out.toString());  
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 }
+	    }catch(Exception e){
+			e.printStackTrace();
+	    }
+		return "";
 	}
 }
