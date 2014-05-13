@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TREdgeLocation implements IModelValid {
 	protected Integer x;
 	protected Integer y;
@@ -23,8 +25,22 @@ public class TREdgeLocation implements IModelValid {
 		this.direction = direction;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		if(direction.equals("NW") || direction.equals("N") || direction.equals("NE") || direction.equals("SW") || direction.equals("S") || direction.equals("SE"))
+			if(x != null && y != null)
+				return;
+		throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TREdgeLocation [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append(", direction=");
+		builder.append(direction);
+		builder.append("]");
+		return builder.toString();
 	}
 }

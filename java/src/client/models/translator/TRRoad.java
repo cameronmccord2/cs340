@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRRoad implements IModelValid {
 	protected Integer owner;
 	protected TREdgeLocation location;
@@ -16,8 +18,19 @@ public class TRRoad implements IModelValid {
 		this.location = location;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		this.location.isValid();
+		if(this.owner == null || this.owner < 0)
+			throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRRoad [owner=");
+		builder.append(owner);
+		builder.append(", location=");
+		builder.append(location);
+		builder.append("]");
+		return builder.toString();
 	}
 }

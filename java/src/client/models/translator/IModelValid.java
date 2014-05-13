@@ -3,5 +3,5 @@ package client.models.translator;
 import client.models.exceptions.InvalidTranslatorModelException;
 
 public interface IModelValid {
-	public boolean isValid() throws InvalidTranslatorModelException;
+	public void isValid() throws InvalidTranslatorModelException;
 }

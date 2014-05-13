@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRHexLocation  implements IModelValid{
 	protected Integer x;
 	protected Integer y;
@@ -16,8 +18,18 @@ public class TRHexLocation  implements IModelValid{
 		this.y = y;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		if(x == null || y == null)
+			throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRHexLocation [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append("]");
+		return builder.toString();
 	}
 }

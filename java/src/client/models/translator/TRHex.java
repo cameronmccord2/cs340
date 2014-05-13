@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRHex implements IModelValid {
 	protected TRHexLocation location;
 	protected String resource;
@@ -23,9 +25,23 @@ public class TRHex implements IModelValid {
 		this.number = number;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		this.location.isValid();
+		if(resource != null && (resource.equals("Wood") || resource.equals("Brick") || resource.equals("Sheep") || resource.equals("Wheat") || resource.equals("Ore")))
+			return;
+		throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRHex [location=");
+		builder.append(location);
+		builder.append(", resource=");
+		builder.append(resource);
+		builder.append(", number=");
+		builder.append(number);
+		builder.append("]");
+		return builder.toString();
 	}
 }
 /*

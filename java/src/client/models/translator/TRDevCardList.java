@@ -1,5 +1,7 @@
 package client.models.translator;
 
+import client.models.exceptions.InvalidTranslatorModelException;
+
 public class TRDevCardList  implements IModelValid {
 	protected Integer monopoly;
 	protected Integer monument;
@@ -37,8 +39,24 @@ public class TRDevCardList  implements IModelValid {
 		this.yearOfPlenty = yearOfPlenty;
 	}
 	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	public void isValid() throws InvalidTranslatorModelException {
+		if(monopoly < 0 || monument < 0 || roadBuilding < 0 || soldier < 0 || yearOfPlenty < 0)
+			throw new InvalidTranslatorModelException(this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRDevCardList [monopoly=");
+		builder.append(monopoly);
+		builder.append(", monument=");
+		builder.append(monument);
+		builder.append(", roadBuilding=");
+		builder.append(roadBuilding);
+		builder.append(", soldier=");
+		builder.append(soldier);
+		builder.append(", yearOfPlenty=");
+		builder.append(yearOfPlenty);
+		builder.append("]");
+		return builder.toString();
 	}
 }

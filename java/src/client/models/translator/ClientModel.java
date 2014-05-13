@@ -67,22 +67,43 @@ public class ClientModel implements IModelValid{
 		this.version = version;
 	}
 	@Override
-	public boolean isValid() throws InvalidTranslatorModelException {
-		try {
-			map.isValid();
-			for (TRPlayer p : this.players) {
-				p.isValid();
-			}
-			this.log.isValid();
-			this.chat.isValid();
-			this.bank.isValid();
-			this.turnTracker.isValid();
-			if(this.tradeOffer != null)
-				this.tradeOffer.isValid();
-			
-		} catch (InvalidTranslatorModelException e) {
-			throw new InvalidTranslatorModelException(e.getLocalizedMessage() + ", ClientModel is not valid");
+
+	public void isValid() throws InvalidTranslatorModelException {
+		map.isValid();
+		for (TRPlayer p : this.players) {
+			p.isValid();
 		}
-		return false;
+		this.log.isValid();
+		this.chat.isValid();
+		this.bank.isValid();
+		this.turnTracker.isValid();
+		if(this.tradeOffer != null)
+			this.tradeOffer.isValid();
+		if(this.version < 0)
+			throw new InvalidTranslatorModelException("Version is less than 0, toString: " + this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ClientModel [map=");
+		builder.append(map);
+		builder.append(", players=");
+		builder.append(players);
+		builder.append(", log=");
+		builder.append(log);
+		builder.append(", chat=");
+		builder.append(chat);
+		builder.append(", bank=");
+		builder.append(bank);
+		builder.append(", turnTracker=");
+		builder.append(turnTracker);
+		builder.append(", tradeOffer=");
+		builder.append(tradeOffer);
+		builder.append(", winner=");
+		builder.append(winner);
+		builder.append(", version=");
+		builder.append(version);
+		builder.append("]");
+		return builder.toString();
 	}
 }
