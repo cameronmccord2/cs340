@@ -21,8 +21,9 @@ public class Translator {
 	}
 	
 	public Object convertToObject(String json){
-		Object obj = gson.fromJson(json, CientModel.class);
-		return obj;
+		return json;
+//		Object obj = gson.fromJson(json, CientModel.class);
+//		return obj;
 	}
 
 }

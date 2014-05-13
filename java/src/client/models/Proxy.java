@@ -1,6 +1,9 @@
 package client.models;
 
 import java.io.BufferedReader;
+
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,6 +21,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.server.CreateGame;
+import client.server.GameServer;
 import client.server.User;
 
 /**
@@ -27,38 +31,31 @@ import client.server.User;
  */
 public class Proxy implements IProxy {
 
-	private Translator translator;
 	private HttpURLConnection connection;
+	private Gson gson = new Gson();
 	
-	public Proxy() {
-		translator = new Translator();
-	}
+	public Proxy() {}
 	
 	@Override
 	public String postUserLogin(User user){
-		String json = translator.convertToJSON(user);
-		System.out.println(json);
-		String response = doPost("/user/login", json);
-		return response;
+		return doPost("/user/login", gson.toJson(user));
 	}
 	
 	@Override
 	public String postUserRegister(User user){
-		String json = translator.convertToJSON(user);
-		System.out.println(json);
-		String response = doPost("/user/register", json);
-		return response;
+		return doPost("/user/register", gson.toJson(user));
 	}
 	
 	@Override
-	public Game[] getGamesList(){
+	public GameServer[] getGamesList(){
 		String response = doGet("/games/list");
-		return null;
+		GameServer gameServer = gson.fromJson(response, GameServer.class);
+		System.out.println();
 	}
 	
 	@Override
 	public String postGamesCreate(CreateGame game){
-		String json = translator.convertToJSON(game);
+		String json = gson.toJson(game);
 		System.out.println(json);
 		String response = doPost("/games/create", json);
 		return null;

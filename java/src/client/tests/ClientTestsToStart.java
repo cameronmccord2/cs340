@@ -6,9 +6,8 @@ import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.models.CreateGame;
 import client.models.Proxy;
-import client.models.User;
+import client.server.User;
 
 public class ClientTestsToStart {
 
