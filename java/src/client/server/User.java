@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.models;
+package client.server;
 
 /**
  * Simply holds the name and password of the user trying to log in

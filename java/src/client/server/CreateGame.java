@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.models;
+package client.server;
 
 /**
  * This class holds the needed attributes to be sent off to the server to create a new game

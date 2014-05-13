@@ -1,13 +1,13 @@
 package client.tests;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import client.models.CreateGame;
+import client.server.CreateGame;
 import client.models.Proxy;
-import client.models.User;
+import client.server.User;
 
 
 public class ProxyTest {

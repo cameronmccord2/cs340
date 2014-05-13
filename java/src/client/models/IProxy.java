@@ -2,6 +2,8 @@ package client.models;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.server.CreateGame;
+import client.server.User;
 
 public interface IProxy {
 

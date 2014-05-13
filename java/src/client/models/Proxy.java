@@ -17,6 +17,8 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.server.CreateGame;
+import client.server.User;
 
 /**
  * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server. 
@@ -80,7 +82,7 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public Game getGameModel(){
-		ClientModel.isValid()
+		//ClientModel.isValid()
 		return null;
 	}
 	
