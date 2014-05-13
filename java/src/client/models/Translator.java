@@ -2,7 +2,7 @@
  * 
  */
 package client.models;
-import com.google.gson.Gson;
+import client.models.translator.ClientModel;
 
 /**
  * This class receives either JSON or Java objects and converts it to the other format
@@ -10,19 +10,12 @@ import com.google.gson.Gson;
  *
  */
 public class Translator {
-	
-	private Gson gson = new Gson();
 
 	public Translator() {}
 	
-	public String convertToJSON(Object obj){
-		String json = gson.toJson(obj);
-		return json;
+	public IGame convertClientModelToGame(ClientModel cm){
+		Game g = new Game();
+		// TODO
+		return g;
 	}
-	
-	public Object convertToObject(String json){
-		Object obj = gson.fromJson(json, CientModel.class);
-		return obj;
-	}
-
 }

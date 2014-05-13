@@ -21,6 +21,12 @@ public class Game implements IGame{
 	public Game() {
 		
 	}
+	
+	public Game(GameInfo gameInfo, Map map, Participant[] participants){
+		this.gameInfo = gameInfo;
+		this.map = map;
+		this.participants = participants;
+	}
 
 	@Override
 	public int rollDie() {
