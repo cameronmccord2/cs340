@@ -18,7 +18,7 @@ public enum VertexDirection implements IDirection{
 		return opposite;
 	}
 
-	public static VertexDirection getDirectionForServerString(String direction) {
+	public static VertexDirection getDirectionFromServerString(String direction) {
 		switch (direction.toUpperCase()) {
 			case "NW":
 				return VertexDirection.NorthWest;

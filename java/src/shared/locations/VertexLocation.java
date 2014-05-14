@@ -18,7 +18,7 @@ public class VertexLocation {
 
 	public VertexLocation(TREdgeLocation location) {
 		this.hexLoc = new HexLocation(location.getX(), location.getY());
-		this.dir = VertexDirection.getDirectionForServerString(location.getDirection());
+		this.dir = VertexDirection.getDirectionFromServerString(location.getDirection());
 	}
 
 	public HexLocation getHexLoc() {
