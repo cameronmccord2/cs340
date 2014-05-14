@@ -1,12 +1,6 @@
 package client.models;
 
 import java.io.BufferedReader;
-<<<<<<< HEAD
-=======
-
-import com.google.gson.Gson;
-
->>>>>>> 62b1039bb44981c5f3454b5cd6b40fe87ff8d4f6
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -21,11 +15,29 @@ import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
+import client.server.AcceptTrade;
+import client.server.BuyDevCard;
 import client.server.CreateGame;
+import client.server.FinishedTurn;
 import client.server.GameLoad;
 import client.server.GameServer;
+import client.server.MaritimeTradeOff;
+import client.server.OfferTrade;
+import client.server.RoadBuilding;
 import client.server.SaveGame;
+import client.server.ServerAI;
+import client.server.ServerBuildCity;
+import client.server.ServerBuildRoad;
+import client.server.ServerBuildSettlement;
+import client.server.ServerChat;
 import client.server.ServerJoinGame;
+import client.server.ServerLogLevel;
+import client.server.ServerMonopoly;
+import client.server.ServerMonument;
+import client.server.ServerRobPlayer;
+import client.server.ServerRoll;
+import client.server.ServerSoldier;
+import client.server.ServerYearofPlenty;
 import client.server.User;
 
 import com.google.gson.Gson;
@@ -144,39 +156,27 @@ public class Proxy implements IProxy {
 
 	@Override
 	public String postGameReset(){
-		return doMasterPost("/user/register","");
+		return doMasterPost("/game/reset","");
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postGameCommands(client.models.Game)
-	 */
 	@Override
-	public void postGameCommands(Game game){
+	public void postGameCommands(){
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#getGameCommands()
-	 */
 	@Override
-	public void getGameCommands(){
-		
+	public String getGameCommands(){
+		return doGet("/game/commands");
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postAddAI(client.models.Participant)
-	 */
 	@Override
-	public void postAddAI(Participant participant){
-		
+	public String postAddAI(ServerAI ai){
+		return doPost("/game/addAI", gson.toJson(ai));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#getListAI()
-	 */
 	@Override
-	public Participant[] getListAI(){
-		return null;
+	public String getListAI(){
+		return doGet("/game/listAI");
 	}
 	
 	/**
@@ -184,153 +184,93 @@ public class Proxy implements IProxy {
 	 * @param the Chat object that needs to be posted
 	 */
 	@Override
-	public void movesSendChat(ChatMessage chat){
-		
+	public String movesSendChat(ServerChat chat){
+		return doPost("/moves/sendChat", gson.toJson(chat));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesRollNumber()
-	 */
 	@Override
-	public int movesRollNumber(){
-		return 0;
+	public String movesRollNumber(ServerRoll roll){
+		return doPost("/moves/rollNumber", gson.toJson(roll));
 	}
 	
-	/**
-	 * Sends the request to rob a certain player by giving the Thief and the Player objects
-	 * @param the current thief object
-	 * @param the player object being robbed
-	 */
 	@Override
-	public void moveRobPlayer(PlayerInfo player){
-		
+	public String moveRobPlayer(ServerRobPlayer rob){
+		return doPost("/moves/robPlayer", gson.toJson(rob));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesFinishTurn(client.data.PlayerInfo)
-	 */
 	@Override
-	public void movesFinishTurn(PlayerInfo player){
-		
+	public String movesFinishTurn(FinishedTurn turn){
+		return doPost("/moves/finishTurn", gson.toJson(turn));
 	}
 	
-	/**
-	 * Sends a player to the server that wants to buy a dev card
-	 * @param the player object that is buying a dev card
-	 * @return returns the DevCard object just bought
-	 */
 	@Override
-	public DevelopmentCard movesBuyDevCard(PlayerInfo player){
-		return null;
-		
+	public String movesBuyDevCard(BuyDevCard card){
+		return doPost("/moves/buyDevCard", gson.toJson(card));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesYear_of_Plenty(client.data.PlayerInfo)
-	 */
 	@Override
-	public void movesYear_of_Plenty(PlayerInfo player){
-		
+	public String movesYear_of_Plenty(ServerYearofPlenty yop){
+		return doPost("/moves/Year_of_Plenty", gson.toJson(yop));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesRoad_Building(client.data.PlayerInfo)
-	 */
 	@Override
-	public void movesRoad_Building(PlayerInfo player){
-		
+	public String movesRoad_Building(RoadBuilding rb){
+		return doPost("/moves/Raod_Building", gson.toJson(rb));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesSoldier(client.data.PlayerInfo)
-	 */
 	@Override
-	public void movesSoldier(PlayerInfo player){
-		
+	public String movesSoldier(ServerSoldier ss){
+		return doPost("/moves/Soldier", gson.toJson(ss));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesMonopoly(client.data.PlayerInfo)
-	 */
 	@Override
-	public void movesMonopoly(PlayerInfo player){
-		
+	public String movesMonopoly(ServerMonopoly sm){
+		return doPost("/moves/Monopoly", gson.toJson(sm));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesMonument(client.data.PlayerInfo)
-	 */
 	@Override
-	public void movesMonument(PlayerInfo player){
-		
+	public String movesMonument(ServerMonument sm){
+		return doPost("/moves/Monument", gson.toJson(sm));
 	}
 	
-	/**
-	 * sends a Road object to the server to build it
-	 * @param the road object that is to be built
-	 */
 	@Override
-	public void movesBuildRoad(Road road){
-		
+	public String movesBuildRoad(ServerBuildRoad br){
+		return doPost("/moves/buildRoad", gson.toJson(br));
 	}
 	
-	/**
-	 * Sends a settlement to be built
-	 * @param the settlement object to be built
-	 */
 	@Override
-	public void movesBuildSettlement(Settlement settlement){
-		
+	public String movesBuildSettlement(ServerBuildSettlement bs){
+		return doPost("/moves/buildSettlement", gson.toJson(bs));
 	}
 	
-	/**
-	 * Sends a city to built on the server
-	 * @param the city object to be built 
-	 */
 	@Override
-	public void movesBuildCity(City city){
-		
+	public String movesBuildCity(ServerBuildCity bc){
+		return doPost("/moves/buildCity", gson.toJson(bc));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesOfferTrade(client.models.DomesticTrade)
-	 */
 	@Override
-	public void movesOfferTrade(DomesticTrade dTrade){
-		
+	public String movesOfferTrade(OfferTrade ot){
+		return doPost("/moves/offerTrade", gson.toJson(ot));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesAcceptTrade(client.models.DomesticTrade)
-	 */
 	@Override
-	public void movesAcceptTrade(DomesticTrade dTrade){
-		
+	public String movesAcceptTrade(AcceptTrade at){
+		return doPost("/moves/acceptTrade", gson.toJson(at));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesMaritimeTrade(client.models.MaritimeTrade)
-	 */
 	@Override
-	public void movesMaritimeTrade(MaritimeTrade mTrade){
-		
+	public String movesMaritimeTrade(MaritimeTradeOff mTrade){
+		return doPost("/moves/maritimeTrade", gson.toJson(mTrade));
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#movesdiscardCards(client.data.PlayerInfo)
-	 */
 	@Override
 	public void movesdiscardCards(PlayerInfo player){
 		
 	}
 	
-	/**
-	 * Sets the log level of the server
-	 * @param the loglevel object
-	 */
 	@Override
-	public void utilChangeLogLevel(LogLevel loglevel){
-		
+	public String utilChangeLogLevel(ServerLogLevel loglevel){
+		return doPost("/util/changeLogLevel", gson.toJson(loglevel));
 	}
 	
 	private String doGet(String urlPath){
