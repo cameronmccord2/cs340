@@ -53,12 +53,6 @@ public interface IProxy {
 	public String postGamesLoad(GameLoad game);
 
 	/**
-	 * Retrieves the latest game state
-	 * @return the Game object that holds all the updated game state
-	 */
-	public abstract IGame getGameModel();
-
-	/**
 	 * Sends a game to reset it on the server
 	 * @param the game that needs to be reset
 	 */
@@ -196,5 +190,11 @@ public interface IProxy {
 	 * @param the loglevel object
 	 */
 	public abstract void utilChangeLogLevel(LogLevel loglevel);
+
+	/**
+	 * Retrieves the latest game state
+	 * @return the Game object that holds all the updated game state
+	 */
+	public IGame getGameModel(Integer gameId);
 
 }

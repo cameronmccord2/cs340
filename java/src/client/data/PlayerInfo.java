@@ -17,7 +17,7 @@ import shared.definitions.*;
  */
 public class PlayerInfo {
 
-	private int id;
+	private long id;
 	private int playerIndex;
 	private String name;
 	private CatanColor color;
@@ -28,19 +28,19 @@ public class PlayerInfo {
 		setName("");
 		setColor(CatanColor.WHITE);
 	}
-	
-	public int getId() {
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public int getPlayerIndex() {
 		return playerIndex;
 	}
-	
+
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
 	}

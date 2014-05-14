@@ -13,6 +13,8 @@ public class Player extends Participant implements IPlayer {
 	/** The settlements. */
 	protected List<ISettlement> settlements;
 	
+	protected List<ICity> cities;
+	
 	/** The roads. */
 	protected List<IRoad> roads;
 	
@@ -28,6 +30,7 @@ public class Player extends Participant implements IPlayer {
 		this.playerInfo = playerInfo;
 		this.settlements = new ArrayList<ISettlement>();
 		this.roads = new ArrayList<IRoad>();
+		this.cities = new ArrayList<ICity>();
 	}
 	
 	/**
@@ -39,11 +42,12 @@ public class Player extends Participant implements IPlayer {
 	 * @param settlements the settlements
 	 * @param roads the roads
 	 */
-	public Player(PlayerInfo playerInfo, List<IDevelopmentCard> developmentCards, List<IResourceCard> resourceCards, List<ISettlement> settlements, List<IRoad> roads){
+	public Player(PlayerInfo playerInfo, List<IDevelopmentCard> developmentCards, List<IResourceCard> resourceCards, List<ISettlement> settlements, List<IRoad> roads, List<ICity> cities){
 		super(developmentCards, resourceCards);
 		this.playerInfo = playerInfo;
 		this.settlements = settlements;
 		this.roads = roads;
+		this.cities = cities;
 	}
 	
 	/* (non-Javadoc)
@@ -120,5 +124,13 @@ public class Player extends Participant implements IPlayer {
 	@Override
 	public void addRoad(IRoad road) {
 		this.roads.add(road);
+	}
+
+	public List<ICity> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<ICity> cities) {
+		this.cities = cities;
 	}
 }

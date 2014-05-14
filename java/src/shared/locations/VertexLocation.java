@@ -1,5 +1,7 @@
 package shared.locations;
 
+import client.models.translator.TREdgeLocation;
+
 
 /**
  * Represents the location of a vertex on a hex map
@@ -14,6 +16,11 @@ public class VertexLocation {
 		setDir(dir);
 	}
 	
+	public VertexLocation(TREdgeLocation location) {
+		this.hexLoc = new HexLocation(location.getX(), location.getY());
+		this.dir = VertexDirection.getDirectionForServerString(location.getDirection());
+	}
+
 	public HexLocation getHexLoc() {
 		return hexLoc;
 	}

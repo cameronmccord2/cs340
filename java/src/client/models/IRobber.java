@@ -1,8 +1,11 @@
 package client.models;
 
+import shared.locations.HexLocation;
+
 public interface IRobber {
-	public ILocation getLocation();
-	public void setLocation(ILocation location);
+	
+	public HexLocation getLocation();
+	public void setLocation(HexLocation location);
 	
 	
 }

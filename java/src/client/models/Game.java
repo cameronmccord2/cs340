@@ -3,8 +3,6 @@
  */
 package client.models;
 
-import java.util.Map;
-
 import client.data.GameInfo;
 
 /**
@@ -15,17 +13,21 @@ import client.data.GameInfo;
 public class Game implements IGame{
 	
 	private GameInfo gameInfo;
-	private Map map;
-	private Participant participants[];
+	private ICatanMap map;
+	private IPlayer players[];
+	private Integer modelVersion;
+	private IBank bank;
+	
 	
 	public Game() {
 		
 	}
 	
-	public Game(GameInfo gameInfo, Map map, Participant[] participants){
+	public Game(GameInfo gameInfo, ICatanMap map, IPlayer[] players){
 		this.gameInfo = gameInfo;
 		this.map = map;
-		this.participants = participants;
+		this.players = players;
+		this.modelVersion = 0;
 	}
 
 	@Override
@@ -34,47 +36,7 @@ public class Game implements IGame{
 		
 	}
 	
-	/**
-	 * @return the gameInfo
-	 */
-	public GameInfo getGameInfo() {
-		return gameInfo;
-	}
-
-	/**
-	 * @param gameInfo the gameInfo to set
-	 */
-	public void setGameInfo(GameInfo gameInfo) {
-		this.gameInfo = gameInfo;
-	}
-
-	/**
-	 * @return the map
-	 */
-	public Map getMap() {
-		return map;
-	}
-
-	/**
-	 * @param map the map to set
-	 */
-	public void setMap(Map map) {
-		this.map = map;
-	}
-
-	/**
-	 * @return the participants
-	 */
-	public Participant[] getParticipants() {
-		return participants;
-	}
-
-	/**
-	 * @param participants the participants to set
-	 */
-	public void setParticipants(Participant[] participants) {
-		this.participants = participants;
-	}
+	
 
 	@Override
 	public void startGame() {
@@ -86,6 +48,73 @@ public class Game implements IGame{
 	public void updateGameState(Object ob) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public GameInfo getGameInfo() {
+		return gameInfo;
+	}
+
+	@Override
+	public void setGameInfo(GameInfo gameInfo) {
+		this.gameInfo = gameInfo;
+	}
+
+	@Override
+	public ICatanMap getMap() {
+		return map;
+	}
+
+	@Override
+	public void setMap(ICatanMap map) {
+		this.map = map;
+	}
+
+	@Override
+	public Integer getModelVersion() {
+		return modelVersion;
+	}
+
+	@Override
+	public void setModelVersion(Integer modelVersion) {
+		this.modelVersion = modelVersion;
+	}
+
+	@Override
+	public IPlayer[] getPlayers() {
+		return players;
+	}
+
+	@Override
+	public void setPlayers(IPlayer[] players) {
+		this.players = players;
+	}
+
+	@Override
+	public IBank getBank() {
+		return bank;
+	}
+
+	@Override
+	public void setBank(IBank bank) {
+		this.bank = bank;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Game [gameInfo=");
+		builder.append(gameInfo);
+		builder.append(", map=");
+		builder.append(map);
+		builder.append(", players=");
+		builder.append(players);
+		builder.append(", modelVersion=");
+		builder.append(modelVersion);
+		builder.append(", bank=");
+		builder.append(bank);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

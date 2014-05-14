@@ -1,6 +1,12 @@
 package client.models;
 
 import java.io.BufferedReader;
+<<<<<<< HEAD
+=======
+
+import com.google.gson.Gson;
+
+>>>>>>> 62b1039bb44981c5f3454b5cd6b40fe87ff8d4f6
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -12,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import client.data.PlayerInfo;
+import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
 import client.server.CreateGame;
@@ -97,8 +104,17 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public IGame getGameModel(){
-		String response = this.doGet("/game/state");
+	public IGame getGameModel(Integer gameId){
+		Integer version = 0;
+		try {
+			version = this.getVersionForGameId(gameId);
+		} catch (InvalidGameModelException e1) {
+			// fail silently
+		}
+		String requestUrl = "/game/model";
+		if(version != 0)
+			requestUrl += "?version=" + version;
+		String response = this.doGet(requestUrl);
 		Gson gson = new Gson();
 		ClientModel cm = gson.fromJson(response, ClientModel.class);
 		try {
@@ -106,10 +122,26 @@ public class Proxy implements IProxy {
 		} catch (InvalidTranslatorModelException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		IGame g = this.translator.convertClientModelToGame(cm);
+		IGame g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(gameId));
 		return g;
 	}
 	
+	private IGame getGameForGameId(Integer gameId) {
+		for (IGame g : this.games) {
+			if(g.getGameInfo().getId() == gameId)
+				return g;
+		}
+		return null;
+	}
+
+	private Integer getVersionForGameId(Integer gameId) throws InvalidGameModelException {
+		for (IGame g : this.games) {
+			if(g.getGameInfo().getId() == gameId)
+				return g.getModelVersion();
+		}
+		throw new InvalidGameModelException("Couldnt find the requested game: " + gameId + " in the game list: " + this.games.toString());
+	}
+
 	@Override
 	public String postGameReset(){
 		return doMasterPost("/user/register","");
