@@ -2,6 +2,21 @@ package client.models;
 
 import java.util.*;
 
+/**
+ * Okay.  So here are some important notes about the x-y system that
+ * Dr. Rodham is using in his MapView/MapComponent/MapController.
+ *
+ * The center Hex is located at x=0, y=0 and radiates outward from
+ * there. The column in the center is the y-axis.  The diagonal that
+ * goes from the top left corner to the bottom right corner is the
+ * x-axis.  The positive y-axis is DOWNWARD.  The positive x-axis is
+ * RIGHTWARD.
+ *
+ *
+ * @author Craig Call
+ *
+ */
+
 public class CatanMap implements ICatanMap
 {
 	private Map<ILocation, IPiece> map;
