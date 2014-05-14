@@ -8,11 +8,6 @@ import shared.locations.VertexLocation;
  */
 public class City extends Settlement implements ICity
 {
-	public City()
-	{
-		this.pointValue = 2;
-	}
-
 	public City(VertexLocation vertexLocation, Player newPlayer, int points) {
 		super(vertexLocation, newPlayer, points);
 	}

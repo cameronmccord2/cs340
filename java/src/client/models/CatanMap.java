@@ -22,34 +22,25 @@ import shared.locations.*;
 public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;
-	private Map<EdgeLocation, IRoad> roadMap;
-	private Map<VertexLocation, ISettlement> settlementMap;
-	private Map<VertexLocation, ICity> cityMap;
-	private Map<VertexLocation, IPort> portMap;
-
 	private Map<ILocation, IPiece> catanMap;
+	private Map<VertexLocation, IPort> portMap;
 
 	private int radius;
 
 	public CatanMap()
 	{
-		hexMap = new HashMap<>();
-		roadMap = new HashMap<>();
-		settlementMap = new HashMap<>();
-		cityMap = new HashMap<>();
-		portMap = new HashMap<>();
-
-		catanMap = new HashMap<>();
+		this.hexMap = new HashMap<>();
+		this.catanMap = new HashMap<>();
+		this.portMap = new HashMap<>();
+		this.radius = 3;
 	}
 
 	/**
 	 *
 	 */
 	@Override
-	public boolean canPlaceSegment(IRoadSegment segment)
+	public boolean canPlaceRoad(IRoadSegment segment)
 	{
-		// TODO Check the location to see if we can add an
-		// IRoadSegment on the map.
 		return false;
 	}
 
@@ -62,7 +53,6 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -80,7 +70,6 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceCity(ICity city)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -91,20 +80,21 @@ public class CatanMap implements ICatanMap
 	 * 	this rule as a Settlement must exist prior to building
 	 * 	a city.
 	 *
-	 *		@param	location
-	 *						The location where a player wants to place
-	 *						a settlement or city.
+	 *		@param	piece
+	 *						The piece that a player wants to place.
+	 *
+	 *		@return	the piece that causes a conflict, or null if
+	 *					there is no conflict.
 	 */
 	@Override
-	public boolean doesDistanceRuleApply(VertexLocation location)
+	public IPiece distanceRule(IPiece piece)
 	{
-		return false;
+		return null;
 	}
 
 	@Override
 	public boolean canMoveRobber(IPlayer player)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -118,22 +108,19 @@ public class CatanMap implements ICatanMap
 	@Override
 	public void addHex(IHex hex)
 	{
-		// TODO Auto-generated method stub
 		hexMap.put(hex.getLocation(), hex);
 	}
 
 	@Override
 	public Collection<IRoad> getRoads()
 	{
-		Collection<IRoad> roads = roadMap.values();
-		return roads;
+		return null;
 	}
 
 	@Override
 	public void placeRoadSegment(IRoadSegment segment)
 			throws InvalidLocationException
 	{
-		// TODO Auto-generated method stub
 
 	}
 
@@ -147,14 +134,12 @@ public class CatanMap implements ICatanMap
 	@Override
 	public void addPort(IPort port)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public Collection<ISettlement> getSettlements()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -162,50 +147,61 @@ public class CatanMap implements ICatanMap
 	public void placeSettlement(ISettlement settlement)
 			throws InvalidLocationException
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public Collection<ICity> getCities()
 	{
-		Collection<ICity> cities = cityMap.values();
-		return cities;
+		return null;
 	}
 
 	@Override
 	public void placeCity(ICity city) throws InvalidLocationException
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public IRobber getRobber()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setRobber(IRobber robber)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public int getRadius()
 	{
-		// TODO Auto-generated method stub
 		return radius;
 	}
 
 	@Override
 	public void setRadius(int radius)
 	{
-		// TODO Auto-generated method stub
 		this.radius = radius;
+	}
+
+	@Override
+	public boolean canBuildSettlement(IPlayer player, ISettlement settlement)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean canBuildCity(IPlayer player, ICity city)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean canBuildRoad(IPlayer player, IRoadSegment segment)
+	{
+		return false;
 	}
 
 }
