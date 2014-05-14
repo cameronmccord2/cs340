@@ -108,13 +108,20 @@
 				<include name="**"/>
 			</fileset>
 		</copy>
- 		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="client.main.Catan"/>
-				<attribute name="Class-Path" 
-					value="lib/${gson.file}" />
-			</manifest>
-		</jar>
+        <jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
+            <manifest>
+                <attribute name="Main-Class" value="client.main.Catan"/>
+                <attribute name="Class-Path"
+                           value="lib/${gson.file}" />
+            </manifest>
+        </jar>
+        <jar jarfile="${java.dist}/catan-test.jar" basedir="${java.build}">
+            <manifest>
+                <attribute name="Main-Class" value="client.tests.AllClientTests"/>
+                <attribute name="Class-Path"
+                           value="lib/${gson.file}" />
+            </manifest>
+        </jar>
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
 			<manifest>
 				<attribute name="Main-Class" value="PUT THE NAME OF YOUR SERVER'S MAIN CLASS HERE"/>
@@ -132,16 +139,25 @@
 			</assertions>
 		</java>
 	</target>
- 	
-	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
-		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
-    
+
+    <target name="our-server" depends="package" description="compiles, packages, and runs the student server">
+        <java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
+            <sysproperty key="com.sun.management.jmxremote" value=""/>
+            <assertions>
+                <enable/>
+            </assertions>
+        </java>
+    </target>
+
+    <target name="test" depends="package" description="compiles, packages, and runs the test cases">
+        <java jar="${java.dist}/catan-test.jar" dir="${java.dist}" fork="yes">
+            <sysproperty key="com.sun.management.jmxremote" value=""/>
+            <assertions>
+                <enable/>
+            </assertions>
+        </java>
+    </target>
+
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
