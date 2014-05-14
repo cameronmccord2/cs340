@@ -213,6 +213,6 @@ public interface IProxy {
 	 * Retrieves the latest game state
 	 * @return the Game object that holds all the updated game state
 	 */
-	public IGame getGameModel(Integer gameId);
+	public void getGameModel();
 
 }

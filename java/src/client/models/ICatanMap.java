@@ -8,6 +8,7 @@ public interface ICatanMap {
 	public boolean canPlaceSettlement(ISettlement settlement);
 	public boolean canPlaceCity(ICity city);
 	public boolean canMoveRobber(IPlayer player);
+	public boolean doesDistanceRuleApply(ILocation first, ILocation second);
 //	This is just a funny default.
 //	public boolean canVerbObject(Object object);
 

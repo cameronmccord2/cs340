@@ -64,6 +64,18 @@ public class Proxy implements IProxy {
 		this.games = new ArrayList<IGame>();
 	}
 	
+	private void saveGameModel(String model){
+		Gson gson = new Gson();
+		ClientModel cm = gson.fromJson(model, ClientModel.class);
+		try {
+			cm.isValid();
+		} catch (InvalidTranslatorModelException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		IGame g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
+		this.translator.convertClientModelToGame(cm, g);
+	}
+	
 	@Override
 	public String postUserLogin(User user){
 		String response =  doPost("/user/login", gson.toJson(user));
@@ -124,10 +136,10 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public IGame getGameModel(Integer gameId){
+	public void getGameModel(){
 		Integer version = 0;
 		try {
-			version = this.getVersionForGameId(gameId);
+			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
 		} catch (InvalidGameModelException e1) {
 			// fail silently
 		}
@@ -135,15 +147,7 @@ public class Proxy implements IProxy {
 		if(version != 0)
 			requestUrl += "?version=" + version;
 		String response = this.doGet(requestUrl);
-		Gson gson = new Gson();
-		ClientModel cm = gson.fromJson(response, ClientModel.class);
-		try {
-			cm.isValid();
-		} catch (InvalidTranslatorModelException e) {
-			throw new RuntimeException(e.getMessage());
-		}
-		IGame g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(gameId));
-		return g;
+		this.saveGameModel(response);
 	}
 	
 	private IGame getGameForGameId(Integer gameId) {

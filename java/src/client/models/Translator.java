@@ -13,6 +13,7 @@ import shared.locations.VertexLocation;
 import client.data.PlayerInfo;
 import client.models.translator.ClientModel;
 import client.models.translator.TRDevCardList;
+import client.models.translator.TRHex;
 import client.models.translator.TRPlayer;
 import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
@@ -33,12 +34,15 @@ public class Translator {
 		
 		Game g = (Game)iGame;
 		
-//		ICatanMap map = new CatanMap();
-//		// TODO do map
-//		IRobber robber = new Robber(cm.getMap().getRobber());
-//		map.setRobber(robber);
-//		map.setRadius(cm.getMap().getRadius());
-//		g.setMap(map);
+		ICatanMap map = new CatanMap();
+		// TODO do map
+		for (TRHex hex : cm.getMap().getHexes()) {
+			
+		}
+		IRobber robber = new Robber(cm.getMap().getRobber());
+		map.setRobber(robber);
+		map.setRadius(cm.getMap().getRadius());
+		g.setMap(map);
 		
 		IBank bank = new Bank(cm.getDeck(), cm.getBank());
 		g.setBank(bank);
