@@ -37,6 +37,7 @@ public class ProxyTest {
 //		assertEquals("Failed to register - someone already has that username.",proxy.postUserRegister(user4));
 	
 		//TEST GET GAMES LIST
+		//change the test to response code (400 or 200)
 		//assertNull(proxy.getGamesList());
 		
 		//TEST CREATE GAME (works)
@@ -47,6 +48,10 @@ public class ProxyTest {
 		ServerJoinGame serverJoinGame = new ServerJoinGame(3,"orange");
 		assertEquals("Success",proxy.postGamesJoin(serverJoinGame));
 		
+		//TEST RESET GAME 
+		//assertEquals("Success",proxy.postGameReset());
+		
+		////////////////////////////////////////////////////////////////////////
 		//TEST SAVE GAME (don't know how to save)
 //		SaveGame saveGame = new SaveGame(0,"???");
 //		assertEquals("Success",proxy.postGamesSave(saveGame));
@@ -57,9 +62,6 @@ public class ProxyTest {
 		
 		//TEST GET MODEL
 		
-		//TEST RESET GAME 
-		//assertEquals("Success",proxy.postGameReset());
-		
 		//TEST GET COMMANDS (no idea what this should return)
 		//assertEquals("Success",proxy.getGameCommands());
 		
@@ -69,7 +71,7 @@ public class ProxyTest {
 		
 		//TEST LIST AI PLAYERS (works)
 		//assertEquals("[\"LARGEST_ARMY\"]",proxy.getListAI());
-		
+		//	//////////////////////////////////////////////////////////////////////
 		//TEST SEND CHAT 
 //		ServerChat serverChat = new ServerChat("sendChat",0,"Hi everyone!");
 //		assertEquals("",proxy.movesSendChat(serverChat));
@@ -143,8 +145,11 @@ public class ProxyTest {
 //		assertEquals("",proxy.movesMaritimeTrade(mt));
 		
 		//TEST DISCARD CARDS
+		//To Dan:
+		//	create discardCards object and compare it to the ServerResponse object handed back
+		//Then the above tests just need to be un-commented and change the asser test according to the ServerResponse object
 		
-		//TEST LOG LEVEL CHANGE
+		//TEST LOG LEVEL CHANGE (works)
 //		ServerLogLevel sll = new ServerLogLevel("WARNING");
 //		assertEquals("Success",proxy.utilChangeLogLevel(sll));
 		

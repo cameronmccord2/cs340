@@ -10,12 +10,6 @@ import client.data.GameInfo;
 public interface IGame {
 	
 	/**
-	 * Generate a random number for the die
-	 * @return returns the number that was rolled 
-	 */
-	int rollDie();
-	
-	/**
 	 * First pull game state and set the models.
 	 */
 	void startGame();

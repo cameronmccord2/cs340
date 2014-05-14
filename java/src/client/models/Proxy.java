@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
@@ -43,8 +40,12 @@ import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
 import client.server.User;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 /**
- * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server. 
+ * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server.
+ * There are three doPost.... 
  * @author scottdaly
  *
  */
@@ -427,7 +428,7 @@ public class Proxy implements IProxy {
 		return "";
 	}
 	
-	private String doMasterPost(String urlPath, String postData) {
+	private ServerRepsonse doMasterPost(String urlPath, String postData) {
 		try { 
 			 URL url = new URL("http://localhost:8081" + urlPath); 
 			 connection = (HttpURLConnection)url.openConnection();
@@ -456,7 +457,7 @@ public class Proxy implements IProxy {
 				 } 
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerRepsonse(out.toString(), connection.getResponseCode());
 			 } 
 			 else{
 				//Read response body from InputStream
@@ -471,11 +472,11 @@ public class Proxy implements IProxy {
 				 }
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerRepsonse(out.toString(), connection.getResponseCode());
 			 }
 	    }catch(Exception e){
 			e.printStackTrace();
 	    }
-		return "";
+		return null;
 	}
 }
