@@ -77,7 +77,7 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public String postUserLogin(User user){
+	public ServerResponse postUserLogin(User user){
 		String response =  doPost("/user/login", gson.toJson(user));
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
@@ -88,7 +88,7 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public String postUserRegister(User user){
+	public ServerResponse postUserRegister(User user){
 		return doPost("/user/register", gson.toJson(user));
 	}
 	
@@ -106,14 +106,14 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public String postGamesCreate(CreateGame game){
+	public ServerResponse postGamesCreate(CreateGame game){
 		String json = gson.toJson(game);
 		String response = doPost("/games/create", json);
 		return null;
 	}
 	
 	@Override
-	public String postGamesJoin(ServerJoinGame join){
+	public ServerResponse postGamesJoin(ServerJoinGame join){
 		String response = doJoinPost("/games/join", gson.toJson(join));
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
@@ -121,18 +121,6 @@ public class Proxy implements IProxy {
 		//gameId = gameId.substring(11);
 		gameId = gameId.substring(0, gameId.length() - 8);
 		return response;
-	}
-	
-	@Override
-	public String postGamesSave(SaveGame game){
-		String response =  doMasterPost("/games/save", gson.toJson(game));
-		System.out.println(response);
-		return response;
-	}
-	
-	@Override
-	public String postGamesLoad(GameLoad game){
-		return "";
 	}
 	
 	@Override
@@ -167,107 +155,87 @@ public class Proxy implements IProxy {
 	}
 
 	@Override
-	public String postGameReset(){
+	public ServerResponse postGameReset(){
 		return doMasterPost("/game/reset","");
 	}
 	
 	@Override
-	public void postGameCommands(){
-		
-	}
-	
-	@Override
-	public String getGameCommands(){
-		return doGet("/game/commands");
-	}
-	
-	@Override
-	public String postAddAI(ServerAI ai){
-		return doMasterPost("/game/addAI", gson.toJson(ai));
-	}
-	
-	@Override
-	public String getListAI(){
-		return doGet("/game/listAI");
-	}
-	
-	@Override
-	public String movesSendChat(ServerChat chat){
+	public ServerResponse movesSendChat(ServerChat chat){
 		return doMasterPost("/moves/sendChat", gson.toJson(chat));
 	}
 	
 	@Override
-	public String movesRollNumber(ServerRoll roll){
+	public ServerResponse movesRollNumber(ServerRoll roll){
 		return doMasterPost("/moves/rollNumber", gson.toJson(roll));
 	}
 	
 	@Override
-	public String moveRobPlayer(ServerRobPlayer rob){
+	public ServerResponse moveRobPlayer(ServerRobPlayer rob){
 		return doMasterPost("/moves/robPlayer", gson.toJson(rob));
 	}
 	
 	@Override
-	public String movesFinishTurn(FinishedTurn turn){
+	public ServerResponse movesFinishTurn(FinishedTurn turn){
 		return doMasterPost("/moves/finishTurn", gson.toJson(turn));
 	}
 	
 	@Override
-	public String movesBuyDevCard(BuyDevCard card){
+	public ServerResponse movesBuyDevCard(BuyDevCard card){
 		return doMasterPost("/moves/buyDevCard", gson.toJson(card));
 	}
 	
 	@Override
-	public String movesYear_of_Plenty(ServerYearofPlenty yop){
+	public ServerResponse movesYear_of_Plenty(ServerYearofPlenty yop){
 		return doMasterPost("/moves/Year_of_Plenty", gson.toJson(yop));
 	}
 	
 	@Override
-	public String movesRoad_Building(RoadBuilding rb){
+	public ServerResponse movesRoad_Building(RoadBuilding rb){
 		return doMasterPost("/moves/Raod_Building", gson.toJson(rb));
 	}
 	
 	@Override
-	public String movesSoldier(ServerSoldier ss){
+	public ServerResponse movesSoldier(ServerSoldier ss){
 		return doMasterPost("/moves/Soldier", gson.toJson(ss));
 	}
 	
 	@Override
-	public String movesMonopoly(ServerMonopoly sm){
+	public ServerResponse movesMonopoly(ServerMonopoly sm){
 		return doMasterPost("/moves/Monopoly", gson.toJson(sm));
 	}
 	
 	@Override
-	public String movesMonument(ServerMonument sm){
+	public ServerResponse movesMonument(ServerMonument sm){
 		return doMasterPost("/moves/Monument", gson.toJson(sm));
 	}
 	
 	@Override
-	public String movesBuildRoad(ServerBuildRoad br){
+	public ServerResponse movesBuildRoad(ServerBuildRoad br){
 		return doMasterPost("/moves/buildRoad", gson.toJson(br));
 	}
 	
 	@Override
-	public String movesBuildSettlement(ServerBuildSettlement bs){
+	public ServerResponse movesBuildSettlement(ServerBuildSettlement bs){
 		return doMasterPost("/moves/buildSettlement", gson.toJson(bs));
 	}
 	
 	@Override
-	public String movesBuildCity(ServerBuildCity bc){
+	public ServerResponse movesBuildCity(ServerBuildCity bc){
 		return doMasterPost("/moves/buildCity", gson.toJson(bc));
 	}
 	
 	@Override
-	public String movesOfferTrade(OfferTrade ot){
+	public ServerResponse movesOfferTrade(OfferTrade ot){
 		return doMasterPost("/moves/offerTrade", gson.toJson(ot));
 	}
 	
 	@Override
-	public String movesAcceptTrade(AcceptTrade at){
+	public ServerResponse movesAcceptTrade(AcceptTrade at){
 		return doMasterPost("/moves/acceptTrade", gson.toJson(at));
 	}
 	
 	@Override
-	public String movesMaritimeTrade(MaritimeTradeOff mTrade){
+	public ServerResponse movesMaritimeTrade(MaritimeTradeOff mTrade){
 		return doMasterPost("/moves/maritimeTrade", gson.toJson(mTrade));
 	}
 	
@@ -277,13 +245,13 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public String utilChangeLogLevel(ServerLogLevel loglevel){
-		ServerRepsonse sr = doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
-		saveGameModel(sr.json);
+	public ServerResponse utilChangeLogLevel(ServerLogLevel loglevel){
+		ServerResponse sr = doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
-	private String doGet(String urlPath){
+	private ServerResponse doGet(String urlPath){
 		URL url;
 		try {
 			url = new URL("http://localhost:8081" + urlPath);
@@ -308,7 +276,7 @@ public class Proxy implements IProxy {
 				 System.out.println("response: " + out.toString());  
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 } 
 			 else{
 				//Read response body from InputStream
@@ -324,15 +292,15 @@ public class Proxy implements IProxy {
 				 System.out.println(out.toString());  
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 }
 	    }catch(Exception e){
 			e.printStackTrace();
 	    }
-		return "";
+		return null;
 	}
 	
-	private String doPost(String urlPath, String postData) {
+	private ServerResponse doPost(String urlPath, String postData) {
 		try { 
 			 URL url = new URL("http://localhost:8081" + urlPath); 
 			 connection = (HttpURLConnection)url.openConnection();
@@ -360,7 +328,7 @@ public class Proxy implements IProxy {
 				 } 
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 } 
 			 else{
 				//Read response body from InputStream
@@ -375,14 +343,14 @@ public class Proxy implements IProxy {
 				 } 
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 }
 	    }catch(Exception e){
 			e.printStackTrace();
 	    }
-		return "";
+		return null;
 	}
-	private String doJoinPost(String urlPath, String postData) {
+	private ServerResponse doJoinPost(String urlPath, String postData) {
 		try { 
 			 URL url = new URL("http://localhost:8081" + urlPath); 
 			 connection = (HttpURLConnection)url.openConnection();
@@ -411,7 +379,7 @@ public class Proxy implements IProxy {
 				 }
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 } 
 			 else{
 				//Read response body from InputStream
@@ -426,15 +394,15 @@ public class Proxy implements IProxy {
 				 } 
 				 reader.close();
 				 responseBody.close();
-				 return out.toString();
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 }
 	    }catch(Exception e){
 			e.printStackTrace();
 	    }
-		return "";
+		return null;
 	}
 	
-	private ServerRepsonse doMasterPost(String urlPath, String postData) {
+	private ServerResponse doMasterPost(String urlPath, String postData) {
 		try { 
 			 URL url = new URL("http://localhost:8081" + urlPath); 
 			 connection = (HttpURLConnection)url.openConnection();
@@ -463,7 +431,7 @@ public class Proxy implements IProxy {
 				 } 
 				 reader.close();
 				 responseBody.close();
-				 return new ServerRepsonse(out.toString(), connection.getResponseCode());
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 } 
 			 else{
 				//Read response body from InputStream
@@ -478,7 +446,7 @@ public class Proxy implements IProxy {
 				 }
 				 reader.close();
 				 responseBody.close();
-				 return new ServerRepsonse(out.toString(), connection.getResponseCode());
+				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 }
 	    }catch(Exception e){
 			e.printStackTrace();

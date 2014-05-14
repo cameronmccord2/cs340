@@ -32,13 +32,13 @@ public interface IProxy {
 	 * calls the user login method on the server 
 	 * @param the User object that is being logged in. Holds the username and password
 	 */
-	public String postUserLogin(User user);
+	public ServerResponse postUserLogin(User user);
 
 	/**
 	 * this calls the method on the server to register a new user
 	 * @param the User object that will be registered
 	 */
-	public String postUserRegister(User user);
+	public ServerResponse postUserRegister(User user);
 
 	/**
 	 * This will retrieve all current games on the server
@@ -50,164 +50,164 @@ public interface IProxy {
 	 * Posts a new game that has just been created
 	 * @param the Game object that was just created to start a new game
 	 */
-	public String postGamesCreate(CreateGame game);
+	public ServerResponse postGamesCreate(CreateGame game);
 
 	/**
 	 * Joins the game on the server
 	 * @param The Game that this client wants to join
 	 */
-	public String postGamesJoin(ServerJoinGame join);
+	public ServerResponse postGamesJoin(ServerJoinGame join);
 
 	/**
 	 * Saves the game state
 	 * @param the game state to be saved
 	 */
-	public String postGamesSave(SaveGame game);
+	public ServerResponse postGamesSave(SaveGame game);
 
 	/**
 	 * Loads the game that the client wants to start and sends it to the server
 	 * @param the game that needs to be loaded
 	 */
-	public String postGamesLoad(GameLoad game);
+	public ServerResponse postGamesLoad(GameLoad game);
 
 	/**
 	 * Sends a game to reset it on the server
 	 * @param the game that needs to be reset
 	 */
-	public String postGameReset();
+	public ServerResponse postGameReset();
 
 	/**
 	 * Not sure what this one does...
 	 * @param game
 	 */
-	public void postGameCommands();
+	public ServerResponse postGameCommands();
 
 	/**
 	 * Not sure what this one does...
 	 */
-	public String getGameCommands();
+	public ServerResponse getGameCommands();
 
 	/**
 	 * This will post an AI participant
 	 * @param the participant AI that needs to be posted
 	 */
-	public String postAddAI(ServerAI ai);
+	public ServerResponse postAddAI(ServerAI ai);
 
 	/**
 	 * returns a list of AI participants
 	 * @return the list of AI participants
 	 */
-	public String getListAI();
+	public ServerResponse getListAI();
 
 	/**
 	 * posts a chat message to the server
 	 * @param the Chat object that needs to be posted
 	 */
-	public String movesSendChat(ServerChat chat);
+	public ServerResponse movesSendChat(ServerChat chat);
 
 	/**
 	 * Rolls the dice for you and returns the number rolled
 	 * @return the integer rolled
 	 */
-	public String movesRollNumber(ServerRoll roll);
+	public ServerResponse movesRollNumber(ServerRoll roll);
 
 	/**
 	 * Sends the request to rob a certain player by giving the Thief and the Player objects
 	 * @param the current thief object
 	 * @param the player object being robbed
 	 */
-	public String moveRobPlayer(ServerRobPlayer rob);
+	public ServerResponse moveRobPlayer(ServerRobPlayer rob);
 
 	/**
 	 * Sends the player indicating that player has finished their turn
 	 * @param the player object who is finishing their turn
 	 */
-	public String movesFinishTurn(FinishedTurn turn);
+	public ServerResponse movesFinishTurn(FinishedTurn turn);
 
 	/**
 	 * Sends a player to the server that wants to buy a dev card
 	 * @param the player object that is buying a dev card
 	 * @return returns the DevCard object just bought
 	 */
-	public String movesBuyDevCard(BuyDevCard card);
+	public ServerResponse movesBuyDevCard(BuyDevCard card);
 
 	/**
 	 * Plays a Year of Plenty card for the player passed in
 	 * @param the player object playing the Year of Plenty card
 	 */
-	public String movesYear_of_Plenty(ServerYearofPlenty yop);
+	public ServerResponse movesYear_of_Plenty(ServerYearofPlenty yop);
 
 	/**
 	 * Plays a Road Building card for the specified player
 	 * @param the player object that is using a Road Building card
 	 */
-	public String movesRoad_Building(RoadBuilding rb);
+	public ServerResponse movesRoad_Building(RoadBuilding rb);
 
 	/**
 	 * Plays a Soldier card for the specified player
 	 * @param the player object that is playing the Soldier card
 	 */
-	public String movesSoldier(ServerSoldier ss);
+	public ServerResponse movesSoldier(ServerSoldier ss);
 
 	/**
 	 * Plays a monopoly card for the specified user
 	 * @param the player object that is using the Monopoly card
 	 */
-	public String movesMonopoly(ServerMonopoly sm);
+	public ServerResponse movesMonopoly(ServerMonopoly sm);
 
 	/**
 	 * Plays a Monument card for the specified user
 	 * @param the player object that is using a Monument card
 	 */
-	public String movesMonument(ServerMonument sm);
+	public ServerResponse movesMonument(ServerMonument sm);
 
 	/**
 	 * sends a Road object to the server to build it
 	 * @param the road object that is to be built
 	 */
-	public String movesBuildRoad(ServerBuildRoad br);
+	public ServerResponse movesBuildRoad(ServerBuildRoad br);
 
 	/**
 	 * Sends a settlement to be built
 	 * @param the settlement object to be built
 	 */
-	public String movesBuildSettlement(ServerBuildSettlement bs);
+	public ServerResponse movesBuildSettlement(ServerBuildSettlement bs);
 
 	/**
 	 * Sends a city to built on the server
 	 * @param the city object to be built 
 	 */
-	public String movesBuildCity(ServerBuildCity bc);
+	public ServerResponse movesBuildCity(ServerBuildCity bc);
 
 	/**
 	 * Sends a Domestic Trade object from a user that wants to trade
 	 * @param the Domestic Trade object that holds the info for the potential trade
 	 */
-	public String movesOfferTrade(OfferTrade ot);
+	public ServerResponse movesOfferTrade(OfferTrade ot);
 
 	/**
 	 * Sends the Domestic Trade object to signify the user accepts the trade
 	 * @param the domestic trade object that is being accepted
 	 */
-	public String movesAcceptTrade(AcceptTrade at);
+	public ServerResponse movesAcceptTrade(AcceptTrade at);
 
 	/**
 	 * Conducts a Maritime trade by sending the maritime trade object
-	 * @param the meritime trade object that holds the info for the trade
+	 * @param the maritime trade object that holds the info for the trade
 	 */
-	public String movesMaritimeTrade(MaritimeTradeOff mTrade);
+	public ServerResponse movesMaritimeTrade(MaritimeTradeOff mTrade);
 
 	/**
 	 * Discards cards because a 7 was rolled
 	 * @param the player object that has to discard cards
 	 */
-	public abstract void movesdiscardCards(PlayerInfo player);
+	public ServerResponse movesdiscardCards(PlayerInfo player);
 
 	/**
 	 * Sets the log level of the server
 	 * @param the loglevel object
 	 */
-	public String utilChangeLogLevel(ServerLogLevel loglevel);
+	public ServerResponse utilChangeLogLevel(ServerLogLevel loglevel);
 
 	/**
 	 * Retrieves the latest game state
