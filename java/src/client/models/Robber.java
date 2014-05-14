@@ -26,13 +26,4 @@ public class Robber extends Piece implements IRobber
 	{
 		return PieceType.ROBBER;
 	}
-
-	@Override
-	public Collection<Resource> getResourceCost()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }

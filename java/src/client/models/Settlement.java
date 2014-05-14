@@ -23,6 +23,8 @@ public class Settlement extends Piece implements ISettlement
 		this.pointValue = pointValue;
 	}
 
+
+
 	@Override
 	public PieceType getPieceType()
 	{
@@ -32,7 +34,7 @@ public class Settlement extends Piece implements ISettlement
 	@Override
 	public Collection<Resource> getResourceCost()
 	{
-		return null;
+		return cost;
 	}
 
 	@Override

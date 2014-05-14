@@ -14,10 +14,5 @@ public interface IPiece
 	public IPlayer getPlayer();
 	public void setPlayer(IPlayer player);
 
-	public CatanColor getColor();
-	public void setColor(CatanColor color);
-
 	public PieceType getPieceType();
-
-	public Collection<Resource> getResourceCost();
 }

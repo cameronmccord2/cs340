@@ -12,7 +12,7 @@ public class VertexLocation implements ILocation {
 	private VertexDirection direction;
 
 	public VertexLocation(HexLocation hexLoc, VertexDirection direction) {
-		setHexLoc(hexLoc);
+		setHexLocation(hexLoc);
 		setDirection(direction);
 	}
 
@@ -25,12 +25,7 @@ public class VertexLocation implements ILocation {
 		return hexLocation;
 	}
 
-	public void setHexLocation(HexLocation hexLocation)
-	{
-		this.setHexLoc(hexLocation);
-	}
-
-	private void setHexLoc(HexLocation hexLocation) {
+	public void setHexLocation(HexLocation hexLocation) {
 		if (hexLocation == null) {
 			throw new IllegalArgumentException("hexLoc cannot be null");
 		}
@@ -112,6 +107,12 @@ public class VertexLocation implements ILocation {
 				assert false;
 				return null;
 		}
+	}
+
+	@Override
+	public <D extends IDirection> void setDirection(D direction)
+	{
+		this.setDirection(direction);
 	}
 }
 
