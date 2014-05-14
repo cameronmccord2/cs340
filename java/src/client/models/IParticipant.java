@@ -1,6 +1,5 @@
 package client.models;
 
-import java.util.List;
 import java.util.Map;
 
 // TODO: Auto-generated Javadoc
@@ -21,13 +20,6 @@ public interface IParticipant {
      *
      * @param resourceCards the new resource cards
      */
-    void setResourceCards(List<IResourceCard> resourceCards);
-
-    /**
-     * Sets the resource cards for this participant.
-     *
-     * @param resourceCards the new resource cards
-     */
     void setResourceCards(Map<IResourceCard, Integer> resourceCards);
 
 	/**
@@ -36,13 +28,6 @@ public interface IParticipant {
 	 * @return the resource cards
 	 */
 	Map<IResourceCard, Integer> getResourceCards();
-
-	/**
-	 * Sets the development cards for this participant.
-	 *
-	 * @param developmentCards the new development cards
-	 */
-	void setDevelopmentCards(List<IDevelopmentCard> developmentCards);
 
 	/**
 	 * Sets the development cards for this participant.

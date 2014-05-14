@@ -2,6 +2,7 @@ package client.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import client.data.PlayerInfo;
 
@@ -20,6 +21,12 @@ public class Player extends Participant implements IPlayer {
 	
 	/** The player info. */
 	protected PlayerInfo playerInfo;
+	
+	  protected int soldiers;
+	  protected int victoryPoints;
+	  protected int monuments;
+	  protected boolean playedDevCard;
+	  protected boolean discarded;
 	
 	/**
 	 * Instantiates a new player.
@@ -42,7 +49,7 @@ public class Player extends Participant implements IPlayer {
 	 * @param settlements the settlements
 	 * @param roads the roads
 	 */
-	public Player(PlayerInfo playerInfo, List<IDevelopmentCard> developmentCards, List<IResourceCard> resourceCards, List<ISettlement> settlements, List<IRoad> roads, List<ICity> cities){
+	public Player(PlayerInfo playerInfo, Map<IDevelopmentCard, Integer> developmentCards, Map<IResourceCard, Integer> resourceCards, List<ISettlement> settlements, List<IRoad> roads, List<ICity> cities){
 		super(developmentCards, resourceCards);
 		this.playerInfo = playerInfo;
 		this.settlements = settlements;
@@ -126,11 +133,63 @@ public class Player extends Participant implements IPlayer {
 		this.roads.add(road);
 	}
 
+	@Override
 	public List<ICity> getCities() {
 		return cities;
 	}
 
+	@Override
 	public void setCities(List<ICity> cities) {
 		this.cities = cities;
+	}
+
+	@Override
+	public int getSoldiers() {
+		return soldiers;
+	}
+
+	@Override
+	public void setSoldiers(int soldiers) {
+		this.soldiers = soldiers;
+	}
+
+	@Override
+	public int getVictoryPoints() {
+		return victoryPoints;
+	}
+
+	@Override
+	public void setVictoryPoints(int victoryPoints) {
+		this.victoryPoints = victoryPoints;
+	}
+
+	@Override
+	public int getMonuments() {
+		return monuments;
+	}
+
+	@Override
+	public void setMonuments(int monuments) {
+		this.monuments = monuments;
+	}
+
+	@Override
+	public boolean isPlayedDevCard() {
+		return playedDevCard;
+	}
+
+	@Override
+	public void setPlayedDevCard(boolean playedDevCard) {
+		this.playedDevCard = playedDevCard;
+	}
+
+	@Override
+	public boolean isDiscarded() {
+		return discarded;
+	}
+
+	@Override
+	public void setDiscarded(boolean discarded) {
+		this.discarded = discarded;
 	}
 }

@@ -1,6 +1,5 @@
 package client.models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +45,7 @@ public abstract class Participant implements IParticipant {
 	/* (non-Javadoc)
 	 * @see client.models.IParticipant#setDevelopmentCards(java.util.List)
 	 */
-	@Override
+
 	public void setDevelopmentCards(List<IDevelopmentCard> developmentCards) {
         for (IDevelopmentCard card : developmentCards) {
             this.developmentCards.put(card,this.developmentCards.get(card)+1);
@@ -72,7 +71,7 @@ public abstract class Participant implements IParticipant {
     /* (non-Javadoc)
      * @see client.models.IParticipant#setResourceCards(java.util.List)
      */
-    @Override
+
     public void setResourceCards(List<IResourceCard> resourceCards) {
         for (IResourceCard card : resourceCards) {
             this.resourceCards.put(card,this.resourceCards.get(card)+1);

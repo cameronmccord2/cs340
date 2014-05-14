@@ -10,12 +10,12 @@ public class EdgeLocation {
 
 	private HexLocation hexLoc;
 	private EdgeDirection dir;
-	
+
 	public EdgeLocation(HexLocation hexLoc, EdgeDirection dir) {
 		setHexLoc(hexLoc);
 		setDir(dir);
 	}
-	
+
 	public EdgeLocation(TREdgeLocation location) {
 		this.dir = EdgeDirection.getDirectionFromServerString(location.getDirection());
 		this.hexLoc = new HexLocation(location.getX(), location.getY());
@@ -24,18 +24,18 @@ public class EdgeLocation {
 	public HexLocation getHexLoc() {
 		return hexLoc;
 	}
-	
+
 	private void setHexLoc(HexLocation hexLoc) {
 		if (hexLoc == null) {
 			throw new IllegalArgumentException("hexLoc cannot be null");
 		}
 		this.hexLoc = hexLoc;
 	}
-	
+
 	public EdgeDirection getDir() {
 		return dir;
 	}
-	
+
 	private void setDir(EdgeDirection dir) {
 		this.dir = dir;
 	}
@@ -74,19 +74,19 @@ public class EdgeLocation {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Returns a canonical (i.e., unique) value for this edge location.
 	 * Since each edge has two different locations on a map,
 	 * this method converts a hex location to a single canonical form.
 	 * This is useful for using hex locations as map keys.
-	 * 
+	 *
 	 * @return Normalized hex location
 	 */
 	public EdgeLocation getNormalizedLocation() {
 
 		// Return an EdgeLocation that has direction NW, N, or NE
-		
+
 		switch (dir) {
 			case NorthWest:
 			case North:
@@ -95,7 +95,7 @@ public class EdgeLocation {
 			case SouthWest:
 			case South:
 			case SouthEast:
-				return new EdgeLocation(hexLoc.getNeighborLoc(dir), 
+				return new EdgeLocation(hexLoc.getNeighborLoc(dir),
 										dir.getOppositeDirection());
 			default:
 				assert false;

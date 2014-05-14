@@ -3,14 +3,18 @@
  */
 package client.models;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.data.PlayerInfo;
 import client.models.translator.ClientModel;
+import client.models.translator.TRDevCardList;
 import client.models.translator.TRPlayer;
+import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
 import client.models.translator.TRVertexObject;
 
@@ -40,21 +44,7 @@ public class Translator {
 		g.setBank(bank);
 		
 		g.setModelVersion(g.getModelVersion() + 1);
-		
-		/*
-		 * 
-		 * things on the TRPlayer that havent been used yet:
-		 *
-	  TRResourceList resources;
-	  TRDevCardList oldDevCards;
-	  TRDevCardList newDevCards;
-	  int soldiers;
-	  int victoryPoints;
-	  int monuments;
-	  boolean playedDevCard;
-	  boolean discarded;
 
-		 */
 		g.setPlayers((IPlayer[]) new Player[cm.getPlayers().length]);
 		int index = 0;
 		for (TRPlayer p : cm.getPlayers()) {
@@ -66,6 +56,12 @@ public class Translator {
 			playerInfo.setColor(CatanColor.getColorForName(p.getColor()));
 			
 			Player newPlayer = new Player(playerInfo);
+			
+			newPlayer.setSoldiers(p.getSoldiers());
+			newPlayer.setVictoryPoints(p.getVictoryPoints());
+			newPlayer.setMonuments(p.getMonuments());
+			newPlayer.setPlayedDevCard(p.isPlayedDevCard());
+			newPlayer.setDiscarded(p.isDiscarded());
 			
 			List<ISettlement> settlements = new ArrayList<ISettlement>();
 			for (TRVertexObject s : cm.getMap().getSettlements()) {
@@ -97,9 +93,24 @@ public class Translator {
 			newPlayer.setRoads(roads);
 			assert(roads.size() == p.getRoads());
 			
-			// TODO
-//			newPlayer.setDevelopmentCards(developmentCards);
-//			newPlayer.setResourceCards(resourceCards);
+			Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
+			TRResourceList resources = p.getResources();
+			resourceCards.put(ResourceCard.BRICK, resources.getBrick());
+			resourceCards.put(ResourceCard.ORE, resources.getOre());
+			resourceCards.put(ResourceCard.SHEEP, resources.getSheep());
+			resourceCards.put(ResourceCard.WHEAT, resources.getWheat());
+			resourceCards.put(ResourceCard.WOOD, resources.getWood());
+			newPlayer.setResourceCards(resourceCards);
+			
+			Map<IDevelopmentCard, Integer> developmentCards = new HashMap<IDevelopmentCard, Integer>();
+			TRDevCardList newDevCards = p.getNewDevCards();
+//			TRDevCardList oldDevCards = p.getOldDevCards();
+			developmentCards.put(DevelopmentCard.MONOPOLY, newDevCards.getMonopoly());
+			developmentCards.put(DevelopmentCard.MONUMENT, newDevCards.getMonument());
+			developmentCards.put(DevelopmentCard.ROAD_BUILD, newDevCards.getRoadBuilding());
+			developmentCards.put(DevelopmentCard.SOLDIER, newDevCards.getSoldier());
+			developmentCards.put(DevelopmentCard.YEAR_OF_PLENTY, newDevCards.getYearOfPlenty());
+			newPlayer.setDevelopmentCards(developmentCards);
 			
 			g.getPlayers()[index] = newPlayer;
 			index++;

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
@@ -39,8 +42,6 @@ import client.server.ServerRoll;
 import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
 import client.server.User;
-
-import com.google.gson.Gson;
 
 /**
  * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server. 
@@ -81,8 +82,14 @@ public class Proxy implements IProxy {
 	@Override
 	public GameServer[] getGamesList(){
 		String response = doGet("/games/list");
-		GameServer gameServer = gson.fromJson(response, GameServer.class);
-		return null;
+		List<GameServer> games = gson.fromJson(response, new TypeToken<List<GameServer>>(){}.getType());
+		GameServer[] list = new GameServer[games.size()];
+		int index = 0;
+		for (GameServer g : games) {
+			list[index] = g;
+			index++;
+		}
+		return list;
 	}
 	
 	@Override
