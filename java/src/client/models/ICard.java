@@ -10,13 +10,6 @@ import java.awt.image.BufferedImage;
 public interface ICard {
 
     /**
-     * Gets the image.
-     *
-     * @return the image
-     */
-    public BufferedImage getImage();
-
-    /**
      * Gets the name of the card (Ore, Soldier, etc).
      *
      * @return the name

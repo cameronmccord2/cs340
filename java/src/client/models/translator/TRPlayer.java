@@ -26,7 +26,8 @@ public class TRPlayer implements IModelValid {
 			this.resources.isValid();
 			this.oldDevCards.isValid();
 			this.newDevCards.isValid();
-			if(this.color == null || this.color.length() == 0 || this.roads < 0 || cities < 0 || settlements < 0 || soldiers < 0 || victoryPoints < 0 || monuments < 0 || this.playerID < 0 || name == null || name.length() == 0)
+			if(this.color == null || this.color.length() == 0 || this.roads < 0 || cities < 0 || settlements < 0 || soldiers < 0 || 
+					victoryPoints < 0 || monuments < 0 || this.playerID < 0 || name == null || name.length() == 0)
 				throw new InvalidTranslatorModelException(this.toString());
 		}
 	  
