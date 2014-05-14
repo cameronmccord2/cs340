@@ -1,6 +1,5 @@
 package client.models;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import client.models.translator.TRDevCardList;
@@ -21,7 +20,7 @@ public class Bank extends Participant implements IBank {
 	}
 
     public Bank(TRDevCardList deck, TRResourceList bank) {
-        this();
+        super();
 
         developmentCards.put(DevelopmentCard.MONOPOLY, deck.getMonopoly());
         developmentCards.put(DevelopmentCard.MONUMENT, deck.getMonument());
