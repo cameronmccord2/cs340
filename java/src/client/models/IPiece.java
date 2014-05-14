@@ -1,6 +1,7 @@
 package client.models;
 
 import shared.definitions.CatanColor;
+import shared.locations.ILocation;
 
 public interface IPiece
 {

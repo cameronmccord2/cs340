@@ -583,7 +583,7 @@ public class MapComponent extends JComponent {
 		
 		Point2D edgePoint = getEdgePoint(edgeLoc);
 		
-		List<Point2D> roadShape = translateShape(ROADS.get(edgeLoc.getDir()), edgePoint);
+		List<Point2D> roadShape = translateShape(ROADS.get(edgeLoc.getDirection()), edgePoint);
 		
 		Polygon poly = toPolygon(roadShape);
 		Color baseColor = color.getJavaColor();
@@ -664,7 +664,7 @@ public class MapComponent extends JComponent {
 	}
 	
 	private void drawPort(Graphics2D g2, EdgeLocation edgeLoc, PortType portType) {
-		Point2D imageLoc = getHexPoint(edgeLoc.getHexLoc());	
+		Point2D imageLoc = getHexPoint(edgeLoc.getHexLocation());	
 		drawRotatedImage(g2, getPortImage(portType), imageLoc, getPortRotation(edgeLoc));				
 	}
 	
@@ -757,7 +757,7 @@ public class MapComponent extends JComponent {
 	
 	private double getPortRotation(EdgeLocation edgeLoc) {
 		
-		return PORT_ROTATIONS.get(edgeLoc.getDir());
+		return PORT_ROTATIONS.get(edgeLoc.getDirection());
 	}
 	
 	private static Point2D getHexPoint(HexLocation hexLoc) {
@@ -791,9 +791,9 @@ public class MapComponent extends JComponent {
 		
 		EdgeLocation normEdgeLoc = edgeLoc.getNormalizedLocation();
 		
-		Point2D hexPoint = getHexPoint(normEdgeLoc.getHexLoc());
+		Point2D hexPoint = getHexPoint(normEdgeLoc.getHexLocation());
 		
-		Point2D edgePoint = EDGE_POINTS.get(normEdgeLoc.getDir());
+		Point2D edgePoint = EDGE_POINTS.get(normEdgeLoc.getDirection());
 		
 		return add(hexPoint, edgePoint);
 	}
@@ -802,9 +802,9 @@ public class MapComponent extends JComponent {
 		
 		VertexLocation normVertLoc = vertLoc.getNormalizedLocation();
 		
-		Point2D hexPoint = getHexPoint(normVertLoc.getHexLoc());
+		Point2D hexPoint = getHexPoint(normVertLoc.getHexLocation());
 		
-		Point2D vertPoint = VERTEX_POINTS.get(normVertLoc.getDir());
+		Point2D vertPoint = VERTEX_POINTS.get(normVertLoc.getDirection());
 		
 		return add(hexPoint, vertPoint);
 	}

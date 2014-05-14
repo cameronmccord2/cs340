@@ -37,11 +37,5 @@ public enum VertexDirection implements IDirection{
 				return null;
 		}
 	}
-
-	@Override
-	public Class<?> getDirectionType()
-	{
-		return VertexDirection.class;
-	}
 }
 
