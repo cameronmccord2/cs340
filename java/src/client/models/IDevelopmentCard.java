@@ -1,14 +1,19 @@
 package client.models;
 
 // TODO: Auto-generated Javadoc
+
+import shared.definitions.DevCardType;
+
 /**
  * The Interface IDevelopmentCard.
  */
 public interface IDevelopmentCard extends ICard {
 
     /**
-     * Play the card and perform the associated action
+     * Gets the type of the card.
+     *
+     * @return the type
      */
-    public void play();
+    public DevCardType getType();
 
 }

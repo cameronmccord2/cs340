@@ -2,14 +2,16 @@ package client.models;
 
 import java.util.List;
 
-import client.models.translator.TRDevCardList;
-import client.models.translator.TRResourceList;
+import client.data.PlayerInfo;
+import shared.definitions.ResourceType;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Bank.
  */
 public class Bank extends Participant implements IBank {
+
+    private PlayerInfo playerInfo;
 
 	/**
 	 * Instantiates a new bank.
@@ -22,11 +24,13 @@ public class Bank extends Participant implements IBank {
 	/**
 	 * Instantiates a new bank.
 	 *
+	 * @param _playerInfo the player info
 	 * @param developmentCards the development cards
 	 * @param resourceCards the resource cards
 	 */
-	public Bank(List<IDevelopmentCard> developmentCards, List<IResourceCard> resourceCards){
+	public Bank(PlayerInfo _playerInfo, List<IDevelopmentCard> developmentCards, List<IResourceCard> resourceCards){
 		super(developmentCards, resourceCards);
+        playerInfo = _playerInfo;
 	}
 	
 	public Bank(TRDevCardList deck, TRResourceList bank) {
@@ -38,7 +42,7 @@ public class Bank extends Participant implements IBank {
 	 */
 	@Override
 	public void setUpNewBank(){
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -48,4 +52,5 @@ public class Bank extends Participant implements IBank {
 	public boolean willAcceptTrade(ITrade trade) {
 		return true;
 	}
+
 }
