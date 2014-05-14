@@ -10,12 +10,12 @@ public class VertexLocation {
 
 	private HexLocation hexLoc;
 	private VertexDirection dir;
-	
+
 	public VertexLocation(HexLocation hexLoc, VertexDirection dir) {
 		setHexLoc(hexLoc);
 		setDir(dir);
 	}
-	
+
 	public VertexLocation(TREdgeLocation location) {
 		this.hexLoc = new HexLocation(location.getX(), location.getY());
 		this.dir = VertexDirection.getDirectionForServerString(location.getDirection());
@@ -24,18 +24,18 @@ public class VertexLocation {
 	public HexLocation getHexLoc() {
 		return hexLoc;
 	}
-	
-	private void setHexLoc(HexLocation hexLoc) {		
+
+	private void setHexLoc(HexLocation hexLoc) {
 		if (hexLoc == null) {
 			throw new IllegalArgumentException("hexLoc cannot be null");
-		}		
+		}
 		this.hexLoc = hexLoc;
 	}
-	
+
 	public VertexDirection getDir() {
 		return dir;
 	}
-	
+
 	private void setDir(VertexDirection direction) {
 		this.dir = direction;
 	}
@@ -74,19 +74,19 @@ public class VertexLocation {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Returns a canonical (i.e., unique) value for this vertex location.
 	 * Since each vertex has three different locations on a map,
 	 * this method converts a vertex location to a single canonical form.
 	 * This is useful for using vertex locations as map keys.
-	 * 
+	 *
 	 * @return Normalized vertex location
 	 */
 	public VertexLocation getNormalizedLocation() {
-		
+
 		// Return location that has direction NW or NE
-		
+
 		switch (dir) {
 			case NorthWest:
 			case NorthEast:
