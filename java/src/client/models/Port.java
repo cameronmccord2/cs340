@@ -7,12 +7,13 @@ import shared.locations.ILocation;
 
 public class Port implements IPort {
 
-	protected HexLocation location;
+	protected HexLocation hexLocation;
+	protected ILocation location;
 	protected int exchangeRate;
 	protected PortType portType;
 
 	public Port(TRPort port) {
-		this.location = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
+		this.hexLocation = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
 		this.exchangeRate = port.getRatio();
 		switch(port.getResource().toUpperCase()){
 		case "WOOD":
@@ -62,11 +63,11 @@ public class Port implements IPort {
 	}
 
 	public HexLocation getHexLocation() {
-		return location;
+		return hexLocation;
 	}
 
 	public void setLocation(HexLocation location) {
-		this.location = location;
+		this.hexLocation = location;
 	}
 
 	@Override

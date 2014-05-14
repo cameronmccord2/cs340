@@ -115,7 +115,6 @@ public class Translator {
 		}
 		
 		ICatanMap map = new CatanMap();
-		// TODO do map
 		for (TRHex hex : cm.getMap().getHexes()) {
 			map.addHex(new Hex(hex));
 		}

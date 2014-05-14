@@ -13,9 +13,13 @@ client.map
 client.maritime
 client.misc
 client.models
+client.models.exceptions
+client.models.translator
 client.points
 client.resources
 client.roll
+client.server
+client.tests
 client.turntracker
 client.utils
 shared.definitions
