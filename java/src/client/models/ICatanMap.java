@@ -8,14 +8,14 @@ public interface ICatanMap {
 	public boolean canPlaceSettlement(ISettlement settlement);
 	public boolean canPlaceCity(ICity city);
 	public boolean canMoveRobber(IPlayer player);
-	public boolean doesDistanceRuleApply(ILocation first, ILocation second);
+	public boolean doesDistanceRuleApply(VertexLocation location);
 //	This is just a funny default.
 //	public boolean canVerbObject(Object object);
 
 	public Collection<IHex> getHexes();
 	public void addHex(IHex hex);
 
-	public Collection<IRoadSegment> getRoads();
+	public Collection<IRoad> getRoads();
 	public void placeRoadSegment(IRoadSegment segment) throws InvalidLocationException;
 
 	public Collection<IPort> getPorts();

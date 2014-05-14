@@ -1,5 +1,7 @@
 package client.models;
 
+import java.util.Collection;
+
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 
@@ -61,6 +63,20 @@ public class Road implements IRoad
 	public boolean isLongestRoad() {
 		// TODO Auto-generated method stub
 		return this.isLongestRoad;
+	}
+
+	@Override
+	public Collection<IRoadSegment> getRoadSegments()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void buildRoad(IRoadSegment segment)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

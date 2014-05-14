@@ -2,6 +2,8 @@ package client.models;
 
 import java.util.*;
 
+import shared.locations.*;
+
 /**
  * Okay.  So here are some important notes about the x-y system that
  * Dr. Rodham is using in his MapView/MapComponent/MapController.
@@ -19,12 +21,18 @@ import java.util.*;
 
 public class CatanMap implements ICatanMap
 {
-	private Map<ILocation, IPiece> map;
+	private Map<HexLocation, IHex> hexMap;
+	private Map<EdgeLocation, IRoad> roadMap;
+	private Map<VertexLocation, ISettlement> settlementMap;
+	private Map<VertexLocation, ICity> cityMap;
 	private int radius;
 
 	public CatanMap()
 	{
-		map = new HashMap<>();
+		hexMap = new HashMap<>();
+		roadMap = new HashMap<>();
+		settlementMap = new HashMap<>();
+		cityMap = new HashMap<>();
 	}
 
 	/**
@@ -70,10 +78,18 @@ public class CatanMap implements ICatanMap
 	}
 
 	/**
+	 * 	This is intended to be a helper method for the "can do"
+	 * 	methods, such as determining whether or not a
+	 * 	settlement can be built. Cities implicitly must follow
+	 * 	this rule as a Settlement must exist prior to building
+	 * 	a city.
 	 *
+	 *		@param	location
+	 *						The location where a player wants to place
+	 *						a settlement or city.
 	 */
 	@Override
-	public boolean doesDistanceRuleApply(ILocation first, ILocation second)
+	public boolean doesDistanceRuleApply(VertexLocation location)
 	{
 		return false;
 	}
@@ -88,19 +104,19 @@ public class CatanMap implements ICatanMap
 	@Override
 	public Collection<IHex> getHexes()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Collection<IHex> hexes = hexMap.values();
+		return hexes;
 	}
 
 	@Override
 	public void addHex(IHex hex)
 	{
 		// TODO Auto-generated method stub
-
+		hexMap.put(hex.getLocation(), hex);
 	}
 
 	@Override
-	public Collection<IRoadSegment> getRoads()
+	public Collection<IRoad> getRoads()
 	{
 		// TODO Auto-generated method stub
 		return null;
