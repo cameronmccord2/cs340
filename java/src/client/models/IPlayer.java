@@ -72,4 +72,28 @@ public interface IPlayer extends IParticipant {
 	 */
 	List<IResourceCard> robPlayer();
 
+	List<ICity> getCities();
+
+	void setCities(List<ICity> cities);
+
+	int getSoldiers();
+
+	void setSoldiers(int soldiers);
+
+	int getVictoryPoints();
+
+	void setVictoryPoints(int victoryPoints);
+
+	int getMonuments();
+
+	void setMonuments(int monuments);
+
+	boolean isPlayedDevCard();
+
+	void setPlayedDevCard(boolean playedDevCard);
+
+	boolean isDiscarded();
+
+	void setDiscarded(boolean discarded);
+
 }

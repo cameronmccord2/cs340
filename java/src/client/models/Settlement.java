@@ -1,5 +1,7 @@
 package client.models;
 
+import shared.locations.VertexLocation;
+
 /**
  * @author Craig Call
  *
@@ -15,6 +17,12 @@ public class Settlement implements ISettlement
 		
 	}
 	
+	public Settlement(VertexLocation vertexLocation, Player newPlayer, int pointValue) {
+		this.player = newPlayer;
+		this.location = vertexLocation;
+		this.pointValue = pointValue;
+	}
+
 	public VertexLocation getVertexLocation()
 	{
 		return location;

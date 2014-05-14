@@ -22,5 +22,29 @@ public enum CatanColor {
 	public Color getJavaColor() {
 		return color;
 	}
+
+	public static CatanColor getColorForName(String color2) {
+		switch(color2.toUpperCase()){
+			case "RED":
+				return CatanColor.RED;
+			case "ORANGE":
+				return CatanColor.ORANGE;
+			case "YELLOW":
+				return CatanColor.YELLOW;
+			case "BLUE":
+				return CatanColor.BLUE;
+			case "GREEN":
+				return CatanColor.GREEN;
+			case "PURPLE":
+				return CatanColor.PURPLE;
+			case "PUCE":
+				return CatanColor.PUCE;
+			case "WHITE":
+				return CatanColor.WHITE;
+			case "BROWN":
+				return CatanColor.BROWN;
+		}
+		return CatanColor.RED;
+	}
 }
 

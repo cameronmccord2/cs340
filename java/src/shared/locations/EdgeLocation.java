@@ -1,5 +1,7 @@
 package shared.locations;
 
+import client.models.translator.TREdgeLocation;
+
 
 /**
  * Represents the location of an edge on a hex map
@@ -14,6 +16,11 @@ public class EdgeLocation {
 		setDir(dir);
 	}
 	
+	public EdgeLocation(TREdgeLocation location) {
+		this.dir = EdgeDirection.getDirectionFromServerString(location.getDirection());
+		this.hexLoc = new HexLocation(location.getX(), location.getY());
+	}
+
 	public HexLocation getHexLoc() {
 		return hexLoc;
 	}

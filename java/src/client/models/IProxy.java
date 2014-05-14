@@ -1,62 +1,62 @@
 package client.models;
 
 import client.data.PlayerInfo;
+import client.server.CreateGame;
+import client.server.GameLoad;
+import client.server.GameServer;
+import client.server.SaveGame;
+import client.server.ServerJoinGame;
+import client.server.User;
 
 public interface IProxy {
 
 	/**
 	 * calls the user login method on the server 
-	 * @param the User object that is being logged in 
+	 * @param the User object that is being logged in. Holds the username and password
 	 */
-	public abstract String postUserLogin(PlayerInfo player);
+	public String postUserLogin(User user);
 
 	/**
 	 * this calls the method on the server to register a new user
 	 * @param the User object that will be registered
 	 */
-	public abstract void postUserRegister(PlayerInfo player);
+	public String postUserRegister(User user);
 
 	/**
 	 * This will retrieve all current games on the server
 	 * @return an array of Game objects
 	 */
-	public abstract Game[] getGamesList();
+	public GameServer[] getGamesList();
 
 	/**
 	 * Posts a new game that has just been created
 	 * @param the Game object that was just created to start a new game
 	 */
-	public abstract void postGamesCreate(Game game);
+	public String postGamesCreate(CreateGame game);
 
 	/**
 	 * Joins the game on the server
 	 * @param The Game that this client wants to join
 	 */
-	public abstract void postGamesJoin(Game game);
+	public String postGamesJoin(ServerJoinGame join);
 
 	/**
 	 * Saves the game state
 	 * @param the game state to be saved
 	 */
-	public abstract void postGamesSave(Game game);
+	public String postGamesSave(SaveGame game);
 
 	/**
 	 * Loads the game that the client wants to start and sends it to the server
 	 * @param the game that needs to be loaded
 	 */
-	public abstract void postGamesLoad(Game game);
-
-	/**
-	 * Retrieves the latest game state
-	 * @return the Game object that holds all the updated game state
-	 */
-	public abstract Game getGameModel();
+	public String postGamesLoad(GameLoad game);
 
 	/**
 	 * Sends a game to reset it on the server
 	 * @param the game that needs to be reset
 	 */
-	public abstract void postGameReset(Game game);
+	public String postGameReset();
 
 	/**
 	 * Not sure what this one does...
@@ -98,7 +98,7 @@ public interface IProxy {
 	 * @param the current thief object
 	 * @param the player object being robbed
 	 */
-	public abstract void moveRobPlayer(Thief thief, PlayerInfo player);
+	public abstract void moveRobPlayer(PlayerInfo player);
 
 	/**
 	 * Sends the player indicating that player has finsihed their turn
@@ -190,5 +190,11 @@ public interface IProxy {
 	 * @param the loglevel object
 	 */
 	public abstract void utilChangeLogLevel(LogLevel loglevel);
+
+	/**
+	 * Retrieves the latest game state
+	 * @return the Game object that holds all the updated game state
+	 */
+	public IGame getGameModel(Integer gameId);
 
 }

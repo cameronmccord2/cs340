@@ -8,6 +8,8 @@ package client.models;
  */
 public interface ITurn {
 	
+//	TurnTracker
+	
 	/**
 	 * This is called when a player wants to use a card of any type as part of their turn
 	 * @param Card that is being played by the player

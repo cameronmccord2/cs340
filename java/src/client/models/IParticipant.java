@@ -1,6 +1,6 @@
 package client.models;
 
-import java.util.List;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,28 +13,28 @@ public interface IParticipant {
 	 *
 	 * @return the development cards
 	 */
-	List<IDevelopmentCard> getDevelopmentCards();
+	Map<IDevelopmentCard, Integer> getDevelopmentCards();
 
-	/**
-	 * Sets the resource cards for this participant.
-	 *
-	 * @param resourceCards the new resource cards
-	 */
-	void setResourceCards(List<IResourceCard> resourceCards);
+    /**
+     * Sets the resource cards for this participant.
+     *
+     * @param resourceCards the new resource cards
+     */
+    void setResourceCards(Map<IResourceCard, Integer> resourceCards);
 
 	/**
 	 * Gets the resource cards for this participant.
 	 *
 	 * @return the resource cards
 	 */
-	List<IResourceCard> getResourceCards();
+	Map<IResourceCard, Integer> getResourceCards();
 
 	/**
 	 * Sets the development cards for this participant.
 	 *
 	 * @param developmentCards the new development cards
 	 */
-	void setDevelopmentCards(List<IDevelopmentCard> developmentCards);
+	void setDevelopmentCards(Map<IDevelopmentCard, Integer> developmentCards);
 	
 	/**
 	 * Will accept trade. Asks the player if they will accept this trade.

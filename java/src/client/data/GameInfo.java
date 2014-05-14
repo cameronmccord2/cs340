@@ -18,11 +18,15 @@ public class GameInfo {
 
 	private int id;
 	private String title;
+	private boolean randomTiles, randomNumbers, randomPorts;
 	private List<PlayerInfo> players;
 
 	public GameInfo() {
 		setId(-1);
 		setTitle("");
+		randomTiles = false;
+		randomNumbers = false;
+		randomPorts = false;
 		players = new ArrayList<PlayerInfo>();
 	}
 	
@@ -47,6 +51,30 @@ public class GameInfo {
 		players.add(newPlayer);
 	}
 	
+	public boolean isRandomTiles() {
+		return randomTiles;
+	}
+
+	public void setRandomTiles(boolean randomTiles) {
+		this.randomTiles = randomTiles;
+	}
+
+	public boolean isRandomNumbers() {
+		return randomNumbers;
+	}
+
+	public void setRandomNumbers(boolean randomNumbers) {
+		this.randomNumbers = randomNumbers;
+	}
+
+	public boolean isRandomPorts() {
+		return randomPorts;
+	}
+
+	public void setRandomPorts(boolean randomPorts) {
+		this.randomPorts = randomPorts;
+	}
+
 	public List<PlayerInfo> getPlayers() {
 		
 		return Collections.unmodifiableList(players);
