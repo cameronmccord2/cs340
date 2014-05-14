@@ -54,5 +54,4 @@ public class Hex implements IHex
 	{
 		this.type = type;
 	}
-
 }
