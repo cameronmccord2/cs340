@@ -278,7 +278,9 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public String utilChangeLogLevel(ServerLogLevel loglevel){
-		return doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
+		ServerRepsonse sr = doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
+		saveGameModel(sr.json);
+		return sr;
 	}
 	
 	private String doGet(String urlPath){
