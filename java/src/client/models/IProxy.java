@@ -119,7 +119,7 @@ public interface IProxy {
 	public String moveRobPlayer(ServerRobPlayer rob);
 
 	/**
-	 * Sends the player indicating that player has finsihed their turn
+	 * Sends the player indicating that player has finished their turn
 	 * @param the player object who is finishing their turn
 	 */
 	public String movesFinishTurn(FinishedTurn turn);

@@ -1,13 +1,15 @@
 package client.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import client.models.Proxy;
+import client.server.CreateGame;
+import client.server.ServerChat;
 import client.server.ServerJoinGame;
-import client.server.ServerLogLevel;
 import client.server.User;
 
 
@@ -22,61 +24,57 @@ public class ProxyTest {
 
 	@Test
 	public void test() {
-		//TEST LOGIN ENDPOINT
+		//TEST LOGIN ENDPOINT (works)
 		User user1 = new User("Sam","sam");
 		assertEquals("Success",proxy.postUserLogin(user1));
 //		User user2 = new User("nonsense","nonsense");
 //		assertEquals("Failed to login - bad username or password.",proxy.postUserLogin(user2));
 		
-		//TEST REGISTER ENDPOINT
+		//TEST REGISTER ENDPOINT (works)
 //		User user3 = new User("Scott","scottiscool");
 //		assertEquals("Success",proxy.postUserRegister(user3));
-//		System.out.println("1");
 //		User user4 = new User("Scott","scottiscool");
 //		assertEquals("Failed to register - someone already has that username.",proxy.postUserRegister(user4));
-//		System.out.println("2");
 	
 		//TEST GET GAMES LIST
 		//assertNull(proxy.getGamesList());
 		
-		//TEST CREATE GAME
-//		CreateGame createGame = new CreateGame(false,false,false,"MINE");
-//		assertNull(proxy.postGamesCreate(createGame));
-		System.out.println("3");
+		//TEST CREATE GAME (works)
+		CreateGame createGame = new CreateGame(false,false,false,"MINE");
+		assertNull(proxy.postGamesCreate(createGame));
 		
-		//TEST JOIN GAME
-		ServerJoinGame serverJoinGame = new ServerJoinGame(0,"orange");
+		//TEST JOIN GAME (works)
+		ServerJoinGame serverJoinGame = new ServerJoinGame(3,"orange");
 		assertEquals("Success",proxy.postGamesJoin(serverJoinGame));
-		System.out.println("4");
 		
-		//TEST SAVE GAME
+		//TEST SAVE GAME (don't know how to save)
 //		SaveGame saveGame = new SaveGame(0,"???");
 //		assertEquals("Success",proxy.postGamesSave(saveGame));
 		
-		//TEST LOAD GAME
+		//TEST LOAD GAME (don't know how to load)
 		//GameLoad gameLoad = new GameLoad("??");
 		//assertEquals(proxy.postGamesLoad(gameLoad));
 		
 		//TEST GET MODEL
 		
-		//TEST RESET GAME
+		//TEST RESET GAME 
 		//assertEquals("Success",proxy.postGameReset());
 		
-		//TEST GET COMMANDS
+		//TEST GET COMMANDS (no idea what this should return)
 		//assertEquals("Success",proxy.getGameCommands());
 		
-//		//TEST ADD AI PLAYER
+//		//TEST ADD AI PLAYER (won't let me add a player)
 //		ServerAI serverAI = new ServerAI("Comp Player");
 //		assertEquals("Success",proxy.postAddAI(serverAI));
 		
-		//TEST LIST AI PLAYERS
-		//assertEquals("",proxy.getListAI());
+		//TEST LIST AI PLAYERS (works)
+		//assertEquals("[\"LARGEST_ARMY\"]",proxy.getListAI());
 		
-		//TEST SEND CHAT
-//		ServerChat serverChat = new ServerChat("sendChat",0,"Message here");
+		//TEST SEND CHAT 
+//		ServerChat serverChat = new ServerChat("sendChat",0,"Hi everyone!");
 //		assertEquals("",proxy.movesSendChat(serverChat));
 		
-		//TEST ROLL NUMBER
+		//TEST ROLL NUMBER (gives a null pointer exception from the server)
 //		ServerRoll serverRoll = new ServerRoll("rollNumber",0,5);
 //		assertEquals("",proxy.movesRollNumber(serverRoll));
 		
@@ -145,6 +143,8 @@ public class ProxyTest {
 //		assertEquals("",proxy.movesMaritimeTrade(mt));
 		
 		//TEST DISCARD CARDS
+		
+		//TEST LOG LEVEL CHANGE
 //		ServerLogLevel sll = new ServerLogLevel("WARNING");
 //		assertEquals("Success",proxy.utilChangeLogLevel(sll));
 		

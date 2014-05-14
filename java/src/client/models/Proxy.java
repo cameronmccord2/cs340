@@ -178,7 +178,7 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public String postAddAI(ServerAI ai){
-		return doPost("/game/addAI", gson.toJson(ai));
+		return doMasterPost("/game/addAI", gson.toJson(ai));
 	}
 	
 	@Override
@@ -186,88 +186,84 @@ public class Proxy implements IProxy {
 		return doGet("/game/listAI");
 	}
 	
-	/**
-	 * posts a chat message to the server
-	 * @param the Chat object that needs to be posted
-	 */
 	@Override
 	public String movesSendChat(ServerChat chat){
-		return doPost("/moves/sendChat", gson.toJson(chat));
+		return doMasterPost("/moves/sendChat", gson.toJson(chat));
 	}
 	
 	@Override
 	public String movesRollNumber(ServerRoll roll){
-		return doPost("/moves/rollNumber", gson.toJson(roll));
+		return doMasterPost("/moves/rollNumber", gson.toJson(roll));
 	}
 	
 	@Override
 	public String moveRobPlayer(ServerRobPlayer rob){
-		return doPost("/moves/robPlayer", gson.toJson(rob));
+		return doMasterPost("/moves/robPlayer", gson.toJson(rob));
 	}
 	
 	@Override
 	public String movesFinishTurn(FinishedTurn turn){
-		return doPost("/moves/finishTurn", gson.toJson(turn));
+		return doMasterPost("/moves/finishTurn", gson.toJson(turn));
 	}
 	
 	@Override
 	public String movesBuyDevCard(BuyDevCard card){
-		return doPost("/moves/buyDevCard", gson.toJson(card));
+		return doMasterPost("/moves/buyDevCard", gson.toJson(card));
 	}
 	
 	@Override
 	public String movesYear_of_Plenty(ServerYearofPlenty yop){
-		return doPost("/moves/Year_of_Plenty", gson.toJson(yop));
+		return doMasterPost("/moves/Year_of_Plenty", gson.toJson(yop));
 	}
 	
 	@Override
 	public String movesRoad_Building(RoadBuilding rb){
-		return doPost("/moves/Raod_Building", gson.toJson(rb));
+		return doMasterPost("/moves/Raod_Building", gson.toJson(rb));
 	}
 	
 	@Override
 	public String movesSoldier(ServerSoldier ss){
-		return doPost("/moves/Soldier", gson.toJson(ss));
+		return doMasterPost("/moves/Soldier", gson.toJson(ss));
 	}
 	
 	@Override
 	public String movesMonopoly(ServerMonopoly sm){
-		return doPost("/moves/Monopoly", gson.toJson(sm));
+		return doMasterPost("/moves/Monopoly", gson.toJson(sm));
 	}
 	
 	@Override
 	public String movesMonument(ServerMonument sm){
-		return doPost("/moves/Monument", gson.toJson(sm));
+		return doMasterPost("/moves/Monument", gson.toJson(sm));
 	}
 	
 	@Override
 	public String movesBuildRoad(ServerBuildRoad br){
-		return doPost("/moves/buildRoad", gson.toJson(br));
+		return doMasterPost("/moves/buildRoad", gson.toJson(br));
 	}
 	
 	@Override
 	public String movesBuildSettlement(ServerBuildSettlement bs){
-		return doPost("/moves/buildSettlement", gson.toJson(bs));
+		return doMasterPost("/moves/buildSettlement", gson.toJson(bs));
 	}
 	
 	@Override
 	public String movesBuildCity(ServerBuildCity bc){
-		return doPost("/moves/buildCity", gson.toJson(bc));
+		return doMasterPost("/moves/buildCity", gson.toJson(bc));
 	}
 	
 	@Override
 	public String movesOfferTrade(OfferTrade ot){
-		return doPost("/moves/offerTrade", gson.toJson(ot));
+		return doMasterPost("/moves/offerTrade", gson.toJson(ot));
 	}
 	
 	@Override
 	public String movesAcceptTrade(AcceptTrade at){
-		return doPost("/moves/acceptTrade", gson.toJson(at));
+		return doMasterPost("/moves/acceptTrade", gson.toJson(at));
 	}
 	
 	@Override
 	public String movesMaritimeTrade(MaritimeTradeOff mTrade){
-		return doPost("/moves/maritimeTrade", gson.toJson(mTrade));
+		return doMasterPost("/moves/maritimeTrade", gson.toJson(mTrade));
 	}
 	
 	@Override
@@ -277,7 +273,7 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public String utilChangeLogLevel(ServerLogLevel loglevel){
-		return doPost("/util/changeLogLevel", gson.toJson(loglevel));
+		return doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
 	}
 	
 	private String doGet(String urlPath){
@@ -302,7 +298,7 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-				 System.out.println(out.toString());  
+				 System.out.println("response: " + out.toString());  
 				 reader.close();
 				 responseBody.close();
 				 return out.toString();

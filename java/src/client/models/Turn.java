@@ -6,59 +6,48 @@ package client.models;
 import client.data.PlayerInfo;
 
 /**
- * The Turn class keeps track of who the current player is and the number rolled on the dice. 
- * It also initiates playing a card, a trade, building a road or settlement.
+ * The Turn class is similar to the TurnTracker returned from the server. Marks who's turn it is and the status.
  * @author scottdaly
  *
  */
-public class Turn implements ITurn{
+public class Turn{
 	
-	private PlayerInfo player;
-	private int numberRolled;
+	private int currentTurn;
+	private String status;
 	
-	@Override
-	public Card playCard(Card card) {
-		// TODO Auto-generated method stub
-		return null;
+	public Turn(int currentTurn, String status) {
+		this.currentTurn = currentTurn;
+		this.status = status;
 	}
-	@Override
-	public Trade initTrade() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void buildRoad(Road road) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Settlement buildSettlement(Settlement settlement) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	/**
-	 * @return the player
+	 * @return the currentTurn
 	 */
-	public PlayerInfo getPlayer() {
-		return player;
+	public int getCurrentTurn() {
+		return currentTurn;
 	}
+
 	/**
-	 * @param player the player to set
+	 * @param currentTurn the currentTurn to set
 	 */
-	public void setPlayer(PlayerInfo player) {
-		this.player = player;
+	public void setCurrentTurn(int currentTurn) {
+		this.currentTurn = currentTurn;
 	}
+
 	/**
-	 * @return the numberRolled
+	 * @return the status
 	 */
-	public int getNumberRolled() {
-		return numberRolled;
+	public String getStatus() {
+		return status;
 	}
+
 	/**
-	 * @param numberRolled the numberRolled to set
+	 * @param status the status to set
 	 */
-	public void setNumberRolled(int numberRolled) {
-		this.numberRolled = numberRolled;
+	public void setStatus(String status) {
+		this.status = status;
 	}
+	
+	
 	
 }

@@ -33,11 +33,8 @@ public class Game implements IGame{
 	@Override
 	public int rollDie() {
 		return 0;
-		
 	}
 	
-	
-
 	@Override
 	public void startGame() {
 		// TODO Auto-generated method stub
