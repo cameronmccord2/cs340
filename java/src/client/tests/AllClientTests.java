@@ -22,6 +22,7 @@ public class AllClientTests {
 				"client.tests.ProxyTest",
 				"client.tests.BankTest",
                 "client.tests.MapTest"
+
 				
 				
 		};

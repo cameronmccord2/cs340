@@ -18,7 +18,6 @@ public class BankTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-        System.out.println("Testing Bank");
         bank = new Bank();
 	}
 
