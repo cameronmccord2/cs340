@@ -10,9 +10,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.data.PlayerInfo;
 import client.models.translator.ClientModel;
-import client.models.translator.TRDevCardList;
 import client.models.translator.TRPlayer;
-import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
 import client.models.translator.TRVertexObject;
 

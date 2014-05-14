@@ -4,26 +4,16 @@ import java.io.BufferedReader;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import sun.misc.IOUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
-import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
