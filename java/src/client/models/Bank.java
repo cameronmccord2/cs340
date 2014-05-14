@@ -1,9 +1,12 @@
 package client.models;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import client.models.translator.TRDevCardList;
 import client.models.translator.TRResourceList;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 // TODO: Auto-generated Javadoc
@@ -19,8 +22,11 @@ public class Bank extends Participant implements IBank {
 		super();
 	}
 
+    /**
+     * Constructor for use with Translator Classes
+     */
     public Bank(TRDevCardList deck, TRResourceList bank) {
-        super();
+        this();
 
         developmentCards.put(DevelopmentCard.MONOPOLY, deck.getMonopoly());
         developmentCards.put(DevelopmentCard.MONUMENT, deck.getMonument());
@@ -75,13 +81,32 @@ public class Bank extends Participant implements IBank {
     /**
      * Checks if the Bank is able to provide a Resource of the type indicated
      *
-     * @param card
+     * @param type
      * @return
      */
-    public boolean canDrawResource(ResourceType card) {
-        if(resourceCards.get(card) > 0)
+    public boolean canDrawResource(ResourceType type) {
+        if(resourceCards.get(type) > 0)
             return true;
         return false;
+    }
+
+    /**
+     * Draw a Resource of the type specified
+    */
+    public ResourceCard drawResource(ResourceType type) {
+        if(canDrawResource(type)) {
+            // TODO return resource type and decrement count
+        }
+        return null;
+    }
+
+    public Integer countResourceCards(ResourceType type) {
+        for (IResourceCard card : resourceCards.keySet()) {
+            if(card.getType() == type)
+                return resourceCards.get(card);
+        }
+        assert false;
+        return 0;
     }
 
     /**
@@ -110,5 +135,36 @@ public class Bank extends Participant implements IBank {
             totalCards += i;
         }
         return totalCards;
+    }
+
+    public Integer countDevCards(DevCardType type) {
+        for (IDevelopmentCard card : developmentCards.keySet()) {
+            if(card.getType() == type)
+                return developmentCards.get(card);
+        }
+        assert false;
+        return 0;
+    }
+
+    public DevelopmentCard drawRandomDevCard() {
+        if( ! canDrawDevCard() )
+            return null;
+
+        Random r = new Random();
+        int cardIndex = r.nextInt(countDevCards());
+        DevelopmentCard currentType = null;
+        int cardCount = 0;
+
+        for (IDevelopmentCard card : developmentCards.keySet()) {
+            currentType = (DevelopmentCard) card;
+            cardCount += countDevCards(currentType.getType());
+
+            if(cardCount >= cardIndex) {
+                developmentCards.put(currentType, developmentCards.get(currentType) -1 );
+                break;
+            }
+        }
+
+        return currentType;
     }
 }
