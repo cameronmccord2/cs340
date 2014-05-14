@@ -1,9 +1,9 @@
 package shared.locations;
 
-public enum EdgeDirection {
-	
+public enum EdgeDirection implements IDirection {
+
 	NorthWest, North, NorthEast, SouthEast, South, SouthWest;
-	
+
     private EdgeDirection opposite;
 
     static {
@@ -35,6 +35,12 @@ public enum EdgeDirection {
 				return EdgeDirection.SouthWest;
 		}
 		return EdgeDirection.South;
+	}
+
+	@Override
+	public Class<?> getDirectionType()
+	{
+		return EdgeDirection.class;
 	}
 }
 

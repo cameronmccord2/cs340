@@ -25,6 +25,7 @@ public class CatanMap implements ICatanMap
 	private Map<EdgeLocation, IRoad> roadMap;
 	private Map<VertexLocation, ISettlement> settlementMap;
 	private Map<VertexLocation, ICity> cityMap;
+	private Map<VertexLocation, IPort> portMap;
 	private int radius;
 
 	public CatanMap()
@@ -33,6 +34,7 @@ public class CatanMap implements ICatanMap
 		roadMap = new HashMap<>();
 		settlementMap = new HashMap<>();
 		cityMap = new HashMap<>();
+		portMap = new HashMap<>();
 	}
 
 	/**
@@ -118,8 +120,8 @@ public class CatanMap implements ICatanMap
 	@Override
 	public Collection<IRoad> getRoads()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Collection<IRoad> roads = roadMap.values();
+		return roads;
 	}
 
 	@Override
@@ -133,8 +135,8 @@ public class CatanMap implements ICatanMap
 	@Override
 	public Collection<IPort> getPorts()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Collection<IPort> ports = portMap.values();
+		return ports;
 	}
 
 	@Override
@@ -162,8 +164,8 @@ public class CatanMap implements ICatanMap
 	@Override
 	public Collection<ICity> getCities()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Collection<ICity> cities = cityMap.values();
+		return cities;
 	}
 
 	@Override

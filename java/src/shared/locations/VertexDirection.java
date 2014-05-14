@@ -1,10 +1,10 @@
 package shared.locations;
 
-public enum VertexDirection {
+public enum VertexDirection implements IDirection{
 	West, NorthWest, NorthEast, East, SouthEast, SouthWest;
-	
+
 	private VertexDirection opposite;
-	
+
 	static {
 		West.opposite = East;
 		NorthWest.opposite = SouthEast;
@@ -13,11 +13,11 @@ public enum VertexDirection {
 		SouthEast.opposite = NorthWest;
 		SouthWest.opposite = NorthEast;
 	}
-	
+
 	public VertexDirection getOppositeDirection() {
 		return opposite;
 	}
-	
+
 	public static VertexDirection getDirectionForServerString(String direction) {
 		switch (direction.toUpperCase()) {
 			case "NW":
@@ -36,6 +36,12 @@ public enum VertexDirection {
 				assert false;
 				return null;
 		}
+	}
+
+	@Override
+	public Class<?> getDirectionType()
+	{
+		return VertexDirection.class;
 	}
 }
 
