@@ -169,7 +169,7 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse movesRollNumber(ServerRoll roll){
-		ServerResponse = doMasterPost("/moves/rollNumber", gson.toJson(roll));
+		ServerResponse sr = doMasterPost("/moves/rollNumber", gson.toJson(roll));
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
@@ -204,7 +204,7 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse movesRoad_Building(RoadBuilding rb){
-		ServerResponse sr = doMasterPost("/moves/Raod_Building", gson.toJson(rb));
+		ServerResponse sr = doMasterPost("/moves/Road_Building", gson.toJson(rb));
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
@@ -280,7 +280,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse utilChangeLogLevel(ServerLogLevel loglevel){
 		ServerResponse sr = doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
-		saveGameModel(sr.getJson());
+		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
