@@ -29,11 +29,6 @@ public class Game implements IGame{
 		this.players = players;
 		this.modelVersion = 0;
 	}
-
-	@Override
-	public int rollDie() {
-		return 0;
-	}
 	
 	@Override
 	public void startGame() {
