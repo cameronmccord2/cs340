@@ -1,11 +1,11 @@
 package client.models;
 
-public class ServerRepsonse  {
+public class ServerResponse  {
 	
 	private String json;
 	private int responseCode;
 
-	public ServerRepsonse(String json, int responseCode) {
+	public ServerResponse(String json, int responseCode) {
 		this.json = json;
 		this.responseCode = responseCode;
 	}

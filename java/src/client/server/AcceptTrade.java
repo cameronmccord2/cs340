@@ -11,11 +11,12 @@ package client.server;
 public class AcceptTrade {
 	private String type;
 	private int playerIndex;
-	public AcceptTrade(String type, int playerIndex) {
+	private boolean willAccept;
+	public AcceptTrade(String type, int playerIndex, boolean willAccept) {
 		this.type = type;
 		this.playerIndex = playerIndex;
+		this.willAccept = willAccept;
 	}
-	private boolean willAccept;
 	/**
 	 * @return the type
 	 */
