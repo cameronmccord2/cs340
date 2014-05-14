@@ -59,45 +59,10 @@ public interface IProxy {
 	public ServerResponse postGamesJoin(ServerJoinGame join);
 
 	/**
-	 * Saves the game state
-	 * @param the game state to be saved
-	 */
-	public ServerResponse postGamesSave(SaveGame game);
-
-	/**
-	 * Loads the game that the client wants to start and sends it to the server
-	 * @param the game that needs to be loaded
-	 */
-	public ServerResponse postGamesLoad(GameLoad game);
-
-	/**
 	 * Sends a game to reset it on the server
 	 * @param the game that needs to be reset
 	 */
 	public ServerResponse postGameReset();
-
-	/**
-	 * Not sure what this one does...
-	 * @param game
-	 */
-	public ServerResponse postGameCommands();
-
-	/**
-	 * Not sure what this one does...
-	 */
-	public ServerResponse getGameCommands();
-
-	/**
-	 * This will post an AI participant
-	 * @param the participant AI that needs to be posted
-	 */
-	public ServerResponse postAddAI(ServerAI ai);
-
-	/**
-	 * returns a list of AI participants
-	 * @return the list of AI participants
-	 */
-	public ServerResponse getListAI();
 
 	/**
 	 * posts a chat message to the server

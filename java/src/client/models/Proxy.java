@@ -19,13 +19,10 @@ import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;
 import client.server.FinishedTurn;
-import client.server.GameLoad;
 import client.server.GameServer;
 import client.server.MaritimeTradeOff;
 import client.server.OfferTrade;
 import client.server.RoadBuilding;
-import client.server.SaveGame;
-import client.server.ServerAI;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
 import client.server.ServerBuildSettlement;
@@ -78,24 +75,26 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse postUserLogin(User user){
-		String response =  doPost("/user/login", gson.toJson(user));
+		ServerResponse sr =  doPost("/user/login", gson.toJson(user));
+		//saveGameModel(sr.getJson());
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		cookie = setCookie.get(0);
-//		cookie = cookie.substring(11);
 		cookie = cookie.substring(0, cookie.length() - 8);
-		return response;
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse postUserRegister(User user){
-		return doPost("/user/register", gson.toJson(user));
+		ServerResponse sr = doPost("/user/register", gson.toJson(user));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public GameServer[] getGamesList(){
-		String response = doGet("/games/list");
-		List<GameServer> games = gson.fromJson(response, new TypeToken<List<GameServer>>(){}.getType());
+		ServerResponse sr = doGet("/games/list");
+		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
 		GameServer[] list = new GameServer[games.size()];
 		int index = 0;
 		for (GameServer g : games) {
@@ -107,20 +106,20 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse postGamesCreate(CreateGame game){
-		String json = gson.toJson(game);
-		String response = doPost("/games/create", json);
-		return null;
+		ServerResponse sr = doPost("/games/create", gson.toJson(game));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse postGamesJoin(ServerJoinGame join){
-		String response = doJoinPost("/games/join", gson.toJson(join));
+		ServerResponse sr = doJoinPost("/games/join", gson.toJson(join));
+		//saveGameModel(sr.getJson());
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		gameId = setCookie.get(0);
-		//gameId = gameId.substring(11);
 		gameId = gameId.substring(0, gameId.length() - 8);
-		return response;
+		return sr;
 	}
 	
 	@Override
@@ -134,8 +133,8 @@ public class Proxy implements IProxy {
 		String requestUrl = "/game/model";
 		if(version != 0)
 			requestUrl += "?version=" + version;
-		String response = this.doGet(requestUrl);
-		this.saveGameModel(response);
+		ServerResponse sr = this.doGet(requestUrl);
+		this.saveGameModel(sr.getJson());
 	}
 	
 	private IGame getGameForGameId(Integer gameId) {
@@ -156,92 +155,126 @@ public class Proxy implements IProxy {
 
 	@Override
 	public ServerResponse postGameReset(){
-		return doMasterPost("/game/reset","");
+		ServerResponse sr = doMasterPost("/game/reset","");
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesSendChat(ServerChat chat){
-		return doMasterPost("/moves/sendChat", gson.toJson(chat));
+		ServerResponse sr = doMasterPost("/moves/sendChat", gson.toJson(chat));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesRollNumber(ServerRoll roll){
-		return doMasterPost("/moves/rollNumber", gson.toJson(roll));
+		ServerResponse = doMasterPost("/moves/rollNumber", gson.toJson(roll));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse moveRobPlayer(ServerRobPlayer rob){
-		return doMasterPost("/moves/robPlayer", gson.toJson(rob));
+		ServerResponse sr = doMasterPost("/moves/robPlayer", gson.toJson(rob));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesFinishTurn(FinishedTurn turn){
-		return doMasterPost("/moves/finishTurn", gson.toJson(turn));
+		ServerResponse sr = doMasterPost("/moves/finishTurn", gson.toJson(turn));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuyDevCard(BuyDevCard card){
-		return doMasterPost("/moves/buyDevCard", gson.toJson(card));
+		ServerResponse sr = doMasterPost("/moves/buyDevCard", gson.toJson(card));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesYear_of_Plenty(ServerYearofPlenty yop){
-		return doMasterPost("/moves/Year_of_Plenty", gson.toJson(yop));
+		ServerResponse sr = doMasterPost("/moves/Year_of_Plenty", gson.toJson(yop));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesRoad_Building(RoadBuilding rb){
-		return doMasterPost("/moves/Raod_Building", gson.toJson(rb));
+		ServerResponse sr = doMasterPost("/moves/Raod_Building", gson.toJson(rb));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesSoldier(ServerSoldier ss){
-		return doMasterPost("/moves/Soldier", gson.toJson(ss));
+		ServerResponse sr = doMasterPost("/moves/Soldier", gson.toJson(ss));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonopoly(ServerMonopoly sm){
-		return doMasterPost("/moves/Monopoly", gson.toJson(sm));
+		ServerResponse sr = doMasterPost("/moves/Monopoly", gson.toJson(sm));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonument(ServerMonument sm){
-		return doMasterPost("/moves/Monument", gson.toJson(sm));
+		ServerResponse sr = doMasterPost("/moves/Monument", gson.toJson(sm));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildRoad(ServerBuildRoad br){
-		return doMasterPost("/moves/buildRoad", gson.toJson(br));
+		ServerResponse sr = doMasterPost("/moves/buildRoad", gson.toJson(br));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildSettlement(ServerBuildSettlement bs){
-		return doMasterPost("/moves/buildSettlement", gson.toJson(bs));
+		ServerResponse sr = doMasterPost("/moves/buildSettlement", gson.toJson(bs));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildCity(ServerBuildCity bc){
-		return doMasterPost("/moves/buildCity", gson.toJson(bc));
+		ServerResponse sr = doMasterPost("/moves/buildCity", gson.toJson(bc));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesOfferTrade(OfferTrade ot){
-		return doMasterPost("/moves/offerTrade", gson.toJson(ot));
+		ServerResponse sr = doMasterPost("/moves/offerTrade", gson.toJson(ot));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesAcceptTrade(AcceptTrade at){
-		return doMasterPost("/moves/acceptTrade", gson.toJson(at));
+		ServerResponse sr = doMasterPost("/moves/acceptTrade", gson.toJson(at));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMaritimeTrade(MaritimeTradeOff mTrade){
-		return doMasterPost("/moves/maritimeTrade", gson.toJson(mTrade));
+		ServerResponse sr = doMasterPost("/moves/maritimeTrade", gson.toJson(mTrade));
+		//saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
-	public void movesdiscardCards(PlayerInfo player){
-		
+	public ServerResponse movesdiscardCards(PlayerInfo player){
+		return null;
 	}
 	
 	@Override

@@ -26,27 +26,23 @@ public class ProxyTest {
 	public void test() {
 		//TEST LOGIN ENDPOINT (works)
 		User user1 = new User("Sam","sam");
-		assertEquals("Success",proxy.postUserLogin(user1));
-//		User user2 = new User("nonsense","nonsense");
-//		assertEquals("Failed to login - bad username or password.",proxy.postUserLogin(user2));
+		assertEquals("Success",proxy.postUserLogin(user1).getJson());
 		
 		//TEST REGISTER ENDPOINT (works)
-//		User user3 = new User("Scott","scottiscool");
-//		assertEquals("Success",proxy.postUserRegister(user3));
-//		User user4 = new User("Scott","scottiscool");
-//		assertEquals("Failed to register - someone already has that username.",proxy.postUserRegister(user4));
+		User user3 = new User("Scott","scottiscool");
+		assertEquals("Success",proxy.postUserRegister(user3).getJson());
 	
 		//TEST GET GAMES LIST
 		//change the test to response code (400 or 200)
 		//assertNull(proxy.getGamesList());
 		
 		//TEST CREATE GAME (works)
-		CreateGame createGame = new CreateGame(false,false,false,"MINE");
-		assertNull(proxy.postGamesCreate(createGame));
+//		CreateGame createGame = new CreateGame(false,false,false,"MINE");
+//		assertNull(proxy.postGamesCreate(createGame));
 		
 		//TEST JOIN GAME (works)
-		ServerJoinGame serverJoinGame = new ServerJoinGame(3,"orange");
-		assertEquals("Success",proxy.postGamesJoin(serverJoinGame));
+//		ServerJoinGame serverJoinGame = new ServerJoinGame(3,"orange");
+//		assertEquals("Success",proxy.postGamesJoin(serverJoinGame));
 		
 		//TEST RESET GAME 
 		//assertEquals("Success",proxy.postGameReset());
