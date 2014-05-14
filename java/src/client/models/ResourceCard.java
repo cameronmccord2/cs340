@@ -68,7 +68,7 @@ public enum ResourceCard implements IResourceCard {
 
         @Override
         public ResourceType getType() {
-            return ResourceType.BRICK;
+            return ResourceType.ORE;
         }
     }
 }

@@ -1,7 +1,9 @@
 package client.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Class Participant.
@@ -9,36 +11,36 @@ import java.util.List;
 public abstract class Participant implements IParticipant {
 
 	/** The development cards. */
-	protected List<IDevelopmentCard> developmentCards;
+	protected Map<IDevelopmentCard, Integer> developmentCards;
 	
 	/** The resource cards. */
-	protected List<IResourceCard> resourceCards;
+	protected Map<IResourceCard, Integer> resourceCards;
 	
 	/**
 	 * Instantiates a new participant.
 	 *
-	 * @param developmentCards the development cards
-	 * @param resourceCards the resource cards
+	 * @param _developmentCards the development cards
+	 * @param _resourceCards the resource cards
 	 */
-	public Participant(List<IDevelopmentCard> developmentCards, List<IResourceCard> resourceCards){
-		this.developmentCards = developmentCards;
-		this.resourceCards = resourceCards;
+	public Participant(Map<IDevelopmentCard, Integer> _developmentCards, Map<IResourceCard, Integer> _resourceCards){
+		this.developmentCards = _developmentCards;
+		this.resourceCards = _resourceCards;
 	}
 	
 	/**
 	 * Instantiates a new participant.
 	 */
 	public Participant(){
-		this.developmentCards = new ArrayList<IDevelopmentCard>();
-		this.resourceCards = new ArrayList<IResourceCard>();
+		this.developmentCards = new HashMap<IDevelopmentCard, Integer>();
+		this.resourceCards = new HashMap<IResourceCard, Integer>();
 	}
 	
 	/* (non-Javadoc)
 	 * @see client.models.IParticipant#getDevelopmentCards()
 	 */
 	@Override
-	public List<IDevelopmentCard> getDevelopmentCards() {
-		return developmentCards;
+	public Map<IDevelopmentCard, Integer> getDevelopmentCards() {
+        return developmentCards;
 	}
 	
 	/* (non-Javadoc)
@@ -46,22 +48,42 @@ public abstract class Participant implements IParticipant {
 	 */
 	@Override
 	public void setDevelopmentCards(List<IDevelopmentCard> developmentCards) {
-		this.developmentCards = developmentCards;
+        for (IDevelopmentCard card : developmentCards) {
+            this.developmentCards.put(card,this.developmentCards.get(card)+1);
+        }
+	}
+
+	/* (non-Javadoc)
+	 * @see client.models.IParticipant#setDevelopmentCards(java.util.List)
+	 */
+	@Override
+	public void setDevelopmentCards(Map<IDevelopmentCard, Integer> developmentCards) {
+        this.developmentCards = developmentCards;
 	}
 	
 	/* (non-Javadoc)
 	 * @see client.models.IParticipant#getResourceCards()
 	 */
 	@Override
-	public List<IResourceCard> getResourceCards() {
+	public Map<IResourceCard, Integer> getResourceCards() {
 		return resourceCards;
 	}
-	
-	/* (non-Javadoc)
-	 * @see client.models.IParticipant#setResourceCards(java.util.List)
-	 */
-	@Override
-	public void setResourceCards(List<IResourceCard> resourceCards) {
-		this.resourceCards = resourceCards;
-	}
+
+    /* (non-Javadoc)
+     * @see client.models.IParticipant#setResourceCards(java.util.List)
+     */
+    @Override
+    public void setResourceCards(List<IResourceCard> resourceCards) {
+        for (IResourceCard card : resourceCards) {
+            this.resourceCards.put(card,this.resourceCards.get(card)+1);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see client.models.IParticipant#setResourceCards(java.util.List)
+     */
+    @Override
+    public void setResourceCards(Map<IResourceCard, Integer> resourceCards) {
+        this.resourceCards = resourceCards;
+    }
 }
