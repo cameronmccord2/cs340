@@ -1,5 +1,6 @@
 package client.models;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.server.CreateGame;
 import client.server.User;
@@ -22,7 +23,7 @@ public interface IProxy {
 	 * This will retrieve all current games on the server
 	 * @return an array of Game objects
 	 */
-	public Game[] getGamesList();
+	public GameInfo[] getGamesList();
 
 	/**
 	 * Posts a new game that has just been created
@@ -47,12 +48,6 @@ public interface IProxy {
 	 * @param the game that needs to be loaded
 	 */
 	public abstract void postGamesLoad(Game game);
-
-	/**
-	 * Retrieves the latest game state
-	 * @return the Game object that holds all the updated game state
-	 */
-	public abstract IGame getGameModel();
 
 	/**
 	 * Sends a game to reset it on the server
@@ -192,5 +187,11 @@ public interface IProxy {
 	 * @param the loglevel object
 	 */
 	public abstract void utilChangeLogLevel(LogLevel loglevel);
+
+	/**
+	 * Retrieves the latest game state
+	 * @return the Game object that holds all the updated game state
+	 */
+	public IGame getGameModel(Integer gameId);
 
 }

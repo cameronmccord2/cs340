@@ -18,5 +18,23 @@ public enum EdgeDirection {
     public EdgeDirection getOppositeDirection() {
         return opposite;
     }
+
+	public static EdgeDirection getDirectionFromServerString(String direction) {
+		switch(direction.toUpperCase()){
+			case "NW":
+				return EdgeDirection.NorthWest;
+			case "N":
+				return EdgeDirection.North;
+			case "NE":
+				return EdgeDirection.NorthEast;
+			case "SE":
+				return EdgeDirection.SouthEast;
+			case "S":
+				return EdgeDirection.South;
+			case "SW":
+				return EdgeDirection.SouthWest;
+		}
+		return EdgeDirection.South;
+	}
 }
 

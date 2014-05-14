@@ -15,11 +15,13 @@ import java.util.List;
 import sun.misc.IOUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
 import client.server.CreateGame;
@@ -35,6 +37,7 @@ public class Proxy implements IProxy {
 	private Translator translator;
 	private HttpURLConnection connection;
 	private List<IGame> games;
+	private Integer activeGameId;
 	
 	public Proxy() {
 		this.translator = new Translator();
@@ -58,9 +61,16 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public Game[] getGamesList(){
+	public GameInfo[] getGamesList(){
 		String response = doGet("/games/list");
-		return null;
+		Gson gson = new Gson();
+		List<GameInfo> games = gson.fromJson(response, new TypeToken<List<GameInfo>>(){}.getType());
+		GameInfo[] gamesOther = new GameInfo[games.size()];
+		
+		for (int i = 0; i < games.size(); i++) {
+			gamesOther[i] = games.get(i);
+		}
+		return gamesOther;
 	}
 	
 	@Override
@@ -88,8 +98,17 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public IGame getGameModel(){
-		String response = this.doGet("/game/state");
+	public IGame getGameModel(Integer gameId){
+		Integer version = 0;
+		try {
+			version = this.getVersionForGameId(gameId);
+		} catch (InvalidGameModelException e1) {
+			// fail silently
+		}
+		String requestUrl = "/game/model";
+		if(version != 0)
+			requestUrl += "?version=" + version;
+		String response = this.doGet(requestUrl);
 		Gson gson = new Gson();
 		ClientModel cm = gson.fromJson(response, ClientModel.class);
 		try {
@@ -97,10 +116,26 @@ public class Proxy implements IProxy {
 		} catch (InvalidTranslatorModelException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		IGame g = this.translator.convertClientModelToGame(cm);
+		IGame g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(gameId));
 		return g;
 	}
 	
+	private IGame getGameForGameId(Integer gameId) {
+		for (IGame g : this.games) {
+			if(g.getGameInfo().getId() == gameId)
+				return g;
+		}
+		return null;
+	}
+
+	private Integer getVersionForGameId(Integer gameId) throws InvalidGameModelException {
+		for (IGame g : this.games) {
+			if(g.getGameInfo().getId() == gameId)
+				return g.getModelVersion();
+		}
+		throw new InvalidGameModelException("Couldnt find the requested game: " + gameId + " in the game list: " + this.games.toString());
+	}
+
 	/* (non-Javadoc)
 	 * @see client.models.IProxy#postGameReset(client.models.Game)
 	 */
@@ -395,5 +430,37 @@ public class Proxy implements IProxy {
 			e.printStackTrace();
 	    }
 		return "";
+	}
+
+	public Translator getTranslator() {
+		return translator;
+	}
+
+	public void setTranslator(Translator translator) {
+		this.translator = translator;
+	}
+
+	public HttpURLConnection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(HttpURLConnection connection) {
+		this.connection = connection;
+	}
+
+	public List<IGame> getGames() {
+		return games;
+	}
+
+	public void setGames(List<IGame> games) {
+		this.games = games;
+	}
+
+	public Integer getActiveGameId() {
+		return activeGameId;
+	}
+
+	public void setActiveGameId(Integer activeGameId) {
+		this.activeGameId = activeGameId;
 	}
 }
