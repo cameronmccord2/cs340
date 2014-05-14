@@ -36,8 +36,8 @@ public class TRPort implements IModelValid {
 		this.location.isValid();
 		if(this.resource == null || this.resource.length() == 0 || this.direction == null || this.direction.length() == 0 || this.ratio < 2 || this.ratio > 3)
 			throw new InvalidTranslatorModelException(this.toString());
-		if((this.resource.equals("Wood") || this.resource.endsWith("Brick") || this.resource.equals("Sheep") || 
-				this.resource.equals("Wheat") || this.resource.equals("Ore")) && 
+		if((this.resource.equals("wood") || this.resource.endsWith("brick") || this.resource.equals("sheep") || 
+				this.resource.equals("wheat") || this.resource.equals("ore")) && 
 				(this.direction.equals("NW") || this.direction.equals("N") || this.direction.equals("NE") || this.direction.equals("E") ||
 						this.direction.equals("SE") || this.direction.equals("SW")))
 			return;
