@@ -8,7 +8,7 @@ import shared.locations.VertexLocation;
  */
 public class City extends Settlement implements ICity
 {
-	public City(VertexLocation vertexLocation, Player newPlayer, int points) {
+	public City(VertexLocation vertexLocation, IPlayer newPlayer, int points) {
 		super(vertexLocation, newPlayer, points);
 	}
 }

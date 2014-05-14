@@ -2,6 +2,8 @@ package client.models;
 
 import java.util.Collection;
 
+import client.models.translator.TRRoad;
+
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
@@ -14,6 +16,13 @@ public class RoadSegment extends Piece implements IRoadSegment
 	public RoadSegment()
 	{
 
+	}
+
+//	new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
+	public RoadSegment(TRRoad road, IPlayer player)
+	{
+		this.setPlayer(player);
+		this.setLocation(new EdgeLocation(road.getLocation()));
 	}
 
 	@Override

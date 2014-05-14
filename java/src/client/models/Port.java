@@ -3,9 +3,10 @@ package client.models;
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
 import shared.locations.HexLocation;
+import shared.locations.ILocation;
 
 public class Port implements IPort {
-	
+
 	protected HexLocation location;
 	protected int exchangeRate;
 	protected PortType portType;
@@ -17,29 +18,29 @@ public class Port implements IPort {
 		case "WOOD":
 			this.portType = PortType.WOOD;
 			break;
-			
+
 		case "BRICK":
 			this.portType = PortType.BRICK;
 			break;
-			
+
 		case "SHEEP":
 			this.portType = PortType.SHEEP;
 			break;
-			
+
 		case "WHEAT":
 			this.portType = PortType.WHEAT;
 			break;
-			
+
 		case "ORE":
 			this.portType = PortType.ORE;
 			break;
-			
+
 		case "THREE":
 			this.portType = PortType.THREE;
 			break;
 		}
 	}
-	
+
 	@Override
 	public int getExchangeRate() {
 		return exchangeRate;
@@ -60,16 +61,26 @@ public class Port implements IPort {
 		this.portType = portType;
 	}
 
-	@Override
-	public HexLocation getLocation() {
+	public HexLocation getHexLocation() {
 		return location;
 	}
 
-	@Override
 	public void setLocation(HexLocation location) {
 		this.location = location;
 	}
 
-	
+	@Override
+	public void setLocation(ILocation location)
+	{
+
+	}
+
+	@Override
+	public ILocation getLocation()
+	{
+		return null;
+	}
+
+
 
 }
