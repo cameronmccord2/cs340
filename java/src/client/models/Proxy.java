@@ -1,36 +1,27 @@
 package client.models;
 
 import java.io.BufferedReader;
-
-import com.google.gson.Gson;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import sun.misc.IOUtils;
-
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
-import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
 import client.server.CreateGame;
+import client.server.GameLoad;
 import client.server.GameServer;
 import client.server.SaveGame;
 import client.server.ServerJoinGame;
 import client.server.User;
+
+import com.google.gson.Gson;
 
 /**
  * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server. 
@@ -45,6 +36,7 @@ public class Proxy implements IProxy {
 	private Translator translator;
 	private List<IGame> games;
 	private String cookie;
+	private String gameId;
 	
 	public Proxy() {
 		this.translator = new Translator();
@@ -77,24 +69,31 @@ public class Proxy implements IProxy {
 	@Override
 	public String postGamesCreate(CreateGame game){
 		String json = gson.toJson(game);
-		System.out.println(json);
 		String response = doPost("/games/create", json);
 		return null;
 	}
 	
 	@Override
 	public String postGamesJoin(ServerJoinGame join){
-		return doJoinPost("/games/join", gson.toJson(join));
+		String response = doJoinPost("/games/join", gson.toJson(join));
+		Map<String, List<String>> map = connection.getHeaderFields();
+		List<String> setCookie = map.get("Set-cookie");
+		gameId = setCookie.get(0);
+		//gameId = gameId.substring(11);
+		gameId = gameId.substring(0, gameId.length() - 8);
+		return response;
 	}
 	
 	@Override
 	public String postGamesSave(SaveGame game){
-		return doPost("/games/save", gson.toJson(game));
+		String response =  doMasterPost("/games/save", gson.toJson(game));
+		System.out.println(response);
+		return response;
 	}
 	
 	@Override
-	public void postGamesLoad(Game game){
-		
+	public String postGamesLoad(GameLoad game){
+		return "";
 	}
 	
 	@Override
@@ -111,12 +110,9 @@ public class Proxy implements IProxy {
 		return g;
 	}
 	
-	/* (non-Javadoc)
-	 * @see client.models.IProxy#postGameReset(client.models.Game)
-	 */
 	@Override
-	public void postGameReset(Game game){
-		
+	public String postGameReset(){
+		return doMasterPost("/user/register","");
 	}
 	
 	/* (non-Javadoc)
@@ -379,8 +375,7 @@ public class Proxy implements IProxy {
 				 String line;
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
-				 }
-				 System.out.println(out.toString());  
+				 } 
 				 reader.close();
 				 responseBody.close();
 				 return out.toString();
@@ -395,8 +390,7 @@ public class Proxy implements IProxy {
 				 String line;
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
-				 }
-				 System.out.println(out.toString());  
+				 } 
 				 reader.close();
 				 responseBody.close();
 				 return out.toString();
@@ -433,7 +427,58 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-				 System.out.println(out.toString());  
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 } 
+			 else{
+				//Read response body from InputStream
+				 InputStream responseBody = connection.getErrorStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 } 
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 }
+	    }catch(Exception e){
+			e.printStackTrace();
+	    }
+		return "";
+	}
+	
+	private String doMasterPost(String urlPath, String postData) {
+		try { 
+			 URL url = new URL("http://localhost:8081" + urlPath); 
+			 connection = (HttpURLConnection)url.openConnection();
+			 connection.setRequestMethod("POST");
+			 connection.setRequestProperty("Cookie", cookie + "; " + gameId);
+			 connection.setDoOutput(true);
+			 connection.connect();
+			 
+			 //Write request body to OutputStream
+			 OutputStream requestBody = connection.getOutputStream();  
+			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
+			 requestBody.close();
+			 
+			 int response = connection.getResponseCode();
+	
+			 if (response == HttpURLConnection.HTTP_OK) {
+				 //Read response body from InputStream
+				 InputStream responseBody = connection.getInputStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 } 
 				 reader.close();
 				 responseBody.close();
 				 return out.toString();
@@ -449,7 +494,6 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-				 System.out.println(out.toString());  
 				 reader.close();
 				 responseBody.close();
 				 return out.toString();

@@ -2,6 +2,7 @@ package client.models;
 
 import client.data.PlayerInfo;
 import client.server.CreateGame;
+import client.server.GameLoad;
 import client.server.GameServer;
 import client.server.SaveGame;
 import client.server.ServerJoinGame;
@@ -49,7 +50,7 @@ public interface IProxy {
 	 * Loads the game that the client wants to start and sends it to the server
 	 * @param the game that needs to be loaded
 	 */
-	public abstract void postGamesLoad(Game game);
+	public String postGamesLoad(GameLoad game);
 
 	/**
 	 * Retrieves the latest game state
@@ -61,7 +62,7 @@ public interface IProxy {
 	 * Sends a game to reset it on the server
 	 * @param the game that needs to be reset
 	 */
-	public abstract void postGameReset(Game game);
+	public String postGameReset();
 
 	/**
 	 * Not sure what this one does...
