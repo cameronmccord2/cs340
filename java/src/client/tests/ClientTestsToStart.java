@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import client.models.Proxy;
+import client.server.ServerJoinGame;
 import client.server.User;
 
 public class ClientTestsToStart {
@@ -25,8 +26,7 @@ public class ClientTestsToStart {
 		assertEquals("Success",proxy.postUserLogin(user1));
 		
 		//TEST JOIN GAME
-		
-		assertNull(proxy.postGamesJoin("{id:2,color: orange}"));
-		
+		ServerJoinGame serverJoinGame = new ServerJoinGame(0,"orange");
+		assertEquals("Success",proxy.postGamesJoin(serverJoinGame));	
 	}
 }

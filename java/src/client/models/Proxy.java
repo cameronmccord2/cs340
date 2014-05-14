@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import sun.misc.IOUtils;
 
@@ -27,6 +28,8 @@ import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
 import client.server.CreateGame;
 import client.server.GameServer;
+import client.server.SaveGame;
+import client.server.ServerJoinGame;
 import client.server.User;
 
 /**
@@ -41,6 +44,7 @@ public class Proxy implements IProxy {
 	private Gson gson = new Gson();
 	private Translator translator;
 	private List<IGame> games;
+	private String cookie;
 	
 	public Proxy() {
 		this.translator = new Translator();
@@ -49,7 +53,13 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public String postUserLogin(User user){
-		return doPost("/user/login", gson.toJson(user));
+		String response =  doPost("/user/login", gson.toJson(user));
+		Map<String, List<String>> map = connection.getHeaderFields();
+		List<String> setCookie = map.get("Set-cookie");
+		cookie = setCookie.get(0);
+//		cookie = cookie.substring(11);
+		cookie = cookie.substring(0, cookie.length() - 8);
+		return response;
 	}
 	
 	@Override
@@ -61,7 +71,6 @@ public class Proxy implements IProxy {
 	public GameServer[] getGamesList(){
 		String response = doGet("/games/list");
 		GameServer gameServer = gson.fromJson(response, GameServer.class);
-		System.out.println();
 		return null;
 	}
 	
@@ -74,14 +83,13 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public String postGamesJoin(String game){
-		String response = doPost("/games/join", game);
-		return null;
+	public String postGamesJoin(ServerJoinGame join){
+		return doJoinPost("/games/join", gson.toJson(join));
 	}
 	
 	@Override
-	public void postGamesSave(Game game){
-		
+	public String postGamesSave(SaveGame game){
+		return doPost("/games/save", gson.toJson(game));
 	}
 	
 	@Override
@@ -361,7 +369,60 @@ public class Proxy implements IProxy {
 			 
 			 int response = connection.getResponseCode();
 	
-			 if (response == HttpURLConnection.HTTP_OK) { 
+			 if (response == HttpURLConnection.HTTP_OK) {
+				 //Read response body from InputStream
+				 InputStream responseBody = connection.getInputStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 }
+				 System.out.println(out.toString());  
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 } 
+			 else{
+				//Read response body from InputStream
+				 InputStream responseBody = connection.getErrorStream(); 
+				 
+				 //convert response to string
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+				 StringBuilder out = new StringBuilder();
+				 String line;
+				 while ((line = reader.readLine()) != null) {
+				     out.append(line);
+				 }
+				 System.out.println(out.toString());  
+				 reader.close();
+				 responseBody.close();
+				 return out.toString();
+			 }
+	    }catch(Exception e){
+			e.printStackTrace();
+	    }
+		return "";
+	}
+	private String doJoinPost(String urlPath, String postData) {
+		try { 
+			 URL url = new URL("http://localhost:8081" + urlPath); 
+			 connection = (HttpURLConnection)url.openConnection();
+			 connection.setRequestMethod("POST");
+			 connection.setRequestProperty("Cookie", cookie);
+			 connection.setDoOutput(true);
+			 connection.connect();
+			 
+			 //Write request body to OutputStream
+			 OutputStream requestBody = connection.getOutputStream();  
+			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
+			 requestBody.close();
+			 
+			 int response = connection.getResponseCode();
+	
+			 if (response == HttpURLConnection.HTTP_OK) {
 				 //Read response body from InputStream
 				 InputStream responseBody = connection.getInputStream(); 
 				 

@@ -3,6 +3,8 @@ package client.models;
 import client.data.PlayerInfo;
 import client.server.CreateGame;
 import client.server.GameServer;
+import client.server.SaveGame;
+import client.server.ServerJoinGame;
 import client.server.User;
 
 public interface IProxy {
@@ -35,13 +37,13 @@ public interface IProxy {
 	 * Joins the game on the server
 	 * @param The Game that this client wants to join
 	 */
-	public String postGamesJoin(String game);
+	public String postGamesJoin(ServerJoinGame join);
 
 	/**
 	 * Saves the game state
 	 * @param the game state to be saved
 	 */
-	public void postGamesSave(Game game);
+	public String postGamesSave(SaveGame game);
 
 	/**
 	 * Loads the game that the client wants to start and sends it to the server
