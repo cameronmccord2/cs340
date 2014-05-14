@@ -5,12 +5,16 @@ import java.util.*;
 public class CatanMap implements ICatanMap
 {
 	private Map<ILocation, IPiece> map;
+	private int radius;
 
 	public CatanMap()
 	{
 		map = new HashMap<>();
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public boolean canPlaceSegment(IRoadSegment segment)
 	{
@@ -19,6 +23,12 @@ public class CatanMap implements ICatanMap
 		return false;
 	}
 
+	/**
+	 *
+	 *
+	 *		@param	settlement
+	 *					The ISettlement to be placed at the
+	 */
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)
 	{
@@ -26,10 +36,30 @@ public class CatanMap implements ICatanMap
 		return false;
 	}
 
+	/**
+	 * 	Only an existing settlement can be upgraded to a
+	 * 	City.
+	 *
+	 * 	@param	city
+	 * 				The ICity that is to replace the current
+	 * 				settlement at that location.
+	 *
+	 * 	@return	Whether or not that ICity can be placed
+	 * 				on the requested Location.
+	 */
 	@Override
 	public boolean canPlaceCity(ICity city)
 	{
 		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public boolean doesDistanceRuleApply(ILocation first, ILocation second)
+	{
 		return false;
 	}
 
@@ -130,14 +160,14 @@ public class CatanMap implements ICatanMap
 	public int getRadius()
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return radius;
 	}
 
 	@Override
 	public void setRadius(int radius)
 	{
 		// TODO Auto-generated method stub
-
+		this.radius = radius;
 	}
 
 }
