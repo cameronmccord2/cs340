@@ -27,4 +27,10 @@ public class DefaultLocation implements ILocation
 		return null;
 	}
 
+	@Override
+	public <D extends IDirection> void setDirection(D direction)
+	{
+
+	}
+
 }

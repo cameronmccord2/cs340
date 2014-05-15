@@ -2,16 +2,15 @@ package client.models;
 
 import java.util.Collection;
 
+import client.models.translator.TRRoad;
+
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.ILocation;
 
-public class RoadSegment implements IRoadSegment
+public class RoadSegment extends Piece implements IRoadSegment
 {
-	private ILocation location;
-	private IPlayer player;
-	private CatanColor color;
 	private Collection<Resource> cost;
 
 	public RoadSegment()
@@ -19,40 +18,11 @@ public class RoadSegment implements IRoadSegment
 
 	}
 
-	@Override
-	public ILocation getLocation()
+//	new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
+	public RoadSegment(TRRoad road, IPlayer player)
 	{
-		return location;
-	}
-
-	@Override
-	public void setLocation(ILocation location)
-	{
-		this.location = location;
-	}
-
-	@Override
-	public IPlayer getPlayer()
-	{
-		return null;
-	}
-
-	@Override
-	public void setPlayer(IPlayer player)
-	{
-
-	}
-
-	@Override
-	public CatanColor getColor()
-	{
-		return null;
-	}
-
-	@Override
-	public void setColor(CatanColor color)
-	{
-
+		this.setPlayer(player);
+		this.setLocation(new EdgeLocation(road.getLocation()));
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package client.models;
 
-import java.util.Collection;
-
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.ILocation;
@@ -37,21 +35,6 @@ public abstract class Piece implements IPiece
 	}
 
 	@Override
-	public CatanColor getColor()
-	{
-		return color;
-	}
-
-	@Override
-	public void setColor(CatanColor color)
-	{
-		this.color = color;
-	}
-
-	@Override
 	public abstract PieceType getPieceType();
-
-	@Override
-	public abstract Collection<Resource> getResourceCost();
 
 }
