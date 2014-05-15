@@ -1,5 +1,8 @@
 package client.models;
 
+import java.util.Collection;
+
+import shared.definitions.PieceType;
 import shared.locations.HexLocation;
 import client.models.translator.TRHexLocation;
 
@@ -7,22 +10,28 @@ import client.models.translator.TRHexLocation;
  * @author scottdaly
  *
  */
-public class Robber implements IRobber{
+public class Robber extends Piece implements IRobber
+{
 
-	protected HexLocation location;
-	
 	public Robber(TRHexLocation robber) {
 		this.setLocation(new HexLocation(robber.getX(), robber.getY()));
 	}
 
-	@Override
-	public HexLocation getLocation() {
-		return this.location;
+	public void setLocation(HexLocation hexLocation) {
+		location.setHexLocation(hexLocation);
 	}
 
 	@Override
-	public void setLocation(HexLocation location) {
-		this.location = location;
+	public PieceType getPieceType()
+	{
+		return PieceType.ROBBER;
+	}
+
+	@Override
+	public Collection<Resource> getResourceCost()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

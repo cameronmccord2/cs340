@@ -1,50 +1,44 @@
 package client.models;
 
+import java.util.Collection;
+
+import shared.definitions.CatanColor;
+import shared.definitions.PieceType;
+import shared.locations.ILocation;
 import shared.locations.VertexLocation;
 
 /**
  * @author Craig Call
  *
  */
-public class Settlement implements ISettlement
+public class Settlement extends Piece implements ISettlement
 {
-	protected IPlayer player;
-	protected VertexLocation location;
 	protected int pointValue;
-	
-	public Settlement()
+	protected Collection<Resource> cost;
+
+	public Settlement(ILocation location, IPlayer player, int pointValue)
 	{
-		
-	}
-	
-	public Settlement(VertexLocation vertexLocation, Player newPlayer, int pointValue) {
-		this.player = newPlayer;
-		this.location = vertexLocation;
+		this.setLocation(location);
+		this.setPlayer(player);
 		this.pointValue = pointValue;
 	}
 
-	public VertexLocation getVertexLocation()
+	@Override
+	public PieceType getPieceType()
 	{
-		return location;
+		return PieceType.SETTLEMENT;
 	}
-	
-	public void setVertexLocation(VertexLocation location)
+
+	@Override
+	public Collection<Resource> getResourceCost()
 	{
-		this.location = location;
+		return null;
 	}
-	
-	public IPlayer getPlayer()
-	{
-		return player;
-	}
-	
-	public void setPlayer(IPlayer player)
-	{
-		this.player = player;
-	}
-	
+
+	@Override
 	public int getPointValue()
 	{
 		return pointValue;
 	}
+
 }
