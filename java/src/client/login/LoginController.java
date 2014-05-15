@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Implementation for the login controller
  */
+//@SuppressWarnings({"unused"})
 public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;

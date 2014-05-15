@@ -19,6 +19,7 @@ import shared.locations.*;
  *
  */
 
+//@SuppressWarnings({"unused"})
 public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;

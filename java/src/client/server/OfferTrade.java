@@ -8,6 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
+//@SuppressWarnings({"unused"})
 public class OfferTrade {
 	private String type;
 	private int playerIndex;

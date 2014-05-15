@@ -24,7 +24,8 @@
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
 	<!-- Tests directory -->
-	<property name="test.dir" value="${java.dir}/src/client/tests/"/>
+	<property name="test.dir" value="${java.dir}/src"/>
+	<property name="test.build" value="${java.dir}/build"/>
 
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -95,6 +96,9 @@
 		<javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
 			<classpath refid="java.lib.classpath" />
 		</javac>
+		<javac srcdir="${test.dir}" destdir="${java.build}" debug="true" includeantruntime="true">
+			<classpath refid="java.lib.classpath" />
+		</javac>
 	</target>
 
 	<target name="package" depends="compile" description="package the jar file" >
@@ -155,7 +159,8 @@
         <java classname="client.tests.AllClientTests">
         	<arg value="-h"/>
         	    <classpath>
-        	        <pathelement path="${tests.dir}"/>
+					  <path refid="java.lib.classpath"/>
+        	        <pathelement location="${java.build}"/>
         	    </classpath>
         </java>
     </target>
