@@ -2,6 +2,8 @@ package client.tests;
 
 import static org.junit.Assert.assertEquals;
 
+import client.models.DummyProxy;
+import client.models.IProxy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,17 +37,17 @@ import client.server.User;
 
 public class ProxyTest {
 	
-	private Proxy proxy;
+	private IProxy proxy;
 	private String illegalMove = "CommandError: A syntatically correct command was an illegal move: class java.lang.NullPointerException";
 	private String illegalMove1 = "CommandError: A syntatically correct command was an illegal move: class java.lang.ArrayIndexOutOfBoundsException";
 
 	@Before
 	public void setUp() throws Exception {
-		proxy = new Proxy();
+		proxy = new DummyProxy();
 	}
 
 	@Test
-	public void test() {
+	public void testUserOperations() {
 		//TEST LOGIN ENDPOINT (works)
 		User user1 = new User("Sam","sam");
 		assertEquals("Success",proxy.postUserLogin(user1).getJson());
@@ -53,7 +55,10 @@ public class ProxyTest {
 		//TEST REGISTER ENDPOINT (works)
 		User user3 = new User("Scott","scottiscool");
 		assertEquals("Success",proxy.postUserRegister(user3).getJson());
-	
+    }
+
+    @Test
+    public void testGamesOperations() {
 		//TEST GET GAMES LIST (Cameron??)
 		//assertEquals(200,proxy.getGamesList().getResponseCode());
 		
@@ -64,10 +69,20 @@ public class ProxyTest {
 		//TEST JOIN GAME (works)
 		ServerJoinGame serverJoinGame = new ServerJoinGame(3,"orange");
 		assertEquals("Success",proxy.postGamesJoin(serverJoinGame).getJson());
-		
+    }
+
+    @Test
+    public void testGameOperations() {
 		//TEST GET MODEL (Cameron???)
 		//assertEquals(200,proxy.getGameModel().getResponseCode());
-		
+
+        //TEST RESET GAME
+        assertEquals(200,proxy.postGameReset().getResponseCode());
+    }
+
+    @Test
+    public void testMovesOperations() {
+
 		//TEST SEND CHAT 
 		ServerChat serverChat = new ServerChat("sendChat",0,"Hi everyone!");
 		assertEquals(200,proxy.movesSendChat(serverChat).getResponseCode());
@@ -143,13 +158,14 @@ public class ProxyTest {
 		//TEST DISCARD CARDS
 		//To Dan:
 		//	create discardCards object and compare it to the ServerResponse object handed back
-		
+    }
+
+    @Test
+    public void testUtilOperations() {
 		//TEST LOG LEVEL CHANGE (works)
 		ServerLogLevel sll = new ServerLogLevel("ALL");
 		assertEquals("Success",proxy.utilChangeLogLevel(sll).getJson());
-		
-		//TEST RESET GAME 
-		assertEquals(200,proxy.postGameReset().getResponseCode());
+
 		
 	}
 }

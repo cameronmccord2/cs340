@@ -84,16 +84,17 @@ public class Bank extends Participant implements IBank {
      * @param type
      * @return
      */
-    public boolean canDrawResource(ResourceType type) {
-        if(resourceCards.get(type) > 0)
+    public boolean canDrawResource(ResourceCard type) {
+        if(resourceCards.containsKey(type) && resourceCards.get(type) > 0) {
             return true;
+        }
         return false;
     }
 
     /**
      * Draw a Resource of the type specified
     */
-    public ResourceCard drawResource(ResourceType type) {
+    public ResourceCard drawResource(ResourceCard type) {
         if(canDrawResource(type)) {
             // TODO return resource type and decrement count
         }
@@ -105,7 +106,7 @@ public class Bank extends Participant implements IBank {
             if(card.getType() == type)
                 return resourceCards.get(card);
         }
-        assert false;
+        //assert false;
         return 0;
     }
 

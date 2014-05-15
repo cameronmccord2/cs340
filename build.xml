@@ -26,12 +26,12 @@
    
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
-    
-	<path id="java.lib.classpath">
-		<fileset dir="${java.lib.dir}">
-			<include name="**/*.jar" />
-		</fileset>
-	</path>
+
+    <path id="java.lib.classpath">
+        <fileset dir="${java.lib.dir}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
 
 	<!-- TARGETS -->
 	<!-- ******* -->
@@ -119,7 +119,7 @@
             <manifest>
                 <attribute name="Main-Class" value="client.tests.AllClientTests"/>
                 <attribute name="Class-Path"
-                           value="lib/${gson.file}" />
+                            value="${java.lib}" />
             </manifest>
         </jar>
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
