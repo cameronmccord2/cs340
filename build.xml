@@ -23,6 +23,8 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
+	<!-- Tests directory -->
+	<property name="test.dir" value="${java.dir}/src/client/tests/"/>
    
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -150,11 +152,11 @@
     </target>
 
     <target name="test" depends="package" description="compiles, packages, and runs the test cases">
-        <java jar="${java.dist}/catan-test.jar" dir="${java.dist}" fork="yes">
-            <sysproperty key="com.sun.management.jmxremote" value=""/>
-            <assertions>
-                <enable/>
-            </assertions>
+        <java classname="client.tests.AllClientTest">
+        	<arg value="-h"/>
+        	    <classpath>
+        	        <pathelement path="${tests.dir}"/>
+        	    </classpath>
         </java>
     </target>
 
