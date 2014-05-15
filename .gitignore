@@ -5,6 +5,12 @@ target/
 java/build/ 
 /java/build/
 /java/build
+java/.gitignore/
+/java/.gitignore/
+/java/.gitignore
+java/bin/
+/java/bin/
+/java/bin
 
 # OS Files #
 .DS_Store
