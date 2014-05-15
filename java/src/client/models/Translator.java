@@ -15,6 +15,7 @@ import client.models.translator.ClientModel;
 import client.models.translator.TRDevCardList;
 import client.models.translator.TRHex;
 import client.models.translator.TRPlayer;
+import client.models.translator.TRPort;
 import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
 import client.models.translator.TRVertexObject;
@@ -28,21 +29,13 @@ public class Translator {
 
 	public Translator() {}
 	
-	public IGame convertClientModelToGame(ClientModel cm, IGame iGame){
+	public IGame convertClientModelToGame(ClientModel cm, IGame iGame) throws InvalidLocationException{
 		if(cm == null || iGame == null)
 			throw new RuntimeException("cm and iGame should never be null");
 		
 		Game g = (Game)iGame;
 		
-		ICatanMap map = new CatanMap();
-		// TODO do map
-		for (TRHex hex : cm.getMap().getHexes()) {
-			
-		}
-		IRobber robber = new Robber(cm.getMap().getRobber());
-		map.setRobber(robber);
-		map.setRadius(cm.getMap().getRadius());
-		g.setMap(map);
+		
 		
 		IBank bank = new Bank(cm.getDeck(), cm.getBank());
 		g.setBank(bank);
@@ -97,6 +90,7 @@ public class Translator {
 			newPlayer.setRoads(roads);
 			assert(roads.size() == p.getRoads());
 			
+			
 			Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
 			TRResourceList resources = p.getResources();
 			resourceCards.put(ResourceCard.BRICK, resources.getBrick());
@@ -119,7 +113,39 @@ public class Translator {
 			g.getPlayers()[index] = newPlayer;
 			index++;
 		}
+		
+		ICatanMap map = new CatanMap();
+		// TODO do map
+		for (TRHex hex : cm.getMap().getHexes()) {
+			map.addHex(new Hex(hex));
+		}
+		for (TRVertexObject city : cm.getMap().getCities()) {
+			map.placeCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers()), 2));
+		}
+		for (TRPort port : cm.getMap().getPorts()) {
+			map.addPort(new Port(port));
+		}
+		for(TRRoad road : cm.getMap().getRoads()){
+			map.placeRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
+		}
+		for (TRVertexObject settl : cm.getMap().getSettlements()) {
+			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), (Player)this.getPlayerWithId(settl.getOwner(), g.getPlayers()), 1));
+		}
+		
+		IRobber robber = new Robber(cm.getMap().getRobber());
+		map.setRobber(robber);
+		map.setRadius(cm.getMap().getRadius());
+		g.setMap(map);
+		
 		return g;
+	}
+
+	private IPlayer getPlayerWithId(Integer owner, IPlayer[] players) {
+		for (IPlayer iPlayer : players) {
+			if(iPlayer.getPlayerInfo().getId() == owner)
+				return iPlayer;
+		}
+		return null;
 	}
 }
 
