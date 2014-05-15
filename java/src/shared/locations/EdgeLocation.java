@@ -25,12 +25,7 @@ public class EdgeLocation implements ILocation{
 		return hexLocation;
 	}
 
-	public void setHexLocation(HexLocation hexLocation)
-	{
-		this.setHexLoc(hexLocation);
-	}
-
-	private void setHexLoc(HexLocation hexLocation) {
+	public void setHexLocation(HexLocation hexLocation) {
 		if (hexLocation == null) {
 			throw new IllegalArgumentException("hexLoc cannot be null");
 		}
@@ -109,8 +104,9 @@ public class EdgeLocation implements ILocation{
 	}
 
 	@Override
-	public void setDirection(IDirection direction) {
-		this.direction = (EdgeDirection)direction;
+	public <D extends IDirection> void setDirection(D direction)
+	{
+		this.setDirection(direction);
 	}
 }
 

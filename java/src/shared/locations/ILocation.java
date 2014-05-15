@@ -6,6 +6,7 @@ public interface ILocation
 	public void setHexLocation(HexLocation location);
 
 	public IDirection getDirection();
+	public <D extends IDirection> void setDirection(D direction);
 
 	public ILocation getNormalizedLocation();
 	void setDirection(IDirection direction);

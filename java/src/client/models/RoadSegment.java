@@ -10,11 +10,8 @@ import shared.locations.HexLocation;
 import shared.locations.ILocation;
 import shared.locations.VertexDirection;
 
-public class RoadSegment implements IRoadSegment
+public class RoadSegment extends Piece implements IRoadSegment
 {
-	private ILocation location;
-	private IPlayer player;
-	private CatanColor color;
 	private Collection<Resource> cost;
 
 	public RoadSegment()
@@ -31,7 +28,8 @@ public class RoadSegment implements IRoadSegment
 	@Override
 	public ILocation getLocation()
 	{
-		return location;
+		this.setPlayer(player);
+		this.setLocation(new EdgeLocation(road.getLocation()));
 	}
 
 	@Override

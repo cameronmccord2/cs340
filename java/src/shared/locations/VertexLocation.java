@@ -25,12 +25,7 @@ public class VertexLocation implements ILocation {
 		return hexLocation;
 	}
 
-	public void setHexLocation(HexLocation hexLocation)
-	{
-		this.setHexLoc(hexLocation);
-	}
-
-	private void setHexLoc(HexLocation hexLocation) {
+	public void setHexLocation(HexLocation hexLocation) {
 		if (hexLocation == null) {
 			throw new IllegalArgumentException("hexLoc cannot be null");
 		}

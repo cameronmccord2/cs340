@@ -1,8 +1,9 @@
 package client.models;
 
-import shared.locations.*;
+import java.util.Collection;
 
 public interface ISettlement extends IPiece
 {
+	public Collection<Resource> getResourceCost();
 	public int getPointValue();
 }

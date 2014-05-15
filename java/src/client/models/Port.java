@@ -2,47 +2,47 @@ package client.models;
 
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
-import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
 import shared.locations.ILocation;
 import shared.locations.VertexDirection;
 
 public class Port implements IPort {
-	
+
+	protected HexLocation hexLocation;
 	protected ILocation location;
 	protected int exchangeRate;
 	protected PortType portType;
 
 	public Port(TRPort port) {
-		this.location = new DefaultLocation(new HexLocation(port.getLocation().getX(), port.getLocation().getY()), VertexDirection.getDirectionFromServerString(port.getDirection()));
+		this.hexLocation = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
 		this.exchangeRate = port.getRatio();
 		switch(port.getResource().toUpperCase()){
 		case "WOOD":
 			this.portType = PortType.WOOD;
 			break;
-			
+
 		case "BRICK":
 			this.portType = PortType.BRICK;
 			break;
-			
+
 		case "SHEEP":
 			this.portType = PortType.SHEEP;
 			break;
-			
+
 		case "WHEAT":
 			this.portType = PortType.WHEAT;
 			break;
-			
+
 		case "ORE":
 			this.portType = PortType.ORE;
 			break;
-			
+
 		case "THREE":
 			this.portType = PortType.THREE;
 			break;
 		}
 	}
-	
+
 	@Override
 	public int getExchangeRate() {
 		return exchangeRate;
@@ -63,18 +63,26 @@ public class Port implements IPort {
 		this.portType = portType;
 	}
 
-	@Override
-	public void setLocation(ILocation location) {
-		// TODO Auto-generated method stub
-		
+	public HexLocation getHexLocation() {
+		return hexLocation;
+	}
+
+	public void setLocation(HexLocation location) {
+		this.hexLocation = location;
 	}
 
 	@Override
-	public ILocation getLocation() {
-		// TODO Auto-generated method stub
+	public void setLocation(ILocation location)
+	{
+
+	}
+
+	@Override
+	public ILocation getLocation()
+	{
 		return null;
 	}
 
-	
+
 
 }
