@@ -13,7 +13,7 @@ public class City extends Settlement implements ICity
 		this.pointValue = 2;
 	}
 
-	public City(VertexLocation vertexLocation, Player newPlayer, int points) {
-		super(vertexLocation, newPlayer, points);
+	public City(VertexLocation vertexLocation, IPlayer iPlayer, int points) {
+		super(vertexLocation, (Player)iPlayer, points);
 	}
 }
