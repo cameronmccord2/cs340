@@ -69,8 +69,17 @@ public class Proxy implements IProxy {
 		} catch (InvalidTranslatorModelException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		IGame g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
-		this.translator.convertClientModelToGame(cm, g);
+		IGame g = null;
+		try {
+			g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
+		} catch (NumberFormatException | InvalidLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < this.games.size(); i++) {
+			if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
+				this.games.set(i, g);
+		}
 	}
 	
 	@Override

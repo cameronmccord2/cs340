@@ -4,6 +4,7 @@ import client.models.translator.TRPort;
 import shared.definitions.PortType;
 import shared.locations.HexLocation;
 import shared.locations.ILocation;
+import shared.locations.VertexDirection;
 
 public class Port implements IPort {
 
