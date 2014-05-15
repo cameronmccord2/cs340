@@ -17,6 +17,10 @@ public class Game implements IGame{
 	private IPlayer players[];
 	private Integer modelVersion;
 	private IBank bank;
+	private MessageList log;
+	private MessageList chat;
+	private TurnTracker turnTracker;
+	private Integer winner;
 	
 	
 	public Game() {
@@ -107,6 +111,56 @@ public class Game implements IGame{
 		builder.append(bank);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public MessageList getLog() {
+		return log;
+	}
+
+	@Override
+	public void setLog(MessageList log) {
+		this.log = log;
+	}
+
+	@Override
+	public MessageList getChat() {
+		return chat;
+	}
+
+	@Override
+	public void setChat(MessageList chat) {
+		this.chat = chat;
+	}
+	
+	@Override
+	public void addChat(MessageLine line){
+		this.chat.addLine(line);
+	}
+	
+	@Override
+	public void addLog(MessageLine line){
+		this.log.addLine(line);
+	}
+
+	@Override
+	public TurnTracker getTurnTracker() {
+		return turnTracker;
+	}
+
+	@Override
+	public void setTurnTracker(TurnTracker turnTracker) {
+		this.turnTracker = turnTracker;
+	}
+
+	@Override
+	public Integer getWinner() {
+		return winner;
+	}
+
+	@Override
+	public void setWinner(Integer winner) {
+		this.winner = winner;
 	}
 	
 }

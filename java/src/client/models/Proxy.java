@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import shared.definitions.CatanColor;
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
 import client.models.exceptions.InvalidTranslatorModelException;
@@ -22,6 +24,7 @@ import client.server.FinishedTurn;
 import client.server.GameServer;
 import client.server.MaritimeTradeOff;
 import client.server.OfferTrade;
+import client.server.PlayerServer;
 import client.server.RoadBuilding;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
@@ -61,7 +64,7 @@ public class Proxy implements IProxy {
 		this.games = new ArrayList<IGame>();
 	}
 	
-	private void saveGameModel(String model){
+	private IGame saveGameModel(String model){
 		Gson gson = new Gson();
 		ClientModel cm = gson.fromJson(model, ClientModel.class);
 		try {
@@ -80,6 +83,7 @@ public class Proxy implements IProxy {
 			if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
 				this.games.set(i, g);
 		}
+		return g;
 	}
 	
 	@Override
@@ -101,16 +105,34 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public GameServer[] getGamesList(){
+	public ServerResponse getGamesList(){
 		ServerResponse sr = doGet("/games/list");
 		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
-		GameServer[] list = new GameServer[games.size()];
-		int index = 0;
+		List<IGame> list = new ArrayList<IGame>();
 		for (GameServer g : games) {
-			list[index] = g;
-			index++;
+			IPlayer[] players = new IPlayer[g.getPlayers().length];
+			int playerIndex = 0;
+			for (PlayerServer p : g.getPlayers()) {
+				PlayerInfo pi = new PlayerInfo();
+				pi.setColor(CatanColor.getColorForName(p.getColor()));
+				pi.setId(p.getId());
+				pi.setName(p.getName());
+				pi.setPlayerIndex(playerIndex);
+				IPlayer player = new Player(pi);
+				players[playerIndex] = player;
+				playerIndex++;
+			}
+			Game game = new Game();
+			game.setPlayers(players);
+			
+			GameInfo gi = new GameInfo();
+			gi.setId(g.getId());
+			gi.setTitle(g.getTitle());
+			game.setGameInfo(gi);
+			list.add(game);
 		}
-		return list;
+		this.games = list;
+		return sr;
 	}
 	
 	@Override
@@ -132,7 +154,7 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public void getGameModel(){
+	public IGame getGameModel(){
 		Integer version = 0;
 		try {
 			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
@@ -143,7 +165,7 @@ public class Proxy implements IProxy {
 		if(version != 0)
 			requestUrl += "?version=" + version;
 		ServerResponse sr = this.doGet(requestUrl);
-		this.saveGameModel(sr.getJson());
+		return this.saveGameModel(sr.getJson());
 	}
 	
 	private IGame getGameForGameId(Integer gameId) {
@@ -494,5 +516,9 @@ public class Proxy implements IProxy {
 			e.printStackTrace();
 	    }
 		return null;
+	}
+
+	public List<IGame> getGames() {
+		return games;
 	}
 }

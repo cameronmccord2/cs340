@@ -14,6 +14,7 @@ import client.data.PlayerInfo;
 import client.models.translator.ClientModel;
 import client.models.translator.TRDevCardList;
 import client.models.translator.TRHex;
+import client.models.translator.TRMessageLine;
 import client.models.translator.TRPlayer;
 import client.models.translator.TRPort;
 import client.models.translator.TRResourceList;
@@ -35,12 +36,24 @@ public class Translator {
 
 		Game g = (Game)iGame;
 
+		g.setLog(new MessageList());
+		for (TRMessageLine line : cm.getLog().getLines()) {
+			g.addLog(new MessageLine(line));
+		}
+		
+		g.setChat(new MessageList());
+		for (TRMessageLine line : cm.getChat().getLines()) {
+			g.addChat(new MessageLine(line));
+		}
 
+		g.setTurnTracker(new TurnTracker(cm.getTurnTracker()));
+		
+		g.setModelVersion(cm.getVersion());
+		
+		g.setWinner(cm.getWinner());
 
 		IBank bank = new Bank(cm.getDeck(), cm.getBank());
 		g.setBank(bank);
-
-		g.setModelVersion(g.getModelVersion() + 1);
 
 		g.setPlayers((IPlayer[]) new Player[cm.getPlayers().length]);
 		int index = 0;

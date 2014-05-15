@@ -44,7 +44,7 @@ public interface IProxy {
 	 * This will retrieve all current games on the server
 	 * @return an array of Game objects
 	 */
-	public GameServer[] getGamesList();
+	public ServerResponse getGamesList();
 
 	/**
 	 * Posts a new game that has just been created
@@ -178,6 +178,6 @@ public interface IProxy {
 	 * Retrieves the latest game state
 	 * @return the Game object that holds all the updated game state
 	 */
-	public void getGameModel();
+	public IGame getGameModel();
 
 }

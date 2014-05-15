@@ -10,7 +10,11 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import client.models.DevelopmentCard;
+import client.models.DummyProxy;
+import client.models.IGame;
 import client.models.Proxy;
+import client.models.ResourceCard;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;
@@ -36,12 +40,14 @@ import client.server.User;
 public class ProxyTest {
 	
 	private Proxy proxy;
+	private DummyProxy dummyProxy;
 	private String illegalMove = "CommandError: A syntatically correct command was an illegal move: class java.lang.NullPointerException";
 	private String illegalMove1 = "CommandError: A syntatically correct command was an illegal move: class java.lang.ArrayIndexOutOfBoundsException";
 
 	@Before
 	public void setUp() throws Exception {
 		proxy = new Proxy();
+		this.dummyProxy = new DummyProxy();
 	}
 
 	@Test
@@ -55,7 +61,8 @@ public class ProxyTest {
 		assertEquals("Success",proxy.postUserRegister(user3).getJson());
 	
 		//TEST GET GAMES LIST (Cameron??)
-		//assertEquals(200,proxy.getGamesList().getResponseCode());
+		assertEquals(200,dummyProxy.getGamesList().getResponseCode());
+		assertEquals(dummyProxy.getGames().size(), 3);
 		
 		//TEST CREATE GAME (works)
 		CreateGame createGame = new CreateGame(false,false,false,"MINE");
@@ -66,7 +73,115 @@ public class ProxyTest {
 		assertEquals("Success",proxy.postGamesJoin(serverJoinGame).getJson());
 		
 		//TEST GET MODEL (Cameron???)
-		//assertEquals(200,proxy.getGameModel().getResponseCode());
+		dummyProxy.getGamesList();
+		IGame g = dummyProxy.getGameModel();
+		assert(g.getMap().getCities().size() == 0);
+		assert(g.getMap().getSettlements().size() == 8);
+		assert(g.getPlayers().length == 4);
+		/*
+		 * "resources": {
+        "brick": 0,
+        "wood": 1,
+        "sheep": 1,
+        "wheat": 1,
+        "ore": 0
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 13,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 0,
+      "playerIndex": 0,
+      "name": "Sam",
+      "color": "orange"
+		 */
+		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.BRICK) == 0);
+		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.WOOD) == 1);
+		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.SHEEP) == 1);
+		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.WHEAT) == 1);
+		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.ORE) == 0);
+		
+		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.MONOPOLY) == 0);
+		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.MONUMENT) == 0);
+		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.ROAD_BUILD) == 0);
+		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.SOLDIER) == 0);
+		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.YEAR_OF_PLENTY) == 0);
+		
+		assert(g.getPlayers()[0].getCities().size() == 4);
+		assert(g.getPlayers()[0].getSettlements().size() == 3);
+		assert(g.getPlayers()[0].getMonuments() == 0);
+		assert(g.getPlayers()[0].getSoldiers() == 0);
+		assert(g.getPlayers()[0].getRoads().size() == 13);
+		assert(g.getPlayers()[0].getVictoryPoints() == 2);
+		
+		/*
+		 * "bank": {
+    "brick": 23,
+    "wood": 21,
+    "sheep": 20,
+    "wheat": 22,
+    "ore": 22
+  },
+		 */
+		
+		assert(g.getBank().getResourceCards().get(ResourceCard.BRICK) == 23);
+		assert(g.getBank().getResourceCards().get(ResourceCard.WOOD) == 21);
+		assert(g.getBank().getResourceCards().get(ResourceCard.SHEEP) == 20);
+		assert(g.getBank().getResourceCards().get(ResourceCard.WHEAT) == 22);
+		assert(g.getBank().getResourceCards().get(ResourceCard.ORE) == 22);
+/*
+ * "deck": {
+    "yearOfPlenty": 2,
+    "monopoly": 2,
+    "soldier": 14,
+    "roadBuilding": 2,
+    "monument": 5
+  },
+ */
+		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.MONOPOLY) == 2);
+		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.MONUMENT) == 5);
+		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.ROAD_BUILD) == 2);
+		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.SOLDIER) == 14);
+		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.YEAR_OF_PLENTY) == 2);
+		
+		assert(g.getChat().getLines().size() == 0);
+		assert(g.getLog().getLines().size() == 24);
+		assert(g.getLog().getLines().get(0).getMessage().equals("Sam built a road"));
+		assert(g.getLog().getLines().get(0).getSource().equals("Sam"));
+		
+		/*
+		 * "turnTracker": {
+    "status": "Rolling",
+    "currentTurn": 0,
+    "longestRoad": -1,
+    "largestArmy": -1
+  },
+		 */
+		assert(g.getTurnTracker().getCurrentTurn() == 0);
+		assert(g.getTurnTracker().getLongestRoad() == -1);
+		assert(g.getTurnTracker().getLargestArmy() == -1);
+		assert(g.getTurnTracker().getStatus().equals("Rolling"));
+		
+		assert(g.getWinner() == -1);
+		assert(g.getModelVersion() == 0);
 		
 		//TEST SEND CHAT 
 		ServerChat serverChat = new ServerChat("sendChat",0,"Hi everyone!");

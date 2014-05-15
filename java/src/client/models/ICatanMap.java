@@ -36,4 +36,5 @@ public interface ICatanMap
 
 	public int getRadius();
 	public void setRadius(int radius);
+	
 }

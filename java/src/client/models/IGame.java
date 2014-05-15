@@ -38,4 +38,24 @@ public interface IGame {
 	GameInfo getGameInfo();
 
 	void setGameInfo(GameInfo gameInfo);
+
+	MessageList getLog();
+
+	void setLog(MessageList log);
+
+	MessageList getChat();
+
+	void setChat(MessageList chat);
+
+	void addChat(MessageLine line);
+
+	void addLog(MessageLine line);
+
+	TurnTracker getTurnTracker();
+
+	void setTurnTracker(TurnTracker turnTracker);
+
+	Integer getWinner();
+
+	void setWinner(Integer winner);
 }
