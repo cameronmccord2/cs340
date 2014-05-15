@@ -26,6 +26,9 @@ public class CatanMap implements ICatanMap
 	private Map<VertexLocation, ISettlement> settlementMap;
 	private Map<VertexLocation, ICity> cityMap;
 	private Map<VertexLocation, IPort> portMap;
+
+	private Map<ILocation, IPiece> catanMap;
+
 	private int radius;
 
 	public CatanMap()
@@ -35,6 +38,8 @@ public class CatanMap implements ICatanMap
 		settlementMap = new HashMap<>();
 		cityMap = new HashMap<>();
 		portMap = new HashMap<>();
+
+		catanMap = new HashMap<>();
 	}
 
 	/**

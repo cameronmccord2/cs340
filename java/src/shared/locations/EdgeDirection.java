@@ -36,11 +36,5 @@ public enum EdgeDirection implements IDirection {
 		}
 		return EdgeDirection.South;
 	}
-
-	@Override
-	public Class<?> getDirectionType()
-	{
-		return EdgeDirection.class;
-	}
 }
 

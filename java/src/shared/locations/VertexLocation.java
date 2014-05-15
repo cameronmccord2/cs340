@@ -6,43 +6,43 @@ import client.models.translator.TREdgeLocation;
 /**
  * Represents the location of a vertex on a hex map
  */
-public class VertexLocation {
+public class VertexLocation implements ILocation {
 
-	private HexLocation hexLoc;
-	private VertexDirection dir;
+	private HexLocation hexLocation;
+	private VertexDirection direction;
 
-	public VertexLocation(HexLocation hexLoc, VertexDirection dir) {
-		setHexLoc(hexLoc);
-		setDir(dir);
+	public VertexLocation(HexLocation hexLoc, VertexDirection direction) {
+		setHexLocation(hexLoc);
+		setDirection(direction);
 	}
 
 	public VertexLocation(TREdgeLocation location) {
-		this.hexLoc = new HexLocation(location.getX(), location.getY());
-		this.dir = VertexDirection.getDirectionForServerString(location.getDirection());
+		this.hexLocation = new HexLocation(location.getX(), location.getY());
+		this.direction = VertexDirection.getDirectionFromServerString(location.getDirection());
 	}
 
-	public HexLocation getHexLoc() {
-		return hexLoc;
+	public HexLocation getHexLocation() {
+		return hexLocation;
 	}
 
-	private void setHexLoc(HexLocation hexLoc) {
-		if (hexLoc == null) {
+	private void setHexLocation(HexLocation hexLocation) {
+		if (hexLocation == null) {
 			throw new IllegalArgumentException("hexLoc cannot be null");
 		}
-		this.hexLoc = hexLoc;
+		this.hexLocation = hexLocation;
 	}
 
-	public VertexDirection getDir() {
-		return dir;
+	public VertexDirection getDirection() {
+		return direction;
 	}
 
-	private void setDir(VertexDirection direction) {
-		this.dir = direction;
+	private void setDirection(VertexDirection direction) {
+		this.direction = direction;
 	}
 
 	@Override
 	public String toString() {
-		return "VertexLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
+		return "VertexLocation [hexLoc=" + hexLocation + ", dir=" + direction + "]";
 	}
 
 	@Override
@@ -50,9 +50,9 @@ public class VertexLocation {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((dir == null) ? 0 : dir.hashCode());
+				+ ((direction == null) ? 0 : direction.hashCode());
 		result = prime * result
-				+ ((hexLoc == null) ? 0 : hexLoc.hashCode());
+				+ ((hexLocation == null) ? 0 : hexLocation.hashCode());
 		return result;
 	}
 
@@ -65,12 +65,12 @@ public class VertexLocation {
 		if (getClass() != obj.getClass())
 			return false;
 		VertexLocation other = (VertexLocation) obj;
-		if (dir != other.dir)
+		if (direction != other.direction)
 			return false;
-		if (hexLoc == null) {
-			if (other.hexLoc != null)
+		if (hexLocation == null) {
+			if (other.hexLocation != null)
 				return false;
-		} else if (!hexLoc.equals(other.hexLoc))
+		} else if (!hexLocation.equals(other.hexLocation))
 			return false;
 		return true;
 	}
@@ -87,21 +87,21 @@ public class VertexLocation {
 
 		// Return location that has direction NW or NE
 
-		switch (dir) {
+		switch (direction) {
 			case NorthWest:
 			case NorthEast:
 				return this;
 			case West:
-				return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.SouthWest),
+				return new VertexLocation(hexLocation.getNeighborLoc(EdgeDirection.SouthWest),
 											VertexDirection.NorthEast);
 			case SouthWest:
-				return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.South),
+				return new VertexLocation(hexLocation.getNeighborLoc(EdgeDirection.South),
 						VertexDirection.NorthWest);
 			case SouthEast:
-				return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.South),
+				return new VertexLocation(hexLocation.getNeighborLoc(EdgeDirection.South),
 						VertexDirection.NorthEast);
 			case East:
-				return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
+				return new VertexLocation(hexLocation.getNeighborLoc(EdgeDirection.SouthEast),
 											VertexDirection.NorthWest);
 			default:
 				assert false;
