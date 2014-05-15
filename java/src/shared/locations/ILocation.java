@@ -8,4 +8,5 @@ public interface ILocation
 	public IDirection getDirection();
 
 	public ILocation getNormalizedLocation();
+	void setDirection(IDirection direction);
 }

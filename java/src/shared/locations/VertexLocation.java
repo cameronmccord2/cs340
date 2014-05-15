@@ -113,5 +113,10 @@ public class VertexLocation implements ILocation {
 				return null;
 		}
 	}
+
+	@Override
+	public void setDirection(IDirection direction) {
+		this.direction = (VertexDirection)direction;
+	}
 }
 

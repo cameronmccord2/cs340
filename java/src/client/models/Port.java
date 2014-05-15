@@ -2,8 +2,10 @@ package client.models;
 
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
+import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
 import shared.locations.ILocation;
+import shared.locations.VertexDirection;
 
 public class Port implements IPort {
 	
@@ -12,7 +14,7 @@ public class Port implements IPort {
 	protected PortType portType;
 
 	public Port(TRPort port) {
-		this.location = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
+		this.location = new DefaultLocation(new HexLocation(port.getLocation().getX(), port.getLocation().getY()), VertexDirection.getDirectionFromServerString(port.getDirection()));
 		this.exchangeRate = port.getRatio();
 		switch(port.getResource().toUpperCase()){
 		case "WOOD":

@@ -2,6 +2,14 @@ package shared.locations;
 
 public class DefaultLocation implements ILocation
 {
+	
+	protected HexLocation hexLocation;
+	protected IDirection direction;
+
+	public DefaultLocation(HexLocation hexLocation2, VertexDirection direction2) {
+		this.hexLocation = hexLocation2;
+		this.direction = direction2;
+	}
 
 	@Override
 	public HexLocation getHexLocation()
@@ -25,6 +33,11 @@ public class DefaultLocation implements ILocation
 	public ILocation getNormalizedLocation()
 	{
 		return null;
+	}
+
+	@Override
+	public void setDirection(IDirection direction) {
+		this.direction = direction;
 	}
 
 }

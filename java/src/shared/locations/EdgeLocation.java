@@ -107,5 +107,10 @@ public class EdgeLocation implements ILocation{
 				return null;
 		}
 	}
+
+	@Override
+	public void setDirection(IDirection direction) {
+		this.direction = (EdgeDirection)direction;
+	}
 }
 

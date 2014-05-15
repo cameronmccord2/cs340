@@ -119,13 +119,13 @@ public class Translator {
 			map.addHex(new Hex(hex));
 		}
 		for (TRVertexObject city : cm.getMap().getCities()) {
-			map.placeCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers()), 2));
+			map.placeCity(new City(new VertexLocation(city.getLocation()), (Player)this.getPlayerWithId(city.getOwner(), g.getPlayers()), 2));
 		}
 		for (TRPort port : cm.getMap().getPorts()) {
 			map.addPort(new Port(port));
 		}
 		for(TRRoad road : cm.getMap().getRoads()){
-			map.placeRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
+			map.placeRoadSegment(new RoadSegment(road, (Player)this.getPlayerWithId(road.getOwner(), g.getPlayers())));
 		}
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
 			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), (Player)this.getPlayerWithId(settl.getOwner(), g.getPlayers()), 1));
