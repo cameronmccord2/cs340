@@ -261,7 +261,7 @@ public class DummyProxy implements IProxy{
 	
 	@Override
 	public ServerResponse utilChangeLogLevel(ServerLogLevel loglevel){
-		ServerResponse sr = new ServerResponse("Succes",200);
+		ServerResponse sr = new ServerResponse("Success",200);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
