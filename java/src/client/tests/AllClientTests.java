@@ -19,8 +19,9 @@ public class AllClientTests {
 	public static void main(String[] args) {
 		
 		String[] testClasses = new String[] {
-				//"client.tests.ProxyTest",
-				"client.tests.BankTest"
+				"client.tests.ProxyTest",
+				"client.tests.BankTest",
+                "client.tests.MapTest"
 				
 				
 		};
