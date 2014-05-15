@@ -12,7 +12,7 @@ public class VertexLocation implements ILocation {
 	private VertexDirection direction;
 
 	public VertexLocation(HexLocation hexLoc, VertexDirection direction) {
-		setHexLoc(hexLoc);
+		setHexLocation(hexLoc);
 		setDirection(direction);
 	}
 

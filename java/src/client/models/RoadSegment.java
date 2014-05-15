@@ -3,7 +3,6 @@ package client.models;
 import java.util.Collection;
 
 import client.models.translator.TRRoad;
-import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
@@ -28,8 +27,7 @@ public class RoadSegment extends Piece implements IRoadSegment
 	@Override
 	public ILocation getLocation()
 	{
-		this.setPlayer(player);
-		this.setLocation(new EdgeLocation(road.getLocation()));
+		return this.location;
 	}
 
 	@Override
@@ -48,18 +46,6 @@ public class RoadSegment extends Piece implements IRoadSegment
 	public void setPlayer(IPlayer player)
 	{
 		this.player = player;
-	}
-
-	@Override
-	public CatanColor getColor()
-	{
-		return this.color;
-	}
-
-	@Override
-	public void setColor(CatanColor color)
-	{
-		this.color = color;
 	}
 
 	@Override

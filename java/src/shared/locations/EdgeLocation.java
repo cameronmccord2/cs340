@@ -12,7 +12,7 @@ public class EdgeLocation implements ILocation{
 	private EdgeDirection direction;
 
 	public EdgeLocation(HexLocation hexLoc, EdgeDirection direction) {
-		setHexLoc(hexLoc);
+		setHexLocation(hexLoc);
 		setDirection(direction);
 	}
 

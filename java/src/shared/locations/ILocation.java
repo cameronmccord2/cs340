@@ -9,5 +9,4 @@ public interface ILocation
 	public <D extends IDirection> void setDirection(D direction);
 
 	public ILocation getNormalizedLocation();
-	void setDirection(IDirection direction);
 }
