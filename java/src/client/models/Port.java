@@ -3,10 +3,11 @@ package client.models;
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
 import shared.locations.HexLocation;
+import shared.locations.ILocation;
 
 public class Port implements IPort {
 	
-	protected HexLocation location;
+	protected ILocation location;
 	protected int exchangeRate;
 	protected PortType portType;
 
@@ -61,13 +62,15 @@ public class Port implements IPort {
 	}
 
 	@Override
-	public HexLocation getLocation() {
-		return location;
+	public void setLocation(ILocation location) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void setLocation(HexLocation location) {
-		this.location = location;
+	public ILocation getLocation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
