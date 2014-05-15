@@ -3,13 +3,14 @@ package client.catan;
 import java.awt.*;
 import javax.swing.*;
 
-
 @SuppressWarnings("serial")
-public class GameStatePanel extends JPanel {
+public class GameStatePanel extends JPanel
+{
 	
 	private JButton button;
-
-	public GameStatePanel() {
+	
+	public GameStatePanel()
+	{
 		
 		this.setLayout(new FlowLayout());
 		this.setBackground(Color.white);
@@ -28,11 +29,11 @@ public class GameStatePanel extends JPanel {
 		updateGameState("Waiting for other Players", false);
 	}
 	
-	public void updateGameState(String stateMessage, boolean enable) {
+	public void updateGameState(String stateMessage, boolean enable)
+	{
 		
 		button.setText(stateMessage);
 		button.setEnabled(enable);
 	}
-
+	
 }
-

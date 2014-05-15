@@ -1,11 +1,19 @@
 package client.roll;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import client.base.*;
-
 
 /**
  * Implementation for the roll view, which allows the user to roll the dice
@@ -13,11 +21,12 @@ import client.base.*;
 @SuppressWarnings("serial")
 public class RollView extends OverlayView implements IRollView {
 
-	private final int LABEL_TEXT_SIZE = 40;
+	private final int LABEL_TEXT_SIZE = 20;
 	private final int BUTTON_TEXT_SIZE = 28;
-	private final int BORDER_WIDTH = 10;
+	private final int BORDER_WIDTH = 1;
 
 	private JLabel label;
+    private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
 
@@ -31,8 +40,17 @@ public class RollView extends OverlayView implements IRollView {
 		Font labelFont = label.getFont();
 		labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
 		label.setFont(labelFont);
-		this.add(label, BorderLayout.CENTER);
+		this.add(label, BorderLayout.NORTH);
 		
+        try {
+            BufferedImage diceImg = ImageIO.read(new File("images/misc/dice.jpg"));
+            Image smallDiceImg = diceImg.getScaledInstance(300, 224, Image.SCALE_SMOOTH);
+            imageLabel = new JLabel(new ImageIcon(smallDiceImg));
+            this.add(imageLabel, BorderLayout.CENTER);
+        } catch (IOException ex) {
+            // Handle Exception Here
+        }
+
 		rollButton = new JButton("Roll!");
 		rollButton.addActionListener(actionListener);
 		Font buttonFont = rollButton.getFont();
@@ -66,7 +84,7 @@ public class RollView extends OverlayView implements IRollView {
 
 	@Override
 	public void setMessage(String message) {
-
+		label.setText(message);
 	}
 
 }

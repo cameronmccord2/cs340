@@ -7,24 +7,27 @@ import javax.swing.*;
 import shared.definitions.*;
 import client.base.*;
 
-
 /**
- * Implementation for the maritime trade overlay, which lets the user make a maritime trade
+ * Implementation for the maritime trade overlay, which lets the user make a
+ * maritime trade
  */
 @SuppressWarnings("serial")
-public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeOverlay {
-
+public class MaritimeTradeOverlay extends OverlayView implements
+													 IMaritimeTradeOverlay
+{
+	
 	private final int LABEL_TEXT_SIZE = 40;
 	private final int BUTTON_TEXT_SIZE = 28;
 	private final int BORDER_WIDTH = 10;
-
+	
 	private JLabel label;
 	private JButton tradeButton;
 	private JButton cancelButton;
 	private JPanel buttonPanel;
-
-	public MaritimeTradeOverlay() {
 	
+	public MaritimeTradeOverlay()
+	{
+		
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
@@ -38,87 +41,101 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(actionListener);
 		Font buttonFont = cancelButton.getFont();
-		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
+		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(),
+										   BUTTON_TEXT_SIZE);
 		cancelButton.setFont(buttonFont);
 		
 		tradeButton = new JButton("Trade!");
 		tradeButton.addActionListener(actionListener);
-		tradeButton.setFont(buttonFont);	
+		tradeButton.setFont(buttonFont);
 		
 		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));		
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(tradeButton);
-		buttonPanel.add(cancelButton);		
+		buttonPanel.add(cancelButton);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
-
+	
 	@Override
-	public IMaritimeTradeController getController() {
+	public IMaritimeTradeController getController()
+	{
 		return (IMaritimeTradeController)super.getController();
 	}
-
+	
 	@Override
-	public void reset() {
+	public void reset()
+	{   
 		
 	}
-
+	
 	@Override
-	public void hideGetOptions() {
+	public void hideGetOptions()
+	{   
 		
 	}
-
+	
 	@Override
-	public void hideGiveOptions() {
+	public void hideGiveOptions()
+	{   
 		
 	}
-
+	
 	@Override
-	public void selectGetOption(ResourceType selectedResource, int amount) {
+	public void selectGetOption(ResourceType selectedResource, int amount)
+	{   
 		
 	}
-
+	
 	@Override
-	public void selectGiveOption(ResourceType selectedResource, int amount) {
+	public void selectGiveOption(ResourceType selectedResource, int amount)
+	{   
 		
 	}
-
+	
 	@Override
-	public void setStateMessage(String message) {
+	public void setStateMessage(String message)
+	{   
 		
 	}
-
+	
 	@Override
-	public void setTradeEnabled(boolean enable) {
+	public void setTradeEnabled(boolean enable)
+	{   
 		
 	}
-
+	
 	@Override
-	public void setCancelEnabled(boolean enabled) {
+	public void setCancelEnabled(boolean enabled)
+	{   
 		
 	}
-
+	
 	@Override
-	public void showGetOptions(ResourceType[] enabledResources) {
+	public void showGetOptions(ResourceType[] enabledResources)
+	{   
 		
 	}
-
+	
 	@Override
-	public void showGiveOptions(ResourceType[] enabledResources) {
+	public void showGiveOptions(ResourceType[] enabledResources)
+	{   
 		
 	}
-
+	
 	private ActionListener actionListener = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e)
+		{
 			
-			if (e.getSource() == tradeButton) {
+			if(e.getSource() == tradeButton)
+			{
 				getController().makeTrade();
 			}
-			else if (e.getSource() == cancelButton) {
+			else if(e.getSource() == cancelButton)
+			{
 				getController().cancelTrade();
 			}
-		}	
+		}
 	};
-
+	
 }
-

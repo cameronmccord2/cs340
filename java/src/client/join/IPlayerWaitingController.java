@@ -2,12 +2,12 @@ package client.join;
 
 import client.base.*;
 
-
 /**
  * Interface for the player waiting controller
  */
-public interface IPlayerWaitingController extends IController {
-
+public interface IPlayerWaitingController extends IController
+{
+	
 	/**
 	 * Displays the player waiting view
 	 */
@@ -18,4 +18,3 @@ public interface IPlayerWaitingController extends IController {
 	 */
 	void addAI();
 }
-
