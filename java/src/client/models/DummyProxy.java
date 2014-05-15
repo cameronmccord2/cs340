@@ -59,8 +59,20 @@ public class DummyProxy implements IProxy{
 		} catch (InvalidTranslatorModelException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		IGame g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
-		this.translator.convertClientModelToGame(cm, g);
+		IGame g = null;
+		try {
+			g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < this.games.size(); i++) {
+			if(this.games.get(i).getGameInfo().getId() == Integer.parseInt(this.gameId))
+				this.games.set(i, g);
+		}
 	}
 	
 	@Override

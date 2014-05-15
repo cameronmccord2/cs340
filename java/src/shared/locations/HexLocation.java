@@ -3,7 +3,7 @@ package shared.locations;
 /**
  * Represents the location of a hex on a hex map
  */
-public class HexLocation {
+public class HexLocation{
 
 	private int x;
 	private int y;
