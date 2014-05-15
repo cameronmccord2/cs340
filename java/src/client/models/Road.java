@@ -11,6 +11,7 @@ import shared.locations.ILocation;
  * @author Craig Call
  *
  */
+@SuppressWarnings({"unused"})
 public class Road implements IRoad
 {
 	private CatanColor color;

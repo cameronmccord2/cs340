@@ -1,7 +1,5 @@
 package client.models;
 
-import java.util.Collection;
-
 import shared.definitions.PieceType;
 import shared.locations.HexLocation;
 import client.models.translator.TRHexLocation;
