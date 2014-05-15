@@ -1,6 +1,9 @@
 package client.models;
 
+import java.util.Collection;
+
 import shared.definitions.CatanColor;
+import shared.definitions.PieceType;
 import shared.locations.ILocation;
 
 public interface IPiece
@@ -13,4 +16,8 @@ public interface IPiece
 
 	public CatanColor getColor();
 	public void setColor(CatanColor color);
+
+	public PieceType getPieceType();
+
+	public Collection<Resource> getResourceCost();
 }

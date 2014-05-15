@@ -3,7 +3,9 @@ package client.models;
 import java.util.Collection;
 
 import shared.definitions.CatanColor;
+import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
+import shared.locations.ILocation;
 
 /**
  * @author Craig Call
@@ -14,7 +16,7 @@ public class Road implements IRoad
 	private CatanColor color;
 	private IPlayer player;
 	private boolean isLongestRoad;
-	private EdgeLocation location;
+	private ILocation location;
 
 	public Road(CatanColor color, IPlayer player)
 	{
@@ -34,49 +36,42 @@ public class Road implements IRoad
 		this.location = location;
 	}
 
-	@Override
 	public CatanColor getColor()
 	{
-		// TODO Auto-generated method stub
 		return color;
 	}
 
-	@Override
-	public void setColor(CatanColor color) {
-		// TODO Auto-generated method stub
+	public void setColor(CatanColor color)
+	{
 		this.color = color;
 	}
 
-	@Override
 	public IPlayer getPlayer() {
-		// TODO Auto-generated method stub
 		return player;
 	}
 
-	@Override
-	public void setPlayer(IPlayer player) {
-		// TODO Auto-generated method stub
+	public void setPlayer(IPlayer player)
+	{
 		this.player = player;
 	}
 
 	@Override
-	public boolean isLongestRoad() {
-		// TODO Auto-generated method stub
+	public boolean isLongestRoad()
+	{
 		return this.isLongestRoad;
 	}
 
 	@Override
 	public Collection<IRoadSegment> getRoadSegments()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void buildRoad(IRoadSegment segment)
 	{
-		// TODO Auto-generated method stub
 
 	}
+
 
 }
