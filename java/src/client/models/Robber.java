@@ -1,6 +1,7 @@
 package client.models;
 
 import shared.definitions.PieceType;
+import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
 import client.models.translator.TRHexLocation;
 
@@ -12,7 +13,8 @@ public class Robber extends Piece implements IRobber
 {
 
 	public Robber(TRHexLocation robber) {
-		this.setLocation(new HexLocation(robber.getX(), robber.getY()));
+		HexLocation hex = new HexLocation(robber.getX(), robber.getY());
+		this.location = new DefaultLocation(hex, null);
 	}
 
 	public void setLocation(HexLocation hexLocation) {

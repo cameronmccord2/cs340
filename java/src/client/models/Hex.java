@@ -18,36 +18,38 @@ public class Hex implements IHex
 
 	public Hex(TRHex hex) {
 		this.location = new HexLocation(hex.getLocation().getX(), hex.getLocation().getY());
-		this.hexNumber = hex.getNumber();
-		switch(hex.getResource().toUpperCase()){
-		case "WOOD":
-			this.type = HexType.WOOD;
-			break;
-			
-		case "BRICK":
-			this.type = HexType.BRICK;
-			break;
-			
-		case "SHEEP":
-			this.type = HexType.SHEEP;
-			break;
-			
-		case "WHEAT":
-			this.type = HexType.WHEAT;
-			break;
-			
-		case "ORE":
-			this.type = HexType.ORE;
-			break;
-			
-		case "DESERT":
-			this.type = HexType.DESERT;
-			break;
-			
-		case "WATER":
-			this.type = HexType.WATER;
-			break;
-		}
+		if(hex.getNumber() != null)
+			this.hexNumber = hex.getNumber();
+		if(hex.getResource() != null)
+			switch(hex.getResource().toUpperCase()){
+			case "WOOD":
+				this.type = HexType.WOOD;
+				break;
+				
+			case "BRICK":
+				this.type = HexType.BRICK;
+				break;
+				
+			case "SHEEP":
+				this.type = HexType.SHEEP;
+				break;
+				
+			case "WHEAT":
+				this.type = HexType.WHEAT;
+				break;
+				
+			case "ORE":
+				this.type = HexType.ORE;
+				break;
+				
+			case "DESERT":
+				this.type = HexType.DESERT;
+				break;
+				
+			case "WATER":
+				this.type = HexType.WATER;
+				break;
+			}
 	}
 
 	@Override

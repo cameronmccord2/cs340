@@ -21,6 +21,8 @@ public class Port implements IPort {
 			this.portType = PortType.valueOf(port.getResource().toUpperCase());
 		} catch (IllegalArgumentException e) {
 			this.portType = null;
+		}catch (NullPointerException e){
+			this.portType = null;
 		}
 
 //		switch(port.getResource().toUpperCase()){

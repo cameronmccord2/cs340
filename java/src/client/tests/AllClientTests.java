@@ -1,6 +1,7 @@
 package client.tests;
 
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
 
 
 
@@ -19,15 +20,16 @@ public class AllClientTests {
 	public static void main(String[] args) {
 		
 		String[] testClasses = new String[] {
-				"client.tests.ProxyTest",
-				"client.tests.BankTest",
-                "client.tests.MapTest"
+				"client.tests.ProxyTest"
+//				"client.tests.BankTest",
+//                "client.tests.MapTest"
 
 				
 				
 		};
-
-		org.junit.runner.JUnitCore.main(testClasses);
+		
+		JUnitCore.runClasses(ProxyTest.class);
+//		org.junit.runner.JUnitCore.main(testClasses);
 	}
 
 }

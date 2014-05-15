@@ -1,7 +1,6 @@
 package client.tests;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +61,7 @@ public class ProxyTest {
 	
 		//TEST GET GAMES LIST (Cameron??)
 		assertEquals(200,dummyProxy.getGamesList().getResponseCode());
-		assertEquals(dummyProxy.getGames().size(), 3);
+		assertEquals(3, dummyProxy.getGames().size());
 		
 		//TEST CREATE GAME (works)
 		CreateGame createGame = new CreateGame(false,false,false,"MINE");
@@ -73,7 +72,7 @@ public class ProxyTest {
 		assertEquals("Success",proxy.postGamesJoin(serverJoinGame).getJson());
 		
 		//TEST GET MODEL (Cameron???)
-		dummyProxy.getGamesList();
+//		dummyProxy.getGamesList();
 		IGame g = dummyProxy.getGameModel();
 		assert(g.getMap().getCities().size() == 0);
 		assert(g.getMap().getSettlements().size() == 8);
@@ -229,7 +228,7 @@ public class ProxyTest {
 		
 		//TEST BUILD ROAD (illegal move)
 		HexLocation location2 = new HexLocation(0,0);
-		EdgeLocation el = new EdgeLocation(location2,EdgeDirection.North);
+		EdgeLocation el = new EdgeLocation(location2, EdgeDirection.North);
 		ServerBuildRoad br = new ServerBuildRoad("buildRoad",0,el,false);
 		assertEquals(illegalMove,proxy.movesBuildRoad(br).getJson());
 		
