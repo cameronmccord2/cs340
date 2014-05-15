@@ -42,7 +42,7 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server.
- * There are three doPost.... 
+ * There are three doPost methods. One is for logging in with no cookie headers. Then the second is for joining a game. Then the last is for all subsequent post calls.
  * @author scottdaly
  *
  */
