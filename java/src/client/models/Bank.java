@@ -1,6 +1,5 @@
 package client.models;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 

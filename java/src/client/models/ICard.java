@@ -1,8 +1,7 @@
 package client.models;
 
-// TODO: Auto-generated Javadoc
 
-import java.awt.image.BufferedImage;
+
 
 /**
  * The Interface ICard.
