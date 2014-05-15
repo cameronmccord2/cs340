@@ -38,6 +38,17 @@ public class ServerResponse  {
 		this.responseCode = responseCode;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerResponse [json=");
+		builder.append(json);
+		builder.append(", responseCode=");
+		builder.append(responseCode);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	
 	
 }

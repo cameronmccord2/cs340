@@ -144,7 +144,6 @@ public class Translator {
 			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), this.getPlayerWithId(settl.getOwner(), g.getPlayers()), 1));
 		}
 		
-		System.out.println(cm.getMap().getRobber());
 		IRobber robber = new Robber(cm.getMap().getRobber());
 		map.setRobber(robber);
 		map.setRadius(cm.getMap().getRadius());
