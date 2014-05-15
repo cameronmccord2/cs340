@@ -5,8 +5,8 @@ import shared.locations.*;
 
 public interface IPort
 {
-	public HexLocation getLocation();
-	public void setLocation(HexLocation location);
+	public ILocation getLocation();
+	public void setLocation(ILocation location);
 
 	public int getExchangeRate();
 	public void setExchangeRate(int rate);

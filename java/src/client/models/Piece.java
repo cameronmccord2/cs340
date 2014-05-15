@@ -4,20 +4,13 @@ import java.util.Collection;
 
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
-import shared.locations.EdgeLocation;
 import shared.locations.ILocation;
 
-public class RoadSegment implements IRoadSegment
+public abstract class Piece implements IPiece
 {
-	private ILocation location;
-	private IPlayer player;
-	private CatanColor color;
-	private Collection<Resource> cost;
-
-	public RoadSegment()
-	{
-
-	}
+	protected IPlayer player;
+	protected CatanColor color;
+	protected ILocation location;
 
 	@Override
 	public ILocation getLocation()
@@ -34,37 +27,31 @@ public class RoadSegment implements IRoadSegment
 	@Override
 	public IPlayer getPlayer()
 	{
-		return null;
+		return player;
 	}
 
 	@Override
 	public void setPlayer(IPlayer player)
 	{
-
+		this.player = player;
 	}
 
 	@Override
 	public CatanColor getColor()
 	{
-		return null;
+		return color;
 	}
 
 	@Override
 	public void setColor(CatanColor color)
 	{
-
+		this.color = color;
 	}
 
 	@Override
-	public Collection<Resource> getResourceCost()
-	{
-		return cost;
-	}
+	public abstract PieceType getPieceType();
 
 	@Override
-	public PieceType getPieceType()
-	{
-		return PieceType.ROAD;
-	}
+	public abstract Collection<Resource> getResourceCost();
 
 }
