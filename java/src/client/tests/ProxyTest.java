@@ -196,16 +196,16 @@ public class ProxyTest {
 		
 		//TEST ROLL NUMBER (illegal move)
 		ServerRoll serverRoll = new ServerRoll("rollNumber",0,5);
-		assertEquals(illegalMove,dummyProxy.movesRollNumber(serverRoll).getJson());
+		assertEquals(dummyModel,dummyProxy.movesRollNumber(serverRoll).getJson());
 		
 		//TEST ROB PLAYER (illegal move)
 		HexLocation location = new HexLocation(0,0);
 		ServerRobPlayer serverRob = new ServerRobPlayer("robPlayer",0,1,location);
-		assertEquals(illegalMove,dummyProxy.moveRobPlayer(serverRob).getJson());
+		assertEquals(dummyModel,dummyProxy.moveRobPlayer(serverRob).getJson());
 		
 		//TEST FINISHED TURN (illegal move)
 		FinishedTurn ft = new FinishedTurn("finishTurn",0);
-		assertEquals(illegalMove,dummyProxy.movesFinishTurn(ft).getJson());
+		assertEquals(dummyModel,dummyProxy.movesFinishTurn(ft).getJson());
 		
 		//TEST BUY DEV CARD (works)
 		BuyDevCard bdc = new BuyDevCard("buyDevCard",0);
@@ -213,22 +213,22 @@ public class ProxyTest {
 		
 		//TEST YEAR OF PLENTY (illegal move)
 		ServerYearofPlenty yop = new ServerYearofPlenty("Year_of_Plenty",0,"resource1","resource2");
-		assertEquals(illegalMove,dummyProxy.movesYear_of_Plenty(yop).getJson());
+		assertEquals(dummyModel,dummyProxy.movesYear_of_Plenty(yop).getJson());
 		
 		//TEST ROAD BUILDING (illegal move)
 		Spot spot1 = new Spot(0,0,"sw");
 		Spot spot2 = new Spot(1,1,"e");
 		RoadBuilding rb = new RoadBuilding("Road_Building",0,spot1,spot2);
-		assertEquals(illegalMove,dummyProxy.movesRoad_Building(rb).getJson());
+		assertEquals(dummyModel,dummyProxy.movesRoad_Building(rb).getJson());
 		
 		//TEST SOLDIER (illegal move)
 		HexLocation location1 = new HexLocation(0,0);
 		ServerSoldier ss = new ServerSoldier("Soldier",0,1,location1);
-		assertEquals(illegalMove,dummyProxy.movesSoldier(ss).getJson());
+		assertEquals(dummyModel,dummyProxy.movesSoldier(ss).getJson());
 		
 		//TEST MONOPOLY (illegal move)
 		ServerMonopoly sm = new ServerMonopoly("Monopoly","wood",0);
-		assertEquals(illegalMove,dummyProxy.movesMonopoly(sm).getJson());
+		assertEquals(dummyModel,dummyProxy.movesMonopoly(sm).getJson());
 		
 		//TEST MONUMENT (works)
 		ServerMonument sm1 = new ServerMonument("Monument",0);
@@ -238,29 +238,29 @@ public class ProxyTest {
 		HexLocation location2 = new HexLocation(0,0);
 		EdgeLocation el = new EdgeLocation(location2, EdgeDirection.North);
 		ServerBuildRoad br = new ServerBuildRoad("buildRoad",0,el,false);
-		assertEquals(illegalMove,dummyProxy.movesBuildRoad(br).getJson());
+		assertEquals(dummyModel,dummyProxy.movesBuildRoad(br).getJson());
 		
 		//TEST BUILD SETTLEMENT (illegal move)
 		HexLocation location3 = new HexLocation(0,0);
 		VertexLocation vl = new VertexLocation(location3,VertexDirection.East);
 		ServerBuildSettlement bs = new ServerBuildSettlement("buildSettlement",0,vl,false);
-		assertEquals(illegalMove,dummyProxy.movesBuildSettlement(bs).getJson());
+		assertEquals(dummyModel,dummyProxy.movesBuildSettlement(bs).getJson());
 		
 		//TEST BUILD CITY
 		HexLocation location4 = new HexLocation(0,0);
 		VertexLocation vl1 = new VertexLocation(location4,VertexDirection.East);
 		ServerBuildCity bc = new ServerBuildCity("buildCity",0,vl1);
-		assertEquals(illegalMove,dummyProxy.movesBuildCity(bc).getJson());
+		assertEquals(dummyModel,dummyProxy.movesBuildCity(bc).getJson());
 		
 		//TEST OFFER TRADE
 		
 		//TEST ACCEPT TRADE (illegal move)
 		AcceptTrade at = new AcceptTrade("acceptTrade",0, true);
-		assertEquals(illegalMove1,dummyProxy.movesAcceptTrade(at).getJson());
+		assertEquals(dummyModel,dummyProxy.movesAcceptTrade(at).getJson());
 		
 		//TEST MARITIME TRADE (illegal move)
 		MaritimeTradeOff mt = new MaritimeTradeOff("maritimeTrade",0,3,"wood","wool");
-		assertEquals(illegalMove,dummyProxy.movesMaritimeTrade(mt).getJson());
+		assertEquals(dummyModel,dummyProxy.movesMaritimeTrade(mt).getJson());
 		
 		//TEST DISCARD CARDS
 		//To Dan:
@@ -274,6 +274,162 @@ public class ProxyTest {
 		assertEquals(200,dummyProxy.postGameReset().getResponseCode());
 		
 	}
+	
+	private String dummyModel = "{ 'deck': { 'yearOfPlenty': 2, "
+			   + "'monopoly': 2, "
+			   + "'soldier': 14, "
+			   + "'roadBuilding': 2, "
+			   + "'monument': 5 }, "
+			   
+   + "'map': { 'hexes': [ { 'location': { 'x': 0, 'y': -2 } }, "
+   					  + "{ 'resource': 'brick', 'location': { 'x': 1, 'y': -2 }, 'number': 4 }, "
+   					  + "{ 'resource': 'wood', 'location': { 'x': 2, 'y': -2 }, 'number': 11 }, "
+   					  + "{ 'resource': 'brick', 'location': { 'x': -1, 'y': -1 }, 'number': 8 }, "
+   					  + "{ 'resource': 'wood', 'location': { 'x': 0, 'y': -1 }, 'number': 3 }, "
+   					  + "{ 'resource': 'ore', 'location': { 'x': 1, 'y': -1 }, 'number': 9 }, "
+   					  + "{ 'resource': 'sheep', 'location': { 'x': 2, 'y': -1 }, 'number': 12 }, "
+   					  + "{ 'resource': 'ore', 'location': { 'x': -2, 'y': 0 }, 'number': 5 }, "
+   					  + "{ 'resource': 'sheep', 'location': { 'x': -1, 'y': 0 }, 'number': 10 }, "
+   					  + "{ 'resource': 'wheat', 'location': { 'x': 0, 'y': 0 }, 'number': 11 }, "
+   					  + "{ 'resource': 'brick', 'location': { 'x': 1, 'y': 0 }, 'number': 5 }, "
+   					  + "{ 'resource': 'wheat', 'location': { 'x': 2, 'y': 0 }, 'number': 6 }, "
+   					  + "{ 'resource': 'wheat', 'location': { 'x': -2, 'y': 1 }, 'number': 2 }, "
+   					  + "{ 'resource': 'sheep', 'location': { 'x': -1, 'y': 1 }, 'number': 9 }, "
+   					  + "{ 'resource': 'wood', 'location': { 'x': 0, 'y': 1 }, 'number': 4 }, "
+   					  + "{ 'resource': 'sheep', 'location': { 'x': 1, 'y': 1 }, 'number': 10 }, "
+   					  + "{ 'resource': 'wood', 'location': { 'x': -2, 'y': 2 }, 'number': 6 }, "
+   					  + "{ 'resource': 'ore', 'location': { 'x': -1, 'y': 2 }, 'number': 3 }, "
+   					  + "{ 'resource': 'wheat', 'location': { 'x': 0, 'y': 2 }, 'number': 8 } ], "
+   					  
+			   + "'roads': [ { 'owner': 2, 'location': { 'direction': 'S', 'x': 1, 'y': -1 } }, "
+			   			  + "{ 'owner': 3, 'location': { 'direction': 'SW', 'x': 2, 'y': -2 } }, "
+			   			  + "{ 'owner': 0, 'location': { 'direction': 'S', 'x': 0, 'y': 1 } }, "
+			   			  + "{ 'owner': 1, 'location': { 'direction': 'SW', 'x': -2, 'y': 1 } }, "
+			   			  + "{ 'owner': 2, 'location': { 'direction': 'S', 'x': 0, 'y': 0 } }, "
+			   			  + "{ 'owner': 0, 'location': { 'direction': 'SW', 'x': 2, 'y': 0 } }, "
+			   			  + "{ 'owner': 1, 'location': { 'direction': 'S', 'x': -1, 'y': -1 } }, "
+			   			  + "{ 'owner': 3, 'location': { 'direction': 'SW', 'x': -1, 'y': 1 } } ], "
+			   			  
+  			   + "'cities': [], "
+  			   
+  			   + "'settlements': [ { 'owner': 3, 'location': { 'direction': 'SE', 'x': 1, 'y': -2 } }, "
+  			   					+ "{ 'owner': 2, 'location': { 'direction': 'SW', 'x': 0, 'y': 0 } }, "
+  			   					+ "{ 'owner': 2, 'location': { 'direction': 'SW', 'x': 1, 'y': -1 } }, "
+  			   					+ "{ 'owner': 1, 'location': { 'direction': 'SW', 'x': -1, 'y': -1 } }, "
+  			   					+ "{ 'owner': 0, 'location': { 'direction': 'SE', 'x': 0, 'y': 1 } }, "
+  			   					+ "{ 'owner': 1, 'location': { 'direction': 'SW', 'x': -2, 'y': 1 } }, "
+  			   					+ "{ 'owner': 0, 'location': { 'direction': 'SW', 'x': 2, 'y': 0 } }, "
+  			   					+ "{ 'owner': 3, 'location': { 'direction': 'SW', 'x': -1, 'y': 1 } } ], "
+  			   					
+				   + "'radius': 3, "
+				   
+				   + "'ports': [ { 'ratio': 2, 'resource': 'wheat', 'direction': 'S', 'location': { 'x': -1, 'y': -2 } }, "
+				   			  + "{ 'ratio': 3, 'direction': 'SW', 'location': { 'x': 3, 'y': -3 } }, "
+				   			  + "{ 'ratio': 2, 'resource': 'ore', 'direction': 'S', 'location': { 'x': 1, 'y': -3 } }, "
+				   			  + "{ 'ratio': 3, 'direction': 'SE', 'location': { 'x': -3, 'y': 0 } }, "
+				   			  + "{ 'ratio': 2, 'resource': 'wood', 'direction': 'NE', 'location': { 'x': -3, 'y': 2 } }, "
+				   			  + "{ 'ratio': 2, 'resource': 'brick', 'direction': 'NE', 'location': { 'x': -2, 'y': 3 } }, "
+				   			  + "{ 'ratio': 3, 'direction': 'NW', 'location': { 'x': 2, 'y': 1 } }, "
+				   			  + "{ 'ratio': 2, 'resource': 'sheep', 'direction': 'NW', 'location': { 'x': 3, 'y': -1 } }, "
+				   			  + "{ 'ratio': 3, 'direction': 'N', 'location': { 'x': 0, 'y': 3 } } ], "
+				   			  
+   			   + "'robber': { 'x': 0, 'y': -2 } }, "
+   			   
+   			   + "'players': [ { 'resources': { 'brick': 0, 'wood': 1, 'sheep': 1, 'wheat': 1, 'ore': 0 }, "
+   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'roads': 13, "
+   			   				  + "'cities': 4, "
+   			   				  + "'settlements': 3, "
+   			   				  + "'soldiers': 0, "
+   			   				  + "'victoryPoints': 2, "
+   			   				  + "'monuments': 0, "
+   			   				  + "'playedDevCard': false, "
+   			   				  + "'discarded': false, "
+   			   				  + "'playerID': 0, "
+   			   				  + "'playerIndex': 0, "
+   			   				  + "'name': 'Sam', "
+   			   				  + "'color': 'orange' }, "
+   			   				+ "{ 'resources': { 'brick': 1, 'wood': 0, 'sheep': 1, 'wheat': 0, 'ore': 1 }, "
+   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'roads': 13, "
+   			   				  + "'cities': 4, "
+   			   				  + "'settlements': 3, "
+   			   				  + "'soldiers': 0, "
+   			   				  + "'victoryPoints': 2, "
+   			   				  + "'monuments': 0, "
+   			   				  + "'playedDevCard': false, "
+   			   				  + "'discarded': false, "
+   			   				  + "'playerID': 1, "
+   			   				  + "'playerIndex': 1, "
+   			   				  + "'name': 'Brooke', "
+   			   				  + "'color': 'blue' }, "
+   			   				+ "{ 'resources': { 'brick': 0, 'wood': 1, 'sheep': 1, 'wheat': 1, 'ore': 0 }, "
+   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'roads': 13, "
+   			   				  + "'cities': 4, "
+   			   				  + "'settlements': 3, "
+   			   				  + "'soldiers': 0, "
+   			   				  + "'victoryPoints': 2, "
+   			   				  + "'monuments': 0, "
+   			   				  + "'playedDevCard': false, "
+   			   				  + "'discarded': false, "
+   			   				  + "'playerID': 10, "
+   			   				  + "'playerIndex': 2, "
+   			   				  + "'name': 'Pete', "
+   			   				  + "'color': 'red' }, "
+   			   				+ "{ 'resources': { 'brick': 0, 'wood': 1, 'sheep': 1, 'wheat': 0, 'ore': 1 }, "
+   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
+   			   				  + "'roads': 13, "
+   			   				  + "'cities': 4, "
+   			   				  + "'settlements': 3, "
+   			   				  + "'soldiers': 0, "
+   			   				  + "'victoryPoints': 2, "
+   			   				  + "'monuments': 0, "
+   			   				  + "'playedDevCard': false, "
+   			   				  + "'discarded': false, "
+   			   				  + "'playerID': 11, "
+   			   				  + "'playerIndex': 3, "
+   			   				  + "'name': 'Mark', "
+   			   				  + "'color': 'green' } ], "
+   			   				  
+				   + "'log': { 'lines': [ { 'source': 'Sam', 'message': 'Sam built a road' }, "
+				   					   + "{ 'source': 'Sam', 'message': 'Sam built a settlement' }, "
+				   					   + "{ 'source': 'Sam', 'message': 'Sams turn just ended' }, "
+				   					   + "{ 'source': 'Brooke', 'message': 'Brooke built a road' }, "
+				   					   + "{ 'source': 'Brooke', 'message': 'Brooke built a settlement' }, "
+				   					   + "{ 'source': 'Brooke', 'message': 'Brookes turn just ended' }, "
+				   					   + "{ 'source': 'Pete', 'message': 'Pete built a road' }, "
+				   					   + "{ 'source': 'Pete', 'message': 'Pete built a settlement' }, "
+				   					   + "{ 'source': 'Pete', 'message': 'Petes turn just ended' }, "
+				   					   + "{ 'source': 'Mark', 'message': 'Mark built a road' }, "
+				   					   + "{ 'source': 'Mark', 'message': 'Mark built a settlement' }, "
+				   					   + "{ 'source': 'Mark', 'message': 'Marks turn just ended' }, "
+				   					   + "{ 'source': 'Mark', 'message': 'Mark built a road' }, "
+				   					   + "{ 'source': 'Mark', 'message': 'Mark built a settlement' }, "
+				   					   + "{ 'source': 'Mark', 'message': 'Marks turn just ended' }, "
+				   					   + "{ 'source': 'Pete', 'message': 'Pete built a road' }, "
+				   					   + "{ 'source': 'Pete', 'message': 'Pete built a settlement' }, "
+				   					   + "{ 'source': 'Pete', 'message': 'Petes turn just ended' }, "
+				   					   + "{ 'source': 'Brooke', 'message': 'Brooke built a road' }, "
+				   					   + "{ 'source': 'Brooke', 'message': 'Brooke built a settlement' }, "
+				   					   + "{ 'source': 'Brooke', 'message': 'Brookes turn just ended' }, "
+				   					   + "{ 'source': 'Sam', 'message': 'Sam built a road' }, "
+				   					   + "{ 'source': 'Sam', 'message': 'Sam built a settlement' }, "
+				   					   + "{ 'source': 'Sam', 'message': 'Sams turn just ended' } ] }, "
+				   					   
+				   + "'chat': { 'lines': [] }, "
+				   
+				   + "'bank': { 'brick': 23, 'wood': 21, 'sheep': 20, 'wheat': 22, 'ore': 22 }, "
+				   
+				   + "'turnTracker': { 'status': 'Rolling', 'currentTurn': 0, 'longestRoad': -1, 'largestArmy': -1 }, "
+				   
+				   + "'winner': -1, "
+				   
+				   + "'version': 0 }";
 }
 //
 //private IProxy proxy;
