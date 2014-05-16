@@ -35,11 +35,21 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 	private JPanel gamePanel;
 	private JPanel buttonPanel;
 	
-	GameInfo[] games;
-	PlayerInfo localPlayer;
+	private GameInfo[] games;
+	private PlayerInfo localPlayer;
 
-	public JoinGameView() {
-		
+	public JoinGameView()
+	{
+		this.initialize();
+	}
+	
+	private void initialize()
+	{
+		this.initializeView();
+	}
+	
+	private void initializeView()
+	{
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
@@ -70,7 +80,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 		
 		// This is the header layout
 		gamePanel = new JPanel();
-		gamePanel.setLayout(new GridLayout(0, 8));
+		gamePanel.setLayout(new GridLayout(0, 4));
 		hash = new JLabel("#");
 		labelFont = new Font(labelFont.getFontName(), Font.BOLD, PANEL_TEXT_SIZE);
 		hash.setFont(labelFont);
@@ -82,41 +92,44 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 		join.setFont(labelFont);
 		
 		
-		gamePanel.add(box0);
+		//gamePanel.add(box0);
 		gamePanel.add(hash);
-		gamePanel.add(box0);
+		//gamePanel.add(box0);
 		gamePanel.add(name);
-		gamePanel.add(box1);
+		//gamePanel.add(box1);
 		gamePanel.add(currentPlayer);
-		gamePanel.add(box1);
+		//gamePanel.add(box1);
 		gamePanel.add(join);
-		gamePanel.add(box1);
+		//gamePanel.add(box1);
 		
 		
 		// This is the looped layout
 		if (games != null && games.length > 0) {
 			labelFont = labelFont.deriveFont(labelFont.getStyle(), PANEL_TEXT_SIZE);
 			for (int i = 0; i < games.length; i++) {
-				gamePanel.add(box0);
+				//gamePanel.add(box0);
 				JLabel tmp = new JLabel(String.valueOf(games[i].getId()));
 				tmp.setFont(labelFont);
 				gamePanel.add(tmp);
 				
-				gamePanel.add(box0);
+				//gamePanel.add(box0);
 				tmp = new JLabel(games[i].getTitle());
 				tmp.setFont(labelFont);
 				gamePanel.add(tmp);
 				
-				gamePanel.add(box1);
+				//gamePanel.add(box1);
 				String players = String.valueOf(games[i].getPlayers().size()) + "/4 : ";
 				for (int j = 0; j < games[i].getPlayers().size(); j++) {
-					players = players + games[i].getPlayers().get(j).getName() + " ";
+					if(j < games[i].getPlayers().size() - 1)
+						players = players + games[i].getPlayers().get(j).getName() + ", ";
+					else
+						players = players + games[i].getPlayers().get(j).getName();
 				}
 				tmp = new JLabel(players);
 				tmp.setFont(labelFont);
 				gamePanel.add(tmp);
 				
-				gamePanel.add(box1);
+				//gamePanel.add(box1);
 				JButton joinButton;
 				if (games[i].getPlayers().size() < 4) {
 					if (games[i].getPlayers().contains(localPlayer)) {
@@ -128,8 +141,11 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 					joinButton = new JButton("Full");
 					joinButton.setEnabled(false);
 				}
+			
+				joinButton.setActionCommand("" + games[i].getId());
+				joinButton.addActionListener(actionListener);
 				gamePanel.add(joinButton);
-				gamePanel.add(box1);
+				//gamePanel.add(box1);
 			} 
 		} 
 		
@@ -150,9 +166,52 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(createButton);
-		buttonPanel.add(joinButton);		
+//		buttonPanel.add(joinButton);		
 		this.add(buttonPanel, BorderLayout.SOUTH);	
 	}
+	
+//	private void updateGames()
+//	{
+//		// This is the looped layout
+//			if (games != null && games.length > 0) {
+//				labelFont = labelFont.deriveFont(labelFont.getStyle(), PANEL_TEXT_SIZE);
+//				for (int i = 0; i < games.length; i++) {
+//					gamePanel.add(box0);
+//					JLabel tmp = new JLabel(String.valueOf(games[i].getId()));
+//					tmp.setFont(labelFont);
+//					gamePanel.add(tmp);
+//					
+//					gamePanel.add(box0);
+//					tmp = new JLabel(games[i].getTitle());
+//					tmp.setFont(labelFont);
+//					gamePanel.add(tmp);
+//					
+//					gamePanel.add(box1);
+//					String players = String.valueOf(games[i].getPlayers().size()) + "/4 : ";
+//					for (int j = 0; j < games[i].getPlayers().size(); j++) {
+//						players = players + games[i].getPlayers().get(j).getName() + " ";
+//					}
+//					tmp = new JLabel(players);
+//					tmp.setFont(labelFont);
+//					gamePanel.add(tmp);
+//					
+//					gamePanel.add(box1);
+//					JButton joinButton;
+//					if (games[i].getPlayers().size() < 4) {
+//						if (games[i].getPlayers().contains(localPlayer)) {
+//							joinButton = new JButton("Re-Join");
+//						} else { 
+//							joinButton = new JButton("Join");
+//						}
+//					} else {
+//						joinButton = new JButton("Full");
+//						joinButton.setEnabled(false);
+//					}
+//					gamePanel.add(joinButton);
+//					gamePanel.add(box1);
+//				} 
+//			}
+//	}
 
 	private ActionListener actionListener = new ActionListener() {
 		@Override
@@ -165,6 +224,26 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 			else if (e.getSource() == joinButton) {
 
 				getController().startJoinGame(null);
+			}
+			else
+			{
+				try
+				{
+					//System.out.println(e.getActionCommand());
+					int gameId = Integer.parseInt(e.getActionCommand());
+					GameInfo game = null;
+					for(GameInfo g : games)
+					{
+						if(g.getId() == gameId)
+						{
+							game = g;
+							break;
+						}
+					}
+					getController().startJoinGame(game);
+				} catch(NumberFormatException ex) {
+					ex.printStackTrace();
+				}
 			}
 		}	
 	};
@@ -179,6 +258,8 @@ public class JoinGameView extends OverlayView implements IJoinGameView {
 	public void setGames(GameInfo[] games, PlayerInfo localPlayer) {
 		this.games = games;
 		this.localPlayer = localPlayer;
+		this.removeAll();
+		this.initialize();
 	}
 
 	

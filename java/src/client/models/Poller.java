@@ -13,8 +13,8 @@ public class Poller {
 	private Proxy proxy;
 	private Timer t;
 	
-	public Poller(){
-		startTimer();
+	public Poller() {
+		this(new Proxy());
 	}
 	
 	
@@ -23,6 +23,7 @@ public class Poller {
 	 */
 	public Poller(Proxy proxy) {
 		this.proxy = proxy;
+		this.startTimer();
 	}
 	
 	static int interval;

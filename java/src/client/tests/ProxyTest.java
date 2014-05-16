@@ -209,7 +209,7 @@ public class ProxyTest {
 		
 		//TEST BUY DEV CARD (works)
 		BuyDevCard bdc = new BuyDevCard("buyDevCard",0);
-		assertEquals(200,proxy.movesBuyDevCard(bdc).getResponseCode());
+		assertEquals(200,dummyProxy.movesBuyDevCard(bdc).getResponseCode());
 		
 		//TEST YEAR OF PLENTY (illegal move)
 		ServerYearofPlenty yop = new ServerYearofPlenty("Year_of_Plenty",0,"resource1","resource2");
@@ -219,7 +219,7 @@ public class ProxyTest {
 		Spot spot1 = new Spot(0,0,"sw");
 		Spot spot2 = new Spot(1,1,"e");
 		RoadBuilding rb = new RoadBuilding("Road_Building",0,spot1,spot2);
-		assertEquals(illegalMove,proxy.movesRoad_Building(rb).getJson());
+		assertEquals(illegalMove,dummyProxy.movesRoad_Building(rb).getJson());
 		
 		//TEST SOLDIER (illegal move)
 		HexLocation location1 = new HexLocation(0,0);
@@ -232,7 +232,7 @@ public class ProxyTest {
 		
 		//TEST MONUMENT (works)
 		ServerMonument sm1 = new ServerMonument("Monument",0);
-		assertEquals(200,proxy.movesMonument(sm1).getResponseCode());
+		assertEquals(200,dummyProxy.movesMonument(sm1).getResponseCode());
 		
 		//TEST BUILD ROAD (illegal move)
 		HexLocation location2 = new HexLocation(0,0);
