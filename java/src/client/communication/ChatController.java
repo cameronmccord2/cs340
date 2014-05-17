@@ -3,7 +3,7 @@ package client.communication;
 import java.util.List;
 
 import client.base.Controller;
-import client.models.Proxy;
+import client.models.IProxy;
 import client.server.ServerChat;
 
 
@@ -12,12 +12,12 @@ import client.server.ServerChat;
  */
 public class ChatController extends Controller implements IChatController {
 
-	private Proxy proxy;
+	private IProxy proxy;
 	
-	public ChatController(IChatView view, Proxy proxy) {
+	public ChatController(IChatView view, IProxy proxy2) {
 		
 		super(view);
-		this.proxy = proxy;
+		this.proxy = proxy2;
 	}
 
 	@Override

@@ -176,4 +176,6 @@ public interface IProxy {
 	 */
 	public IGame getGameModel();
 
+	Facade getFacade();
+
 }

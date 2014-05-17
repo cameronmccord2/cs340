@@ -58,10 +58,17 @@ public class Proxy implements IProxy {
 	private List<IGame> games;
 	private String cookie;
 	private String gameId;
+	private Facade facade;
 	
 	public Proxy() {
 		this.translator = new Translator();
 		this.games = new ArrayList<IGame>();
+		this.facade = new Facade(this);
+	}
+	
+	@Override
+	public Facade getFacade(){
+		return this.facade;
 	}
 	
 	private IGame saveGameModel(String model){

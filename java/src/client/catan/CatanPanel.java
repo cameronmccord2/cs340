@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
 import client.misc.WaitView;
+import client.models.IProxy;
 import client.models.Proxy;
 import client.roll.RollController;
 import client.roll.RollResultView;
@@ -28,7 +29,7 @@ public class CatanPanel extends JPanel
 	private RollResultView rollResultView;
 	private RollController rollController;
 	
-	public CatanPanel(Proxy proxy)
+	public CatanPanel(IProxy proxy)
 	{
 		this.setLayout(new BorderLayout());
 		

@@ -48,10 +48,12 @@ public class DummyProxy implements IProxy{
 	private Translator translator;
 	private List<IGame> games;
 	private String gameId = "0";
+	private Facade facade;
 	
 	public DummyProxy() {
 		this.translator = new Translator();
 		this.games = new ArrayList<IGame>();
+		this.facade = new Facade(this);
 	}
 	
 	private IGame saveGameModel(String model){
@@ -468,5 +470,10 @@ public class DummyProxy implements IProxy{
 
 	public List<IGame> getGames() {
 		return games;
+	}
+
+	@Override
+	public Facade getFacade() {
+		return this.facade;
 	}
 }

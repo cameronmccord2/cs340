@@ -11,6 +11,7 @@ import client.communication.ChatController;
 import client.communication.ChatView;
 import client.communication.GameHistoryController;
 import client.communication.GameHistoryView;
+import client.models.IProxy;
 import client.models.Proxy;
 import client.turntracker.TurnTrackerController;
 import client.turntracker.TurnTrackerView;
@@ -27,7 +28,7 @@ public class LeftPanel extends JPanel {
 	private TurnTrackerView turnView;
 	private TurnTrackerController turnController;
 	
-	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, Proxy proxy) {
+	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, IProxy proxy) {
 		
 		this.setLayout(new BorderLayout());
 		

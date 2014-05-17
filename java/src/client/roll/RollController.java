@@ -1,6 +1,7 @@
 package client.roll;
 
 import client.base.Controller;
+import client.models.IProxy;
 import client.models.Proxy;
 import client.server.ServerRoll;
 
@@ -11,7 +12,7 @@ import client.server.ServerRoll;
  */
 public class RollController extends Controller implements IRollController {
 
-	private Proxy proxy;
+	private IProxy proxy;
 	private IRollResultView resultView;
 
 	/**
@@ -20,7 +21,7 @@ public class RollController extends Controller implements IRollController {
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView, Proxy proxy) {
+	public RollController(IRollView view, IRollResultView resultView, IProxy proxy) {
 
 		super(view);
 		this.proxy = proxy;
