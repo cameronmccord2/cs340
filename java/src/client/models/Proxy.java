@@ -101,7 +101,6 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse postUserRegister(User user){
-		System.out.println(user.getUser() + user.getPassword());
 		ServerResponse sr = doPost("/user/register", gson.toJson(user));
 		//saveGameModel(sr.getJson());
 		return sr;

@@ -86,12 +86,13 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void register() {
 		
-		// TODO: register new user (which, if successful, also logs them in)
-		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		User user = new User(((ILoginView) super.getView()).getRegisterUsername(), ((ILoginView) super.getView()).getRegisterPassword());
+		if(proxy.postUserRegister(user).getJson().equals("Success")){
+			// If register succeeded, log them in
+			proxy.postUserLogin(user);
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
 	}
-
 }
 
