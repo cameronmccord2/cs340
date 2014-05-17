@@ -104,6 +104,7 @@ public class Proxy implements IProxy {
 			cookie = setCookie.get(0);
 			cookie = cookie.substring(0, cookie.length() - 8);
 		}
+		this.facade.setCurrentUser(user.getUser());
 		return sr;
 	}
 	

@@ -4,8 +4,12 @@ import shared.definitions.*;
 import client.base.*;
 import client.data.PlayerInfo;
 import client.misc.*;
+import client.models.DomesticTrade;
 import client.models.ICatanModelObserver;
+import client.models.IDomesticTrade;
 import client.models.IProxy;
+import client.models.Resource;
+import client.models.ResourceCollection;
 
 
 /**
@@ -17,6 +21,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private IProxy proxy;
+	private ResourceCollection resources;
+	private IDomesticTrade currentTrade;
+	private Integer wood;
+	private Integer ore;
+	private Integer wheat;
+	private Integer brick;
+	private Integer sheep;
 
 	/**
 	 * DomesticTradeController constructor
@@ -84,18 +95,59 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
-
+		this.wood = 0;
+		this.sheep = 0;
+		this.ore = 0;
+		this.brick = 0;
+		this.wheat = 0;
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-
+		switch(resource){
+		case BRICK:
+			if(this.brick > 0)
+				this.brick--;
+			break;
+		case ORE:
+			if(this.ore > 0)
+				this.ore--;
+			break;
+		case SHEEP:
+			if(this.sheep > 0)
+				this.sheep--;
+			break;
+		case WHEAT:
+			if(this.wheat > 0)
+				this.wheat--;
+			break;
+		case WOOD:
+			if(this.wood > 0)
+				this.wood--;
+			break;
+		}
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-
+		switch(resource){
+		case BRICK:
+			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.brick)
+				this.brick++;
+			break;
+		case ORE:
+			break;
+		case SHEEP:
+			break;
+		case WHEAT:
+			break;
+		case WOOD:
+			break;
+		default:
+			break;
+		
+		}
 	}
 
 	@Override

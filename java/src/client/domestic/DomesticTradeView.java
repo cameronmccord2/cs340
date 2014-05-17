@@ -11,10 +11,10 @@ import client.base.*;
  * Implementation of the domestic trade view, which contains the
  * "Domestic Trade" button
  */
-@SuppressWarnings("serial")
 public class DomesticTradeView extends PanelView implements IDomesticTradeView
 {
 	
+	private static final long serialVersionUID = -8596616682593331195L;
 	private JButton button;
 	
 	public DomesticTradeView()

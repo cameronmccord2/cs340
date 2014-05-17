@@ -85,6 +85,7 @@ public class DummyProxy implements IProxy{
 	@Override
 	public ServerResponse postUserLogin(User user){
 		ServerResponse sr = new ServerResponse("Success",200);
+		this.facade.setCurrentUser(user.getUser());
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
