@@ -13,7 +13,7 @@ import client.roll.RollController;
 import client.roll.RollResultView;
 import client.roll.RollView;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unused"})
 public class CatanPanel extends JPanel
 {
 	private TitlePanel titlePanel;
