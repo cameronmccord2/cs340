@@ -1,6 +1,6 @@
 package client.models.exceptions;
 
-public class CantFindGameModel extends Exception {
+public class CantFindGameModelException extends Exception {
 
 	/**
 	 * 

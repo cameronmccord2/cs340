@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shared.definitions.ResourceType;
-import client.data.PlayerInfo;
-import client.models.exceptions.CantFindGameModel;
+import client.models.exceptions.CantFindGameModelException;
 
 public class Facade implements IFacade {
 	
@@ -18,14 +17,14 @@ public class Facade implements IFacade {
 		this.observers = new HashSet<ICatanModelObserver>();
 	}
 	
-	private IGame getGameModel() throws CantFindGameModel{
+	private IGame getGameModel() throws CantFindGameModelException{
 		Integer gameId = Integer.parseInt(this.proxy.getGameId());
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){
 				return g;
 			}
 		}
-		throw new CantFindGameModel();
+		throw new CantFindGameModelException();
 	}
 	
 	private IPlayer getCurrentUser(){
@@ -36,7 +35,7 @@ public class Facade implements IFacade {
 					return p;
 			}
 			
-		} catch (CantFindGameModel e) {
+		} catch (CantFindGameModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
