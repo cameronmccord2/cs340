@@ -90,6 +90,7 @@ public class Proxy implements IProxy {
 			if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
 				this.games.set(i, g);
 		}
+		this.facade.updatedCatanModel();
 		return g;
 	}
 	
@@ -527,7 +528,13 @@ public class Proxy implements IProxy {
 		return null;
 	}
 
+	@Override
 	public List<IGame> getGames() {
 		return games;
+	}
+
+	@Override
+	public String getGameId() {
+		return gameId;
 	}
 }

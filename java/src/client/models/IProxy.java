@@ -1,5 +1,7 @@
 package client.models;
 
+import java.util.List;
+
 import client.data.PlayerInfo;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
@@ -177,5 +179,9 @@ public interface IProxy {
 	public IGame getGameModel();
 
 	IFacade getFacade();
+
+	List<IGame> getGames();
+
+	String getGameId();
 
 }

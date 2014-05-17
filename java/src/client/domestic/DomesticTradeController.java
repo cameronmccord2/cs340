@@ -4,13 +4,14 @@ import shared.definitions.*;
 import client.base.*;
 import client.data.PlayerInfo;
 import client.misc.*;
+import client.models.ICatanModelObserver;
 import client.models.IProxy;
 
 
 /**
  * Domestic trade controller implementation
  */
-public class DomesticTradeController extends Controller implements IDomesticTradeController {
+public class DomesticTradeController extends Controller implements IDomesticTradeController, ICatanModelObserver {
 
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
@@ -32,21 +33,24 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		super(tradeView);
 		
 		this.proxy = proxy;
+		this.proxy.getFacade().registerAsObserver(this);
 		
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		int playercount = 3;
-		PlayerInfo[] pinfos = new PlayerInfo[playercount];
-		for (int i = 0; i < playercount; i++) {
-			PlayerInfo pi = new PlayerInfo();
-			pi.setName("asdf" + i);
-			pi.setPlayerIndex(i);
-			pi.setColor(CatanColor.RED);
-			pi.setId(i);
-			pinfos[i] = pi;
-		}
-		tradeOverlay.setPlayers(pinfos);
+		
+		// dummy data
+//		int playercount = 3;
+//		PlayerInfo[] pinfos = new PlayerInfo[playercount];
+//		for (int i = 0; i < playercount; i++) {
+//			PlayerInfo pi = new PlayerInfo();
+//			pi.setName("asdf" + i);
+//			pi.setPlayerIndex(i);
+//			pi.setColor(CatanColor.RED);
+//			pi.setId(i);
+//			pinfos[i] = pi;
+//		}
+//		tradeOverlay.setPlayers(pinfos);
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -131,6 +135,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 
 		getAcceptOverlay().closeModal();
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

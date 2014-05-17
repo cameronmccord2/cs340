@@ -78,6 +78,7 @@ public class DummyProxy implements IProxy{
 			if(this.games.get(i).getGameInfo().getId() == Integer.parseInt(this.gameId))
 				this.games.set(i, g);
 		}
+		this.facade.updatedCatanModel();
 		return g;
 	}
 	
@@ -475,5 +476,10 @@ public class DummyProxy implements IProxy{
 	@Override
 	public IFacade getFacade() {
 		return this.facade;
+	}
+
+	@Override
+	public String getGameId() {
+		return this.getGameId();
 	}
 }
