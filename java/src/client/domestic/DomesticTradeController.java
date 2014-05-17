@@ -1,15 +1,20 @@
 package client.domestic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.definitions.*;
 import client.base.*;
-import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.DomesticTrade;
 import client.models.ICatanModelObserver;
 import client.models.IDomesticTrade;
+import client.models.IParticipant;
 import client.models.IProxy;
-import client.models.Resource;
+import client.models.IResourceCard;
 import client.models.ResourceCollection;
+import client.models.exceptions.CantFindPlayerException;
+import client.server.OfferTrade;
 
 
 /**
@@ -21,13 +26,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 	private IProxy proxy;
-	private ResourceCollection resources;
-	private IDomesticTrade currentTrade;
-	private Integer wood;
-	private Integer ore;
-	private Integer wheat;
-	private Integer brick;
-	private Integer sheep;
+	private ResourceCollection recieveCounts;
+	private ResourceCollection sendCounts;
+	private List<ResourceType> recieveTypes;
+	private List<ResourceType> sendTypes;
+	private Integer playerToTradeWith;
 
 	/**
 	 * DomesticTradeController constructor
@@ -95,97 +98,85 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
-		this.wood = 0;
-		this.sheep = 0;
-		this.ore = 0;
-		this.brick = 0;
-		this.wheat = 0;
+		this.recieveTypes = new ArrayList<ResourceType>();
+		this.sendTypes = new ArrayList<ResourceType>();
+		this.recieveCounts = new ResourceCollection(this.proxy);
+		this.sendCounts = new ResourceCollection(this.proxy);
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		switch(resource){
-		case BRICK:
-			if(this.brick > 0)
-				this.brick--;
-			break;
-		case ORE:
-			if(this.ore > 0)
-				this.ore--;
-			break;
-		case SHEEP:
-			if(this.sheep > 0)
-				this.sheep--;
-			break;
-		case WHEAT:
-			if(this.wheat > 0)
-				this.wheat--;
-			break;
-		case WOOD:
-			if(this.wood > 0)
-				this.wood--;
-			break;
-		}
+		if(this.recieveTypes.indexOf(resource) != -1)
+			this.recieveCounts.decreaseResourceAmount(resource);
+		else if(this.sendTypes.indexOf(resource) != -1)
+			this.sendCounts.decreaseResourceAmount(resource);
+		else
+			throw new RuntimeException("decrease error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		switch(resource){
-		case BRICK:
-			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.brick)
-				this.brick++;
-			break;
-		case ORE:
-			break;
-		case SHEEP:
-			break;
-		case WHEAT:
-			break;
-		case WOOD:
-			break;
-		default:
-			break;
-		
-		}
+		if(this.recieveTypes.indexOf(resource) != -1)
+			this.recieveCounts.increaseResourceAmount(resource);
+		else if(this.sendTypes.indexOf(resource) != -1)
+			this.sendCounts.increaseResourceAmount(resource);
+		else
+			throw new RuntimeException("increase error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
 	}
 
 	@Override
 	public void sendTradeOffer() {
-
-		getTradeOverlay().closeModal();
-//		getWaitOverlay().showModal();
+		try {
+			this.proxy.movesOfferTrade(new OfferTrade(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex(), this.playerToTradeWith, ResourceCollection.getOffer(this.sendCounts, this.recieveCounts), "Domestic"));
+			
+			getTradeOverlay().closeModal();
+			getWaitOverlay().showModal();
+		
+		} catch (CantFindPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-
+		this.playerToTradeWith = playerIndex;
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-
+		if(this.recieveTypes.indexOf(resource) != -1)
+			throw new RuntimeException("there is an error with set resource to recieve, already in list: " + this.recieveTypes.toString() + ", reosurce: " + resource.toString());
+		this.recieveTypes.add(resource);
+		this.recieveCounts.setResourceToZero(resource);
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-
+		if(this.sendTypes.indexOf(resource) != -1)
+			throw new RuntimeException("the resource is already in the send list: " + resource.toString() + ", list: " + this.sendTypes.toString());
+		this.sendTypes.add(resource);
+		this.sendCounts.setResourceToZero(resource);
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-
+		this.recieveCounts.setResourceToZero(resource);
+		this.sendCounts.setResourceToZero(resource);
+		this.recieveTypes.remove(resource);
+		this.sendTypes.remove(resource);
 	}
 
 	@Override
 	public void cancelTrade() {
-
+		// everything gets cleared out when the modal gets shown
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-
+		
 		getAcceptOverlay().closeModal();
 	}
 

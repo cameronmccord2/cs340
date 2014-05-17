@@ -1,6 +1,6 @@
 package client.models;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * The Class DomesticTrade.
@@ -15,7 +15,7 @@ public class DomesticTrade extends Trade implements IDomesticTrade {
 	 * @param sendResources the send resources
 	 * @param recieveResources the recieve resources
 	 */
-	public DomesticTrade(IParticipant from, IParticipant to, List<IResourceCard> sendResources, List<IResourceCard> recieveResources) {
+	public DomesticTrade(IParticipant from, IParticipant to, Map<IResourceCard, Integer> sendResources, Map<IResourceCard, Integer> recieveResources) {
 		super(from, to, sendResources, recieveResources);
 	}
 

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import shared.definitions.ResourceType;
 import client.models.exceptions.CantFindGameModelException;
+import client.models.exceptions.CantFindPlayerException;
 
 public class Facade implements IFacade {
 	
@@ -27,7 +28,8 @@ public class Facade implements IFacade {
 		throw new CantFindGameModelException();
 	}
 	
-	private IPlayer getCurrentUser(){
+	@Override
+	public IPlayer getCurrentUser() throws CantFindPlayerException{
 		try {
 			IGame g = this.getGameModel();
 			for (IPlayer p : g.getPlayers()) {
@@ -39,7 +41,7 @@ public class Facade implements IFacade {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		throw new CantFindPlayerException("Cant find player by name: " + this.playerName);
 	}
 	
 	@Override
@@ -56,12 +58,35 @@ public class Facade implements IFacade {
 
 	@Override
 	public Integer getPlayerResourceCount(ResourceType resource) {
-		return this.getCurrentUser().getResourceCards().get(resource);
+		try {
+			return this.getCurrentUser().getResourceCards().get(resource);
+		} catch (CantFindPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("Couldnt find player: " + e.getLocalizedMessage());
+		}
 	}
 
 	@Override
 	public void setCurrentUser(String usersName) {
 		this.playerName = usersName;
+	}
+
+	@Override
+	public IParticipant getPlayerWithIndex(Integer playerIndex) throws CantFindPlayerException {
+		try {
+			IGame g = this.getGameModel();
+			for (IPlayer p : g.getPlayers()) {
+				if(p.getPlayerInfo().getName().equals(this.playerName))
+					return p;
+			}
+			
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("Cant find game model: " + e.getLocalizedMessage());
+		}
+		throw new CantFindPlayerException("Cant find player by index: " + playerIndex);
 	}
 	
 	
