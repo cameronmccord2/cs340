@@ -1,6 +1,6 @@
 package client.models;
 
-public class Facade {
+public class Facade implements IFacade {
 	
 	private IProxy proxy;
 	

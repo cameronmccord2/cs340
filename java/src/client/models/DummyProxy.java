@@ -48,7 +48,7 @@ public class DummyProxy implements IProxy{
 	private Translator translator;
 	private List<IGame> games;
 	private String gameId = "0";
-	private Facade facade;
+	private IFacade facade;
 	
 	public DummyProxy() {
 		this.translator = new Translator();
@@ -473,7 +473,7 @@ public class DummyProxy implements IProxy{
 	}
 
 	@Override
-	public Facade getFacade() {
+	public IFacade getFacade() {
 		return this.facade;
 	}
 }
