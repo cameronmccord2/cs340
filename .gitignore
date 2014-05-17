@@ -11,6 +11,9 @@ java/.gitignore/
 java/bin/
 /java/bin/
 /java/bin
+java/dist
+/java/dist
+/java/dist/
 
 # OS Files #
 .DS_Store

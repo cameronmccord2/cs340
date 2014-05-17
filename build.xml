@@ -79,7 +79,6 @@
 	<property name="java.build" location="${java.dir}/build"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
 	<property name="java.lib" location="${java.dir}/lib"/>
-    <property name="gson.file" location="gson-2.2.4.jar"/>
 
 	<target name="init" description="create build directories">
 		<tstamp/>
@@ -118,7 +117,7 @@
             <manifest>
                 <attribute name="Main-Class" value="client.main.Catan"/>
                 <attribute name="Class-Path"
-                           value="lib/${gson.file}" />
+                           value="lib/gson-2.2.4.jar" />
             </manifest>
         </jar>
         <jar jarfile="${java.dist}/catan-test.jar" basedir="${java.build}">
@@ -132,7 +131,7 @@
 			<manifest>
 				<attribute name="Main-Class" value="PUT THE NAME OF YOUR SERVER'S MAIN CLASS HERE"/>
 				<attribute name="Class-Path"
-					value="lib/${gson.file}" />
+					value="lib/gson-2.2.4.jar" />
 			</manifest>
 		</jar>
 	</target>
