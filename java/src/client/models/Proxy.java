@@ -90,15 +90,18 @@ public class Proxy implements IProxy {
 	public ServerResponse postUserLogin(User user){
 		ServerResponse sr =  doPost("/user/login", gson.toJson(user));
 		//saveGameModel(sr.getJson());
-		Map<String, List<String>> map = connection.getHeaderFields();
-		List<String> setCookie = map.get("Set-cookie");
-		cookie = setCookie.get(0);
-		cookie = cookie.substring(0, cookie.length() - 8);
+		if(sr.getResponseCode() == 200){
+			Map<String, List<String>> map = connection.getHeaderFields();
+			List<String> setCookie = map.get("Set-cookie");
+			cookie = setCookie.get(0);
+			cookie = cookie.substring(0, cookie.length() - 8);
+		}
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse postUserRegister(User user){
+		System.out.println(user.getUser() + user.getPassword());
 		ServerResponse sr = doPost("/user/register", gson.toJson(user));
 		//saveGameModel(sr.getJson());
 		return sr;

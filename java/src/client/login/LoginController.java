@@ -1,14 +1,10 @@
 package client.login;
 
-import client.base.*;
-import client.misc.*;
-
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import client.base.Controller;
+import client.base.IAction;
+import client.misc.IMessageView;
+import client.models.Proxy;
+import client.server.User;
 
 
 /**
@@ -19,6 +15,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
+	private Proxy proxy;
 	
 	/**
 	 * LoginController constructor
@@ -26,10 +23,10 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param view Login view
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
-	public LoginController(ILoginView view, IMessageView messageView) {
+	public LoginController(ILoginView view, IMessageView messageView, Proxy proxy) {
 
 		super(view);
-		
+		this.proxy = proxy;
 		this.messageView = messageView;
 	}
 	
@@ -72,12 +69,18 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void signIn() {
 		
-		// TODO: log in user
-		
-
-		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		User user = new User(((ILoginView) super.getView()).getLoginUsername(), ((ILoginView) super.getView()).getLoginPassword());
+		if(proxy.postUserLogin(user).getJson().equals("Success")){
+			// If log in succeeded
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
+		else{
+			messageView.setTitle("Login Error");
+			messageView.setMessage("Login failed. Bad username or password.");
+			messageView.showModal();
+		}
+			
 	}
 
 	@Override

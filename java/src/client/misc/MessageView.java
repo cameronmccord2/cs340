@@ -22,8 +22,6 @@ public class MessageView extends OverlayView implements IMessageView {
 	private JButton closeButton;
 	private JPanel buttonPanel;
 	private JLabel message;
-	
-	
 
 	public MessageView() {
 		

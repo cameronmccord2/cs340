@@ -1,12 +1,21 @@
 package client.main;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
-import client.catan.*;
-import client.login.*;
-import client.join.*;
-import client.misc.*;
-import client.base.*;
+import client.base.IAction;
+import client.catan.CatanPanel;
+import client.join.JoinGameController;
+import client.join.JoinGameView;
+import client.join.NewGameView;
+import client.join.PlayerWaitingController;
+import client.join.PlayerWaitingView;
+import client.join.SelectColorView;
+import client.login.LoginController;
+import client.login.LoginView;
+import client.misc.MessageView;
+import client.models.Proxy;
 
 /**
  * Main entry point for the Catan program
@@ -16,6 +25,7 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
+	private static Proxy proxy;
 	
 	public Catan()
 	{
@@ -56,11 +66,13 @@ public class Catan extends JFrame
 			public void run()
 			{
 				new Catan();
+				proxy = new Proxy();
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
 																									playerWaitingView);
 				playerWaitingView.setController(playerWaitingController);
+				
 				
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
@@ -87,7 +99,7 @@ public class Catan extends JFrame
 				MessageView loginMessageView = new MessageView();
 				LoginController loginController = new LoginController(
 																	  loginView,
-																	  loginMessageView);
+																	  loginMessageView, proxy);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()

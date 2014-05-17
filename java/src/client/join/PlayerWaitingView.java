@@ -94,6 +94,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		
 		//add the AI panel
 		this.add(aiPanel, BorderLayout.SOUTH);
+		
 	}
 
 	//listener for the "add AI player" button
