@@ -4,6 +4,7 @@ import shared.definitions.*;
 import client.base.*;
 import client.data.PlayerInfo;
 import client.misc.*;
+import client.models.IProxy;
 
 
 /**
@@ -14,6 +15,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
+	private IProxy proxy;
 
 	/**
 	 * DomesticTradeController constructor
@@ -24,9 +26,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 * @param acceptOverlay Accept trade overlay which lets the user accept or reject a proposed trade
 	 */
 	public DomesticTradeController(IDomesticTradeView tradeView, IDomesticTradeOverlay tradeOverlay,
-									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
+									IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay,
+									IProxy proxy) {
 
 		super(tradeView);
+		
+		this.proxy = proxy;
 		
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);

@@ -1,11 +1,13 @@
 package client.catan;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import client.domestic.*;
 import client.maritime.*;
 import client.misc.*;
+import client.models.IProxy;
 
 @SuppressWarnings("serial")
 public class TradePanel extends JPanel
@@ -21,9 +23,11 @@ public class TradePanel extends JPanel
 	private MaritimeTradeOverlay maritimeOverlay;
 	private MaritimeTradeController maritimeController;
 	
-	public TradePanel()
+	private IProxy proxy;
+	
+	public TradePanel(IProxy proxy)
 	{
-		
+		this.proxy = proxy;
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		domesticView = new DomesticTradeView();
@@ -34,7 +38,8 @@ public class TradePanel extends JPanel
 		domesticController = new DomesticTradeController(domesticView,
 														 domesticOverlay,
 														 domesticWaitView,
-														 domesticAcceptOverlay);
+														 domesticAcceptOverlay,
+														 this.proxy);
 		domesticView.setController(domesticController);
 		domesticOverlay.setController(domesticController);
 		domesticWaitView.setController(domesticController);
