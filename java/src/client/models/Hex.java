@@ -21,7 +21,17 @@ public class Hex implements IHex
 		if(hex.getNumber() != null)
 			this.hexNumber = hex.getNumber();
 		
-		this.type = HexType.valueOf(hex.getResource().toUpperCase());
+		// This isthe preferred, dynamic way to get an enum from a String
+		// instead of using a switch statement.
+		try
+		{
+    		if(hex.getResource() != null)
+    			this.type = HexType.valueOf(hex.getResource().toUpperCase());
+		}
+		catch(IllegalArgumentException e)
+		{
+			this.type = HexType.DESERT;
+		}
 		
 //		if(hex.getResource() != null)
 //			switch(hex.getResource().toUpperCase()){
