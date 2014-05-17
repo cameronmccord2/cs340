@@ -1,6 +1,10 @@
 package client.communication;
 
-import client.base.*;
+import java.util.List;
+
+import client.base.Controller;
+import client.models.Proxy;
+import client.server.ServerChat;
 
 
 /**
@@ -8,9 +12,12 @@ import client.base.*;
  */
 public class ChatController extends Controller implements IChatController {
 
-	public ChatController(IChatView view) {
+	private Proxy proxy;
+	
+	public ChatController(IChatView view, Proxy proxy) {
 		
 		super(view);
+		this.proxy = proxy;
 	}
 
 	@Override
@@ -20,7 +27,14 @@ public class ChatController extends Controller implements IChatController {
 
 	@Override
 	public void sendMessage(String message) {
-		
+		ServerChat chat = new ServerChat("sendChat",0,message);
+		if(proxy.movesSendChat(chat).getResponseCode() == 200){
+			System.out.println("message sent");
+		}
+	}
+	
+	public void updateMessages(List<LogEntry> entries){
+		getView().setEntries(entries);
 	}
 
 }

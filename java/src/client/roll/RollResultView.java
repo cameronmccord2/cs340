@@ -51,7 +51,7 @@ public class RollResultView extends OverlayView implements IRollResultView {
 		this.add(okayButton, BorderLayout.SOUTH);
 		
 		//create the rollLabel
-		rollLabel = new JLabel("ERROR: YOU FORGOT TO SET THE ROLL VALUE BEFORE DISPLAYING THIS WINDOW... NAUGHTY, NAUGHTY");
+		rollLabel = new JLabel("Loading");
 		Font rollLabelFont = rollLabel.getFont();
 		rollLabelFont = rollLabelFont.deriveFont(rollLabelFont.getStyle(), LABEL_TEXT_SIZE);
 		rollLabel.setFont(rollLabelFont);

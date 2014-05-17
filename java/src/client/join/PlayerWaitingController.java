@@ -21,7 +21,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-
+		//fetch players from Game model
+		//getView().setPlayers(value);
 		getView().showModal();
 	}
 
@@ -29,6 +30,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void addAI() {
 
 		// TEMPORARY
+		getView().closeModal();
+	}
+	
+	public void updatePlayers(){
+		//getView().setPlayers(value);
+		//check if 4 are in the list then close and go to game
 		getView().closeModal();
 	}
 

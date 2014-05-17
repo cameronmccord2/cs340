@@ -1,16 +1,13 @@
 package client.catan;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import shared.definitions.ResourceType;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
 import client.misc.WaitView;
+import client.models.Proxy;
 import client.roll.RollController;
 import client.roll.RollResultView;
 import client.roll.RollView;
@@ -31,13 +28,13 @@ public class CatanPanel extends JPanel
 	private RollResultView rollResultView;
 	private RollController rollController;
 	
-	public CatanPanel()
+	public CatanPanel(Proxy proxy)
 	{
 		this.setLayout(new BorderLayout());
 		
 		titlePanel = new TitlePanel();
 		midPanel = new MidPanel();
-		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
+		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(), proxy);
 		rightPanel = new RightPanel(midPanel.getMapController());
 		
 		this.add(titlePanel, BorderLayout.NORTH);
@@ -54,7 +51,7 @@ public class CatanPanel extends JPanel
 		
 		rollView = new RollView();
 		rollResultView = new RollResultView();
-		rollController = new RollController(rollView, rollResultView);
+		rollController = new RollController(rollView, rollResultView, proxy);
 		rollView.setController(rollController);
 		rollResultView.setController(rollController);
 		

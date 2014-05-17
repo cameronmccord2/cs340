@@ -76,6 +76,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		aiPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		
 		//create the AI button panel
+		//ARE WE DOING AI PLAYERS????
 		JPanel aiButtonPanel = new JPanel();
 		aiButtonPanel.setLayout(new BoxLayout(aiButtonPanel, BoxLayout.X_AXIS));
 				

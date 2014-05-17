@@ -1,10 +1,19 @@
 package client.catan;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 
-import client.communication.*;
-import client.turntracker.*;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
+import client.communication.ChatController;
+import client.communication.ChatView;
+import client.communication.GameHistoryController;
+import client.communication.GameHistoryView;
+import client.models.Proxy;
+import client.turntracker.TurnTrackerController;
+import client.turntracker.TurnTrackerView;
 
 
 @SuppressWarnings("serial")
@@ -18,7 +27,7 @@ public class LeftPanel extends JPanel {
 	private TurnTrackerView turnView;
 	private TurnTrackerController turnController;
 	
-	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel) {
+	public LeftPanel(TitlePanel titlePanel, GameStatePanel gameStatePanel, Proxy proxy) {
 		
 		this.setLayout(new BorderLayout());
 		
@@ -32,7 +41,7 @@ public class LeftPanel extends JPanel {
 		historyView.setController(historyController);
 		
 		chatView = new ChatView();
-                chatController = new ChatController(chatView);
+                chatController = new ChatController(chatView, proxy);
                 chatView.setController(chatController);
 		
 		turnView = new TurnTrackerView(titlePanel, gameStatePanel);

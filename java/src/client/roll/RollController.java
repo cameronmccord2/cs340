@@ -1,6 +1,9 @@
 package client.roll;
 
-import client.base.*;
+import client.base.Controller;
+import client.models.Proxy;
+import client.server.ServerRoll;
+
 
 
 /**
@@ -8,6 +11,7 @@ import client.base.*;
  */
 public class RollController extends Controller implements IRollController {
 
+	private Proxy proxy;
 	private IRollResultView resultView;
 
 	/**
@@ -16,10 +20,10 @@ public class RollController extends Controller implements IRollController {
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
-	public RollController(IRollView view, IRollResultView resultView) {
+	public RollController(IRollView view, IRollResultView resultView, Proxy proxy) {
 
 		super(view);
-		
+		this.proxy = proxy;
 		setResultView(resultView);
 	}
 	
@@ -36,9 +40,14 @@ public class RollController extends Controller implements IRollController {
 	
 	@Override
 	public void rollDice() {
-
-		getResultView().showModal();
+		getRollView().closeModal();
+		int rolledResult = (int) (1 + (Math.random() * 12));
+		ServerRoll serverRoll = new ServerRoll("rollNumber",0,rolledResult);
+		if(proxy.movesRollNumber(serverRoll).getResponseCode() == 200){
+			getResultView().setRollValue(rolledResult);
+			getResultView().showModal();
+			
+		}
 	}
-
 }
 

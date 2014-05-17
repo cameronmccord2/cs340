@@ -35,7 +35,7 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		catanPanel = new CatanPanel();
+		catanPanel = new CatanPanel(proxy);
 		this.setContentPane(catanPanel);
 		
 		display();
@@ -65,8 +65,9 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				new Catan();
 				proxy = new Proxy();
+				new Catan();
+				
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(

@@ -7,6 +7,7 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.misc.IMessageView;
 import client.models.Proxy;
+import client.server.CreateGame;
 import client.server.ServerJoinGame;
 
 /**
@@ -182,22 +183,25 @@ public class JoinGameController extends Controller implements
 	@Override
 	public void startCreateNewGame()
 	{
-		
 		getNewGameView().showModal();
 	}
 	
 	@Override
 	public void cancelCreateNewGame()
 	{
-		
 		getNewGameView().closeModal();
 	}
 	
 	@Override
 	public void createNewGame()
 	{
-		
-		getNewGameView().closeModal();
+		CreateGame newGame = new CreateGame(getNewGameView().getRandomlyPlaceHexes(),
+											getNewGameView().getRandomlyPlaceNumbers(),
+											getNewGameView().getUseRandomPorts(),
+											getNewGameView().getTitle());
+		if(proxy.postGamesCreate(newGame).getResponseCode() == 200){
+			getNewGameView().closeModal();
+		}
 	}
 	
 	@Override
@@ -219,12 +223,12 @@ public class JoinGameController extends Controller implements
 	{
 		ServerJoinGame join = new ServerJoinGame(0, color);
 		//ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color);
-		System.out.println(join.getId() + join.getColor());
-		proxy.postGamesJoin(join);
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
+		if(proxy.postGamesJoin(join).getJson().equals("Success")){
+			// If join succeeded
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			joinAction.execute();
+		}	
 	}
 	
 }
