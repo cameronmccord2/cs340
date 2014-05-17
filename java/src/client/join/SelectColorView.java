@@ -325,7 +325,7 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 	}
 
 	@Override
-	public CatanColor getSelectedColor() {
+	public String getSelectedColor() {
 
 		return getColorByNumber(selButton);
 	}
@@ -357,29 +357,38 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		}
 	}
 	
-	private CatanColor getColorByNumber(int val) {
+	private String getColorByNumber(int val) {
 		
 		switch (val) {
 		case 0:
 			return null;
 		case 1:
-			return CatanColor.ORANGE;
+			return "orange";
+			//return CatanColor.ORANGE;
 		case 2:
-			return CatanColor.RED;
+			return "red";
+			//return CatanColor.RED;
 		case 3:
-			return CatanColor.YELLOW;
+			return "yellow";
+			//return CatanColor.YELLOW;
 		case 4:
-			return CatanColor.GREEN;
+			return "green";
+			//return CatanColor.GREEN;
 		case 5:
-			return CatanColor.PURPLE;
+			return "purple";
+			//return CatanColor.PURPLE;
 		case 6:
-			return CatanColor.BLUE;
+			return "blue";
+			//return CatanColor.BLUE;
 		case 7:
-			return CatanColor.WHITE;
+			return "white";
+			//return CatanColor.WHITE;
 		case 8:
-			return CatanColor.BROWN;
+			return "brown";
+			//return CatanColor.BROWN;
 		case 9:
-			return CatanColor.PUCE;
+			return "puce";
+			//return CatanColor.PUCE;
 		default:
 			assert false;
 			return null;

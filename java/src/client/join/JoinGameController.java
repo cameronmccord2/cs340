@@ -1,9 +1,13 @@
 package client.join;
 
 import shared.definitions.CatanColor;
-import client.base.*;
-import client.data.*;
-import client.misc.*;
+import client.base.Controller;
+import client.base.IAction;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.misc.IMessageView;
+import client.models.Proxy;
+import client.server.ServerJoinGame;
 
 /**
  * Implementation for the join game controller
@@ -16,6 +20,8 @@ public class JoinGameController extends Controller implements
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private GameInfo selectedGame;
+	private Proxy proxy;
 	
 	/**
 	 * JoinGameController constructor
@@ -32,11 +38,11 @@ public class JoinGameController extends Controller implements
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView,
 							  ISelectColorView selectColorView,
-							  IMessageView messageView)
+							  IMessageView messageView, Proxy proxy)
 	{
 		
 		super(view);
-		
+		this.proxy = proxy;
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
@@ -197,7 +203,7 @@ public class JoinGameController extends Controller implements
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
-		
+		selectedGame = game;
 		getSelectColorView().showModal();
 	}
 	
@@ -209,9 +215,12 @@ public class JoinGameController extends Controller implements
 	}
 	
 	@Override
-	public void joinGame(CatanColor color)
+	public void joinGame(String color)
 	{
-		
+		ServerJoinGame join = new ServerJoinGame(0, color);
+		//ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color);
+		System.out.println(join.getId() + join.getColor());
+		proxy.postGamesJoin(join);
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();

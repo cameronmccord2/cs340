@@ -52,6 +52,6 @@ public interface IJoinGameController extends IController
 	 * @param color
 	 *            The color selected by the user
 	 */
-	void joinGame(CatanColor color);
+	void joinGame(String color);
 	
 }
