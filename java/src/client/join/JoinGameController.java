@@ -6,14 +6,15 @@ import client.base.IAction;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.misc.IMessageView;
-import client.models.Proxy;
+import client.models.ICatanModelObserver;
+import client.models.IProxy;
 import client.server.CreateGame;
 import client.server.ServerJoinGame;
 
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController
+public class JoinGameController extends Controller implements IJoinGameController, ICatanModelObserver
 {
 	
 	private INewGameView newGameView;
@@ -21,7 +22,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMessageView messageView;
 	private IAction joinAction;
 	private GameInfo selectedGame;
-	private Proxy proxy;
+	private IProxy proxy;
 	
 	/**
 	 * JoinGameController constructor
@@ -38,7 +39,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView,
 							  ISelectColorView selectColorView,
-							  IMessageView messageView, Proxy proxy)
+							  IMessageView messageView, IProxy proxy)
 	{
 		
 		super(view);
@@ -46,6 +47,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView()
@@ -230,6 +232,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getJoinGameView().closeModal();
 			joinAction.execute();
 		}	
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -3,6 +3,7 @@ package client.communication;
 import java.util.List;
 
 import client.base.Controller;
+import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.server.ServerChat;
 
@@ -10,14 +11,15 @@ import client.server.ServerChat;
 /**
  * Chat controller implementation
  */
-public class ChatController extends Controller implements IChatController {
+public class ChatController extends Controller implements IChatController, ICatanModelObserver {
 
 	private IProxy proxy;
 	
-	public ChatController(IChatView view, IProxy proxy2) {
+	public ChatController(IChatView view, IProxy proxy) {
 		
 		super(view);
-		this.proxy = proxy2;
+		this.proxy = proxy;
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 
 	@Override
@@ -35,6 +37,12 @@ public class ChatController extends Controller implements IChatController {
 	
 	public void updateMessages(List<LogEntry> entries){
 		getView().setEntries(entries);
+	}
+
+	@Override
+	public void update() {
+		System.out.println("time to update");
+		
 	}
 
 }

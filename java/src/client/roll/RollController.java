@@ -1,6 +1,7 @@
 package client.roll;
 
 import client.base.Controller;
+import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.models.Proxy;
 import client.server.ServerRoll;
@@ -10,7 +11,7 @@ import client.server.ServerRoll;
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController {
+public class RollController extends Controller implements IRollController, ICatanModelObserver {
 
 	private IProxy proxy;
 	private IRollResultView resultView;
@@ -26,6 +27,7 @@ public class RollController extends Controller implements IRollController {
 		super(view);
 		this.proxy = proxy;
 		setResultView(resultView);
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 	
 	public IRollResultView getResultView() {
@@ -49,6 +51,11 @@ public class RollController extends Controller implements IRollController {
 			getResultView().showModal();
 			
 		}
+	}
+
+	@Override
+	public void update() {
+		
 	}
 }
 

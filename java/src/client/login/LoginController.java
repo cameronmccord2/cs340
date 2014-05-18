@@ -3,6 +3,7 @@ package client.login;
 import client.base.Controller;
 import client.base.IAction;
 import client.misc.IMessageView;
+import client.models.IProxy;
 import client.models.Proxy;
 import client.server.User;
 
@@ -15,7 +16,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	private IMessageView messageView;
 	private IAction loginAction;
-	private Proxy proxy;
+	private IProxy proxy;
 	
 	/**
 	 * LoginController constructor
@@ -23,7 +24,7 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param view Login view
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
-	public LoginController(ILoginView view, IMessageView messageView, Proxy proxy) {
+	public LoginController(ILoginView view, IMessageView messageView, IProxy proxy) {
 
 		super(view);
 		this.proxy = proxy;
