@@ -28,6 +28,7 @@ public class ResourceCollection {
 	
 	
 	public void increaseResourceAmount(ResourceType resource) {
+		System.out.println("has: " + this.proxy.getFacade().getPlayerResourceCount(resource) + " " + resource.toString());
 		switch(resource){
 		case BRICK:
 			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.brick)
@@ -49,6 +50,9 @@ public class ResourceCollection {
 			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.wood)
 				this.wood++;
 			break;
+			
+		default:
+			throw new RuntimeException("cant find resource: " + resource.toString());
 		}
 	}
 	
@@ -74,6 +78,9 @@ public class ResourceCollection {
 			if(this.wood > 0)
 				this.wood--;
 			break;
+			
+		default:
+			throw new RuntimeException("cant find resource: " + resource.toString());
 		}
 	}
 
@@ -212,6 +219,29 @@ public class ResourceCollection {
 
 	public void setSheep(Integer sheep) {
 		this.sheep = sheep;
+	}
+
+
+	public int getTotalCount() {
+		return this.brick + this.ore + this.sheep + this.wood + this.wheat;
+	}
+
+
+	public Integer getResourceCount(ResourceType resource) {
+		switch(resource){
+		case BRICK:
+			return this.brick;
+		case ORE:
+			return this.ore;
+		case SHEEP:
+			return this.sheep;
+		case WHEAT:
+			return this.wheat;
+		case WOOD:
+			return this.wood;
+		default:
+			return 0;
+		}
 	}
 }
 

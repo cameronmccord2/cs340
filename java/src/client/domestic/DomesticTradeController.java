@@ -27,6 +27,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private List<ResourceType> recieveTypes;
 	private List<ResourceType> sendTypes;
 	private Integer playerToTradeWith;
+	private boolean playersHaveNotBeenSet;
 
 	/**
 	 * DomesticTradeController constructor
@@ -41,6 +42,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 									IProxy proxy) {
 
 		super(tradeView);
+		this.playersHaveNotBeenSet = true;
 		
 		this.proxy = proxy;
 		this.proxy.getFacade().registerAsObserver(this);
@@ -98,27 +100,49 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.sendTypes = new ArrayList<ResourceType>();
 		this.recieveCounts = new ResourceCollection(this.proxy);
 		this.sendCounts = new ResourceCollection(this.proxy);
+		this.playerToTradeWith = -1;
+//		this.update();
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		if(this.recieveTypes.indexOf(resource) != -1)
+		System.out.println("decreaseing: " + resource.toString());
+		Integer hasOfResource = this.proxy.getFacade().getPlayerResourceCount(resource);
+		Integer currentTradeCount = 0;
+		if(this.recieveTypes.indexOf(resource) != -1){
 			this.recieveCounts.decreaseResourceAmount(resource);
-		else if(this.sendTypes.indexOf(resource) != -1)
+			currentTradeCount = this.recieveCounts.getResourceCount(resource);
+		}
+		else if(this.sendTypes.indexOf(resource) != -1){
 			this.sendCounts.decreaseResourceAmount(resource);
+			currentTradeCount = this.recieveCounts.getResourceCount(resource);
+		}
 		else
 			throw new RuntimeException("decrease error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
+		
+		this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+		this.decideTradeState();
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		if(this.recieveTypes.indexOf(resource) != -1)
+		System.out.println("increasing: " + resource.toString());
+		Integer hasOfResource = this.proxy.getFacade().getPlayerResourceCount(resource);
+		Integer currentTradeCount = 0;
+		if(this.recieveTypes.indexOf(resource) != -1){
 			this.recieveCounts.increaseResourceAmount(resource);
-		else if(this.sendTypes.indexOf(resource) != -1)
+			currentTradeCount = this.recieveCounts.getResourceCount(resource);
+		}
+		else if(this.sendTypes.indexOf(resource) != -1){
 			this.sendCounts.increaseResourceAmount(resource);
+			currentTradeCount = this.recieveCounts.getResourceCount(resource);
+		}
 		else
 			throw new RuntimeException("increase error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
+		
+		this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+		this.decideTradeState();
 	}
 
 	@Override
@@ -137,31 +161,51 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
+//		System.out.println("Player: " + playerIndex);
 		this.playerToTradeWith = playerIndex;
+		this.decideTradeState();
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
+//		System.out.println("resourceToRecieve: " + resource.toString());
+		this.sendTypes.remove(resource);
+		this.sendCounts.setResourceToZero(resource);
 		if(this.recieveTypes.indexOf(resource) != -1)
 			throw new RuntimeException("there is an error with set resource to recieve, already in list: " + this.recieveTypes.toString() + ", reosurce: " + resource.toString());
 		this.recieveTypes.add(resource);
 		this.recieveCounts.setResourceToZero(resource);
+		this.decideTradeState();
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
+//		System.out.println("resourceToSend: " + resource.toString());
+		this.recieveTypes.remove(resource);
+		this.recieveCounts.setResourceToZero(resource);
 		if(this.sendTypes.indexOf(resource) != -1)
 			throw new RuntimeException("the resource is already in the send list: " + resource.toString() + ", list: " + this.sendTypes.toString());
 		this.sendTypes.add(resource);
 		this.sendCounts.setResourceToZero(resource);
+		this.decideTradeState();
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
+//		System.out.println("unsetResource: " + resource.toString());
 		this.recieveCounts.setResourceToZero(resource);
 		this.sendCounts.setResourceToZero(resource);
 		this.recieveTypes.remove(resource);
 		this.sendTypes.remove(resource);
+		this.decideTradeState();
+	}
+	
+	private void decideTradeState(){
+		System.out.println("deciding: " + this.playerToTradeWith + ", " + this.sendCounts.getTotalCount() + ", " + this.recieveCounts.getTotalCount());
+		if(this.playerToTradeWith == -1 || (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
+			this.tradeOverlay.setStateMessage("Set the trade you want to make");
+		else
+			this.tradeOverlay.setStateMessage("Trade!");
 	}
 
 	@Override
@@ -178,7 +222,30 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
-		this.tradeOverlay.setPlayers(this.proxy.getFacade().getAllPlayerInfos());
+//		if(this.playersHaveNotBeenSet){
+			this.tradeOverlay.setPlayers(this.proxy.getFacade().getAllPlayerInfos());
+//			this.playersHaveNotBeenSet = false;
+//		}
+		
+		if(this.proxy.getFacade().isMyTurn()){
+			this.tradeOverlay.setResourceSelectionEnabled(true);
+			this.tradeOverlay.setPlayerSelectionEnabled(true);
+			this.tradeOverlay.setStateMessage("Set the trade you want to make");
+			this.setResourceChangeForResource(ResourceType.BRICK);
+			this.setResourceChangeForResource(ResourceType.ORE);
+			this.setResourceChangeForResource(ResourceType.SHEEP);
+			this.setResourceChangeForResource(ResourceType.WHEAT);
+			this.setResourceChangeForResource(ResourceType.WOOD);
+			// have the view reset counts to 0 when unhidden?
+		}else{
+			this.tradeOverlay.setResourceSelectionEnabled(false);
+			this.tradeOverlay.setPlayerSelectionEnabled(false);
+			this.tradeOverlay.setStateMessage("It is not your turn");
+		}
+	}
+
+	private void setResourceChangeForResource(ResourceType resource) {
+		this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerResourceCount(resource) > 0), false);
 	}
 
 }

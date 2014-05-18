@@ -20,4 +20,6 @@ public interface IFacade {
 
 	PlayerInfo[] getAllPlayerInfos();
 
+	boolean isMyTurn();
+
 }

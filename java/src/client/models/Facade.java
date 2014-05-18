@@ -60,7 +60,10 @@ public class Facade implements IFacade {
 	@Override
 	public Integer getPlayerResourceCount(ResourceType resource) {
 		try {
-			return this.getCurrentUser().getResourceCards().get(resource);
+			Integer count = this.getCurrentUser().getResourceCards().get(resource);
+			if(count == null)
+				return 0;
+			return count;
 		} catch (CantFindPlayerException e) {
 			throw new RuntimeException("Couldnt find player: " + e.getLocalizedMessage());
 		}
@@ -98,6 +101,21 @@ public class Facade implements IFacade {
 		} catch (CantFindGameModelException e) {
 			throw new RuntimeException("cant find game model, getAllPlayerInfos, " + e.getLocalizedMessage());
 		}
+	}
+
+	@Override
+	public boolean isMyTurn() {
+		try {
+			IPlayer currentUser = this.getCurrentUser();
+			return (this.getGameModel().getTurnTracker().currentTurn == currentUser.getPlayerInfo().getPlayerIndex());
+		} catch (CantFindPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	
