@@ -39,7 +39,6 @@ public class Facade implements IFacade {
 			}
 			
 		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		throw new CantFindPlayerException("Cant find player by name: " + this.playerName);
@@ -63,8 +62,6 @@ public class Facade implements IFacade {
 		try {
 			return this.getCurrentUser().getResourceCards().get(resource);
 		} catch (CantFindPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new RuntimeException("Couldnt find player: " + e.getLocalizedMessage());
 		}
 	}
@@ -84,8 +81,6 @@ public class Facade implements IFacade {
 			}
 			
 		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new RuntimeException("Cant find game model: " + e.getLocalizedMessage());
 		}
 		throw new CantFindPlayerException("Cant find player by index: " + playerIndex);
