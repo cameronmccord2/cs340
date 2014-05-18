@@ -13,8 +13,7 @@ import client.server.ServerJoinGame;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements
-												  IJoinGameController
+public class JoinGameController extends Controller implements IJoinGameController
 {
 	
 	private INewGameView newGameView;
@@ -177,6 +176,8 @@ public class JoinGameController extends Controller implements
 		
 		GameInfo[] games = {one, two, three, four};
 		getJoinGameView().setGames(games, self);
+		
+		this.proxy.getGamesList();// added to help other views by cameron
 		getJoinGameView().showModal();
 	}
 	

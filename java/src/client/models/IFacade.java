@@ -1,5 +1,6 @@
 package client.models;
 
+import client.data.PlayerInfo;
 import client.models.exceptions.CantFindPlayerException;
 import shared.definitions.ResourceType;
 
@@ -16,5 +17,7 @@ public interface IFacade {
 	IPlayer getCurrentUser() throws CantFindPlayerException;
 
 	IParticipant getPlayerWithIndex(Integer playerToTradeWith) throws CantFindPlayerException;
+
+	PlayerInfo[] getAllPlayerInfos();
 
 }

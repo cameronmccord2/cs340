@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shared.definitions.ResourceType;
+import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 
@@ -51,6 +52,7 @@ public class Facade implements IFacade {
 
 	@Override
 	public void updatedCatanModel() {
+			
 		for (ICatanModelObserver o : this.observers) {
 			o.update();
 		}
@@ -87,6 +89,20 @@ public class Facade implements IFacade {
 			throw new RuntimeException("Cant find game model: " + e.getLocalizedMessage());
 		}
 		throw new CantFindPlayerException("Cant find player by index: " + playerIndex);
+	}
+
+	@Override
+	public PlayerInfo[] getAllPlayerInfos() {
+		try {
+			PlayerInfo[] pi = new PlayerInfo[this.getGameModel().getPlayers().length];
+			for (int i = 0; i < this.getGameModel().getPlayers().length; i++) {
+				pi[i] = this.getGameModel().getPlayers()[i].getPlayerInfo();
+			}
+			return pi;
+			
+		} catch (CantFindGameModelException e) {
+			throw new RuntimeException("cant find game model, getAllPlayerInfos, " + e.getLocalizedMessage());
+		}
 	}
 	
 	

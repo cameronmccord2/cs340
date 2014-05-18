@@ -60,6 +60,8 @@ public class Proxy implements IProxy {
 	private String gameId;
 	private IFacade facade;
 	
+	
+	
 	public Proxy() {
 		this.translator = new Translator();
 		this.games = new ArrayList<IGame>();
@@ -91,12 +93,13 @@ public class Proxy implements IProxy {
 				this.games.set(i, g);
 		}
 		this.facade.updatedCatanModel();
+//		System.out.println(g.toString());
 		return g;
 	}
 	
 	@Override
 	public ServerResponse postUserLogin(User user){
-		ServerResponse sr =  doPost("/user/login", gson.toJson(user));
+		ServerResponse sr =  doPost("/user/login", gson.toJson(user), false, false);
 		//saveGameModel(sr.getJson());
 		if(sr.getResponseCode() == 200){
 			Map<String, List<String>> map = connection.getHeaderFields();
@@ -110,16 +113,17 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse postUserRegister(User user){
-		ServerResponse sr = doPost("/user/register", gson.toJson(user));
+		ServerResponse sr = doPost("/user/register", gson.toJson(user), false, false);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse getGamesList(){
-		ServerResponse sr = doGet("/games/list");
+		ServerResponse sr = doGet("/games/list", false, false);
 		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
 		List<IGame> list = new ArrayList<IGame>();
+//		System.out.println("games from server: " + games.toString());
 		for (GameServer g : games) {
 			IPlayer[] players = new IPlayer[g.getPlayers().length];
 			int playerIndex = 0;
@@ -143,24 +147,29 @@ public class Proxy implements IProxy {
 			list.add(game);
 		}
 		this.games = list;
+//		System.out.println("games: " + this.games.toString());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse postGamesCreate(CreateGame game){
-		ServerResponse sr = doPost("/games/create", gson.toJson(game));
+		ServerResponse sr = doPost("/games/create", gson.toJson(game), false, false);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse postGamesJoin(ServerJoinGame join){
-		ServerResponse sr = doJoinPost("/games/join", gson.toJson(join));
+		ServerResponse sr = doPost("/games/join", gson.toJson(join), true, false);// responds with Success
 		//saveGameModel(sr.getJson());
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		gameId = setCookie.get(0);
+//		System.out.println(gameId);// catan.game=0;Path=/;
 		gameId = gameId.substring(0, gameId.length() - 8);
+//		System.out.println(gameId);//catan.game=0
+		gameId = gameId.substring(11);
+//		System.out.println(gameId);//0
 		return sr;
 	}
 	
@@ -171,11 +180,16 @@ public class Proxy implements IProxy {
 			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
 		} catch (InvalidGameModelException e1) {
 			// fail silently
+			System.out.println("There is no current game model, getGameModel without version");
 		}
+		if(version == null)
+			version = 0;
+		
+		
 		String requestUrl = "/game/model";
 		if(version != 0)
 			requestUrl += "?version=" + version;
-		ServerResponse sr = this.doGet(requestUrl);
+		ServerResponse sr = this.doGet(requestUrl, true, true);
 		return this.saveGameModel(sr.getJson());
 	}
 	
@@ -197,119 +211,119 @@ public class Proxy implements IProxy {
 
 	@Override
 	public ServerResponse postGameReset(){
-		ServerResponse sr = doMasterPost("/game/reset","");
+		ServerResponse sr = doPost("/game/reset","", true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesSendChat(ServerChat chat){
-		ServerResponse sr = doMasterPost("/moves/sendChat", gson.toJson(chat));
+		ServerResponse sr = doPost("/moves/sendChat", gson.toJson(chat), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesRollNumber(ServerRoll roll){
-		ServerResponse sr = doMasterPost("/moves/rollNumber", gson.toJson(roll));
+		ServerResponse sr = doPost("/moves/rollNumber", gson.toJson(roll), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse moveRobPlayer(ServerRobPlayer rob){
-		ServerResponse sr = doMasterPost("/moves/robPlayer", gson.toJson(rob));
+		ServerResponse sr = doPost("/moves/robPlayer", gson.toJson(rob), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesFinishTurn(FinishedTurn turn){
-		ServerResponse sr = doMasterPost("/moves/finishTurn", gson.toJson(turn));
+		ServerResponse sr = doPost("/moves/finishTurn", gson.toJson(turn), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuyDevCard(BuyDevCard card){
-		ServerResponse sr = doMasterPost("/moves/buyDevCard", gson.toJson(card));
+		ServerResponse sr = doPost("/moves/buyDevCard", gson.toJson(card), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesYear_of_Plenty(ServerYearofPlenty yop){
-		ServerResponse sr = doMasterPost("/moves/Year_of_Plenty", gson.toJson(yop));
+		ServerResponse sr = doPost("/moves/Year_of_Plenty", gson.toJson(yop), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesRoad_Building(RoadBuilding rb){
-		ServerResponse sr = doMasterPost("/moves/Road_Building", gson.toJson(rb));
+		ServerResponse sr = doPost("/moves/Road_Building", gson.toJson(rb), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesSoldier(ServerSoldier ss){
-		ServerResponse sr = doMasterPost("/moves/Soldier", gson.toJson(ss));
+		ServerResponse sr = doPost("/moves/Soldier", gson.toJson(ss), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonopoly(ServerMonopoly sm){
-		ServerResponse sr = doMasterPost("/moves/Monopoly", gson.toJson(sm));
+		ServerResponse sr = doPost("/moves/Monopoly", gson.toJson(sm), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonument(ServerMonument sm){
-		ServerResponse sr = doMasterPost("/moves/Monument", gson.toJson(sm));
+		ServerResponse sr = doPost("/moves/Monument", gson.toJson(sm), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildRoad(ServerBuildRoad br){
-		ServerResponse sr = doMasterPost("/moves/buildRoad", gson.toJson(br));
+		ServerResponse sr = doPost("/moves/buildRoad", gson.toJson(br), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildSettlement(ServerBuildSettlement bs){
-		ServerResponse sr = doMasterPost("/moves/buildSettlement", gson.toJson(bs));
+		ServerResponse sr = doPost("/moves/buildSettlement", gson.toJson(bs), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildCity(ServerBuildCity bc){
-		ServerResponse sr = doMasterPost("/moves/buildCity", gson.toJson(bc));
+		ServerResponse sr = doPost("/moves/buildCity", gson.toJson(bc), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesOfferTrade(OfferTrade ot){
-		ServerResponse sr = doMasterPost("/moves/offerTrade", gson.toJson(ot));
+		ServerResponse sr = doPost("/moves/offerTrade", gson.toJson(ot), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesAcceptTrade(AcceptTrade at){
-		ServerResponse sr = doMasterPost("/moves/acceptTrade", gson.toJson(at));
+		ServerResponse sr = doPost("/moves/acceptTrade", gson.toJson(at), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMaritimeTrade(MaritimeTradeOff mTrade){
-		ServerResponse sr = doMasterPost("/moves/maritimeTrade", gson.toJson(mTrade));
+		ServerResponse sr = doPost("/moves/maritimeTrade", gson.toJson(mTrade), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
@@ -321,21 +335,49 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public ServerResponse utilChangeLogLevel(ServerLogLevel loglevel){
-		ServerResponse sr = doMasterPost("/util/changeLogLevel", gson.toJson(loglevel));
+		ServerResponse sr = doPost("/util/changeLogLevel", gson.toJson(loglevel), true, true);
 		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
-	private ServerResponse doGet(String urlPath){
+	private ServerResponse doGet(String urlPath, boolean withCookie, boolean withGameId){
+		return this.doRequest(urlPath, "GET", withCookie, withGameId, null);
+	}
+	
+	private ServerResponse doPost(String urlPath, String postData, boolean withCookie, boolean withGameId){
+		return this.doRequest(urlPath, "POST", withCookie, withGameId, postData);
+	}
+	
+	private ServerResponse doRequest(String urlPath, String verb, boolean withCookie, boolean withGameId, String postData){
 		URL url;
 		try {
 			url = new URL("http://localhost:8081" + urlPath);
 			connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestMethod("GET");
+			connection.setRequestMethod(verb);
+			String cookieProperty = "";
+			if(withCookie){
+				cookieProperty = cookie;
+				if(withGameId)
+					cookieProperty += "; catan.game=" + gameId;
+			}
+			if(cookieProperty.length() > 0)
+				connection.setRequestProperty("Cookie", cookieProperty);
+			
+			if(verb.equals("POST"))
+				connection.setDoOutput(true);
+			
 			connection.connect();
 			
+			
+			if(verb.equals("POST")){
+				//Write request body to OutputStream
+				 OutputStream requestBody = connection.getOutputStream();  
+				 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
+				 requestBody.close();
+			}
+			
 			int response = connection.getResponseCode();
-			System.out.println(response);
+//			System.out.println(response);
 			if (response == HttpURLConnection.HTTP_OK) { 
 				
 				 //Read response body from InputStream
@@ -348,7 +390,7 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-				 System.out.println("response: " + out.toString());  
+//				 System.out.println("response: " + out.toString());  
 				 reader.close();
 				 responseBody.close();
 				 return new ServerResponse(out.toString(), connection.getResponseCode());
@@ -364,7 +406,7 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-				 System.out.println(out.toString());  
+//				 System.out.println(out.toString());  
 				 reader.close();
 				 responseBody.close();
 				 return new ServerResponse(out.toString(), connection.getResponseCode());
@@ -375,159 +417,156 @@ public class Proxy implements IProxy {
 		return null;
 	}
 	
-	private ServerResponse doPost(String urlPath, String postData) {
-		try { 
-			 URL url = new URL("http://localhost:8081" + urlPath); 
-			 connection = (HttpURLConnection)url.openConnection();
-			 connection.setRequestMethod("POST");
-			 connection.setDoOutput(true);
-			 connection.connect();
-			 
-			 //Write request body to OutputStream
-			 OutputStream requestBody = connection.getOutputStream();  
-			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
-			 requestBody.close();
-			 
-			 int response = connection.getResponseCode();
-	
-			 if (response == HttpURLConnection.HTTP_OK) {
-				 //Read response body from InputStream
-				 InputStream responseBody = connection.getInputStream(); 
-				 
-				 //convert response to string
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
-				 StringBuilder out = new StringBuilder();
-				 String line;
-				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
-				 } 
-				 reader.close();
-				 responseBody.close();
-				 return new ServerResponse(out.toString(), connection.getResponseCode());
-			 } 
-			 else{
-				//Read response body from InputStream
-				 InputStream responseBody = connection.getErrorStream(); 
-				 
-				 //convert response to string
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
-				 StringBuilder out = new StringBuilder();
-				 String line;
-				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
-				 } 
-				 reader.close();
-				 responseBody.close();
-				 return new ServerResponse(out.toString(), connection.getResponseCode());
-			 }
-	    }catch(Exception e){
-			e.printStackTrace();
-	    }
-		return null;
-	}
-	private ServerResponse doJoinPost(String urlPath, String postData) {
-		try { 
-			 URL url = new URL("http://localhost:8081" + urlPath); 
-			 connection = (HttpURLConnection)url.openConnection();
-			 connection.setRequestMethod("POST");
-			 connection.setRequestProperty("Cookie", cookie);
-			 connection.setDoOutput(true);
-			 connection.connect();
-			 
-			 //Write request body to OutputStream
-			 OutputStream requestBody = connection.getOutputStream();  
-			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
-			 requestBody.close();
-			 
-			 int response = connection.getResponseCode();
-	
-			 if (response == HttpURLConnection.HTTP_OK) {
-				 //Read response body from InputStream
-				 InputStream responseBody = connection.getInputStream(); 
-				 
-				 //convert response to string
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
-				 StringBuilder out = new StringBuilder();
-				 String line;
-				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
-				 }
-				 reader.close();
-				 responseBody.close();
-				 return new ServerResponse(out.toString(), connection.getResponseCode());
-			 } 
-			 else{
-				//Read response body from InputStream
-				 InputStream responseBody = connection.getErrorStream(); 
-				 
-				 //convert response to string
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
-				 StringBuilder out = new StringBuilder();
-				 String line;
-				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
-				 } 
-				 reader.close();
-				 responseBody.close();
-				 return new ServerResponse(out.toString(), connection.getResponseCode());
-			 }
-	    }catch(Exception e){
-			e.printStackTrace();
-	    }
-		return null;
-	}
-	
-	private ServerResponse doMasterPost(String urlPath, String postData) {
-		try { 
-			 URL url = new URL("http://localhost:8081" + urlPath); 
-			 connection = (HttpURLConnection)url.openConnection();
-			 connection.setRequestMethod("POST");
-			 connection.setRequestProperty("Cookie", cookie + "; " + gameId);
-			 connection.setDoOutput(true);
-			 connection.connect();
-			 
-			 //Write request body to OutputStream
-			 OutputStream requestBody = connection.getOutputStream();  
-			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
-			 requestBody.close();
-			 
-			 int response = connection.getResponseCode();
-	
-			 if (response == HttpURLConnection.HTTP_OK) {
-				 //Read response body from InputStream
-				 InputStream responseBody = connection.getInputStream(); 
-				 
-				 //convert response to string
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
-				 StringBuilder out = new StringBuilder();
-				 String line;
-				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
-				 } 
-				 reader.close();
-				 responseBody.close();
-				 return new ServerResponse(out.toString(), connection.getResponseCode());
-			 } 
-			 else{
-				//Read response body from InputStream
-				 InputStream responseBody = connection.getErrorStream(); 
-				 
-				 //convert response to string
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
-				 StringBuilder out = new StringBuilder();
-				 String line;
-				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
-				 }
-				 reader.close();
-				 responseBody.close();
-				 return new ServerResponse(out.toString(), connection.getResponseCode());
-			 }
-	    }catch(Exception e){
-			e.printStackTrace();
-	    }
-		return null;
-	}
+//	private ServerResponse doPost(String urlPath, String postData) {
+//		try { 
+//			 URL url = new URL("http://localhost:8081" + urlPath); 
+//			 connection = (HttpURLConnection)url.openConnection();
+//			 connection.setRequestMethod("POST");
+//			 connection.setDoOutput(true);
+//			 connection.connect();
+//			 
+//			 
+//			 
+//			 int response = connection.getResponseCode();
+//	
+//			 if (response == HttpURLConnection.HTTP_OK) {
+//				 //Read response body from InputStream
+//				 InputStream responseBody = connection.getInputStream(); 
+//				 
+//				 //convert response to string
+//				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+//				 StringBuilder out = new StringBuilder();
+//				 String line;
+//				 while ((line = reader.readLine()) != null) {
+//				     out.append(line);
+//				 } 
+//				 reader.close();
+//				 responseBody.close();
+//				 return new ServerResponse(out.toString(), connection.getResponseCode());
+//			 } 
+//			 else{
+//				//Read response body from InputStream
+//				 InputStream responseBody = connection.getErrorStream(); 
+//				 
+//				 //convert response to string
+//				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+//				 StringBuilder out = new StringBuilder();
+//				 String line;
+//				 while ((line = reader.readLine()) != null) {
+//				     out.append(line);
+//				 } 
+//				 reader.close();
+//				 responseBody.close();
+//				 return new ServerResponse(out.toString(), connection.getResponseCode());
+//			 }
+//	    }catch(Exception e){
+//			e.printStackTrace();
+//	    }
+//		return null;
+//	}
+//	private ServerResponse doJoinPost(String urlPath, String postData) {
+//		try { 
+//			 URL url = new URL("http://localhost:8081" + urlPath); 
+//			 connection = (HttpURLConnection)url.openConnection();
+//			 connection.setRequestMethod("POST");
+//			 connection.setRequestProperty("Cookie", cookie);
+//			 connection.setDoOutput(true);
+//			 connection.connect();
+//			 
+//			 //Write request body to OutputStream
+//			 OutputStream requestBody = connection.getOutputStream();  
+//			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
+//			 requestBody.close();
+//			 
+//			 int response = connection.getResponseCode();
+//	
+//			 if (response == HttpURLConnection.HTTP_OK) {
+//				 //Read response body from InputStream
+//				 InputStream responseBody = connection.getInputStream(); 
+//				 
+//				 //convert response to string
+//				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+//				 StringBuilder out = new StringBuilder();
+//				 String line;
+//				 while ((line = reader.readLine()) != null) {
+//				     out.append(line);
+//				 }
+//				 reader.close();
+//				 responseBody.close();
+//				 return new ServerResponse(out.toString(), connection.getResponseCode());
+//			 } 
+//			 else{
+//				//Read response body from InputStream
+//				 InputStream responseBody = connection.getErrorStream(); 
+//				 
+//				 //convert response to string
+//				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+//				 StringBuilder out = new StringBuilder();
+//				 String line;
+//				 while ((line = reader.readLine()) != null) {
+//				     out.append(line);
+//				 } 
+//				 reader.close();
+//				 responseBody.close();
+//				 return new ServerResponse(out.toString(), connection.getResponseCode());
+//			 }
+//	    }catch(Exception e){
+//			e.printStackTrace();
+//	    }
+//		return null;
+//	}
+//	
+//	private ServerResponse doMasterPost(String urlPath, String postData) {
+//		try { 
+//			 URL url = new URL("http://localhost:8081" + urlPath); 
+//			 connection = (HttpURLConnection)url.openConnection();
+//			 connection.setRequestMethod("POST");
+//			 connection.setRequestProperty("Cookie", cookie + "; " + gameId);
+//			 connection.setDoOutput(true);
+//			 connection.connect();
+//			 
+//			 //Write request body to OutputStream
+//			 OutputStream requestBody = connection.getOutputStream();  
+//			 requestBody.write(postData.getBytes(Charset.forName("UTF-8")));
+//			 requestBody.close();
+//			 
+//			 int response = connection.getResponseCode();
+//	
+//			 if (response == HttpURLConnection.HTTP_OK) {
+//				 //Read response body from InputStream
+//				 InputStream responseBody = connection.getInputStream(); 
+//				 
+//				 //convert response to string
+//				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+//				 StringBuilder out = new StringBuilder();
+//				 String line;
+//				 while ((line = reader.readLine()) != null) {
+//				     out.append(line);
+//				 } 
+//				 reader.close();
+//				 responseBody.close();
+//				 return new ServerResponse(out.toString(), connection.getResponseCode());
+//			 } 
+//			 else{
+//				//Read response body from InputStream
+//				 InputStream responseBody = connection.getErrorStream(); 
+//				 
+//				 //convert response to string
+//				 BufferedReader reader = new BufferedReader(new InputStreamReader(responseBody));
+//				 StringBuilder out = new StringBuilder();
+//				 String line;
+//				 while ((line = reader.readLine()) != null) {
+//				     out.append(line);
+//				 }
+//				 reader.close();
+//				 responseBody.close();
+//				 return new ServerResponse(out.toString(), connection.getResponseCode());
+//			 }
+//	    }catch(Exception e){
+//			e.printStackTrace();
+//	    }
+//		return null;
+//	}
 
 	@Override
 	public List<IGame> getGames() {

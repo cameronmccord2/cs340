@@ -31,8 +31,10 @@ public class Translator {
 	public Translator() {}
 
 	public IGame convertClientModelToGame(ClientModel cm, IGame iGame) throws InvalidLocationException{
-		if(cm == null || iGame == null)
-			throw new RuntimeException("cm and iGame should never be null");
+		if(cm == null)
+			throw new RuntimeException("cm  should never be null");
+		if(iGame == null)
+			throw new RuntimeException("iGame  should never be null");
 
 		Game g = (Game)iGame;
 
@@ -81,7 +83,8 @@ public class Translator {
 				settlements.add(newS);
 			}
 			newPlayer.setSettlements(settlements);
-			assert(settlements.size() == p.getSettlements());
+//			System.out.println(settlements.size() + "," + p.getSettlements());
+//			assert(settlements.size() == p.getSettlements());
 
 			List<ICity> cities = new ArrayList<ICity>();
 			for (TRVertexObject c : cm.getMap().getCities()) {
@@ -91,7 +94,7 @@ public class Translator {
 				cities.add(newC);
 			}
 			newPlayer.setCities(cities);
-			assert(cities.size() == p.getCities());
+//			assert(cities.size() == p.getCities());
 
 			List<IRoad> roads = new ArrayList<IRoad>();
 			for (TRRoad road : cm.getMap().getRoads()) {
@@ -101,7 +104,7 @@ public class Translator {
 				roads.add(r);
 			}
 			newPlayer.setRoads(roads);
-			assert(roads.size() == p.getRoads());
+//			assert(roads.size() == p.getRoads());
 
 
 			Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();

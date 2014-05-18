@@ -1,6 +1,6 @@
 package client.models;
 
-import java.util.List;
+import java.util.Map;
 
 import client.exceptions.InvalidTradeException;
 
@@ -22,7 +22,7 @@ public class MaritimeTrade extends Trade implements IMaritimeTrade {
 	 * @param sendRatio the send ratio, must be 2, 3, or 4
 	 * @throws InvalidTradeException 
 	 */
-	public MaritimeTrade(IParticipant from, IParticipant to, List<IResourceCard> sendResources, List<IResourceCard> recieveResources, Integer sendRatio) throws InvalidTradeException {
+	public MaritimeTrade(IParticipant from, IParticipant to, Map<IResourceCard, Integer> sendResources, Map<IResourceCard, Integer> recieveResources, Integer sendRatio) throws InvalidTradeException {
 		super(from, to, sendResources, recieveResources);
 		this.setSendRatio(sendRatio);
 	}

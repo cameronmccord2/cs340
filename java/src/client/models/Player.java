@@ -192,4 +192,29 @@ public class Player extends Participant implements IPlayer {
 	public void setDiscarded(boolean discarded) {
 		this.discarded = discarded;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Player [settlements=");
+		builder.append(settlements);
+		builder.append(", cities=");
+		builder.append(cities);
+		builder.append(", roads=");
+		builder.append(roads);
+		builder.append(", playerInfo=");
+		builder.append(playerInfo);
+		builder.append(", soldiers=");
+		builder.append(soldiers);
+		builder.append(", victoryPoints=");
+		builder.append(victoryPoints);
+		builder.append(", monuments=");
+		builder.append(monuments);
+		builder.append(", playedDevCard=");
+		builder.append(playedDevCard);
+		builder.append(", discarded=");
+		builder.append(discarded);
+		builder.append("]");
+		return builder.toString();
+	}
 }

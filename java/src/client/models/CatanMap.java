@@ -204,4 +204,19 @@ public class CatanMap implements ICatanMap
 	{
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CatanMap [hexMap=");
+		builder.append(hexMap);
+		builder.append(", catanMap=");
+		builder.append(catanMap);
+		builder.append(", portMap=");
+		builder.append(portMap);
+		builder.append(", radius=");
+		builder.append(radius);
+		builder.append("]");
+		return builder.toString();
+	}
 }

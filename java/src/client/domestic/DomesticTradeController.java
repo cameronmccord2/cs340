@@ -6,12 +6,8 @@ import java.util.List;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
-import client.models.DomesticTrade;
 import client.models.ICatanModelObserver;
-import client.models.IDomesticTrade;
-import client.models.IParticipant;
 import client.models.IProxy;
-import client.models.IResourceCard;
 import client.models.ResourceCollection;
 import client.models.exceptions.CantFindPlayerException;
 import client.server.OfferTrade;
@@ -182,8 +178,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		this.tradeOverlay.setPlayers(this.proxy.getFacade().getAllPlayerInfos());
 	}
 
 }

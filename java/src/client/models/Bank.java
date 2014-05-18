@@ -167,4 +167,15 @@ public class Bank extends Participant implements IBank {
 
         return currentType;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Bank [developmentCards=");
+		builder.append(developmentCards);
+		builder.append(", resourceCards=");
+		builder.append(resourceCards);
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -89,6 +89,7 @@ public class Catan extends JFrame
 					public void execute()
 					{
 						playerWaitingController.start();
+						proxy.getGameModel();
 					}
 				});
 				joinView.setController(joinController);
