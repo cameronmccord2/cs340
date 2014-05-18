@@ -2,6 +2,7 @@ package client.models;
 
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.translator.TRTradeOffer;
 import shared.definitions.ResourceType;
 
 public interface IFacade {
@@ -16,10 +17,14 @@ public interface IFacade {
 
 	IPlayer getCurrentUser() throws CantFindPlayerException;
 
-	IParticipant getPlayerWithIndex(Integer playerToTradeWith) throws CantFindPlayerException;
+	IPlayer getPlayerWithIndex(Integer playerToTradeWith) throws CantFindPlayerException;
 
 	PlayerInfo[] getAllPlayerInfos();
 
 	boolean isMyTurn();
+
+	TRTradeOffer getCurrentTrade();
+
+	Integer getCurrentUserIndex();
 
 }

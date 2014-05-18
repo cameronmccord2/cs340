@@ -7,6 +7,7 @@ import shared.definitions.ResourceType;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.translator.TRTradeOffer;
 
 public class Facade implements IFacade {
 	
@@ -75,7 +76,7 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public IParticipant getPlayerWithIndex(Integer playerIndex) throws CantFindPlayerException {
+	public IPlayer getPlayerWithIndex(Integer playerIndex) throws CantFindPlayerException {
 		try {
 			IGame g = this.getGameModel();
 			for (IPlayer p : g.getPlayers()) {
@@ -117,6 +118,62 @@ public class Facade implements IFacade {
 		}
 		return false;
 	}
-	
-	
+
+	@Override
+	public TRTradeOffer getCurrentTrade() {
+		try {
+			return this.getGameModel().getCurrentTrade();
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Integer getCurrentUserIndex() {
+		try {
+			return this.getCurrentUser().getPlayerInfo().getPlayerIndex();
+		} catch (CantFindPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

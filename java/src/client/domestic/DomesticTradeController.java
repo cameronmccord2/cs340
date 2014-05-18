@@ -10,6 +10,7 @@ import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.models.ResourceCollection;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.translator.TRTradeOffer;
 import client.server.OfferTrade;
 
 
@@ -28,6 +29,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private List<ResourceType> sendTypes;
 	private Integer playerToTradeWith;
 	private boolean playersHaveNotBeenSet;
+	private String state;
 
 	/**
 	 * DomesticTradeController constructor
@@ -43,7 +45,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 		super(tradeView);
 		this.playersHaveNotBeenSet = true;
-		
+		this.state = "Inited";
 		this.proxy = proxy;
 		this.proxy.getFacade().registerAsObserver(this);
 		
@@ -101,6 +103,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.recieveCounts = new ResourceCollection(this.proxy);
 		this.sendCounts = new ResourceCollection(this.proxy);
 		this.playerToTradeWith = -1;
+		this.state = "starting";
 //		this.update();
 		getTradeOverlay().showModal();
 	}
@@ -201,6 +204,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 	
 	private void decideTradeState(){
+		this.state = "notrade";
 		System.out.println("deciding: " + this.playerToTradeWith + ", " + this.sendCounts.getTotalCount() + ", " + this.recieveCounts.getTotalCount());
 		if(this.playerToTradeWith == -1 && (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
 			this.tradeOverlay.setStateMessage("Set the trade you want to make");
@@ -208,19 +212,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			this.tradeOverlay.setStateMessage("Select resources to trade");
 		else if(this.playerToTradeWith == -1 && (this.sendCounts.getTotalCount() != 0 || this.recieveCounts.getTotalCount() != 0))
 			this.tradeOverlay.setStateMessage("Select a player");
-		else
+		else{
 			this.tradeOverlay.setStateMessage("Trade!");
+			this.state = "cantrade";
+		}
 	}
 
 	@Override
 	public void cancelTrade() {
 		// everything gets cleared out when the modal gets shown
 		getTradeOverlay().closeModal();
+		this.state = "closed";
 	}
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		
+		this.state = "accepted";
 		getAcceptOverlay().closeModal();
 	}
 
@@ -245,6 +252,46 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			this.tradeOverlay.setResourceSelectionEnabled(false);
 			this.tradeOverlay.setPlayerSelectionEnabled(false);
 			this.tradeOverlay.setStateMessage("It is not your turn");
+		}
+		
+		TRTradeOffer currentTrade = this.proxy.getFacade().getCurrentTrade();
+		if(currentTrade == null){
+			this.waitOverlay.closeModal();
+		}else if(currentTrade.getReciever() == this.proxy.getFacade().getCurrentUserIndex()){
+			this.setupAcceptTradeWithTrade(currentTrade);
+		}
+	}
+
+	private void setupAcceptTradeWithTrade(TRTradeOffer currentTrade) {
+		try {
+			this.acceptOverlay.setPlayerName(this.proxy.getFacade().getPlayerWithIndex(currentTrade.getSender()).getPlayerInfo().getName());
+			if(currentTrade.getOffer().getBrick() > 0)
+				this.acceptOverlay.addGetResource(ResourceType.BRICK, currentTrade.getOffer().getBrick());
+			else if(currentTrade.getOffer().getBrick() < 0)
+				this.acceptOverlay.addGiveResource(ResourceType.BRICK, currentTrade.getOffer().getBrick() * -1);
+			if(currentTrade.getOffer().getOre() > 0)
+				this.acceptOverlay.addGetResource(ResourceType.ORE, currentTrade.getOffer().getOre());
+			else if(currentTrade.getOffer().getOre() < 0)
+				this.acceptOverlay.addGiveResource(ResourceType.ORE, currentTrade.getOffer().getOre() * -1);
+			if(currentTrade.getOffer().getSheep() > 0)
+				this.acceptOverlay.addGetResource(ResourceType.SHEEP, currentTrade.getOffer().getSheep());
+			else if(currentTrade.getOffer().getSheep() < 0)
+				this.acceptOverlay.addGiveResource(ResourceType.SHEEP, currentTrade.getOffer().getSheep() * -1);
+			if(currentTrade.getOffer().getWheat() > 0)
+				this.acceptOverlay.addGetResource(ResourceType.WHEAT, currentTrade.getOffer().getWheat());
+			else if(currentTrade.getOffer().getWheat() < 0)
+				this.acceptOverlay.addGiveResource(ResourceType.WHEAT, currentTrade.getOffer().getWheat() * -1);
+			if(currentTrade.getOffer().getWood() > 0)
+				this.acceptOverlay.addGetResource(ResourceType.WOOD, currentTrade.getOffer().getWood());
+			else if(currentTrade.getOffer().getWood() < 0)
+				this.acceptOverlay.addGiveResource(ResourceType.WOOD, currentTrade.getOffer().getWood() * -1);
+		
+			this.acceptOverlay.setAcceptEnabled(false);// TODO do this
+			this.acceptOverlay.setAcceptEnabled(true);// TODO do this
+			this.acceptOverlay.showModal();
+		} catch (CantFindPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

@@ -4,6 +4,7 @@
 package client.models;
 
 import client.data.GameInfo;
+import client.models.translator.TRTradeOffer;
 
 /**
  * The Game class will hold the map, a dice object, and the list of participants.
@@ -21,6 +22,7 @@ public class Game implements IGame{
 	private MessageList chat;
 	private TurnTracker turnTracker;
 	private Integer winner;
+	private TRTradeOffer currentTrade;
 	
 	
 	public Game() {
@@ -161,6 +163,16 @@ public class Game implements IGame{
 	@Override
 	public void setWinner(Integer winner) {
 		this.winner = winner;
+	}
+
+	@Override
+	public TRTradeOffer getCurrentTrade() {
+		return currentTrade;
+	}
+
+	@Override
+	public void setCurrentTrade(TRTradeOffer currentTrade) {
+		this.currentTrade = currentTrade;
 	}
 	
 }

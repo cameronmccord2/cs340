@@ -47,6 +47,8 @@ public class Translator {
 		for (TRMessageLine line : cm.getChat().getLines()) {
 			g.addChat(new MessageLine(line));
 		}
+		
+		g.setCurrentTrade(cm.getTradeOffer());
 
 		g.setTurnTracker(new TurnTracker(cm.getTurnTracker()));
 		

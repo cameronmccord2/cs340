@@ -1,6 +1,7 @@
 package client.models;
 
 import client.data.GameInfo;
+import client.models.translator.TRTradeOffer;
 
 /**
  * The Game interface
@@ -58,4 +59,8 @@ public interface IGame {
 	Integer getWinner();
 
 	void setWinner(Integer winner);
+
+	TRTradeOffer getCurrentTrade();
+
+	void setCurrentTrade(TRTradeOffer currentTrade);
 }
