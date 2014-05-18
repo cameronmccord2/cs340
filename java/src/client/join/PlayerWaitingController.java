@@ -15,6 +15,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public PlayerWaitingController(IPlayerWaitingView view, IProxy proxy) {
 
 		super(view);
+		this.proxy = proxy;
 		this.proxy.getFacade().registerAsObserver(this);
 	}
 

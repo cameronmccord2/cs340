@@ -202,8 +202,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	
 	private void decideTradeState(){
 		System.out.println("deciding: " + this.playerToTradeWith + ", " + this.sendCounts.getTotalCount() + ", " + this.recieveCounts.getTotalCount());
-		if(this.playerToTradeWith == -1 || (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
+		if(this.playerToTradeWith == -1 && (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
 			this.tradeOverlay.setStateMessage("Set the trade you want to make");
+		else if(this.playerToTradeWith != -1 && (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
+			this.tradeOverlay.setStateMessage("Select resources to trade");
+		else if(this.playerToTradeWith == -1 && (this.sendCounts.getTotalCount() != 0 || this.recieveCounts.getTotalCount() != 0))
+			this.tradeOverlay.setStateMessage("Select a player");
 		else
 			this.tradeOverlay.setStateMessage("Trade!");
 	}
@@ -222,10 +226,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
-//		if(this.playersHaveNotBeenSet){
+		if(this.playersHaveNotBeenSet){
 			this.tradeOverlay.setPlayers(this.proxy.getFacade().getAllPlayerInfos());
-//			this.playersHaveNotBeenSet = false;
-//		}
+			this.playersHaveNotBeenSet = false;
+		}
 		
 		if(this.proxy.getFacade().isMyTurn()){
 			this.tradeOverlay.setResourceSelectionEnabled(true);

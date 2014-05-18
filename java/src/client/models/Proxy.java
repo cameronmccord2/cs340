@@ -70,7 +70,7 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public IFacade getFacade(){
-		System.out.println("get facade");
+		System.out.println("get facade: " + this + ", f: " + this.facade);
 		return this.facade;
 	}
 	
