@@ -70,13 +70,6 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		labelPanel.add(subLabel);
 		this.add(labelPanel, BorderLayout.NORTH);
 
-		// Padding
-		Dimension edge0 = new Dimension(5, 10);
-		Dimension edge1 = new Dimension(15, 20);
-
-		JComponent box0 = new Box.Filler(edge0, edge0, edge0);
-		JComponent box1 = new Box.Filler(edge1, edge1, edge1);
-
 		// This is the header layout
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new GridLayout(0, 4));
@@ -90,15 +83,10 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		join = new JLabel("Join");
 		join.setFont(labelFont);
 
-		//gamePanel.add(box0);
 		gamePanel.add(hash);
-		//gamePanel.add(box0);
 		gamePanel.add(name);
-		//gamePanel.add(box1);
 		gamePanel.add(currentPlayer);
-		//gamePanel.add(box1);
 		gamePanel.add(join);
-		//gamePanel.add(box1);
 
 		// This is the looped layout
 		if (games != null && games.length > 0)
@@ -106,15 +94,14 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 			labelFont = labelFont.deriveFont(labelFont.getStyle(), PANEL_TEXT_SIZE);
 			for (GameInfo game : games)
 			{
-				//gamePanel.add(box0);
 				JLabel tmp1 = new JLabel(String.valueOf(game.getId()));
 				tmp1.setFont(labelFont);
 				gamePanel.add(tmp1);
-				//gamePanel.add(box0);
+
 				JLabel tmp2 = new JLabel(game.getTitle());
 				tmp2.setFont(labelFont);
 				gamePanel.add(tmp2);
-				//gamePanel.add(box1);
+
 				String players = String.valueOf(game.getPlayers().size()) + "/4 : ";
 				for (int j = 0; j < game.getPlayers().size(); j++) {
 					if (j < game.getPlayers().size() - 1) {
@@ -126,7 +113,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				JLabel tmp3 = new JLabel(players);
 				tmp3.setFont(labelFont);
 				gamePanel.add(tmp3);
-				//gamePanel.add(box1);
+
 				JButton joinButton;
 				
 				if (game.getPlayers().contains(localPlayer))
@@ -145,7 +132,6 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				joinButton.setActionCommand("" + game.getId());
 				joinButton.addActionListener(actionListener);
 				gamePanel.add(joinButton);
-				//gamePanel.add(box1);
 			}
 		}
 
@@ -211,6 +197,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 //				} 
 //			}
 //	}
+	
 	private ActionListener actionListener = new ActionListener()
 	{
 		@Override

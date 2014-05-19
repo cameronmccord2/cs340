@@ -90,7 +90,9 @@ public class CatanMap implements ICatanMap
 	@Override
 	public IPiece distanceRule(IPiece piece)
 	{
-		return null;
+		IPiece conflictPiece = null;
+		
+		return conflictPiece;
 	}
 
 	@Override

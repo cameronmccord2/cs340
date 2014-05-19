@@ -8,6 +8,7 @@ import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.ILocation;
+import shared.locations.VertexLocation;
 
 public class RoadSegment extends Piece implements IRoadSegment
 {
@@ -61,6 +62,18 @@ public class RoadSegment extends Piece implements IRoadSegment
 	public PieceType getPieceType()
 	{
 		return PieceType.ROAD;
+	}
+
+	@Override
+	public VertexLocation getStartLocation()
+	{
+		return null;
+	}
+
+	@Override
+	public VertexLocation getEndLocation()
+	{
+		return null;
 	}
 
 }
