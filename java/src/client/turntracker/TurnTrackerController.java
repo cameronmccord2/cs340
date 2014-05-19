@@ -9,25 +9,27 @@ import client.base.*;
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController {
 
-	public TurnTrackerController(ITurnTrackerView view) {
-		
+	public TurnTrackerController(ITurnTrackerView view)
+	{
 		super(view);
 		
 		initFromModel();
 	}
 	
 	@Override
-	public ITurnTrackerView getView() {
-		
+	public ITurnTrackerView getView()
+	{
 		return (ITurnTrackerView)super.getView();
 	}
 
 	@Override
-	public void endTurn() {
-
+	public void endTurn()
+	{
+		
 	}
 	
-	private void initFromModel() {
+	private void initFromModel()
+	{
 		//<temp>
 		getView().setLocalPlayerColor(CatanColor.RED);
 		//</temp>

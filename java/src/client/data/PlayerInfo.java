@@ -72,9 +72,8 @@ public class PlayerInfo
 
 	@Override
 	public int hashCode()
-	{		
-		final int prime = 223;
-		return 31 * prime + this.id;
+	{
+		return 31 * this.id;
 	}
 
 	@Override
@@ -92,7 +91,4 @@ public class PlayerInfo
 		
 		return this.id == other.id;
 	}
-	
-	
-	
 }
