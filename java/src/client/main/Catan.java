@@ -70,8 +70,8 @@ public class Catan extends JFrame
 				
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
-				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
-																									playerWaitingView, proxy);
+				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView,
+				                                                                                    proxy);
 				playerWaitingView.setController(playerWaitingController);
 				
 				
@@ -79,11 +79,11 @@ public class Catan extends JFrame
 				NewGameView newGameView = new NewGameView();
 				SelectColorView selectColorView = new SelectColorView();
 				MessageView joinMessageView = new MessageView();
-				final JoinGameController joinController = new JoinGameController(
-																				 joinView,
+				final JoinGameController joinController = new JoinGameController(joinView,
 																				 newGameView,
 																				 selectColorView,
-																				 joinMessageView, proxy);
+																				 joinMessageView,
+																				 proxy);
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()
@@ -99,9 +99,9 @@ public class Catan extends JFrame
 				
 				LoginView loginView = new LoginView();
 				MessageView loginMessageView = new MessageView();
-				LoginController loginController = new LoginController(
-																	  loginView,
-																	  loginMessageView, proxy);
+				LoginController loginController = new LoginController(loginView,
+																	  loginMessageView,
+																	  proxy);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()
