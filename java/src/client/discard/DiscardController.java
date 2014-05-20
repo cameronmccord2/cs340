@@ -4,6 +4,7 @@ import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
 import client.models.ICatanModelObserver;
+import client.models.IProxy;
 
 
 /**
@@ -14,6 +15,7 @@ public class DiscardController extends Controller implements IDiscardController,
 {
 
 	private IWaitView waitView;
+	private IProxy proxy;
 
 	/**
 	 * DiscardController constructor
@@ -26,6 +28,11 @@ public class DiscardController extends Controller implements IDiscardController,
 		super(view);
 
 		this.waitView = waitView;
+	}
+	
+	public void setProxy(IProxy proxy)
+	{
+		this.proxy = proxy;
 	}
 
 	public IDiscardView getDiscardView()
@@ -48,7 +55,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void increaseAmount(ResourceType resource)
 	{
-		
+		proxy.getFacade();
 	}
 
 	/**
@@ -73,10 +80,11 @@ public class DiscardController extends Controller implements IDiscardController,
 		getDiscardView().closeModal();
 	}
 
+	
 	@Override
 	public void update()
 	{
-
+		
 	}
 }
 

@@ -4,6 +4,7 @@ import java.util.*;
 
 import client.base.*;
 import client.models.*;
+import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -83,11 +84,11 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     public void update() {
         try {
 
-            getView().setElementAmount(ResourceBarElement.WOOD, this.proxy.getFacade().getPlayerResourceCount(ResourceType.WOOD));
-            getView().setElementAmount(ResourceBarElement.BRICK, this.proxy.getFacade().getPlayerResourceCount(ResourceType.BRICK));
-            getView().setElementAmount(ResourceBarElement.WHEAT, this.proxy.getFacade().getPlayerResourceCount(ResourceType.WHEAT));
-            getView().setElementAmount(ResourceBarElement.SHEEP, this.proxy.getFacade().getPlayerResourceCount(ResourceType.SHEEP));
-            getView().setElementAmount(ResourceBarElement.ORE, this.proxy.getFacade().getPlayerResourceCount(ResourceType.ORE));
+            getView().setElementAmount(ResourceBarElement.WOOD, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD));
+            getView().setElementAmount(ResourceBarElement.BRICK, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK));
+            getView().setElementAmount(ResourceBarElement.WHEAT, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT));
+            getView().setElementAmount(ResourceBarElement.SHEEP, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP));
+            getView().setElementAmount(ResourceBarElement.ORE, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE));
 
             getView().setElementAmount(ResourceBarElement.SOLDIERS, this.proxy.getFacade().getCurrentUser().getSoldiers());
             getView().setElementAmount(ResourceBarElement.CITY, MAX_CITIES - this.proxy.getFacade().getCurrentUser().getCities().size());
@@ -97,7 +98,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
         }
         catch (CantFindPlayerException e) {
             e.getStackTrace();
-        }
+        } catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }
 

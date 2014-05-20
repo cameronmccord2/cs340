@@ -2,10 +2,10 @@ package client.models;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
 
-import shared.definitions.ResourceType;
 import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
@@ -43,22 +43,18 @@ public class Facade implements IFacade {
 	}
 	
 	@Override
-	public IPlayer getCurrentUser() throws CantFindPlayerException{
-		try {
-			IGame g = this.getGameModel();
-			for (IPlayer p : g.getPlayers()) {
-				if(p.getPlayerInfo().getName().equals(this.playerName))
-					return p;
-			}
-			
-		} catch (CantFindGameModelException e) {
-			e.printStackTrace();
+	public IPlayer getCurrentUser() throws CantFindPlayerException, CantFindGameModelException{
+		IGame g = this.getGameModel();
+		for (IPlayer p : g.getPlayers()) {
+			if(p.getPlayerInfo().getName().equals(this.playerName))
+				return p;
 		}
-		throw new CantFindPlayerException("Cant find player by name: " + this.playerName);
+		throw new CantFindPlayerException("sorry");
 	}
 	
 	@Override
 	public void registerAsObserver(ICatanModelObserver observer) {
+		System.out.println("registering: " + observer.getClass().toString());
 		this.observers.add(observer);
 	}
 
@@ -71,7 +67,7 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public Integer getPlayerResourceCount(ResourceType resource) {
+	public Integer getPlayerResourceCount(ResourceCard resource) throws CantFindGameModelException {
 		try {
 			Integer count = this.getCurrentUser().getResourceCards().get(resource);
 			if(count == null)
@@ -81,6 +77,14 @@ public class Facade implements IFacade {
 			throw new RuntimeException("Couldnt find player: " + e.getLocalizedMessage());
 		}
 	}
+	
+	@Override
+	public Integer getBankResourceCount(ResourceCard resource) throws CantFindGameModelException {
+		Integer count = this.getGameModel().getBank().getResourceCards().get(resource);
+		if(count != null)
+			return count;
+		return 0;
+	}
 
 	@Override
 	public void setCurrentUser(String usersName) {
@@ -88,43 +92,30 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public IPlayer getPlayerWithIndex(Integer playerIndex) throws CantFindPlayerException {
-		try {
-			IGame g = this.getGameModel();
-			for (IPlayer p : g.getPlayers()) {
-				if(p.getPlayerInfo().getName().equals(this.playerName))
-					return p;
-			}
-			
-		} catch (CantFindGameModelException e) {
-			throw new RuntimeException("Cant find game model: " + e.getLocalizedMessage());
+	public IPlayer getPlayerWithIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
+		IGame g = this.getGameModel();
+		for (IPlayer p : g.getPlayers()) {
+			if(p.getPlayerInfo().getName().equals(this.playerName))
+				return p;
 		}
 		throw new CantFindPlayerException("Cant find player by index: " + playerIndex);
 	}
 
 	@Override
-	public PlayerInfo[] getAllPlayerInfos() {
-		try {
-			PlayerInfo[] pi = new PlayerInfo[this.getGameModel().getPlayers().length];
-			for (int i = 0; i < this.getGameModel().getPlayers().length; i++) {
-				pi[i] = this.getGameModel().getPlayers()[i].getPlayerInfo();
-			}
-			return pi;
-			
-		} catch (CantFindGameModelException e) {
-			throw new RuntimeException("cant find game model, getAllPlayerInfos, " + e.getLocalizedMessage());
+	public PlayerInfo[] getAllPlayerInfos() throws CantFindGameModelException {
+		PlayerInfo[] pi = new PlayerInfo[this.getGameModel().getPlayers().length];
+		for (int i = 0; i < this.getGameModel().getPlayers().length; i++) {
+			pi[i] = this.getGameModel().getPlayers()[i].getPlayerInfo();
 		}
+		return pi;
 	}
 
 	@Override
-	public boolean isMyTurn() {
+	public boolean isMyTurn() throws CantFindGameModelException {
 		try {
 			IPlayer currentUser = this.getCurrentUser();
 			return (this.getGameModel().getTurnTracker().currentTurn == currentUser.getPlayerInfo().getPlayerIndex());
 		} catch (CantFindPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (CantFindGameModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -132,18 +123,12 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public TRTradeOffer getCurrentTrade() {
-		try {
-			return this.getGameModel().getCurrentTrade();
-		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public TRTradeOffer getCurrentTrade() throws CantFindGameModelException {
+		return this.getGameModel().getCurrentTrade();
 	}
 
 	@Override
-	public Integer getCurrentUserIndex() {
+	public Integer getCurrentUserIndex() throws CantFindGameModelException {
 		try {
 			return this.getCurrentUser().getPlayerInfo().getPlayerIndex();
 		} catch (CantFindPlayerException e) {
@@ -151,6 +136,11 @@ public class Facade implements IFacade {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	@Override
+	public Map<IResourceCard, Integer> getResourcesForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException {
+		return this.getPlayerWithIndex(playerId).getResourceCards();
 	}
 
 	@Override

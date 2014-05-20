@@ -3,6 +3,8 @@
  */
 package client.server;
 
+import client.models.translator.TRTradeOffer;
+
 /**
  * Holds info to accept a trade from the server
  * @author scottdaly
@@ -15,6 +17,11 @@ public class AcceptTrade {
 	public AcceptTrade(String type, int playerIndex, boolean willAccept) {
 		this.type = type;
 		this.playerIndex = playerIndex;
+		this.willAccept = willAccept;
+	}
+	public AcceptTrade(TRTradeOffer currentTrade, boolean willAccept) {
+		this.type = "willAccept";
+		this.playerIndex = currentTrade.getReceiver();
 		this.willAccept = willAccept;
 	}
 	/**

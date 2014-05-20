@@ -3,6 +3,7 @@ package client.points;
 import client.base.*;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
+import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import client.server.FinishedTurn;
 
@@ -64,7 +65,10 @@ public class PointsController extends Controller implements IPointsController,
         }
         catch (CantFindPlayerException e) {
             e.printStackTrace();
-        }
+        } catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
     @Override

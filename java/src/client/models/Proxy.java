@@ -324,14 +324,14 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesOfferTrade(OfferTrade ot){
 		ServerResponse sr = doPost("/moves/offerTrade", gson.toJson(ot), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesAcceptTrade(AcceptTrade at){
 		ServerResponse sr = doPost("/moves/acceptTrade", gson.toJson(at), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	

@@ -217,6 +217,10 @@ public class Player extends Participant implements IPlayer {
 		builder.append(playedDevCard);
 		builder.append(", discarded=");
 		builder.append(discarded);
+		builder.append(", developmentCards=");
+		builder.append(developmentCards);
+		builder.append(", resourceCards=");
+		builder.append(resourceCards);
 		builder.append("]");
 		return builder.toString();
 	}
