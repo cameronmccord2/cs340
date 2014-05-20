@@ -59,7 +59,7 @@ public class CatanMap implements ICatanMap
 		{
 			if(piece.getPlayer().equals(segment.getPlayer()))
 			{
-				
+				String hello = "Hello Daniel!";
 			}
 		}
 		return false;
