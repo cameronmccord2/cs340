@@ -25,7 +25,8 @@ public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;
 	private Map<ILocation, IPiece> catanMap;
-	private Map<VertexLocation, IPort> portMap;
+	private Map<ILocation, IPort> portMap;
+	private IRobber robber;
 
 	private int radius;
 
@@ -34,6 +35,7 @@ public class CatanMap implements ICatanMap
 		this.hexMap = new HashMap<>();
 		this.catanMap = new HashMap<>();
 		this.portMap = new HashMap<>();
+		this.robber = null;
 		this.radius = 3;
 	}
 
@@ -163,7 +165,6 @@ public class CatanMap implements ICatanMap
 			conflictPiece = catanMap.get(corner.getNormalizedLocation());
 			if(conflictPiece != null)
 				return conflictPiece;
-				
 		}
 
 		return conflictPiece;
@@ -172,7 +173,7 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canMoveRobber(IPlayer player)
 	{
-		return false;
+		return true;
 	}
 
 	@Override
@@ -189,16 +190,25 @@ public class CatanMap implements ICatanMap
 	}
 
 	@Override
-	public Collection<IRoad> getRoads()
+	public Collection<IRoadSegment> getRoads()
 	{
-		return null;
+		Collection<IRoadSegment> roads = new HashSet<>();
+		for(ILocation location : catanMap.keySet())
+		{
+			IPiece piece = catanMap.get(location);
+			if(piece.getPieceType() == PieceType.ROAD)
+				roads.add((IRoadSegment)piece);
+		}
+		return roads;
 	}
 
 	@Override
 	public void placeRoadSegment(IRoadSegment segment)
 			throws InvalidLocationException
 	{
-
+		if(!canPlaceRoad(segment))
+			throw new InvalidLocationException();
+		
 	}
 
 	@Override
@@ -211,44 +221,63 @@ public class CatanMap implements ICatanMap
 	@Override
 	public void addPort(IPort port)
 	{
-
+		portMap.put(port.getLocation(), port);
 	}
 
 	@Override
 	public Collection<ISettlement> getSettlements()
 	{
-		return null;
+		Collection<ISettlement> settlements = new HashSet<>();
+		for(ILocation location : catanMap.keySet())
+		{
+			IPiece piece = catanMap.get(location);
+			if(piece.getPieceType() == PieceType.SETTLEMENT)
+				settlements.add((ISettlement)piece);
+		}
+		return settlements;
 	}
 
 	@Override
 	public void placeSettlement(ISettlement settlement)
 			throws InvalidLocationException
 	{
-
+		if(!canPlaceSettlement(settlement))
+			throw new InvalidLocationException();
 	}
 
 	@Override
 	public Collection<ICity> getCities()
 	{
-		return null;
+		Collection<ICity> cities = new HashSet<>();
+		for(ILocation location : catanMap.keySet())
+		{
+			IPiece piece = catanMap.get(location);
+			if(piece.getPieceType() == PieceType.CITY)
+				cities.add((ICity)piece);
+		}
+		return cities;
 	}
 
 	@Override
 	public void placeCity(ICity city) throws InvalidLocationException
 	{
-
+		if(!canPlaceCity(city))
+			throw new InvalidLocationException();
 	}
 
+	/**
+	 * @return	the robber or null if on the desert or uninitialized.
+	 */
 	@Override
 	public IRobber getRobber()
 	{
-		return null;
+		return robber;
 	}
 
 	@Override
 	public void setRobber(IRobber robber)
 	{
-
+		this.robber = robber;
 	}
 
 	@Override
@@ -263,6 +292,12 @@ public class CatanMap implements ICatanMap
 		this.radius = radius;
 	}
 
+	/*
+	 * I just realized that these help methods should go in the
+	 * Player implementation because these are intended to check
+	 * whether or not the player has the proper amount of resources.
+	 */
+	
 	@Override
 	public boolean canBuildSettlement(IPlayer player, ISettlement settlement)
 	{

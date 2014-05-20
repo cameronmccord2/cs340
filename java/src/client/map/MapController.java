@@ -6,6 +6,7 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import client.models.ICatanModelObserver;
 
 /**
  * Implementation for the map controller.
@@ -24,12 +25,13 @@ import client.data.*;
  *
  */
 
-public class MapController extends Controller implements IMapController {
-
+public class MapController extends Controller implements IMapController,
+														 ICatanModelObserver
+{
 	private IRobView robView;
 
-	public MapController(IMapView view, IRobView robView) {
-
+	public MapController(IMapView view, IRobView robView)
+	{
 		super(view);
 
 		setRobView(robView);
@@ -37,20 +39,24 @@ public class MapController extends Controller implements IMapController {
 		initFromModel();
 	}
 
-	public IMapView getView() {
-
+	public IMapView getView()
+	{
 		return (IMapView)super.getView();
 	}
 
-	private IRobView getRobView() {
+	private IRobView getRobView()
+	{
 		return robView;
 	}
-	private void setRobView(IRobView robView) {
+	
+	private void setRobView(IRobView robView)
+	{
 		this.robView = robView;
 	}
 
-	protected void initFromModel() {
-
+	// THIS NEEDS TO BE UPDATED WITH THE REAL THING.
+	protected void initFromModel()
+	{
 		//<temp>
 
 		Random rand = new Random();
@@ -116,67 +122,77 @@ public class MapController extends Controller implements IMapController {
 		//</temp>
 	}
 
-	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
+	public boolean canPlaceRoad(EdgeLocation edgeLoc)
+	{
 		return true;
 	}
 
-	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-
+	public boolean canPlaceSettlement(VertexLocation vertLoc)
+	{
 		return true;
 	}
 
-	public boolean canPlaceCity(VertexLocation vertLoc) {
-
+	public boolean canPlaceCity(VertexLocation vertLoc)
+	{
 		return true;
 	}
 
-	public boolean canPlaceRobber(HexLocation hexLoc) {
-
+	public boolean canPlaceRobber(HexLocation hexLoc)
+	{
 		return true;
 	}
 
-	public void placeRoad(EdgeLocation edgeLoc) {
-
+	public void placeRoad(EdgeLocation edgeLoc)
+	{
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 
-	public void placeSettlement(VertexLocation vertLoc) {
-
+	public void placeSettlement(VertexLocation vertLoc)
+	{
 		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
 	}
 
-	public void placeCity(VertexLocation vertLoc) {
-
+	public void placeCity(VertexLocation vertLoc)
+	{
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
 	}
 
-	public void placeRobber(HexLocation hexLoc) {
-
+	public void placeRobber(HexLocation hexLoc)
+	{
 		getView().placeRobber(hexLoc);
 
 		getRobView().showModal();
 	}
 
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
-
+	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
+	{
 		getView().startDrop(pieceType, CatanColor.ORANGE, true);
 	}
 
-	public void cancelMove() {
+	public void cancelMove()
+	{
 
 	}
 
-	public void playSoldierCard() {
+	public void playSoldierCard()
+	{
 
 	}
 
-	public void playRoadBuildingCard() {
+	public void playRoadBuildingCard()
+	{
 
 	}
 
-	public void robPlayer(RobPlayerInfo victim) {
+	public void robPlayer(RobPlayerInfo victim)
+	{
 
+	}
+
+	@Override
+	public void update()
+	{
+		
 	}
 
 }
