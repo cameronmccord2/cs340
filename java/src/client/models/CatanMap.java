@@ -2,6 +2,7 @@ package client.models;
 
 import java.util.*;
 
+import shared.definitions.PieceType;
 import shared.locations.*;
 
 /**
@@ -71,7 +72,14 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceCity(ICity city)
 	{
-		return false;
+		IPiece piece = catanMap.get(city.getLocation());
+		if(piece == null)
+			return false;
+		if(piece.getPieceType() != PieceType.SETTLEMENT)
+			return false;
+		if(!piece.getPlayer().equals(city.getPlayer()))
+			return false;
+		return true;
 	}
 
 	/**
@@ -91,7 +99,7 @@ public class CatanMap implements ICatanMap
 	public IPiece distanceRule(IPiece piece)
 	{
 		IPiece conflictPiece = null;
-		
+
 		return conflictPiece;
 	}
 
