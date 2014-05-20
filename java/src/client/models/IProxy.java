@@ -42,7 +42,7 @@ public interface IProxy {
 	 * This will retrieve all current games on the server
 	 * @return an array of Game objects
 	 */
-	public ServerResponse getGamesList();
+	public List<IGame> getGamesList();
 
 	/**
 	 * Posts a new game that has just been created
@@ -183,5 +183,7 @@ public interface IProxy {
 	List<IGame> getGames();
 
 	String getGameId();
+
+	public ReturnedUser getrUser();
 
 }

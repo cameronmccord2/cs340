@@ -1,12 +1,27 @@
 package client.join;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import client.base.*;
-import client.data.*;
+import client.base.OverlayView;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 
 /**
  * Implementation for the join game view, which lets the user select a game to
@@ -36,7 +51,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 	private JPanel gamePanel;
 	private JPanel buttonPanel;
 
-	private GameInfo[] games;
+	private List<GameInfo> games;
 	private PlayerInfo localPlayer;
 
 	public JoinGameView()
@@ -101,7 +116,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		//gamePanel.add(box1);
 
 		// This is the looped layout
-		if (games != null && games.length > 0)
+		if (games != null && games.size() > 0)
 		{
 			labelFont = labelFont.deriveFont(labelFont.getStyle(), PANEL_TEXT_SIZE);
 			for (GameInfo game : games)
@@ -127,21 +142,30 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				tmp3.setFont(labelFont);
 				gamePanel.add(tmp3);
 				//gamePanel.add(box1);
-				JButton joinButton;
+				JButton joinButton = null;
 				
-				if (game.getPlayers().contains(localPlayer))
-				{
-					joinButton = new JButton("Re-Join");
+				for(PlayerInfo p : game.getPlayers()){
+					if(p.getId() == localPlayer.getId() 
+							&& p.getName().equals(localPlayer.getName())){
+						joinButton = new JButton("Re-Join");
+					}
 				}
-				else if (game.getPlayers().size() >= 4)
-				{
-					joinButton = new JButton("Full");
-					joinButton.setEnabled(false);
+//				if (game.getPlayers().contains(localPlayer))
+//				{
+//					joinButton = new JButton("Re-Join");
+//				}
+				if(joinButton == null){
+					if (game.getPlayers().size() >= 4)
+					{
+						joinButton = new JButton("Full");
+						joinButton.setEnabled(false);
+					}
+					else
+					{
+						joinButton = new JButton("Join");
+					}
 				}
-				else
-				{
-					joinButton = new JButton("Join");
-				}
+				
 				joinButton.setActionCommand("" + game.getId());
 				joinButton.addActionListener(actionListener);
 				gamePanel.add(joinButton);
@@ -257,7 +281,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 	}
 
 	@Override
-	public void setGames(GameInfo[] games, PlayerInfo localPlayer)
+	public void setGames(List<GameInfo> games, PlayerInfo localPlayer)
 	{
 		this.games = games;
 		this.localPlayer = localPlayer;

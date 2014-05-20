@@ -25,19 +25,16 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
 	public LoginController(ILoginView view, IMessageView messageView, IProxy proxy) {
-
 		super(view);
 		this.proxy = proxy;
 		this.messageView = messageView;
 	}
 	
 	public ILoginView getLoginView() {
-		
 		return (ILoginView)super.getView();
 	}
 	
 	public IMessageView getMessageView() {
-		
 		return messageView;
 	}
 	
@@ -47,7 +44,6 @@ public class LoginController extends Controller implements ILoginController {
 	 * @param value The action to be executed when the user logs in
 	 */
 	public void setLoginAction(IAction value) {
-		
 		loginAction = value;
 	}
 	
@@ -57,7 +53,6 @@ public class LoginController extends Controller implements ILoginController {
 	 * @return The action to be executed when the user logs in
 	 */
 	public IAction getLoginAction() {
-		
 		return loginAction;
 	}
 

@@ -98,7 +98,7 @@ public class DummyProxy implements IProxy{
 	}
 	
 	@Override
-	public ServerResponse getGamesList(){
+	public List<IGame> getGamesList(){
 		String response = "[{'title':'Default Game',"
 						  + "'id':0,"
 						  + "'players':[{'color':'orange','name':'Sam','id':0},"
@@ -143,7 +143,7 @@ public class DummyProxy implements IProxy{
 			list.add(game);
 		}
 		this.games = list;
-		return sr;
+		return this.games;
 	}
 	
 	@Override
@@ -482,5 +482,11 @@ public class DummyProxy implements IProxy{
 	@Override
 	public String getGameId() {
 		return this.getGameId();
+	}
+
+	@Override
+	public ReturnedUser getrUser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

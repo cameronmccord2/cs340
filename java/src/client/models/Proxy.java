@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +59,9 @@ public class Proxy implements IProxy {
 	private Translator translator;
 	private List<IGame> games;
 	private String cookie;
-	private String gameId;
+	private String gameId = null;
 	private IFacade facade;
-	
+	private ReturnedUser rUser;
 	
 	
 	public Proxy() {
@@ -70,7 +72,6 @@ public class Proxy implements IProxy {
 	
 	@Override
 	public IFacade getFacade(){
-		System.out.println("get facade: " + this + ", f: " + this.facade);
 		return this.facade;
 	}
 	
@@ -101,45 +102,58 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse postUserLogin(User user){
 		ServerResponse sr =  doPost("/user/login", gson.toJson(user), false, false);
-		//saveGameModel(sr.getJson());
 		if(sr.getResponseCode() == 200){
 			Map<String, List<String>> map = connection.getHeaderFields();
 			List<String> setCookie = map.get("Set-cookie");
 			cookie = setCookie.get(0);
 			cookie = cookie.substring(0, cookie.length() - 8);
+			String temp = cookie.substring(11, cookie.length());
+			try {
+				rUser = gson.fromJson(URLDecoder.decode(temp, "UTF-8"), ReturnedUser.class);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		this.facade.setCurrentUser(user.getUser());
 		return sr;
 	}
 	
+
+	public ReturnedUser getrUser() {
+		return rUser;
+	}
+
 	@Override
 	public ServerResponse postUserRegister(User user){
 		ServerResponse sr = doPost("/user/register", gson.toJson(user), false, false);
-		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
-	public ServerResponse getGamesList(){
+	public List<IGame> getGamesList(){
 		ServerResponse sr = doGet("/games/list", false, false);
 		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
 		List<IGame> list = new ArrayList<IGame>();
-//		System.out.println("games from server: " + games.toString());
+		//System.out.println("games from server: " + games.toString());
 		for (GameServer g : games) {
-			IPlayer[] players = new IPlayer[g.getPlayers().length];
-			int playerIndex = 0;
-			for (PlayerServer p : g.getPlayers()) {
-				PlayerInfo pi = new PlayerInfo();
-				pi.setColor(CatanColor.getColorForName(p.getColor()));
-				pi.setId(p.getId());
-				pi.setName(p.getName());
-				pi.setPlayerIndex(playerIndex);
-				IPlayer player = new Player(pi);
-				players[playerIndex] = player;
-				playerIndex++;
-			}
 			Game game = new Game();
-			game.setPlayers(players);
+			
+			if(g.getPlayers()[0].getColor() != null){
+				IPlayer[] players = new IPlayer[g.getPlayers().length];
+				int playerIndex = 0;
+				for (PlayerServer p : g.getPlayers()) {
+					PlayerInfo pi = new PlayerInfo();
+					pi.setColor(CatanColor.getColorForName(p.getColor()));
+					pi.setId(p.getId());
+					pi.setName(p.getName());
+					pi.setPlayerIndex(playerIndex);
+					IPlayer player = new Player(pi);
+					players[playerIndex] = player;
+					playerIndex++;
+				}
+				game.setPlayers(players);
+			}
 			
 			GameInfo gi = new GameInfo();
 			gi.setId(g.getId());
@@ -149,13 +163,12 @@ public class Proxy implements IProxy {
 		}
 		this.games = list;
 //		System.out.println("games: " + this.games.toString());
-		return sr;
+		return this.games;
 	}
 	
 	@Override
 	public ServerResponse postGamesCreate(CreateGame game){
 		ServerResponse sr = doPost("/games/create", gson.toJson(game), false, false);
-		//saveGameModel(sr.getJson());
 		return sr;
 	}
 	

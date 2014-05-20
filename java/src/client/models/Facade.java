@@ -21,6 +21,7 @@ public class Facade implements IFacade {
 	}
 	
 	private IGame getGameModel() throws CantFindGameModelException{
+		//if(this.proxy.getGameId() != null)
 		Integer gameId = Integer.parseInt(this.proxy.getGameId());
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){

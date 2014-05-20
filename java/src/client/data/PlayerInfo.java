@@ -92,6 +92,15 @@ public class PlayerInfo
 		
 		return this.id == other.id;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PlayerInfo [id=" + id + ", playerIndex=" + playerIndex
+				+ ", name=" + name + ", color=" + color + "]";
+	}
 	
 	
 	
