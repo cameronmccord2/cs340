@@ -64,7 +64,7 @@ public class Translator {
 		for (TRPlayer p : cm.getPlayers()) {
 
 			PlayerInfo playerInfo = new PlayerInfo();
-			//playerInfo.setId(p.getPlayerID());
+			playerInfo.setId(p.getPlayerID());
 			playerInfo.setPlayerIndex(p.getPlayerIndex());
 			playerInfo.setName(p.getName());
 			playerInfo.setColor(CatanColor.getColorForName(p.getColor()));
