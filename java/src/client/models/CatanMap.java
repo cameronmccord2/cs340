@@ -52,7 +52,7 @@ public class CatanMap implements ICatanMap
 	 *
 	 *
 	 *		@param	settlement
-	 *					The ISettlement to be placed at the
+	 *					The ISettlement to be placed on the map.
 	 */
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)
@@ -173,6 +173,7 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canMoveRobber(IPlayer player)
 	{
+		int playerId = player.getPlayerInfo().getId();
 		return true;
 	}
 
@@ -208,7 +209,7 @@ public class CatanMap implements ICatanMap
 	{
 		if(!canPlaceRoad(segment))
 			throw new InvalidLocationException();
-		
+		catanMap.put(segment.getLocation(), segment);
 	}
 
 	@Override
@@ -243,6 +244,7 @@ public class CatanMap implements ICatanMap
 	{
 		if(!canPlaceSettlement(settlement))
 			throw new InvalidLocationException();
+		catanMap.put(settlement.getLocation(), settlement);
 	}
 
 	@Override
@@ -263,6 +265,7 @@ public class CatanMap implements ICatanMap
 	{
 		if(!canPlaceCity(city))
 			throw new InvalidLocationException();
+		catanMap.put(city.getLocation(), city);
 	}
 
 	/**
