@@ -20,13 +20,15 @@ import shared.locations.*;
  *
  */
 
-//@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused"})
 public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;
 	private Map<ILocation, IPiece> catanMap;
 	private Map<ILocation, IPort> portMap;
 	private IRobber robber;
+	
+	private IProxy proxy;
 
 	private int radius;
 
@@ -38,6 +40,11 @@ public class CatanMap implements ICatanMap
 		this.robber = null;
 		this.radius = 3;
 	}
+	
+	public void setProxy(IProxy proxy)
+	{
+		this.proxy = proxy;
+	}
 
 	/**
 	 *
@@ -45,6 +52,16 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceRoad(IRoadSegment segment)
 	{
+		if(catanMap.get(segment.getLocation()) != null)
+			return false;
+		
+		for(IPiece piece : catanMap.values())
+		{
+			if(piece.getPlayer().equals(segment.getPlayer()))
+			{
+				
+			}
+		}
 		return false;
 	}
 
