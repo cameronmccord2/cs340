@@ -92,7 +92,7 @@ public class RoadSegment extends Piece implements IRoadSegment
 				break;
 		}
 		VertexLocation start = new VertexLocation(roadEdge.getHexLocation(),
-																direction);
+												  direction);
 		return start.getNormalizedLocation();
 	}
 
@@ -123,7 +123,7 @@ public class RoadSegment extends Piece implements IRoadSegment
 				break;
 		}
 		VertexLocation end = new VertexLocation(roadEdge.getHexLocation(),
-															 direction);
+												direction);
 		return end.getNormalizedLocation();
 	}
 
