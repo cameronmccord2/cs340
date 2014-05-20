@@ -7,45 +7,58 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 
-
 /**
- * Implementation for the map controller
+ * Implementation for the map controller.
+ *
+ * Okay.  So here are some important notes about the x-y system that
+ * Dr. Rodham is using in his MapView/MapComponent/MapController.
+ *
+ * The center Hex is located at x=0, y=0 and radiates outward from
+ * there. The column in the center is the y-axis.  The diagonal that
+ * goes from the top left corner to the bottom right corner is the
+ * x-axis.  The positive y-axis is DOWNWARD.  The positive x-axis is
+ * RIGHTWARD.
+ *
+ *
+ * @author Craig Call
+ *
  */
+
 public class MapController extends Controller implements IMapController {
-	
+
 	private IRobView robView;
-	
+
 	public MapController(IMapView view, IRobView robView) {
-		
+
 		super(view);
-		
+
 		setRobView(robView);
-		
+
 		initFromModel();
 	}
-	
+
 	public IMapView getView() {
-		
+
 		return (IMapView)super.getView();
 	}
-	
+
 	private IRobView getRobView() {
 		return robView;
 	}
 	private void setRobView(IRobView robView) {
 		this.robView = robView;
 	}
-	
+
 	protected void initFromModel() {
-		
+
 		//<temp>
-		
+
 		Random rand = new Random();
 
 		for (int x = 0; x <= 3; ++x) {
-			
-			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {				
+
+			int maxY = 3 - x;
+			for (int y = -3; y <= maxY; ++y) {
 				int r = rand.nextInt(HexType.values().length);
 				HexType hexType = HexType.values()[r];
 				HexLocation hexLoc = new HexLocation(x, y);
@@ -59,7 +72,7 @@ public class MapController extends Controller implements IMapController {
 				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
 				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
-			
+
 			if (x != 0) {
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) {
@@ -78,7 +91,7 @@ public class MapController extends Controller implements IMapController {
 				}
 			}
 		}
-		
+
 		PortType portType = PortType.BRICK;
 		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
@@ -86,9 +99,9 @@ public class MapController extends Controller implements IMapController {
 		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-		
+
 		getView().placeRobber(new HexLocation(0, 0));
-		
+
 		getView().addNumber(new HexLocation(-2, 0), 2);
 		getView().addNumber(new HexLocation(-2, 1), 3);
 		getView().addNumber(new HexLocation(-2, 2), 4);
@@ -99,72 +112,72 @@ public class MapController extends Controller implements IMapController {
 		getView().addNumber(new HexLocation(2, -2), 10);
 		getView().addNumber(new HexLocation(2, -1), 11);
 		getView().addNumber(new HexLocation(2, 0), 12);
-		
+
 		//</temp>
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
+
 		return true;
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
+
 		return true;
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
+
 		return true;
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
+
 		return true;
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
+
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
+
 		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
-		
+
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		
+
 		getView().placeRobber(hexLoc);
-		
+
 		getRobView().showModal();
 	}
-	
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
+
+	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
+
 		getView().startDrop(pieceType, CatanColor.ORANGE, true);
 	}
-	
+
 	public void cancelMove() {
-		
+
 	}
-	
-	public void playSoldierCard() {	
-		
+
+	public void playSoldierCard() {
+
 	}
-	
-	public void playRoadBuildingCard() {	
-		
+
+	public void playRoadBuildingCard() {
+
 	}
-	
-	public void robPlayer(RobPlayerInfo victim) {	
-		
+
+	public void robPlayer(RobPlayerInfo victim) {
+
 	}
-	
+
 }
 

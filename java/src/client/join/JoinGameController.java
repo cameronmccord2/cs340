@@ -21,6 +21,7 @@ import client.server.ServerJoinGame;
 /**
  * Implementation for the join game controller
  */
+@SuppressWarnings({"unused"})
 public class JoinGameController extends Controller implements IJoinGameController, ICatanModelObserver
 {
 	
@@ -65,7 +66,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * 
 	 * @return The action to be executed when the user joins a game
 	 */
-	public IAction getJoinAction(){
+
+	public IAction getJoinAction()
+	{
 		return joinAction;
 	}
 	

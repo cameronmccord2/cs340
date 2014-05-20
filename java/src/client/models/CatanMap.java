@@ -2,6 +2,7 @@ package client.models;
 
 import java.util.*;
 
+import shared.definitions.PieceType;
 import shared.locations.*;
 
 /**
@@ -54,6 +55,9 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)
 	{
+		HexLocation hex = settlement.getLocation().getHexLocation();
+		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
+			return false;
 		return false;
 	}
 
@@ -71,7 +75,14 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceCity(ICity city)
 	{
-		return false;
+		IPiece piece = catanMap.get(city.getLocation());
+		if(piece == null)
+			return false;
+		if(piece.getPieceType() != PieceType.SETTLEMENT)
+			return false;
+		if(!piece.getPlayer().equals(city.getPlayer()))
+			return false;
+		return true;
 	}
 
 	/**
@@ -90,7 +101,72 @@ public class CatanMap implements ICatanMap
 	@Override
 	public IPiece distanceRule(IPiece piece)
 	{
-		return null;
+		/*
+		 * Things to consider for the algorithm:
+		 * 		: We need only consider the three adjacent
+		 * 			verteces, which are:
+		 * 				if (x,y).NE then
+		 * 					+ (x  , y  ).NW -> left
+		 * 					+ (x+1, y-1).NW -> above
+		 * 					+ (x+1, y  ).NW -> below
+		 * 				if (x,y).NW then
+		 * 					+ (x  , y  ).NE -> right
+		 * 					+ (x-1, y  ).NE -> above
+		 * 					+ (x-1, y+1).NE -> below
+		 * 
+		 */
+		IPiece conflictPiece = null;
+		VertexLocation location = (VertexLocation)piece.getLocation();
+		List<VertexLocation> adjacentCorners = new ArrayList<>();
+		
+		if(location.getDirection() == VertexDirection.NorthEast)
+		{
+			HexLocation hex = location.getHexLocation();
+			VertexDirection direction = VertexDirection.NorthWest;
+			
+			VertexLocation left = new VertexLocation(hex, direction);
+			
+			HexLocation aboveHex = new HexLocation(hex.getX()+1, hex.getY()-1);
+			VertexLocation above = new VertexLocation(aboveHex, direction);
+			
+			HexLocation belowHex = new HexLocation(hex.getX()+1, hex.getY());
+			VertexLocation below = new VertexLocation(belowHex, direction);
+			
+			adjacentCorners.add(left);
+			adjacentCorners.add(above);
+			adjacentCorners.add(below);
+		}
+		else if(location.getDirection() == VertexDirection.NorthWest)
+		{
+			HexLocation hex = location.getHexLocation();
+			VertexDirection direction = VertexDirection.NorthEast;
+			
+			VertexLocation right = new VertexLocation(hex, direction);
+			
+			HexLocation aboveHex = new HexLocation(hex.getX()-1, hex.getY());
+			VertexLocation above = new VertexLocation(aboveHex, direction);
+			
+			HexLocation belowHex = new HexLocation(hex.getX()-1, hex.getY()+1);
+			VertexLocation below = new VertexLocation(belowHex, direction);
+			
+			adjacentCorners.add(right);
+			adjacentCorners.add(above);
+			adjacentCorners.add(below);
+		}
+		else
+		{
+			assert false;
+		}
+		
+		for(VertexLocation corner : adjacentCorners)
+		{
+			conflictPiece = catanMap.get(corner.getNormalizedLocation());
+			if(conflictPiece != null)
+				return conflictPiece;
+				
+		}
+
+		return conflictPiece;
 	}
 
 	@Override

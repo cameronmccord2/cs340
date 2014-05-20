@@ -2,6 +2,7 @@ package client.catan;
 
 import javax.swing.*;
 
+import client.models.IProxy;
 import shared.definitions.PieceType;
 import client.points.*;
 import client.resources.*;
@@ -22,7 +23,7 @@ public class RightPanel extends JPanel
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController)
+	public RightPanel(final IMapController mapController, IProxy proxy)
 	{
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -54,13 +55,13 @@ public class RightPanel extends JPanel
 		//
 		pointsView = new PointsView();
 		finishedView = new GameFinishedView();
-		pointsController = new PointsController(pointsView, finishedView);
+		pointsController = new PointsController(pointsView, finishedView, proxy);
 		pointsView.setController(pointsController);
 		
 		// Initialize resource bar view and controller
 		//
 		resourceView = new ResourceBarView();
-		resourceController = new ResourceBarController(resourceView);
+		resourceController = new ResourceBarController(resourceView, proxy);
 		resourceController.setElementAction(ResourceBarElement.ROAD,
 											createStartMoveAction(mapController,
 																  PieceType.ROAD));

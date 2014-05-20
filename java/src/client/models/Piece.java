@@ -13,7 +13,7 @@ public abstract class Piece implements IPiece
 	@Override
 	public ILocation getLocation()
 	{
-		return location;
+		return location.getNormalizedLocation();
 	}
 
 	@Override

@@ -38,7 +38,6 @@ public class MapView extends PanelView implements IMapView
 	@Override
 	public void setController(IController controller)
 	{
-		
 		super.setController(controller);
 		
 		map.setController(controller);

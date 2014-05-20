@@ -72,9 +72,8 @@ public class PlayerInfo
 
 	@Override
 	public int hashCode()
-	{		
-		final int prime = 223;
-		return 31 * prime + this.id;
+	{
+		return 31 * this.id;
 	}
 
 	@Override
@@ -92,16 +91,4 @@ public class PlayerInfo
 		
 		return this.id == other.id;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "PlayerInfo [id=" + id + ", playerIndex=" + playerIndex
-				+ ", name=" + name + ", color=" + color + "]";
-	}
-	
-	
-	
 }

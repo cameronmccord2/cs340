@@ -8,6 +8,8 @@ import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.ILocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 public class RoadSegment extends Piece implements IRoadSegment
 {
@@ -61,6 +63,68 @@ public class RoadSegment extends Piece implements IRoadSegment
 	public PieceType getPieceType()
 	{
 		return PieceType.ROAD;
+	}
+
+	@Override
+	public VertexLocation getStartLocation()
+	{
+		EdgeLocation roadEdge = (EdgeLocation)this.getLocation();
+		VertexDirection direction = VertexDirection.NorthWest;
+		switch(roadEdge.getDirection())
+		{
+			case North:
+				direction = VertexDirection.NorthWest;
+				break;
+			case NorthEast:
+				direction = VertexDirection.NorthEast;
+				break;
+			case SouthEast:
+				direction = VertexDirection.SouthEast;
+				break;
+			case South:
+				direction = VertexDirection.SouthWest;
+				break;
+			case SouthWest:
+				direction = VertexDirection.West;
+				break;
+			case NorthWest:
+				direction = VertexDirection.West;
+				break;
+		}
+		VertexLocation start = new VertexLocation(roadEdge.getHexLocation(),
+																direction);
+		return start.getNormalizedLocation();
+	}
+
+	@Override
+	public VertexLocation getEndLocation()
+	{
+		EdgeLocation roadEdge = (EdgeLocation)this.getLocation();
+		VertexDirection direction = VertexDirection.NorthWest;
+		switch(roadEdge.getDirection())
+		{
+			case North:
+				direction = VertexDirection.NorthEast;
+				break;
+			case NorthEast:
+				direction = VertexDirection.East;
+				break;
+			case SouthEast:
+				direction = VertexDirection.East;
+				break;
+			case South:
+				direction = VertexDirection.SouthEast;
+				break;
+			case SouthWest:
+				direction = VertexDirection.SouthWest;
+				break;
+			case NorthWest:
+				direction = VertexDirection.NorthWest;
+				break;
+		}
+		VertexLocation end = new VertexLocation(roadEdge.getHexLocation(),
+															 direction);
+		return end.getNormalizedLocation();
 	}
 
 }

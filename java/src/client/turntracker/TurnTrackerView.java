@@ -56,6 +56,18 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 	public ITurnTrackerController getController() {
 		return (ITurnTrackerController)super.getController();
 	}
+	
+	@Override
+	public void setController(IController controller) {
+		super.setController(controller);
+		this.gameStatePanel.setButtonAction(new IAction() {
+			@Override
+			public void execute()
+			{
+				getController().endTurn();
+			}
+		});
+	}
 
 	@Override
 	public void setLocalPlayerColor(CatanColor value) {
