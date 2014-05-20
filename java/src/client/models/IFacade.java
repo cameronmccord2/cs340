@@ -1,5 +1,8 @@
 package client.models;
 
+import java.util.List;
+
+import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindPlayerException;
 import client.models.translator.TRTradeOffer;
@@ -26,5 +29,7 @@ public interface IFacade {
 	TRTradeOffer getCurrentTrade();
 
 	Integer getCurrentUserIndex();
+	
+	List<LogEntry> getChats();
 
 }

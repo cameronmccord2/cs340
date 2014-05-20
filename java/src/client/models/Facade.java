@@ -1,9 +1,11 @@
 package client.models;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import shared.definitions.ResourceType;
+import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
@@ -148,6 +150,21 @@ public class Facade implements IFacade {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	@Override
+	public List<LogEntry> getChats() {
+		try {
+			IGame game = getGameModel();
+			List<MessageLine> list = game.getChat().getLines();
+			for(MessageLine l : list){
+				//LogEntry chat = new LogEntry();
+			}
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
 

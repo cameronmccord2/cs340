@@ -235,9 +235,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color)
 	{
-		ServerJoinGame join = new ServerJoinGame(0, "orange");
-		//ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString());
-		System.out.println(join.getColor());
+		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());
 		if(proxy.postGamesJoin(join).getJson().equals("Success")){
 			// If join succeeded
 			getSelectColorView().closeModal();
