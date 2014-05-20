@@ -10,7 +10,7 @@ import client.models.ICatanModelObserver;
  * Discard controller implementation
  */
 public class DiscardController extends Controller implements IDiscardController,
-																				 ICatanModelObserver
+															 ICatanModelObserver
 {
 
 	private IWaitView waitView;
@@ -70,7 +70,6 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard()
 	{
-
 		getDiscardView().closeModal();
 	}
 

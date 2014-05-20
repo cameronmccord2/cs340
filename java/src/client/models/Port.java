@@ -76,20 +76,20 @@ public class Port implements IPort {
 		return hexLocation;
 	}
 
-	public void setLocation(HexLocation location) {
+	public void setHexLocation(HexLocation location) {
 		this.hexLocation = location;
 	}
 
 	@Override
 	public void setLocation(ILocation location)
 	{
-
+		this.location = location;
 	}
 
 	@Override
 	public ILocation getLocation()
 	{
-		return null;
+		return this.location;
 	}
 
 
