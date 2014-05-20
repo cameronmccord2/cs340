@@ -48,7 +48,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void increaseAmount(ResourceType resource)
 	{
-
+		
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void decreaseAmount(ResourceType resource)
 	{
-
+		
 	}
 
 	/**
@@ -76,9 +76,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void update()
 	{
-		// TODO Auto-generated method stub
 
 	}
-
 }
 

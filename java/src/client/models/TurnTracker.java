@@ -2,6 +2,11 @@ package client.models;
 
 import client.models.translator.TRTurnTracker;
 
+
+/*
+ * Why are you using the Integer class instead of the
+ * int primative type?
+ */
 public class TurnTracker {
 	protected Integer currentTurn;
 	protected String status;
@@ -14,27 +19,35 @@ public class TurnTracker {
 		this.longestRoad = turnTracker.getLongestRoad();
 		this.largestArmy = turnTracker.getLargestArmy();
 	}
+	
 	public Integer getCurrentTurn() {
 		return currentTurn;
 	}
+	
 	public void setCurrentTurn(Integer currentTurn) {
 		this.currentTurn = currentTurn;
 	}
+	
 	public String getStatus() {
 		return status;
 	}
+	
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 	public Integer getLongestRoad() {
 		return longestRoad;
 	}
+	
 	public void setLongestRoad(Integer longestRoad) {
 		this.longestRoad = longestRoad;
 	}
+	
 	public Integer getLargestArmy() {
 		return largestArmy;
 	}
+	
 	public void setLargestArmy(Integer largestArmy) {
 		this.largestArmy = largestArmy;
 	}
