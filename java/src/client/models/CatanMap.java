@@ -77,6 +77,7 @@ public class CatanMap implements ICatanMap
 		HexLocation hex = settlement.getLocation().getHexLocation();
 		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
 			return false;
+		
 		return false;
 	}
 
