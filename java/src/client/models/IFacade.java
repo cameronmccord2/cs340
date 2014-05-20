@@ -31,5 +31,7 @@ public interface IFacade {
 	Integer getCurrentUserIndex();
 	
 	List<LogEntry> getChats();
+	
+	//void getDevCards();
 
 }
