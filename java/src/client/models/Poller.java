@@ -48,7 +48,6 @@ public class Poller {
 	 * Calls the Proxy and tells it to pull current game state from the server
 	 */
 	public void updateModel(){
-		System.out.println("update");
 		//proxy.getGameModel();
 	}
 	
