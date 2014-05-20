@@ -235,6 +235,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 			}
 			else if (e.getSource() == joinButton)
 			{
+				System.out.println("1");
 				getController().startJoinGame(null);
 			}
 			else

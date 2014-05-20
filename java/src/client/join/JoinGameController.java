@@ -31,6 +31,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IAction joinAction;
 	private GameInfo selectedGame;
 	private IProxy proxy;
+	private PlayerInfo self;
 	
 	/**
 	 * JoinGameController constructor
@@ -109,7 +110,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start()
 	{
-		PlayerInfo self = new PlayerInfo();
+		self = new PlayerInfo();
 		self.setId(this.proxy.getrUser().getPlayerID());
 		self.setName(this.proxy.getrUser().getName());
 		
@@ -217,6 +218,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
+		for(PlayerInfo p : game.getPlayers()){
+			if(p.getId() != self.getId())
+				getSelectColorView().setColorEnabled(p.getColor(), false);
+		}
 		selectedGame = game;
 		getSelectColorView().showModal();
 	}
@@ -228,10 +233,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 	
 	@Override
-	public void joinGame(String color)
+	public void joinGame(CatanColor color)
 	{
-		//ServerJoinGame join = new ServerJoinGame(0, color);
-		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color);
+		ServerJoinGame join = new ServerJoinGame(0, "orange");
+		//ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString());
+		System.out.println(join.getColor());
 		if(proxy.postGamesJoin(join).getJson().equals("Success")){
 			// If join succeeded
 			getSelectColorView().closeModal();
