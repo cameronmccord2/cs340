@@ -86,14 +86,15 @@ public class Proxy implements IProxy {
 		IGame g = null;
 		try {
 			g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
+			for (int i = 0; i < this.games.size(); i++) {
+				if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
+					this.games.set(i, g);
+			}
 		} catch (NumberFormatException | InvalidLocationException e) {
-			// TODO Auto-generated catch block
+			System.out.println("here");
 			e.printStackTrace();
 		}
-		for (int i = 0; i < this.games.size(); i++) {
-			if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
-				this.games.set(i, g);
-		}
+		
 		this.facade.updatedCatanModel();
 //		System.out.println(g.toString());
 		return g;
@@ -183,7 +184,7 @@ public class Proxy implements IProxy {
 		gameId = gameId.substring(0, gameId.length() - 8);
 //		System.out.println(gameId);//catan.game=0
 		gameId = gameId.substring(11);
-//		System.out.println(gameId);//0
+		System.out.println(gameId);//0
 		return sr;
 	}
 	
@@ -233,7 +234,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesSendChat(ServerChat chat){
 		ServerResponse sr = doPost("/moves/sendChat", gson.toJson(chat), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	

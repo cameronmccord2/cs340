@@ -4,6 +4,7 @@ import client.base.Controller;
 import client.data.PlayerInfo;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
+import client.models.exceptions.CantFindGameModelException;
 
 
 /**
@@ -29,12 +30,19 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 		//fetch players from Game model
-		PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
-		getView().setPlayers(players);
-		getView().showModal();
-		if(players.length == 4){
-			getView().closeModal();
+		PlayerInfo[] players;
+		try {
+			players = this.proxy.getFacade().getAllPlayerInfos();
+			getView().setPlayers(players);
+			getView().showModal();
+			if(players.length == 4){
+				getView().closeModal();
+			}
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
@@ -46,11 +54,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void update() {
-		PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
-		getView().setPlayers(players);
-		if(players.length == 4){
-			getView().closeModal();
+		PlayerInfo[] players;
+		try {
+			players = this.proxy.getFacade().getAllPlayerInfos();
+			getView().setPlayers(players);
+			if(players.length == 4){
+				getView().closeModal();
+			}
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 
 }
