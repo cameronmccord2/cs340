@@ -1,6 +1,7 @@
 package client.join;
 
 import client.base.Controller;
+import client.data.PlayerInfo;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
 
@@ -28,27 +29,28 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 		//fetch players from Game model
-		//getView().setPlayers(value);
+		PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+		getView().setPlayers(players);
 		getView().showModal();
+		if(players.length == 4){
+			getView().closeModal();
+		}
 	}
 
 	@Override
 	public void addAI() {
 
 		// TEMPORARY
-		getView().closeModal();
-	}
-	
-	public void updatePlayers(){
-		//getView().setPlayers(value);
-		//check if 4 are in the list then close and go to game
-		getView().closeModal();
+		
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+		getView().setPlayers(players);
+		if(players.length == 4){
+			getView().closeModal();
+		}
 	}
 
 }

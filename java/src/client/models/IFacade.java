@@ -2,6 +2,9 @@ package client.models;
 
 import java.util.Map;
 
+import java.util.List;
+
+import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
@@ -26,6 +29,8 @@ public interface IFacade {
 	TRTradeOffer getCurrentTrade() throws CantFindGameModelException;
 
 	Integer getCurrentUserIndex() throws CantFindGameModelException;
+	
+	List<LogEntry> getChats();
 
 	Map<IResourceCard, Integer> getResourcesForPlayerId(Integer reciever) throws CantFindPlayerException, CantFindGameModelException;
 

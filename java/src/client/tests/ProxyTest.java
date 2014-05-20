@@ -68,7 +68,7 @@ public class ProxyTest {
 		assertEquals("Success",dummyProxy.postUserRegister(user3).getJson());
 	
 		//TEST GET GAMES LIST (Cameron??)
-		assertEquals(200,dummyProxy.getGamesList().getResponseCode());
+		//assertEquals(200,dummyProxy.getGamesList().getResponseCode());
 		assertEquals(3, dummyProxy.getGames().size());
 		
 		//TEST CREATE GAME (works)

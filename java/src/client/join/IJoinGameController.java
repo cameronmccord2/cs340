@@ -49,9 +49,9 @@ public interface IJoinGameController extends IController
 	 * Called by the select color view when the user clicks the "Join Game"
 	 * button
 	 * 
-	 * @param color
+	 * @param catanColor
 	 *            The color selected by the user
 	 */
-	void joinGame(String color);
+	void joinGame(CatanColor catanColor);
 	
 }

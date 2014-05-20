@@ -2,8 +2,10 @@ package client.models;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
+import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
@@ -21,7 +23,16 @@ public class Facade implements IFacade {
 	}
 	
 	private IGame getGameModel() throws CantFindGameModelException{
-		Integer gameId = Integer.parseInt(this.proxy.getGameId());
+        //System.out.println("GAMEID: " + this.proxy.getGameId());
+
+        // Must have a default Integer for parseInt. getGameId() returns null
+        // before a game is chosen.
+        Integer gameId;
+        if(this.proxy.getGameId() == null)
+            gameId = 0;
+		else
+            gameId = Integer.parseInt(this.proxy.getGameId());
+
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){
 				return g;
@@ -129,6 +140,21 @@ public class Facade implements IFacade {
 	@Override
 	public Map<IResourceCard, Integer> getResourcesForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException {
 		return this.getPlayerWithIndex(playerId).getResourceCards();
+	}
+
+	@Override
+	public List<LogEntry> getChats() {
+		try {
+			IGame game = getGameModel();
+			List<MessageLine> list = game.getChat().getLines();
+			for(MessageLine l : list){
+				//LogEntry chat = new LogEntry();
+			}
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
 

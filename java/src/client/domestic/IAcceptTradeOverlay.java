@@ -45,4 +45,9 @@ public interface IAcceptTradeOverlay extends IOverlayView
 	 *            The offering player's name
 	 */
 	void setPlayerName(String name);
+	
+	/**
+	 * Resets the overlay back to the original settings.
+	 */
+	void reset();
 }

@@ -25,7 +25,7 @@ public interface ICatanMap
 	public IRobber getRobber();
 	public void setRobber(IRobber robber);
 
-	public Collection<IRoad> getRoads();
+	public Collection<IRoadSegment> getRoads();
 	public void placeRoadSegment(IRoadSegment segment) throws InvalidLocationException;
 
 	public Collection<ISettlement> getSettlements();

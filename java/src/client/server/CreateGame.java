@@ -11,14 +11,14 @@ package client.server;
 public class CreateGame {
 	
 	private boolean randomTiles, randomNumbers, randomPorts;
-	private String title;
+	private String name;
 	
 	public CreateGame(boolean randomTiles, boolean randomNumbers,
-			boolean randomPorts, String title) {
+			boolean randomPorts, String name) {
 		this.randomTiles = randomTiles;
 		this.randomNumbers = randomNumbers;
 		this.randomPorts = randomPorts;
-		this.title = title;
+		this.name = name;
 	}
 	public boolean isRandomTiles() {
 		return randomTiles;
@@ -38,11 +38,20 @@ public class CreateGame {
 	public void setRandomPorts(boolean randomPorts) {
 		this.randomPorts = randomPorts;
 	}
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CreateGame [randomTiles=" + randomTiles + ", randomNumbers="
+				+ randomNumbers + ", randomPorts=" + randomPorts + ", name="
+				+ name + "]";
 	}
 	
 	

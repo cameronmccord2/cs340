@@ -10,7 +10,7 @@ import java.util.TimerTask;
  */
 public class Poller {
 
-	private Proxy proxy;
+	private IProxy proxy;
 	private Timer t;
 	
 	public Poller() {
@@ -21,7 +21,7 @@ public class Poller {
 	/**
 	 * 
 	 */
-	public Poller(Proxy proxy) {
+	public Poller(IProxy proxy) {
 		this.proxy = proxy;
 		this.startTimer();
 	}
@@ -48,7 +48,7 @@ public class Poller {
 	 * Calls the Proxy and tells it to pull current game state from the server
 	 */
 	public void updateModel(){
-		proxy.getGameModel();
+		//proxy.getGameModel();
 	}
 	
 	public void endTImer(){

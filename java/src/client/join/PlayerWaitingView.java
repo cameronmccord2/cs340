@@ -48,65 +48,65 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		this.add(center, BorderLayout.CENTER);	
 		
 		//create the AI panel for the bottom of the pane
-		aiPanel = new JPanel();
-		aiPanel.setLayout(new BoxLayout(aiPanel, BoxLayout.Y_AXIS));
-		
+//		aiPanel = new JPanel();
+//		aiPanel.setLayout(new BoxLayout(aiPanel, BoxLayout.Y_AXIS));
+//		
 		//create the AI type panel
-		JPanel aiTypePanel = new JPanel();
-		aiTypePanel.setLayout(new BoxLayout(aiTypePanel, BoxLayout.X_AXIS));
-		
-		aiTypePanel.add(Box.createHorizontalGlue());
-		
-		JLabel aiTypeLabel = new JLabel("Select AI Type:");
-		FontUtils.setFont(aiTypeLabel, AI_TEXT_SIZE);
-		aiTypePanel.add(aiTypeLabel);
-		
-		aiTypePanel.add(Box.createRigidArea(new Dimension(5, 0)));
-		
-		aiModel = new SpinnerListModel();
-		aiChoices = new JSpinner(aiModel);
-		((JSpinner.DefaultEditor)aiChoices.getEditor()).getTextField().setEditable(false);
-		FontUtils.setFont(aiChoices, AI_TEXT_SIZE);
-		aiTypePanel.add(aiChoices);
-
-		aiTypePanel.add(Box.createHorizontalGlue());
-		
-		aiPanel.add(aiTypePanel);
-		
-		aiPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+//		JPanel aiTypePanel = new JPanel();
+//		aiTypePanel.setLayout(new BoxLayout(aiTypePanel, BoxLayout.X_AXIS));
+//		
+//		aiTypePanel.add(Box.createHorizontalGlue());
+//		
+//		JLabel aiTypeLabel = new JLabel("Select AI Type:");
+//		FontUtils.setFont(aiTypeLabel, AI_TEXT_SIZE);
+//		aiTypePanel.add(aiTypeLabel);
+//		
+//		aiTypePanel.add(Box.createRigidArea(new Dimension(5, 0)));
+//		
+//		aiModel = new SpinnerListModel();
+//		aiChoices = new JSpinner(aiModel);
+//		((JSpinner.DefaultEditor)aiChoices.getEditor()).getTextField().setEditable(false);
+//		FontUtils.setFont(aiChoices, AI_TEXT_SIZE);
+//		aiTypePanel.add(aiChoices);
+//
+//		aiTypePanel.add(Box.createHorizontalGlue());
+//		
+//		aiPanel.add(aiTypePanel);
+//		
+//		aiPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		
 		//create the AI button panel
-		//ARE WE DOING AI PLAYERS????
-		JPanel aiButtonPanel = new JPanel();
-		aiButtonPanel.setLayout(new BoxLayout(aiButtonPanel, BoxLayout.X_AXIS));
-				
-		aiButtonPanel.add(Box.createHorizontalGlue());
-		
-		addAiButton = new JButton("Add a computer player");
-		addAiButton.addActionListener(actionListener);
-		FontUtils.setFont(addAiButton, BUTTON_TEXT_SIZE);
-		aiButtonPanel.add(addAiButton);
-		
-		aiButtonPanel.add(Box.createHorizontalGlue());
-		
-		aiPanel.add(aiButtonPanel);
-		
-		aiPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-		
-		//add the AI panel
-		this.add(aiPanel, BorderLayout.SOUTH);
+//		//ARE WE DOING AI PLAYERS????
+//		JPanel aiButtonPanel = new JPanel();
+//		aiButtonPanel.setLayout(new BoxLayout(aiButtonPanel, BoxLayout.X_AXIS));
+//				
+//		aiButtonPanel.add(Box.createHorizontalGlue());
+//		
+//		addAiButton = new JButton("Add a computer player");
+//		addAiButton.addActionListener(actionListener);
+//		FontUtils.setFont(addAiButton, BUTTON_TEXT_SIZE);
+//		aiButtonPanel.add(addAiButton);
+//		
+//		aiButtonPanel.add(Box.createHorizontalGlue());
+//		
+//		aiPanel.add(aiButtonPanel);
+//		
+//		aiPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+//		
+//		//add the AI panel
+//		this.add(aiPanel, BorderLayout.SOUTH);
 		
 	}
 
 	//listener for the "add AI player" button
-	private ActionListener actionListener = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == addAiButton) {			
-				getController().addAI();
-			}
-		}	
-	};
+//	private ActionListener actionListener = new ActionListener() {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			if (e.getSource() == addAiButton) {			
+//				getController().addAI();
+//			}
+//		}	
+//	};
 
 	@Override
 	public IPlayerWaitingController getController() {
@@ -119,11 +119,11 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		String labelText = "";
 		if(value.length == NUMBER_OF_PLAYERS){
 			labelText = "This game is ready to go!";
-			addAiButton.setEnabled(false);
+			//addAiButton.setEnabled(false);
 		}
 		else{
 			labelText = ("Waiting for Players: Need " + (NUMBER_OF_PLAYERS-value.length) + " more");
-			addAiButton.setEnabled(true);
+			//addAiButton.setEnabled(true);
 		}
 		
 		label.setText(labelText);

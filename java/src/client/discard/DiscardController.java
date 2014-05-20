@@ -10,7 +10,7 @@ import client.models.ICatanModelObserver;
  * Discard controller implementation
  */
 public class DiscardController extends Controller implements IDiscardController,
-																				 ICatanModelObserver
+															 ICatanModelObserver
 {
 
 	private IWaitView waitView;
@@ -48,7 +48,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void increaseAmount(ResourceType resource)
 	{
-
+		
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void decreaseAmount(ResourceType resource)
 	{
-
+		
 	}
 
 	/**
@@ -70,16 +70,13 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard()
 	{
-
 		getDiscardView().closeModal();
 	}
 
 	@Override
 	public void update()
 	{
-		// TODO Auto-generated method stub
 
 	}
-
 }
 

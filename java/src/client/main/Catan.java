@@ -17,6 +17,7 @@ import client.login.LoginView;
 import client.misc.MessageView;
 import client.models.DummyProxy;
 import client.models.IProxy;
+import client.models.Poller;
 import client.models.Proxy;
 
 /**
@@ -27,7 +28,8 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
-	private static IProxy proxy;
+	private static Proxy proxy;
+	private static Poller poller;
 	
 	public Catan()
 	{
@@ -67,7 +69,8 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				proxy = new DummyProxy();
+				proxy = new Proxy();
+				
 				new Catan();
 				
 				
@@ -90,6 +93,8 @@ public class Catan extends JFrame
 					@Override
 					public void execute()
 					{
+						poller = new Poller(proxy);
+						poller.startTimer();
 						playerWaitingController.start();
 						proxy.getGameModel();
 					}

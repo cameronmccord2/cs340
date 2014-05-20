@@ -41,7 +41,6 @@ public class ChatController extends Controller implements IChatController, ICata
 
 	@Override
 	public void update() {
-		System.out.println("time to update");
 		
 	}
 

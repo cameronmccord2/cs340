@@ -25,7 +25,8 @@ public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;
 	private Map<ILocation, IPiece> catanMap;
-	private Map<VertexLocation, IPort> portMap;
+	private Map<ILocation, IPort> portMap;
+	private IRobber robber;
 
 	private int radius;
 
@@ -34,6 +35,7 @@ public class CatanMap implements ICatanMap
 		this.hexMap = new HashMap<>();
 		this.catanMap = new HashMap<>();
 		this.portMap = new HashMap<>();
+		this.robber = null;
 		this.radius = 3;
 	}
 
@@ -50,11 +52,14 @@ public class CatanMap implements ICatanMap
 	 *
 	 *
 	 *		@param	settlement
-	 *					The ISettlement to be placed at the
+	 *					The ISettlement to be placed on the map.
 	 */
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)
 	{
+		HexLocation hex = settlement.getLocation().getHexLocation();
+		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
+			return false;
 		return false;
 	}
 
@@ -98,7 +103,69 @@ public class CatanMap implements ICatanMap
 	@Override
 	public IPiece distanceRule(IPiece piece)
 	{
+		/*
+		 * Things to consider for the algorithm:
+		 * 		: We need only consider the three adjacent
+		 * 			verteces, which are:
+		 * 				if (x,y).NE then
+		 * 					+ (x  , y  ).NW -> left
+		 * 					+ (x+1, y-1).NW -> above
+		 * 					+ (x+1, y  ).NW -> below
+		 * 				if (x,y).NW then
+		 * 					+ (x  , y  ).NE -> right
+		 * 					+ (x-1, y  ).NE -> above
+		 * 					+ (x-1, y+1).NE -> below
+		 * 
+		 */
 		IPiece conflictPiece = null;
+		VertexLocation location = (VertexLocation)piece.getLocation();
+		List<VertexLocation> adjacentCorners = new ArrayList<>();
+		
+		if(location.getDirection() == VertexDirection.NorthEast)
+		{
+			HexLocation hex = location.getHexLocation();
+			VertexDirection direction = VertexDirection.NorthWest;
+			
+			VertexLocation left = new VertexLocation(hex, direction);
+			
+			HexLocation aboveHex = new HexLocation(hex.getX()+1, hex.getY()-1);
+			VertexLocation above = new VertexLocation(aboveHex, direction);
+			
+			HexLocation belowHex = new HexLocation(hex.getX()+1, hex.getY());
+			VertexLocation below = new VertexLocation(belowHex, direction);
+			
+			adjacentCorners.add(left);
+			adjacentCorners.add(above);
+			adjacentCorners.add(below);
+		}
+		else if(location.getDirection() == VertexDirection.NorthWest)
+		{
+			HexLocation hex = location.getHexLocation();
+			VertexDirection direction = VertexDirection.NorthEast;
+			
+			VertexLocation right = new VertexLocation(hex, direction);
+			
+			HexLocation aboveHex = new HexLocation(hex.getX()-1, hex.getY());
+			VertexLocation above = new VertexLocation(aboveHex, direction);
+			
+			HexLocation belowHex = new HexLocation(hex.getX()-1, hex.getY()+1);
+			VertexLocation below = new VertexLocation(belowHex, direction);
+			
+			adjacentCorners.add(right);
+			adjacentCorners.add(above);
+			adjacentCorners.add(below);
+		}
+		else
+		{
+			assert false;
+		}
+		
+		for(VertexLocation corner : adjacentCorners)
+		{
+			conflictPiece = catanMap.get(corner.getNormalizedLocation());
+			if(conflictPiece != null)
+				return conflictPiece;
+		}
 
 		return conflictPiece;
 	}
@@ -106,7 +173,8 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canMoveRobber(IPlayer player)
 	{
-		return false;
+		int playerId = player.getPlayerInfo().getId();
+		return true;
 	}
 
 	@Override
@@ -123,16 +191,25 @@ public class CatanMap implements ICatanMap
 	}
 
 	@Override
-	public Collection<IRoad> getRoads()
+	public Collection<IRoadSegment> getRoads()
 	{
-		return null;
+		Collection<IRoadSegment> roads = new HashSet<>();
+		for(ILocation location : catanMap.keySet())
+		{
+			IPiece piece = catanMap.get(location);
+			if(piece.getPieceType() == PieceType.ROAD)
+				roads.add((IRoadSegment)piece);
+		}
+		return roads;
 	}
 
 	@Override
 	public void placeRoadSegment(IRoadSegment segment)
 			throws InvalidLocationException
 	{
-
+		if(!canPlaceRoad(segment))
+			throw new InvalidLocationException();
+		catanMap.put(segment.getLocation(), segment);
 	}
 
 	@Override
@@ -145,44 +222,65 @@ public class CatanMap implements ICatanMap
 	@Override
 	public void addPort(IPort port)
 	{
-
+		portMap.put(port.getLocation(), port);
 	}
 
 	@Override
 	public Collection<ISettlement> getSettlements()
 	{
-		return null;
+		Collection<ISettlement> settlements = new HashSet<>();
+		for(ILocation location : catanMap.keySet())
+		{
+			IPiece piece = catanMap.get(location);
+			if(piece.getPieceType() == PieceType.SETTLEMENT)
+				settlements.add((ISettlement)piece);
+		}
+		return settlements;
 	}
 
 	@Override
 	public void placeSettlement(ISettlement settlement)
 			throws InvalidLocationException
 	{
-
+		if(!canPlaceSettlement(settlement))
+			throw new InvalidLocationException();
+		catanMap.put(settlement.getLocation(), settlement);
 	}
 
 	@Override
 	public Collection<ICity> getCities()
 	{
-		return null;
+		Collection<ICity> cities = new HashSet<>();
+		for(ILocation location : catanMap.keySet())
+		{
+			IPiece piece = catanMap.get(location);
+			if(piece.getPieceType() == PieceType.CITY)
+				cities.add((ICity)piece);
+		}
+		return cities;
 	}
 
 	@Override
 	public void placeCity(ICity city) throws InvalidLocationException
 	{
-
+		if(!canPlaceCity(city))
+			throw new InvalidLocationException();
+		catanMap.put(city.getLocation(), city);
 	}
 
+	/**
+	 * @return	the robber or null if on the desert or uninitialized.
+	 */
 	@Override
 	public IRobber getRobber()
 	{
-		return null;
+		return robber;
 	}
 
 	@Override
 	public void setRobber(IRobber robber)
 	{
-
+		this.robber = robber;
 	}
 
 	@Override
@@ -197,6 +295,12 @@ public class CatanMap implements ICatanMap
 		this.radius = radius;
 	}
 
+	/*
+	 * I just realized that these help methods should go in the
+	 * Player implementation because these are intended to check
+	 * whether or not the player has the proper amount of resources.
+	 */
+	
 	@Override
 	public boolean canBuildSettlement(IPlayer player, ISettlement settlement)
 	{
