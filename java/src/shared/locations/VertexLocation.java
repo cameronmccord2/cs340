@@ -110,9 +110,8 @@ public class VertexLocation implements ILocation {
 	}
 
 	@Override
-	public <D extends IDirection> void setDirection(D direction)
-	{
-		this.setDirection(direction);
+	public void setDirection(IDirection direction) {
+		this.direction = (VertexDirection)direction;
 	}
 }
 

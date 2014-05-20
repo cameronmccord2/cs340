@@ -18,7 +18,7 @@ public class MapTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-        System.out.println("Testing Map");
+//        System.out.println("Testing Map");
         map = new CatanMap();
 	}
 

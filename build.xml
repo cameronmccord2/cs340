@@ -1,20 +1,20 @@
 ﻿<project name="Demo Server" default="server" basedir=".">
 
 	<!-- PROPERTIES -->
-	<!-- ********** -->	
-    
+	<!-- ********** -->
+
 	<!-- Directory paths for the java server, javascript, and dest dir for the student copy -->
     <property name="port.arg" value="8081"/>
     <property name="web.arg" value="gameplay"/>
     <property name="requests.arg" value="ug"/>
-     
+
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
     <property name="java.src.dir" value="${java.dir}/src"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
-    
+
     <!-- Base output folder -->
     <property name="dest.dir" value="docs"/>
     <!-- Javadoc output folder -->
@@ -24,8 +24,9 @@
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
 	<!-- Tests directory -->
-	<property name="test.dir" value="${java.dir}/src/client/tests/"/>
-   
+	<property name="test.dir" value="${java.dir}/src"/>
+	<property name="test.build" value="${java.dir}/build"/>
+
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
 
@@ -37,7 +38,7 @@
 
 	<!-- TARGETS -->
 	<!-- ******* -->
-     
+
 	<target name="server" description="Runs the demo server">
 		<java jar="${jar.file}" fork="true">
 			<arg value="${port.arg}"/>
@@ -48,7 +49,7 @@
 			</assertions>
 		</java>
 	</target>
-    
+
     <target name="make-java-doc" description="Generate the Java docs">
         <echo> Making Java documentation </echo>
         <delete dir="${javadoc.dir}"/>
@@ -60,7 +61,7 @@
 			</packageset>
 		</javadoc>
    </target>
-    
+
     <!--
     <target name="make-js-doc" description="Generate the JavaScript docs">
         <echo> Making JavaScript documentation </echo>
@@ -78,25 +79,27 @@
 	<property name="java.build" location="${java.dir}/build"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
 	<property name="java.lib" location="${java.dir}/lib"/>
-    <property name="gson.file" location="gson-2.2.4.jar"/>
 
 	<target name="init" description="create build directories">
 		<tstamp/>
 		<mkdir dir="${java.build}"/>
 		<mkdir dir="${java.dist}"/>
 	</target>
-		
+
 	<target name="clean" description="clean build files" >
 		<delete dir="${java.build}"/>
 		<delete dir="${java.dist}"/>
 	</target>
-    
+
 	<target name="compile" depends="init" description="compile the source " >
 		<javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
 			<classpath refid="java.lib.classpath" />
 		</javac>
+		<javac srcdir="${test.dir}" destdir="${java.build}" debug="true" includeantruntime="true">
+			<classpath refid="java.lib.classpath" />
+		</javac>
 	</target>
-	
+
 	<target name="package" depends="compile" description="package the jar file" >
 		<mkdir dir="${java.dist}/lib"/>
 		<copy todir="${java.dist}/lib">
@@ -114,7 +117,7 @@
             <manifest>
                 <attribute name="Main-Class" value="client.main.Catan"/>
                 <attribute name="Class-Path"
-                           value="lib/${gson.file}" />
+                           value="lib/gson-2.2.4.jar" />
             </manifest>
         </jar>
         <jar jarfile="${java.dist}/catan-test.jar" basedir="${java.build}">
@@ -127,12 +130,12 @@
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
 			<manifest>
 				<attribute name="Main-Class" value="PUT THE NAME OF YOUR SERVER'S MAIN CLASS HERE"/>
-				<attribute name="Class-Path" 
-					value="lib/${gson.file}" />
+				<attribute name="Class-Path"
+					value="lib/gson-2.2.4.jar" />
 			</manifest>
 		</jar>
 	</target>
-	
+
 	<target name="client" depends="package" description="compiles, packages, and runs the student client">
 		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
@@ -152,10 +155,11 @@
     </target>
 
     <target name="test" depends="package" description="compiles, packages, and runs the test cases">
-        <java classname="client.tests.AllClientTest">
+        <java classname="client.tests.AllClientTests">
         	<arg value="-h"/>
         	    <classpath>
-        	        <pathelement path="${tests.dir}"/>
+					  <path refid="java.lib.classpath"/>
+        	        <pathelement location="${java.build}"/>
         	    </classpath>
         </java>
     </target>
@@ -163,6 +167,6 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
-  
+
 </project>
 

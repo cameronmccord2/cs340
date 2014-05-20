@@ -6,13 +6,14 @@ import javax.swing.border.*;
 
 import shared.definitions.*;
 
-
 @SuppressWarnings("serial")
-public class TitlePanel extends JPanel {
+public class TitlePanel extends JPanel
+{
 	
 	private JLabel titleLabel;
-
-	public TitlePanel() {
+	
+	public TitlePanel()
+	{
 		
 		this.setLayout(new BorderLayout());
 		this.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -27,11 +28,11 @@ public class TitlePanel extends JPanel {
 		this.add(titleLabel, BorderLayout.CENTER);
 	}
 	
-	public void setLocalPlayerColor(CatanColor value) {
+	public void setLocalPlayerColor(CatanColor value)
+	{
 		
 		this.setBackground(value.getJavaColor());
 		titleLabel.setBackground(value.getJavaColor());
 	}
 	
 }
-

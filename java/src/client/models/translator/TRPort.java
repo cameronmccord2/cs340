@@ -34,12 +34,12 @@ public class TRPort implements IModelValid {
 	@Override
 	public void isValid() throws InvalidTranslatorModelException {
 		this.location.isValid();
-		if(this.resource == null || this.resource.length() == 0 || this.direction == null || this.direction.length() == 0 || this.ratio < 2 || this.ratio > 3)
-			throw new InvalidTranslatorModelException(this.toString());
-		if((this.resource.equals("wood") || this.resource.endsWith("brick") || this.resource.equals("sheep") || 
+		if(this.direction == null || this.direction.length() == 0 || this.ratio < 2 || this.ratio > 3)
+			throw new InvalidTranslatorModelException("first " + this.toString());
+		if((this.resource == null || this.resource.equals("wood") || this.resource.endsWith("brick") || this.resource.equals("sheep") || 
 				this.resource.equals("wheat") || this.resource.equals("ore")) && 
 				(this.direction.equals("NW") || this.direction.equals("N") || this.direction.equals("NE") || this.direction.equals("E") ||
-						this.direction.equals("SE") || this.direction.equals("SW")))
+						this.direction.equals("SE") || this.direction.equals("SW") || this.direction.equals("S")))
 			return;
 		throw new InvalidTranslatorModelException(this.toString());
 	}

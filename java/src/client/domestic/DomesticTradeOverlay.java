@@ -117,7 +117,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getController().cancelTrade();
-				reset();// TODO, this may not be needed here
+//				reset();// TODO, this may not be needed here
 			}
 		});
 		
@@ -189,6 +189,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					upDownPanelByResourceType.get(resourceType).setVisible(true);
+					resourceCounts.get(resourceType).setText("0");
 					getController().setResourceToSend(resourceType);
 				}
 	        	
@@ -222,6 +223,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					upDownPanelByResourceType.get(resourceType).setVisible(true);
+					resourceCounts.get(resourceType).setText("0");
 					getController().setResourceToReceive(resourceType);
 				}
 	        	
@@ -366,7 +368,6 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	@Override
 	public void setPlayers(PlayerInfo[] value) {
-		
 		for (int i = 0; i < value.length; i++) {
 			
 			JToggleButton toggle = new JToggleButton(value[i].getName());
@@ -390,7 +391,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	@Override
 	public void setPlayerSelectionEnabled(boolean enable) {
-		this.playerSelectionPanel.setEnabled(enable);
+		System.out.println("player selection: " + enable);
+		this.playerSelectionPanel.setVisible(enable);
 	}
 
 	@Override

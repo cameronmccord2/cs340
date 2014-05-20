@@ -19,6 +19,7 @@ import shared.locations.*;
  *
  */
 
+//@SuppressWarnings({"unused"})
 public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;
@@ -89,7 +90,9 @@ public class CatanMap implements ICatanMap
 	@Override
 	public IPiece distanceRule(IPiece piece)
 	{
-		return null;
+		IPiece conflictPiece = null;
+		
+		return conflictPiece;
 	}
 
 	@Override
@@ -204,4 +207,18 @@ public class CatanMap implements ICatanMap
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CatanMap [hexMap=");
+		builder.append(hexMap);
+		builder.append(", catanMap=");
+		builder.append(catanMap);
+		builder.append(", portMap=");
+		builder.append(portMap);
+		builder.append(", radius=");
+		builder.append(radius);
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -1,8 +1,7 @@
 package client.models;
 
-import java.util.List;
+import java.util.Map;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ITrade.
  */
@@ -41,28 +40,14 @@ public interface ITrade {
 	 *
 	 * @return the send resource cards
 	 */
-	public List<IResourceCard> getSend();
-	
-	/**
-	 * Sets the send resource cards.
-	 *
-	 * @param send the new send resource cards
-	 */
-	public void setSend(List<IResourceCard> send);
+	public Map<IResourceCard, Integer> getSend();
 	
 	/**
 	 * Gets the recieve resource cards.
 	 *
 	 * @return the recieve resource cards
 	 */
-	public List<IResourceCard> getRecieve();
-	
-	/**
-	 * Sets the recieve resource cards.
-	 *
-	 * @param recieve the new recieve resource cards
-	 */
-	public void setRecieve(List<IResourceCard> recieve);
+	public Map<IResourceCard, Integer> getRecieve();
 	
 	/**
 	 * Checks if the trade is accepted.

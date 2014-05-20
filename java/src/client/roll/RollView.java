@@ -1,11 +1,25 @@
 package client.roll;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import client.base.*;
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
+import client.base.OverlayView;
 
 /**
  * Implementation for the roll view, which allows the user to roll the dice
@@ -13,11 +27,12 @@ import client.base.*;
 @SuppressWarnings("serial")
 public class RollView extends OverlayView implements IRollView {
 
-	private final int LABEL_TEXT_SIZE = 40;
+	private final int LABEL_TEXT_SIZE = 20;
 	private final int BUTTON_TEXT_SIZE = 28;
-	private final int BORDER_WIDTH = 10;
+	private final int BORDER_WIDTH = 1;
 
 	private JLabel label;
+    private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
 
@@ -27,12 +42,21 @@ public class RollView extends OverlayView implements IRollView {
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
 		
-		label = new JLabel("Roll View");
+		label = new JLabel("Roll for your turn");
 		Font labelFont = label.getFont();
 		labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
 		label.setFont(labelFont);
-		this.add(label, BorderLayout.CENTER);
+		this.add(label, BorderLayout.NORTH);
 		
+        try {
+            BufferedImage diceImg = ImageIO.read(new File("images/misc/dice.jpg"));
+            Image smallDiceImg = diceImg.getScaledInstance(300, 224, Image.SCALE_SMOOTH);
+            imageLabel = new JLabel(new ImageIcon(smallDiceImg));
+            this.add(imageLabel, BorderLayout.CENTER);
+        } catch (IOException ex) {
+            // Handle Exception Here
+        }
+
 		rollButton = new JButton("Roll!");
 		rollButton.addActionListener(actionListener);
 		Font buttonFont = rollButton.getFont();
@@ -51,8 +75,6 @@ public class RollView extends OverlayView implements IRollView {
 			
 			if (e.getSource() == rollButton) {
 				
-				closeModal();
-				
 				getController().rollDice();
 			}
 		}	
@@ -66,7 +88,7 @@ public class RollView extends OverlayView implements IRollView {
 
 	@Override
 	public void setMessage(String message) {
-
+		label.setText(message);
 	}
 
 }

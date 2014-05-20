@@ -18,33 +18,55 @@ public class DiscardController extends Controller implements IDiscardController 
 	 * @param view View displayed to let the user select cards to discard
 	 * @param waitView View displayed to notify the user that they are waiting for other players to discard
 	 */
-	public DiscardController(IDiscardView view, IWaitView waitView) {
-		
+	public DiscardController(IDiscardView view, IWaitView waitView)
+	{
 		super(view);
 		
 		this.waitView = waitView;
 	}
-
-	public IDiscardView getDiscardView() {
+	
+	public IDiscardView getDiscardView()
+	{
 		return (IDiscardView)super.getView();
 	}
 	
-	public IWaitView getWaitView() {
+	public IWaitView getWaitView()
+	{
 		return waitView;
 	}
 
+	/**
+	 * This method is called when the user increases the amount of the specified
+	 * resource.
+	 * 
+	 * @param resource
+	 *            The resource that was increased
+	 */
 	@Override
-	public void increaseAmount(ResourceType resource) {
+	public void increaseAmount(ResourceType resource)
+	{
 		
 	}
 
+	/**
+	 * This method is called when the user decreases the amount of the specified
+	 * resource.
+	 * 
+	 * @param resource
+	 *            The resource that was decreased
+	 */
 	@Override
-	public void decreaseAmount(ResourceType resource) {
+	public void decreaseAmount(ResourceType resource)
+	{
 		
 	}
 
+	/**
+	 * This method is called when the user clicks the discard button.
+	 */
 	@Override
-	public void discard() {
+	public void discard()
+	{
 		
 		getDiscardView().closeModal();
 	}

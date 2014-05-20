@@ -2,34 +2,36 @@ package client.models.translator;
 
 import client.models.exceptions.InvalidTranslatorModelException;
 
-public class TRPlayer implements IModelValid {
+public class TRPlayer implements IModelValid
+{
+	// ALL OF THESE SHOULD HAVE VISIBILITY MODIFIERS
 	TRResourceList resources;
-	  TRDevCardList oldDevCards;
-	  TRDevCardList newDevCards;
-	  int roads;
-	  int cities;
-	  int settlements;
-	  int soldiers;
-	  int victoryPoints;
-	  int monuments;
-	  boolean playedDevCard;
-	  boolean discarded;
-	  Long playerID;
-	  int playerIndex;
-	  String name;
-	  protected String color;
+    TRDevCardList oldDevCards;
+    TRDevCardList newDevCards;
+    int roads;
+    int cities;
+    int settlements;
+    int soldiers;
+    int victoryPoints;
+    int monuments;
+    boolean playedDevCard;
+    boolean discarded;
+    int playerID;
+    int playerIndex;
+    String name;
+    protected String color;
 	  
-	  @Override
-		public void isValid() throws InvalidTranslatorModelException{
-			if(resources == null || this.oldDevCards == null || this.newDevCards == null)
-				throw new InvalidTranslatorModelException(this.toString());
-			this.resources.isValid();
-			this.oldDevCards.isValid();
-			this.newDevCards.isValid();
-			if(this.color == null || this.color.length() == 0 || this.roads < 0 || cities < 0 || settlements < 0 || soldiers < 0 || 
-					victoryPoints < 0 || monuments < 0 || this.playerID < 0 || name == null || name.length() == 0)
-				throw new InvalidTranslatorModelException(this.toString());
-		}
+    @Override
+    public void isValid() throws InvalidTranslatorModelException{
+    	if(resources == null || this.oldDevCards == null || this.newDevCards == null)
+    		throw new InvalidTranslatorModelException(this.toString());
+    	this.resources.isValid();
+    	this.oldDevCards.isValid();
+    	this.newDevCards.isValid();
+    	if(this.color == null || this.color.length() == 0 || this.roads < 0 || cities < 0 || settlements < 0 || soldiers < 0 || 
+    			victoryPoints < 0 || monuments < 0 || this.playerID < 0 || name == null || name.length() == 0)
+    		throw new InvalidTranslatorModelException(this.toString());
+    }
 	  
 	public TRResourceList getResources() {
 		return resources;
@@ -97,10 +99,10 @@ public class TRPlayer implements IModelValid {
 	public void setDiscarded(boolean discarded) {
 		this.discarded = discarded;
 	}
-	public Long getPlayerID() {
+	public int getPlayerID() {
 		return playerID;
 	}
-	public void setPlayerID(Long playerID) {
+	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
 	public int getPlayerIndex() {
@@ -158,5 +160,4 @@ public class TRPlayer implements IModelValid {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 }

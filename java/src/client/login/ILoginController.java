@@ -2,12 +2,12 @@ package client.login;
 
 import client.base.*;
 
-
 /**
  * Interface for the login controller
  */
-public interface ILoginController extends IController {
-
+public interface ILoginController extends IController
+{
+	
 	/**
 	 * Displays the login view
 	 */
@@ -24,4 +24,3 @@ public interface ILoginController extends IController {
 	void register();
 	
 }
-

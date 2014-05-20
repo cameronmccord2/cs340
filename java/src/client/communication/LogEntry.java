@@ -1,13 +1,13 @@
-package client.communication;	
+package client.communication;
 
 import shared.definitions.*;
-
 
 /**
  * Message (or entry) displayed in the LogComponent
  */
-public class LogEntry {
-
+public class LogEntry
+{
+	
 	/**
 	 * Color used when displaying the message
 	 */
@@ -18,23 +18,30 @@ public class LogEntry {
 	 */
 	private String message;
 	
-	public LogEntry(CatanColor color, String message) {
+	public LogEntry(CatanColor color, String message)
+	{
 		this.color = color;
 		this.message = message;
 	}
 	
-	public CatanColor getColor() {
+	public CatanColor getColor()
+	{
 		return color;
 	}
-	public void setColor(CatanColor color) {
+	
+	public void setColor(CatanColor color)
+	{
 		this.color = color;
 	}
-	public String getMessage() {
+	
+	public String getMessage()
+	{
 		return message;
 	}
-	public void setMessage(String message) {
+	
+	public void setMessage(String message)
+	{
 		this.message = message;
 	}
 	
 }
-

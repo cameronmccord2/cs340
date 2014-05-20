@@ -1,8 +1,7 @@
 package client.models;
 
-import java.util.List;
+import java.util.Map;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Trade.
  */
@@ -15,10 +14,10 @@ public abstract class Trade implements ITrade {
 	protected IParticipant to;
 	
 	/** The send. */
-	protected List<IResourceCard> send;
+	protected Map<IResourceCard, Integer> send;
 	
 	/** The recieve. */
-	protected List<IResourceCard> recieve;
+	protected Map<IResourceCard, Integer> recieve;
 	
 	/** The accepted. */
 	protected boolean accepted;
@@ -31,7 +30,7 @@ public abstract class Trade implements ITrade {
 	 * @param sendResources the send resources
 	 * @param recieveResources the recieve resources
 	 */
-	public Trade(IParticipant from, IParticipant to, List<IResourceCard> sendResources, List<IResourceCard> recieveResources){
+	public Trade(IParticipant from, IParticipant to, Map<IResourceCard, Integer> sendResources, Map<IResourceCard, Integer> recieveResources){
 		super();
 		this.from = from;
 		this.to = to;
@@ -39,6 +38,12 @@ public abstract class Trade implements ITrade {
 		this.recieve = recieveResources;
 	}
 	
+	public Trade(IParticipant from2, IParticipant to2) {
+		super();
+		this.from = from2;
+		this.to = to2;
+	}
+
 	/* (non-Javadoc)
 	 * @see client.models.ITrade#getFrom()
 	 */
@@ -72,38 +77,6 @@ public abstract class Trade implements ITrade {
 	}
 	
 	/* (non-Javadoc)
-	 * @see client.models.ITrade#getSend()
-	 */
-	@Override
-	public List<IResourceCard> getSend() {
-		return send;
-	}
-	
-	/* (non-Javadoc)
-	 * @see client.models.ITrade#setSend(java.util.List)
-	 */
-	@Override
-	public void setSend(List<IResourceCard> send) {
-		this.send = send;
-	}
-	
-	/* (non-Javadoc)
-	 * @see client.models.ITrade#getRecieve()
-	 */
-	@Override
-	public List<IResourceCard> getRecieve() {
-		return recieve;
-	}
-	
-	/* (non-Javadoc)
-	 * @see client.models.ITrade#setRecieve(java.util.List)
-	 */
-	@Override
-	public void setRecieve(List<IResourceCard> recieve) {
-		this.recieve = recieve;
-	}
-	
-	/* (non-Javadoc)
 	 * @see client.models.ITrade#isAccepted()
 	 */
 	@Override
@@ -127,5 +100,21 @@ public abstract class Trade implements ITrade {
 	public void acceptTrade() {
 		this.setAccepted(true);
 		// TODO exchange cards
+	}
+
+	public Map<IResourceCard, Integer> getSend() {
+		return send;
+	}
+
+	public void setSend(Map<IResourceCard, Integer> send) {
+		this.send = send;
+	}
+
+	public Map<IResourceCard, Integer> getRecieve() {
+		return recieve;
+	}
+
+	public void setRecieve(Map<IResourceCard, Integer> recieve) {
+		this.recieve = recieve;
 	}
 }

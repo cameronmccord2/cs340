@@ -1,17 +1,15 @@
 package client.models;
 
+import java.util.List;
+
 import client.data.PlayerInfo;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;
 import client.server.FinishedTurn;
-import client.server.GameLoad;
-import client.server.GameServer;
 import client.server.MaritimeTradeOff;
 import client.server.OfferTrade;
 import client.server.RoadBuilding;
-import client.server.SaveGame;
-import client.server.ServerAI;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
 import client.server.ServerBuildSettlement;
@@ -44,7 +42,7 @@ public interface IProxy {
 	 * This will retrieve all current games on the server
 	 * @return an array of Game objects
 	 */
-	public GameServer[] getGamesList();
+	public ServerResponse getGamesList();
 
 	/**
 	 * Posts a new game that has just been created
@@ -178,6 +176,12 @@ public interface IProxy {
 	 * Retrieves the latest game state
 	 * @return the Game object that holds all the updated game state
 	 */
-	public void getGameModel();
+	public IGame getGameModel();
+
+	IFacade getFacade();
+
+	List<IGame> getGames();
+
+	String getGameId();
 
 }

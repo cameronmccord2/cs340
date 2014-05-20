@@ -15,31 +15,41 @@ public class Port implements IPort {
 	public Port(TRPort port) {
 		this.hexLocation = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
 		this.exchangeRate = port.getRatio();
-		switch(port.getResource().toUpperCase()){
-		case "WOOD":
-			this.portType = PortType.WOOD;
-			break;
 
-		case "BRICK":
-			this.portType = PortType.BRICK;
-			break;
-
-		case "SHEEP":
-			this.portType = PortType.SHEEP;
-			break;
-
-		case "WHEAT":
-			this.portType = PortType.WHEAT;
-			break;
-
-		case "ORE":
-			this.portType = PortType.ORE;
-			break;
-
-		case "THREE":
-			this.portType = PortType.THREE;
-			break;
+		// This short piece of code can replace the switch statement
+		try {
+			this.portType = PortType.valueOf(port.getResource().toUpperCase());
+		} catch (IllegalArgumentException e) {
+			this.portType = null;
+		}catch (NullPointerException e){
+			this.portType = null;
 		}
+
+//		switch(port.getResource().toUpperCase()){
+//		case "WOOD":
+//			this.portType = PortType.WOOD;
+//			break;
+//
+//		case "BRICK":
+//			this.portType = PortType.BRICK;
+//			break;
+//
+//		case "SHEEP":
+//			this.portType = PortType.SHEEP;
+//			break;
+//
+//		case "WHEAT":
+//			this.portType = PortType.WHEAT;
+//			break;
+//
+//		case "ORE":
+//			this.portType = PortType.ORE;
+//			break;
+//
+//		case "THREE":
+//			this.portType = PortType.THREE;
+//			break;
+//		}
 	}
 
 	@Override

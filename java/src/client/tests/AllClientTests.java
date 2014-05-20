@@ -1,6 +1,7 @@
 package client.tests;
 
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
 
 
 
@@ -26,8 +27,8 @@ public class AllClientTests {
 				
 				
 		};
-
-		org.junit.runner.JUnitCore.main(testClasses);
+		
+		JUnitCore.main(testClasses);
 	}
 
 }

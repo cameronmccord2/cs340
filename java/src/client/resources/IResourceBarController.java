@@ -2,11 +2,11 @@ package client.resources;
 
 import client.base.*;
 
-
 /**
  * Interface for the resource bar controller
  */
-public interface IResourceBarController extends IController {
+public interface IResourceBarController extends IController
+{
 	
 	/**
 	 * Called by the view then the user requests to build a road
@@ -17,7 +17,7 @@ public interface IResourceBarController extends IController {
 	 * Called by the view then the user requests to build a settlement
 	 */
 	void buildSettlement();
-
+	
 	/**
 	 * Called by the view then the user requests to build a city
 	 */
@@ -33,4 +33,3 @@ public interface IResourceBarController extends IController {
 	 */
 	void playCard();
 }
-

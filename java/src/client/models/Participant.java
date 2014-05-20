@@ -85,4 +85,15 @@ public abstract class Participant implements IParticipant {
     public void setResourceCards(Map<IResourceCard, Integer> resourceCards) {
         this.resourceCards = resourceCards;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Participant [developmentCards=");
+		builder.append(developmentCards);
+		builder.append(", resourceCards=");
+		builder.append(resourceCards);
+		builder.append("]");
+		return builder.toString();
+	}
 }

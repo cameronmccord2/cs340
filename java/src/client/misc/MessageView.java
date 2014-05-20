@@ -14,13 +14,14 @@ import client.base.*;
 @SuppressWarnings("serial")
 public class MessageView extends OverlayView implements IMessageView {
 
-	private final int LABEL_TEXT_SIZE = 40;
-	private final int BUTTON_TEXT_SIZE = 28;
+	private final int LABEL_TEXT_SIZE = 20;
+	private final int BUTTON_TEXT_SIZE = 20;
 	private final int BORDER_WIDTH = 10;
 
 	private JLabel label;
 	private JButton closeButton;
 	private JPanel buttonPanel;
+	private JLabel message;
 
 	public MessageView() {
 		
@@ -32,7 +33,12 @@ public class MessageView extends OverlayView implements IMessageView {
 		Font labelFont = label.getFont();
 		labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
 		label.setFont(labelFont);
-		this.add(label, BorderLayout.CENTER);
+		this.add(label, BorderLayout.NORTH);
+		
+		
+		
+		message = new JLabel("Message Body");
+		this.add(message, BorderLayout.CENTER);
 		
 		closeButton = new JButton("Close");
 		closeButton.addActionListener(actionListener);
@@ -58,12 +64,12 @@ public class MessageView extends OverlayView implements IMessageView {
 
 	@Override
 	public void setTitle(String title) {
-
+		label.setText(title);
 	}
 
 	@Override
 	public void setMessage(String message) {
-
+		this.message.setText(String.format("<html><div style=\"width:%dpx;\">%s</div><html>", 500, message));
 	}
 	
 }

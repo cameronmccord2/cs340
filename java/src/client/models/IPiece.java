@@ -1,8 +1,5 @@
 package client.models;
 
-import java.util.Collection;
-
-import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.ILocation;
 

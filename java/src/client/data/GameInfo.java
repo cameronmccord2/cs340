@@ -80,5 +80,24 @@ public class GameInfo {
 		return Collections.unmodifiableList(players);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GameInfo [id=");
+		builder.append(id);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", randomTiles=");
+		builder.append(randomTiles);
+		builder.append(", randomNumbers=");
+		builder.append(randomNumbers);
+		builder.append(", randomPorts=");
+		builder.append(randomPorts);
+		builder.append(", players=");
+		builder.append(players);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
 

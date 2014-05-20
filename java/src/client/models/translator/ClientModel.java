@@ -13,7 +13,7 @@ public class ClientModel implements IModelValid{
 	  protected TRTurnTracker turnTracker;
 	  protected TRTradeOffer tradeOffer;
 	  protected TRDevCardList deck;
-	  Long winner;
+	  int winner;
 	  int version = 0;
 	public TRMap getMap() {
 		return map;
@@ -57,12 +57,6 @@ public class ClientModel implements IModelValid{
 	public void setTradeOffer(TRTradeOffer tradeOffer) {
 		this.tradeOffer = tradeOffer;
 	}
-	public Long getWinner() {
-		return winner;
-	}
-	public void setWinner(Long winner) {
-		this.winner = winner;
-	}
 	public int getVersion() {
 		return version;
 	}
@@ -85,6 +79,18 @@ public class ClientModel implements IModelValid{
 			this.tradeOffer.isValid();
 		if(this.version < 0)
 			throw new InvalidTranslatorModelException("Version is less than 0, toString: " + this.toString());
+	}
+	public TRDevCardList getDeck() {
+		return deck;
+	}
+	public void setDeck(TRDevCardList deck) {
+		this.deck = deck;
+	}
+	public int getWinner() {
+		return winner;
+	}
+	public void setWinner(int winner) {
+		this.winner = winner;
 	}
 	@Override
 	public String toString() {
@@ -112,12 +118,6 @@ public class ClientModel implements IModelValid{
 		builder.append("]");
 		return builder.toString();
 	}
-	public TRDevCardList getDeck() {
-		return deck;
-	}
-	public void setDeck(TRDevCardList deck) {
-		this.deck = deck;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,7 +133,7 @@ public class ClientModel implements IModelValid{
 		result = prime * result
 				+ ((turnTracker == null) ? 0 : turnTracker.hashCode());
 		result = prime * result + version;
-		result = prime * result + ((winner == null) ? 0 : winner.hashCode());
+		result = prime * result + winner;
 		return result;
 	}
 	@Override
@@ -184,11 +184,9 @@ public class ClientModel implements IModelValid{
 			return false;
 		if (version != other.version)
 			return false;
-		if (winner == null) {
-			if (other.winner != null)
-				return false;
-		} else if (!winner.equals(other.winner))
+		if (winner != other.winner)
 			return false;
 		return true;
 	}
+	
 }

@@ -1,25 +1,28 @@
 package client.catan;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import client.map.*;
-
+import client.models.IProxy;
 
 @SuppressWarnings("serial")
-public class MidPanel extends JPanel {
-
+public class MidPanel extends JPanel
+{
+	
 	private TradePanel tradePanel;
 	private MapView mapView;
 	private RobView robView;
 	private MapController mapController;
 	private GameStatePanel gameStatePanel;
-
-	public MidPanel() {
+	
+	public MidPanel(IProxy proxy)
+	{
 		
 		this.setLayout(new BorderLayout());
 		
-		tradePanel = new TradePanel();
+		tradePanel = new TradePanel(proxy);
 		
 		mapView = new MapView();
 		robView = new RobView();
@@ -28,21 +31,22 @@ public class MidPanel extends JPanel {
 		robView.setController(mapController);
 		
 		gameStatePanel = new GameStatePanel();
-
+		
 		this.add(tradePanel, BorderLayout.NORTH);
 		this.add(mapView, BorderLayout.CENTER);
 		this.add(gameStatePanel, BorderLayout.SOUTH);
-
+		
 		this.setPreferredSize(new Dimension(800, 700));
 	}
 	
-	public GameStatePanel getGameStatePanel() {
+	public GameStatePanel getGameStatePanel()
+	{
 		return gameStatePanel;
 	}
 	
-	public IMapController getMapController() {
+	public IMapController getMapController()
+	{
 		return mapController;
 	}
 	
 }
-
