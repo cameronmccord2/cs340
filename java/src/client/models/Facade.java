@@ -1,5 +1,6 @@
 package client.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.List;
@@ -147,11 +148,18 @@ public class Facade implements IFacade {
 		try {
 			IGame game = getGameModel();
 			List<MessageLine> list = game.getChat().getLines();
+			PlayerInfo[] players = getAllPlayerInfos(); 
+			List<LogEntry> chatList = new ArrayList<LogEntry>();
 			for(MessageLine l : list){
-				//LogEntry chat = new LogEntry();
+				for(PlayerInfo p : players){
+					if(l.getSource().equals(p.getName())){
+						LogEntry chat = new LogEntry(p.getColor(),l.getMessage());
+						chatList.add(chat);
+					}
+				}
 			}
+			return chatList;
 		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
