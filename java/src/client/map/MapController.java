@@ -7,6 +7,7 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.models.ICatanModelObserver;
+import client.models.IProxy;
 
 /**
  * Implementation for the map controller.
@@ -29,6 +30,7 @@ public class MapController extends Controller implements IMapController,
 														 ICatanModelObserver
 {
 	private IRobView robView;
+	private IProxy proxy;
 
 	public MapController(IMapView view, IRobView robView)
 	{
@@ -37,6 +39,12 @@ public class MapController extends Controller implements IMapController,
 		setRobView(robView);
 
 		initFromModel();
+	}
+	
+	public void setProxy(IProxy proxy)
+	{
+		this.proxy = proxy;
+		proxy.getFacade().registerAsObserver(this);
 	}
 
 	public IMapView getView()

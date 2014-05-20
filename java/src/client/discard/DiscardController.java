@@ -33,6 +33,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void setProxy(IProxy proxy)
 	{
 		this.proxy = proxy;
+		proxy.getFacade().registerAsObserver(this);
 	}
 
 	public IDiscardView getDiscardView()
