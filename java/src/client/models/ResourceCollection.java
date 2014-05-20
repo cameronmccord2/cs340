@@ -3,6 +3,7 @@ package client.models;
 import java.util.HashMap;
 import java.util.Map;
 
+import client.models.exceptions.CantFindGameModelException;
 import client.models.translator.TRResourceList;
 import shared.definitions.ResourceType;
 
@@ -28,32 +29,39 @@ public class ResourceCollection {
 	
 	
 	public void increaseResourceAmount(ResourceType resource) {
-		System.out.println("has: " + this.proxy.getFacade().getPlayerResourceCount(resource) + " " + resource.toString());
-		switch(resource){
-		case BRICK:
-			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.brick)
-				this.brick++;
-			break;
-		case ORE:
-			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.ore)
-				this.ore++;
-			break;
-		case SHEEP:
-			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.sheep)
-				this.sheep++;
-			break;
-		case WHEAT:
-			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.wheat)
-				this.wheat++;
-			break;
-		case WOOD:
-			if(this.proxy.getFacade().getPlayerResourceCount(resource) > this.wood)
-				this.wood++;
-			break;
+		try {
+			System.out.println("has: " + this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) + " " + resource.toString());
+		
+			switch(resource){
+				case BRICK:
+					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.brick)
+						this.brick++;
+					break;
+				case ORE:
+					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.ore)
+						this.ore++;
+					break;
+				case SHEEP:
+					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.sheep)
+						this.sheep++;
+					break;
+				case WHEAT:
+					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.wheat)
+						this.wheat++;
+					break;
+				case WOOD:
+					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.wood)
+						this.wood++;
+					break;
+					
+				default:
+					throw new RuntimeException("cant find resource: " + resource.toString());
+			}
 			
-		default:
-			throw new RuntimeException("cant find resource: " + resource.toString());
+		} catch (CantFindGameModelException e) {
+			// dont do anything, nothing should call this before the game model exists
 		}
+		
 	}
 	
 	public void decreaseResourceAmount(ResourceType resource) {

@@ -15,6 +15,8 @@ import client.join.SelectColorView;
 import client.login.LoginController;
 import client.login.LoginView;
 import client.misc.MessageView;
+import client.models.DummyProxy;
+import client.models.IProxy;
 import client.models.Proxy;
 
 /**
@@ -25,7 +27,7 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
-	private static Proxy proxy;
+	private static IProxy proxy;
 	
 	public Catan()
 	{
@@ -65,7 +67,7 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				proxy = new Proxy();
+				proxy = new DummyProxy();
 				new Catan();
 				
 				
