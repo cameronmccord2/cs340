@@ -45,4 +45,6 @@ public interface IFacade {
 
 	String getCurrentState() throws CantFindGameModelException;
 
+	IPlayer[] getPlayers() throws CantFindGameModelException;
+
 }

@@ -184,6 +184,11 @@ public class Facade implements IFacade {
 	public String getCurrentState() throws CantFindGameModelException{
 		return this.getGameModel().getTurnTracker().getStatus();
 	}
+
+	@Override
+	public IPlayer[] getPlayers() throws CantFindGameModelException {
+		return this.getGameModel().getPlayers();
+	}
 }
 
 
