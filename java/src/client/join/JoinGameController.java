@@ -238,8 +238,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());
 		if(proxy.postGamesJoin(join).getJson().equals("Success")){
 			// If join succeeded
+			
+			System.out.println("Inside joinGame");
+			
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
+			
+//			THIS IS CAUSING AN INFINITE LOOP!
 			joinAction.execute();
 		}	
 	}

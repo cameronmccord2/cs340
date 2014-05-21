@@ -1,0 +1,10 @@
+clean
+client
+compile
+init
+make-java-doc
+make-tester-zip
+our-server
+package
+server
+test
