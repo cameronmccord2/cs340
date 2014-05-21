@@ -250,6 +250,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			
 			
 //			THIS IS SOMEHOW CAUSING AN INFINITE LOOP!
+			System.out.println("before execute");
 			joinAction.execute();
 			System.out.println("After execute");
 		}	

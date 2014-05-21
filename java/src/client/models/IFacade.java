@@ -1,7 +1,6 @@
 package client.models;
 
 import java.util.Map;
-
 import java.util.List;
 
 import client.communication.LogEntry;
@@ -39,5 +38,9 @@ public interface IFacade {
 	Integer getBankResourceCount(ResourceCard resource) throws CantFindGameModelException;
 
 	Integer getPlayerResourceCount(ResourceCard resource) throws CantFindGameModelException;
+
+	Integer getWinner() throws CantFindGameModelException;
+
+	TurnTracker getTurnTracker() throws CantFindGameModelException;
 
 }

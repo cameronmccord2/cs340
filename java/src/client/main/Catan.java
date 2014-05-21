@@ -105,10 +105,16 @@ public class Catan extends JFrame
 					@Override
 					public void execute()
 					{
+						System.out.println("in execute");
 						poller = new Poller(proxy);
-						poller.startTimer();
+//						poller = new Thread(new Poller(proxy));
+//						System.out.println("after created");
+//						poller.start();
+//						System.out.println("after start");
+//						poller.startTimer();
 						playerWaitingController.start();
-						proxy.getGameModel();
+						System.out.println("after start 2");
+//						proxy.getGameModel();
 						System.out.println("End of execute");
 					}
 				});

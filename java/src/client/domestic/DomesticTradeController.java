@@ -298,16 +298,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
-		System.out.println("updating");
+//		System.out.println("updating");
 		try{
 			PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
-			if(players == null || players.length == 0){
+			PlayerInfo[] finalPlayers = new PlayerInfo[players.length - 1];
+			int counter = 0;
+			for (PlayerInfo pi : players) {
+				if(pi.getPlayerIndex() != this.proxy.getFacade().getCurrentUserIndex())
+					finalPlayers[counter++] = pi;
+			}
+			if(finalPlayers == null || finalPlayers.length == 0){
 				System.out.println("no players");
 				return;
 			}
 			
 			if(this.playersHaveNotBeenSet){
-				this.tradeOverlay.setPlayers(players);
+				this.tradeOverlay.setPlayers(finalPlayers);
 				this.playersHaveNotBeenSet = false;
 			}
 			

@@ -58,7 +58,7 @@ public class PointsController extends Controller implements IPointsController,
 	            Integer points = this.proxy.getFacade().getCurrentUser().getVictoryPoints();
 	            getPointsView().setPoints( points );
 	            
-	            Integer winnerId = this.proxy.getGameModel().getWinner();
+	            Integer winnerId = this.proxy.getFacade().getWinner();
 	            
 	            if( winnerId >= 0 ) {
 	            	PlayerInfo winner = getPlayerById(winnerId);
