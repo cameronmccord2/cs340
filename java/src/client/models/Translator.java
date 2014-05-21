@@ -81,7 +81,7 @@ public class Translator {
 			for (TRVertexObject s : cm.getMap().getSettlements()) {
 				if((long)s.getOwner() != p.getPlayerID())
 					continue;
-				ISettlement newS = new Settlement(new VertexLocation(s.getLocation()), newPlayer, 1);// TODO point value?
+				ISettlement newS = new Settlement(new VertexLocation(s.getLocation()), newPlayer);
 				settlements.add(newS);
 			}
 			newPlayer.setSettlements(settlements);
@@ -92,7 +92,7 @@ public class Translator {
 			for (TRVertexObject c : cm.getMap().getCities()) {
 				if((long)c.getOwner() != p.getPlayerID())
 					continue;
-				ICity newC = new City(new VertexLocation(c.getLocation()), newPlayer, 1);// TODO point value?
+				ICity newC = new City(new VertexLocation(c.getLocation()), newPlayer);
 				cities.add(newC);
 			}
 			newPlayer.setCities(cities);
@@ -137,7 +137,7 @@ public class Translator {
 			map.addHex(new Hex(hex));
 		}
 		for (TRVertexObject city : cm.getMap().getCities()) {
-			map.placeCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers()), 2));
+			map.placeCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers())));
 		}
 		for (TRPort port : cm.getMap().getPorts()) {
 			map.addPort(new Port(port));
@@ -146,7 +146,7 @@ public class Translator {
 			map.placeRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
 		}
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
-			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), this.getPlayerWithId(settl.getOwner(), g.getPlayers()), 1));
+			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), this.getPlayerWithId(settl.getOwner(), g.getPlayers())));
 		}
 		
 		IRobber robber = new Robber(cm.getMap().getRobber());
