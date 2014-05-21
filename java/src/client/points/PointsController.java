@@ -83,7 +83,18 @@ public class PointsController extends Controller implements IPointsController,
 		if(id < 0 || id > 3)
 			assert false;
 
-        for(PlayerInfo player : this.proxy.getFacade().getAllPlayerInfos()) {
+		PlayerInfo[] players = null;
+		
+		try
+		{
+			players = this.proxy.getFacade().getAllPlayerInfos();
+		}
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+		
+        for(PlayerInfo player : players) {
             if(player.getId() == id)
                 return player;
         }
