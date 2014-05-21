@@ -45,7 +45,6 @@ public class Poller{
 		    new TimerTask(){
 		    	@Override
 		        public void run(){
-		    		System.out.println("running ");
 		            proxy.getGameModel();
 		        }
 		    },

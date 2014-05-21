@@ -59,8 +59,8 @@ public class RollController extends Controller implements IRollController, ICata
 	public void update() {
 		try {
 			System.out.println(this.proxy.getFacade().getTurnTracker().toString() + ", my index: " + this.proxy.getFacade().getCurrentUserIndex());
-			if(this.proxy.getFacade().isMyTurn())
-				getRollView().showModal();
+			//if(this.proxy.getFacade().isMyTurn())
+				//getRollView().showModal();
 		} catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		}

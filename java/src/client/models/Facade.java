@@ -142,6 +142,11 @@ public class Facade implements IFacade {
 	public Map<IResourceCard, Integer> getResourcesForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException {
 		return this.getPlayerWithIndex(playerId).getResourceCards();
 	}
+	
+	@Override
+	public Map<IDevelopmentCard, Integer> getDevCardsForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException {
+		return this.getPlayerWithIndex(playerId).getDevelopmentCards();
+	}
 
 	@Override
 	public List<LogEntry> getChats() {

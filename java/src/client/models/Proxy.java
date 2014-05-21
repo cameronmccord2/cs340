@@ -210,7 +210,7 @@ public class Proxy implements IProxy {
 		Integer version = 0;
 		try {
 			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
-			System.out.println("version: " + version);
+			//System.out.println("version: " + version);
 		} catch (InvalidGameModelException e1) {
 			// fail silently
 			System.out.println("There is no current game model, getGameModel without version");
@@ -259,7 +259,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesRollNumber(ServerRoll roll){
 		ServerResponse sr = doPost("/moves/rollNumber", gson.toJson(roll), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
@@ -280,49 +280,49 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesBuyDevCard(BuyDevCard card){
 		ServerResponse sr = doPost("/moves/buyDevCard", gson.toJson(card), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesYear_of_Plenty(ServerYearofPlenty yop){
 		ServerResponse sr = doPost("/moves/Year_of_Plenty", gson.toJson(yop), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesRoad_Building(RoadBuilding rb){
 		ServerResponse sr = doPost("/moves/Road_Building", gson.toJson(rb), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesSoldier(ServerSoldier ss){
 		ServerResponse sr = doPost("/moves/Soldier", gson.toJson(ss), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonopoly(ServerMonopoly sm){
 		ServerResponse sr = doPost("/moves/Monopoly", gson.toJson(sm), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonument(ServerMonument sm){
 		ServerResponse sr = doPost("/moves/Monument", gson.toJson(sm), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildRoad(ServerBuildRoad br){
 		ServerResponse sr = doPost("/moves/buildRoad", gson.toJson(br), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
