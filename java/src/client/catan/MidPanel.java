@@ -27,6 +27,8 @@ public class MidPanel extends JPanel
 		mapView = new MapView();
 		robView = new RobView();
 		mapController = new MapController(mapView, robView);
+		mapController.setProxy(proxy);
+		
 		mapView.setController(mapController);
 		robView.setController(mapController);
 		

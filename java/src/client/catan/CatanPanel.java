@@ -47,6 +47,8 @@ public class CatanPanel extends JPanel
 		discardWaitView = new WaitView();
 		discardWaitView.setMessage("Waiting for other Players to Discard");
 		discardController = new DiscardController(discardView, discardWaitView);
+		discardController.setProxy(proxy);
+		
 		discardView.setController(discardController);
 		discardWaitView.setController(discardController);
 		
