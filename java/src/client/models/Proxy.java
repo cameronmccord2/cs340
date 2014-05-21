@@ -78,6 +78,7 @@ public class Proxy implements IProxy {
 	private IGame saveGameModel(String model){
 		System.out.println("here");
 		Gson gson = new Gson();
+//		System.out.println(model);
 		ClientModel cm = gson.fromJson(model, ClientModel.class);
 		try {
 			cm.isValid();

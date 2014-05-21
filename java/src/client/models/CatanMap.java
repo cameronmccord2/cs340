@@ -2,6 +2,7 @@ package client.models;
 
 import java.util.*;
 
+import client.data.PlayerInfo;
 import shared.definitions.PieceType;
 import shared.locations.*;
 
@@ -60,7 +61,11 @@ public class CatanMap implements ICatanMap
 		
 		for(IPiece piece : catanMap.values())
 		{
-			if(piece.getPlayer().equals(segment.getPlayer()))
+			PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
+			PlayerInfo segmentOwner = segment.getPlayer().getPlayerInfo();
+//			System.out.println(pieceOwner);
+//			System.out.println(segmentOwner);
+			if(pieceOwner.equals(segmentOwner))
 			{
 				switch(piece.getPieceType())
 				{
@@ -357,6 +362,22 @@ public class CatanMap implements ICatanMap
 		if(distanceRule(settlement) != null)
 			throw new InvalidLocationException();
 		catanMap.put(settlement.getLocation(), settlement);
+	}
+	
+	@Override
+	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException
+	{
+		if(catanMap.get(segment.getLocation()) != null)
+			throw new InvalidLocationException();
+		catanMap.put(segment.getLocation(), segment);
+	}
+	
+	@Override
+	public void placeInitialCity(ICity city) throws InvalidLocationException
+	{
+		if(catanMap.get(city.getLocation()) != null)
+			throw new InvalidLocationException();
+		catanMap.put(city.getLocation(), city);
 	}
 
 	@Override

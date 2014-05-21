@@ -36,7 +36,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			getView().setPlayers(players);
 			getView().showModal();
 			if(players.length == 4){
-				getView().closeModal();
+				if(getView().isModalShowing())
+					getView().closeModal();
 			}
 		} catch (CantFindGameModelException e) {
 			// TODO Auto-generated catch block
@@ -58,6 +59,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		try {
 			players = this.proxy.getFacade().getAllPlayerInfos();
 			getView().setPlayers(players);
+			
 			if(players.length == 4){
 				if(getView().isModalShowing())
 					getView().closeModal();

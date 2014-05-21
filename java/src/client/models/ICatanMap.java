@@ -33,4 +33,6 @@ public interface ICatanMap
 	public void setRadius(int radius);
 	
 	public void placeInitialSettlement(ISettlement settlement) throws InvalidLocationException;
+	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException;
+	public void placeInitialCity(ICity city) throws InvalidLocationException;
 }
