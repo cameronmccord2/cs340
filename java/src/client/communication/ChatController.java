@@ -41,7 +41,7 @@ public class ChatController extends Controller implements IChatController, ICata
 
 	@Override
 	public void update() {
-		
+		getView().setEntries(this.proxy.getFacade().getChats());
 	}
 
 }
