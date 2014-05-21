@@ -326,7 +326,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}else if(currentTrade.getReceiver() == this.proxy.getFacade().getCurrentUserIndex()){
 				this.setupAcceptTradeWithTrade(currentTrade);
 			}
-			System.out.println("receiver: " + currentTrade.getReceiver() + ", you: " + this.proxy.getFacade().getCurrentUserIndex());
 		}catch(CantFindGameModelException e){
 			// dont do anything, wait for the model to update again
 		}

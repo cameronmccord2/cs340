@@ -142,16 +142,16 @@ public class Translator {
 			map.addHex(new Hex(hex));
 		}
 		for (TRVertexObject city : cm.getMap().getCities()) {
-			map.placeCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers())));
+			map.placeCityNoRules(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers())));
 		}
 		for (TRPort port : cm.getMap().getPorts()) {
 			map.addPort(new Port(port));
 		}
 		for(TRRoad road : cm.getMap().getRoads()){
-			map.placeRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
+			map.placeRoadNoRules(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
 		}
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
-			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), this.getPlayerWithId(settl.getOwner(), g.getPlayers())));
+			map.placeSettlementNoRules(new Settlement(new VertexLocation(settl.getLocation()), this.getPlayerWithId(settl.getOwner(), g.getPlayers())));
 		}
 		
 		IRobber robber = new Robber(cm.getMap().getRobber());
