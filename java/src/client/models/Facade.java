@@ -184,6 +184,28 @@ public class Facade implements IFacade {
 	public String getCurrentState() throws CantFindGameModelException{
 		return this.getGameModel().getTurnTracker().getStatus();
 	}
+
+	@Override
+	public List<LogEntry> getGameHistory() {
+		try {
+			IGame game = getGameModel();
+			List<MessageLine> list = game.getLog().getLines();
+			PlayerInfo[] players = getAllPlayerInfos(); 
+			List<LogEntry> logList = new ArrayList<LogEntry>();
+			for(MessageLine l : list){
+				for(PlayerInfo p : players){
+					if(l.getSource().equals(p.getName())){
+						LogEntry log = new LogEntry(p.getColor(),l.getMessage());
+						logList.add(log);
+					}
+				}
+			}
+			return logList;
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
 
 

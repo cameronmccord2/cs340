@@ -1,22 +1,21 @@
 package client.communication;
 
-import java.util.*;
-import java.util.List;
-
-import client.base.*;
-import shared.definitions.*;
+import client.base.Controller;
+import client.models.ICatanModelObserver;
+import client.models.IProxy;
 
 
 /**
  * Game history controller implementation
  */
-public class GameHistoryController extends Controller implements IGameHistoryController {
+public class GameHistoryController extends Controller implements IGameHistoryController, ICatanModelObserver {
 
-	public GameHistoryController(IGameHistoryView view) {
+	private IProxy proxy;
+	
+	public GameHistoryController(IGameHistoryView view, IProxy proxy) {
 		
 		super(view);
-		
-		initFromModel();
+		this.proxy = proxy;
 	}
 	
 	@Override
@@ -27,21 +26,23 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	
 	private void initFromModel() {
 		
-		//<temp>
+		//List<LogEntry> entries = new ArrayList<LogEntry>();
+//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
+//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
+//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
+//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
+//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
+//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
+//		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
+//		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
 		
-		List<LogEntry> entries = new ArrayList<LogEntry>();
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-		
-		getView().setEntries(entries);
-	
-		//</temp>
+		getView().setEntries(this.proxy.getFacade().getGameHistory());
+
+	}
+
+	@Override
+	public void update() {
+		initFromModel();	
 	}
 	
 }
