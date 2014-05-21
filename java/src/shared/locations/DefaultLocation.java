@@ -6,33 +6,33 @@ public class DefaultLocation implements ILocation
 	protected HexLocation hexLocation;
 	protected IDirection direction;
 
-	public DefaultLocation(HexLocation hexLocation2, VertexDirection direction2) {
-		this.hexLocation = hexLocation2;
-		this.direction = direction2;
+	public DefaultLocation(HexLocation hexLocation, VertexDirection direction) {
+		this.hexLocation = hexLocation;
+		this.direction = direction;
 	}
 
 	@Override
 	public HexLocation getHexLocation()
 	{
-		return null;
+		return hexLocation;
 	}
 
 	@Override
 	public void setHexLocation(HexLocation hexLocation)
 	{
-
+		this.hexLocation = hexLocation;
 	}
 
 	@Override
 	public IDirection getDirection()
 	{
-		return null;
+		return direction;
 	}
 
 	@Override
 	public ILocation getNormalizedLocation()
 	{
-		return null;
+		return this;
 	}
 
 	@Override
