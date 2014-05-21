@@ -161,7 +161,7 @@ public class Translator {
 		}
 		
 		IRobber robber = new Robber(cm.getMap().getRobber());
-		System.out.println(robber.getLocation());
+//		System.out.println(robber.getLocation());
 		map.setRobber(robber);
 		map.setRadius(cm.getMap().getRadius());
 		g.setMap(map);
