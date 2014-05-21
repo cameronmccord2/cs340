@@ -81,54 +81,63 @@ public class MapController extends Controller implements IMapController,
 	// THIS NEEDS TO BE UPDATED WITH THE REAL THING.
 	protected void initFromModel()
 	{
-		IFacade facade = proxy.getFacade();
-		IGame game = proxy.getGameModel();
-		ICatanMap map = game.getMap();
-		
-		for(IHex hex : map.getHexes())
+		try
 		{
-			this.getView().addHex(hex.getLocation(), hex.getHexType());
-			this.getView().addNumber(hex.getLocation(), hex.getHexNumber());
-		}
-		
-		for(IPort port : map.getPorts())
-		{
-			this.getView().addPort((EdgeLocation)port.getLocation(),
-			                       port.getPortType());
-		}
-		
-		for(ISettlement settlement : map.getSettlements())
-		{
-			IPlayer player = settlement.getPlayer();
-			PlayerInfo info = player.getPlayerInfo();
-			CatanColor color = info.getColor();
-			VertexLocation location = (VertexLocation)settlement.getLocation();
+			IFacade facade = proxy.getFacade();
+//			System.out.println(facade.getCurrentState());
+			ICatanMap map = facade.getCatanMap();
+			for(IHex hex : map.getHexes())
+			{
+//				System.out.println(hex.toString());
+				this.getView().addHex(hex.getLocation(), hex.getHexType());
+				if(hex.getHexNumber() != null)
+					this.getView().addNumber(hex.getLocation(), hex.getHexNumber());
+			}
 			
-			this.getView().placeSettlement(location, color);
-		}
-		
-		for(ICity city : map.getCities())
-		{
-			IPlayer player = city.getPlayer();
-			PlayerInfo info = player.getPlayerInfo();
-			CatanColor color = info.getColor();
-			VertexLocation location = (VertexLocation)city.getLocation();
+			for(IPort port : map.getPorts())
+			{
+				this.getView().addPort((EdgeLocation)port.getLocation(),
+				                       port.getPortType());
+			}
 			
-			this.getView().placeCity(location, color);
-		}
-		
-		for(IRoadSegment segment : map.getRoads())
-		{
-			IPlayer player = segment.getPlayer();
-			PlayerInfo info = player.getPlayerInfo();
-			CatanColor color = info.getColor();
-			EdgeLocation location = (EdgeLocation)segment.getLocation();
+			for(ISettlement settlement : map.getSettlements())
+			{
+//				System.out.println(settlement.toString());
+				IPlayer player = settlement.getPlayer();
+				PlayerInfo info = player.getPlayerInfo();
+				CatanColor color = info.getColor();
+				VertexLocation location = (VertexLocation)settlement.getLocation();
+				
+				this.getView().placeSettlement(location, color);
+			}
 			
-			this.getView().placeRoad(location, color);
+			for(ICity city : map.getCities())
+			{
+				IPlayer player = city.getPlayer();
+				PlayerInfo info = player.getPlayerInfo();
+				CatanColor color = info.getColor();
+				VertexLocation location = (VertexLocation)city.getLocation();
+				
+				this.getView().placeCity(location, color);
+			}
+			
+			for(IRoadSegment segment : map.getRoads())
+			{
+				IPlayer player = segment.getPlayer();
+				PlayerInfo info = player.getPlayerInfo();
+				CatanColor color = info.getColor();
+				EdgeLocation location = (EdgeLocation)segment.getLocation();
+				
+				this.getView().placeRoad(location, color);
+			}
+			
+			IRobber robber = map.getRobber();
+			this.getView().placeRobber(robber.getLocation().getHexLocation());
 		}
-		
-		IRobber robber = map.getRobber();
-		this.getView().placeRobber(robber.getLocation().getHexLocation());
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void defaultInit()
@@ -331,7 +340,9 @@ public class MapController extends Controller implements IMapController,
 	@Override
 	public void update()
 	{
+		try {
 		initFromModel();
+		} catch(Exception e){}
 	}
 
 }

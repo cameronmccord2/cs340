@@ -2,7 +2,9 @@ package client.models;
 
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
+import shared.locations.EdgeLocation;
 import shared.locations.ILocation;
 
 public class Port implements IPort {
@@ -15,14 +17,17 @@ public class Port implements IPort {
 	public Port(TRPort port) {
 		this.hexLocation = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
 		this.exchangeRate = port.getRatio();
+		
+		EdgeDirection direction = EdgeDirection.getDirectionFromServerString(port.getDirection());
+		location = new EdgeLocation(hexLocation, direction);
 
 		// This short piece of code can replace the switch statement
 		try {
 			this.portType = PortType.valueOf(port.getResource().toUpperCase());
 		} catch (IllegalArgumentException e) {
-			this.portType = null;
+			this.portType = PortType.THREE;
 		}catch (NullPointerException e){
-			this.portType = null;
+			this.portType = PortType.THREE;
 		}
 
 //		switch(port.getResource().toUpperCase()){

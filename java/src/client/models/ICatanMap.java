@@ -28,6 +28,8 @@ public interface ICatanMap
 
 	public Collection<ICity> getCities();
 	public void placeCity(ICity city) throws InvalidLocationException;
+	
+	public Collection<IPiece> getPieces();
 
 	public int getRadius();
 	public void setRadius(int radius);

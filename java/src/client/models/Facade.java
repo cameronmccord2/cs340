@@ -43,6 +43,12 @@ public class Facade implements IFacade {
 	}
 	
 	@Override
+	public ICatanMap getCatanMap() throws CantFindGameModelException
+	{
+		return this.getGameModel().getMap();
+	}
+	
+	@Override
 	public IPlayer getCurrentUser() throws CantFindPlayerException, CantFindGameModelException{
 		IGame g = this.getGameModel();
 		for (IPlayer p : g.getPlayers()) {

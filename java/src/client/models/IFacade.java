@@ -47,4 +47,6 @@ public interface IFacade {
 
 	String getCurrentState() throws CantFindGameModelException;
 
+	ICatanMap getCatanMap() throws CantFindGameModelException;
+
 }

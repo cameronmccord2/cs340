@@ -48,4 +48,27 @@ public class Settlement extends Piece implements ISettlement
 		return pointValue;
 	}
 
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("Settlement: [");
+		builder.append("pointValue=");
+		builder.append(pointValue);
+		builder.append("\n             ");
+		if(player == null)
+		{
+    		builder.append("player=null");
+    		builder.append("\n             ");
+		}
+		else
+		{
+			builder.append("playerId=");
+    		builder.append(player.getPlayerInfo().getId());
+    		builder.append("\n             ");
+		}
+		builder.append("location=");
+		builder.append(location);
+		builder.append("\n             ");
+		return builder.toString();
+	}
 }

@@ -40,6 +40,76 @@ public class CatanMap implements ICatanMap
 		this.portMap = new HashMap<>();
 		this.robber = null;
 		this.radius = 3;
+		
+		this.initializeOceanHexes();
+	}
+	
+//	private void initializeOceanHexes()
+//	{
+//		for(int x = 0; x <= 3; x++)
+//		{
+//			int a = -3;
+//			int b = 3-x;
+//			
+//			IHex first = new Hex();
+//			HexLocation one = new HexLocation(a, b);
+//			first.setLocation(one);
+//			
+//			IHex second = new Hex();
+//			HexLocation two = new HexLocation(-b, -a);
+//			second.setLocation(two);
+//			
+//			System.out.printf("( a,  b) : (%2d, %2d)\n", a, b);
+//			System.out.printf("(-b, -a) : (%2d, %2d)\n", -b, -a);
+//			
+//			hexMap.put(one, first);
+//			hexMap.put(two, second);
+//		}
+//		
+//		for(int x = 1; x <= 2; x++)
+//		{
+//			int a = x;
+//			int b = 3-x;
+//			
+//			IHex first = new Hex();
+//			HexLocation one = new HexLocation(a, b);
+//			first.setLocation(one);
+//			
+//			IHex second = new Hex();
+//			HexLocation two = new HexLocation(-b, -a);
+//			second.setLocation(two);
+//			
+//			hexMap.put(one, first);
+//			hexMap.put(two, second);
+//		}
+//	}
+	
+	private void initializeOceanHexes()
+	{
+		hexMap.put(new HexLocation(-3,3), new Hex(new HexLocation(-3,3)));
+		hexMap.put(new HexLocation(-3,2), new Hex(new HexLocation(-3,2)));
+		hexMap.put(new HexLocation(-3,1), new Hex(new HexLocation(-3,1)));
+		hexMap.put(new HexLocation(-3,0), new Hex(new HexLocation(-3,0)));
+		
+		hexMap.put(new HexLocation(-2,3), new Hex(new HexLocation(-2,3)));
+		hexMap.put(new HexLocation(-2,-1), new Hex(new HexLocation(-2,-1)));
+		
+		hexMap.put(new HexLocation(-1,3), new Hex(new HexLocation(-1,3)));
+		hexMap.put(new HexLocation(-1,-2), new Hex(new HexLocation(-1,-2)));
+		
+		hexMap.put(new HexLocation(0,3), new Hex(new HexLocation(0,3)));
+		hexMap.put(new HexLocation(0,-3), new Hex(new HexLocation(0,-3)));
+		
+		hexMap.put(new HexLocation(1,2), new Hex(new HexLocation(1,2)));
+		hexMap.put(new HexLocation(1,-3), new Hex(new HexLocation(1,-3)));
+		
+		hexMap.put(new HexLocation(2,1), new Hex(new HexLocation(2,1)));
+		hexMap.put(new HexLocation(2,-3), new Hex(new HexLocation(2,-3)));
+		
+		hexMap.put(new HexLocation(3,0), new Hex(new HexLocation(3,0)));
+		hexMap.put(new HexLocation(3,-1), new Hex(new HexLocation(3,-1)));
+		hexMap.put(new HexLocation(3,-2), new Hex(new HexLocation(3,-2)));
+		hexMap.put(new HexLocation(3,-3), new Hex(new HexLocation(3,-3)));
 	}
 	
 	public void setProxy(IProxy proxy)
@@ -255,9 +325,8 @@ public class CatanMap implements ICatanMap
 	public Collection<IRoadSegment> getRoads()
 	{
 		Collection<IRoadSegment> roads = new HashSet<>();
-		for(ILocation location : catanMap.keySet())
+		for(IPiece piece : catanMap.values())
 		{
-			IPiece piece = catanMap.get(location);
 			if(piece.getPieceType() == PieceType.ROAD)
 				roads.add((IRoadSegment)piece);
 		}
@@ -290,9 +359,8 @@ public class CatanMap implements ICatanMap
 	public Collection<ISettlement> getSettlements()
 	{
 		Collection<ISettlement> settlements = new HashSet<>();
-		for(ILocation location : catanMap.keySet())
+		for(IPiece piece : catanMap.values())
 		{
-			IPiece piece = catanMap.get(location);
 			if(piece.getPieceType() == PieceType.SETTLEMENT)
 				settlements.add((ISettlement)piece);
 		}
@@ -312,13 +380,18 @@ public class CatanMap implements ICatanMap
 	public Collection<ICity> getCities()
 	{
 		Collection<ICity> cities = new HashSet<>();
-		for(ILocation location : catanMap.keySet())
+		for(IPiece piece : catanMap.values())
 		{
-			IPiece piece = catanMap.get(location);
 			if(piece.getPieceType() == PieceType.CITY)
 				cities.add((ICity)piece);
 		}
 		return cities;
+	}
+	
+	@Override
+	public Collection<IPiece> getPieces()
+	{
+		return catanMap.values();
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class Poller{
 		        }
 		    },
 		    10,      // run first occurrence immediately
-		    2000); // run every two seconds
+		    3000); // run every two seconds
 		
 	}
 	/**

@@ -8,8 +8,8 @@ public interface IHex
 	public HexLocation getLocation();
 	public void setLocation(HexLocation location);
 
-	public int getHexNumber();
-	public void setHexNumber(int number);
+	public Integer getHexNumber();
+	public void setHexNumber(Integer number);
 
 	public HexType getHexType();
 	public void setHexType(HexType type);
