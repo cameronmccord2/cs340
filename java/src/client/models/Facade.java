@@ -179,6 +179,11 @@ public class Facade implements IFacade {
 	public TurnTracker getTurnTracker() throws CantFindGameModelException {
 		return this.getGameModel().getTurnTracker();
 	}
+	
+	@Override
+	public String getCurrentState() throws CantFindGameModelException{
+		return this.getGameModel().getTurnTracker().getStatus();
+	}
 }
 
 

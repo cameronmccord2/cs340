@@ -83,14 +83,9 @@ public class Proxy implements IProxy {
 		try {
 			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
 		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		} catch (InvalidGameModelException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		Gson gson = new Gson();
-//		System.out.println("model: " + model);
 		ClientModel cm = gson.fromJson(model, ClientModel.class);
 		try {
 			cm.isValid();
@@ -210,10 +205,8 @@ public class Proxy implements IProxy {
 		Integer version = 0;
 		try {
 			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
-			//System.out.println("version: " + version);
 		} catch (InvalidGameModelException e1) {
 			// fail silently
-			System.out.println("There is no current game model, getGameModel without version");
 		}
 		if(version == null)
 			version = 0;
@@ -410,7 +403,6 @@ public class Proxy implements IProxy {
 			}
 			
 			int response = connection.getResponseCode();
-//			System.out.println(response);
 			if (response == HttpURLConnection.HTTP_OK) { 
 				
 				 //Read response body from InputStream
@@ -423,7 +415,6 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-//				 System.out.println("response: " + out.toString());  
 				 reader.close();
 				 responseBody.close();
 				 return new ServerResponse(out.toString(), connection.getResponseCode());
@@ -439,7 +430,6 @@ public class Proxy implements IProxy {
 				 while ((line = reader.readLine()) != null) {
 				     out.append(line);
 				 }
-//				 System.out.println(out.toString());  
 				 reader.close();
 				 responseBody.close();
 				 return new ServerResponse(out.toString(), connection.getResponseCode());

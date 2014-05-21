@@ -2,9 +2,6 @@ package client.models;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Object that generates a timer and will trigger the Proxy after a period of time to pull new data
@@ -25,7 +22,6 @@ public class Poller{
 	 * 
 	 */
 	public Poller(IProxy proxy) {
-		System.out.println("created poller");
 		this.proxy = proxy;
 		this.startTimer();
 	}
@@ -37,7 +33,6 @@ public class Poller{
 	 * Starts the timer of the poller
 	 */
 	public void startTimer(){
-		System.out.println("starting timer");
 		
 		t = new Timer();
 

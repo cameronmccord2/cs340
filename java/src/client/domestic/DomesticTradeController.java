@@ -157,12 +157,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void sendTradeOffer() {
 		try {
 			OfferTrade tradeOffer = new OfferTrade(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex(), this.playerToTradeWith, ResourceCollection.getOffer(this.sendCounts, this.recieveCounts), "offerTrade");
-			System.out.println("trade offer: " + tradeOffer.toString());
 			this.proxy.movesOfferTrade(tradeOffer);
 			getTradeOverlay().closeModal();
 			getTradeOverlay().reset();
 			getWaitOverlay().showModal();
-			System.out.println("sent trade to: " + this.playerToTradeWith + ", you: " + this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex() + ", offer: " + ResourceCollection.getOffer(this.sendCounts, this.recieveCounts).toString());
 		
 		} catch (CantFindPlayerException e) {
 		} catch (CantFindGameModelException e) {
@@ -201,7 +199,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					
 					int currentTradeCount = this.recieveCounts.getResourceCount(resource);
 					int hasOfResource = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
-					System.out.println(hasOfResource + " > " + currentTradeCount);
 					this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
 				}
 			}
@@ -298,7 +295,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
-//		System.out.println("updating");
 		try{
 			PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
 			PlayerInfo[] finalPlayers = new PlayerInfo[players.length - 1];
@@ -308,7 +304,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					finalPlayers[counter++] = pi;
 			}
 			if(finalPlayers == null || finalPlayers.length == 0){
-				System.out.println("no players");
 				return;
 			}
 			

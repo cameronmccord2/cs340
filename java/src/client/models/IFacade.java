@@ -43,4 +43,6 @@ public interface IFacade {
 
 	Map<IDevelopmentCard, Integer> getDevCardsForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException;
 
+	String getCurrentState() throws CantFindGameModelException;
+
 }
