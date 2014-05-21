@@ -104,4 +104,17 @@ public class Hex implements IHex
 	{
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Hex [location=");
+		builder.append(location);
+		builder.append(", hexNumber=");
+		builder.append(hexNumber);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append("]");
+		return builder.toString();
+	}
 }

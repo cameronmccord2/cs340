@@ -44,7 +44,8 @@ public class RollController extends Controller implements IRollController, ICata
 	
 	@Override
 	public void rollDice() {
-		getRollView().closeModal();
+		if(this.getRollView().isModalShowing())
+			getRollView().closeModal();
 		int rolledResult = (int) (1 + (Math.random() * 12));
 		ServerRoll serverRoll = new ServerRoll("rollNumber",0,rolledResult);
 		if(proxy.movesRollNumber(serverRoll).getResponseCode() == 200){
@@ -57,8 +58,9 @@ public class RollController extends Controller implements IRollController, ICata
 	@Override
 	public void update() {
 		try {
-			if(this.proxy.getFacade().isMyTurn())
-				getRollView().showModal();
+			System.out.println(this.proxy.getFacade().getTurnTracker().toString() + ", my index: " + this.proxy.getFacade().getCurrentUserIndex());
+			//if(this.proxy.getFacade().isMyTurn())
+				//getRollView().showModal();
 		} catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		}

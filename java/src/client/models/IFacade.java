@@ -1,7 +1,6 @@
 package client.models;
 
 import java.util.Map;
-
 import java.util.List;
 
 import client.communication.LogEntry;
@@ -31,13 +30,17 @@ public interface IFacade {
 	Integer getCurrentUserIndex() throws CantFindGameModelException;
 	
 	List<LogEntry> getChats();
-	
-	//void getDevCards();
 
 	Map<IResourceCard, Integer> getResourcesForPlayerId(Integer reciever) throws CantFindPlayerException, CantFindGameModelException;
 
 	Integer getBankResourceCount(ResourceCard resource) throws CantFindGameModelException;
 
 	Integer getPlayerResourceCount(ResourceCard resource) throws CantFindGameModelException;
+
+	Integer getWinner() throws CantFindGameModelException;
+
+	TurnTracker getTurnTracker() throws CantFindGameModelException;
+
+	Map<IDevelopmentCard, Integer> getDevCardsForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException;
 
 }

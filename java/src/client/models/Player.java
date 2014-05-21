@@ -52,7 +52,12 @@ public class Player extends Participant implements IPlayer {
 	 * @param settlements the settlements
 	 * @param roads the roads
 	 */
-	public Player(PlayerInfo playerInfo, Map<IDevelopmentCard, Integer> developmentCards, Map<IResourceCard, Integer> resourceCards, List<ISettlement> settlements, List<IRoad> roads, List<ICity> cities){
+	public Player(PlayerInfo playerInfo,
+	              Map<IDevelopmentCard, Integer> developmentCards,
+	              Map<IResourceCard, Integer> resourceCards,
+	              List<ISettlement> settlements,
+	              List<IRoad> roads,
+	              List<ICity> cities) {
 		super(developmentCards, resourceCards);
 		this.playerInfo = playerInfo;
 		this.settlements = settlements;

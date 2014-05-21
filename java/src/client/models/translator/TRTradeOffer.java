@@ -21,7 +21,7 @@ public class TRTradeOffer implements IModelValid {
 	@Override
 	public void isValid() throws InvalidTranslatorModelException {
 		this.offer.isValid();
-		if(this.sender == null || this.sender < 0 || this.receiver == null || this.receiver < 0)
+		if(this.sender == null || this.sender < 0 || this.receiver == null || this.receiver < 0 || this.sender == this.receiver)
 			throw new InvalidTranslatorModelException(this.toString());
 	}
 	public Integer getReceiver() {

@@ -249,7 +249,9 @@ public class MapController extends Controller implements IMapController,
 		getRobView().showModal();
 	}
 
-	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
+	public void startMove(PieceType pieceType,
+	                      boolean isFree,
+	                      boolean allowDisconnected)
 	{
 		getView().startDrop(pieceType, CatanColor.ORANGE, true);
 	}

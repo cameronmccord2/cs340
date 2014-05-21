@@ -6,6 +6,7 @@ import java.util.Map;
 
 import shared.definitions.*;
 import client.base.*;
+import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
@@ -58,19 +59,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		
-		// dummy data
-//		int playercount = 3;
-//		PlayerInfo[] pinfos = new PlayerInfo[playercount];
-//		for (int i = 0; i < playercount; i++) {
-//			PlayerInfo pi = new PlayerInfo();
-//			pi.setName("asdf" + i);
-//			pi.setPlayerIndex(i);
-//			pi.setColor(CatanColor.RED);
-//			pi.setId(i);
-//			pinfos[i] = pi;
-//		}
-//		tradeOverlay.setPlayers(pinfos);
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -110,111 +98,159 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.sendCounts = new ResourceCollection(this.proxy);
 		this.playerToTradeWith = -1;
 		this.state = "starting";
-//		this.update();
 		getTradeOverlay().showModal();
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		System.out.println("decreaseing: " + resource.toString());
 		try{
 			Integer hasOfResource = this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource));
 			Integer currentTradeCount = 0;
 			if(this.recieveTypes.indexOf(resource) != -1){
 				this.recieveCounts.decreaseResourceAmount(resource);
 				currentTradeCount = this.recieveCounts.getResourceCount(resource);
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
 			}
 			else if(this.sendTypes.indexOf(resource) != -1){
 				this.sendCounts.decreaseResourceAmount(resource);
-				currentTradeCount = this.recieveCounts.getResourceCount(resource);
+				currentTradeCount = this.sendCounts.getResourceCount(resource);
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
 			}
 			else
 				throw new RuntimeException("decrease error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
 			
-			this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+			
 			this.decideTradeState();
 		}catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		System.out.println("increasing: " + resource.toString());
 		try{
-			Integer hasOfResource = this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource));
-			Integer currentTradeCount = 0;
+			Integer hasOfResource = 0;
 			if(this.recieveTypes.indexOf(resource) != -1){
 				this.recieveCounts.increaseResourceAmount(resource);
-				currentTradeCount = this.recieveCounts.getResourceCount(resource);
+				int currentTradeCount = this.recieveCounts.getResourceCount(resource);
+				if(this.playerToTradeWith != -1){
+					hasOfResource = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
+					this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+				}
 			}
 			else if(this.sendTypes.indexOf(resource) != -1){
+				hasOfResource = this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource));
 				this.sendCounts.increaseResourceAmount(resource);
-				currentTradeCount = this.recieveCounts.getResourceCount(resource);
+				int currentTradeCount = this.sendCounts.getResourceCount(resource);
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
 			}
 			else
 				throw new RuntimeException("increase error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
 			
-			this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+			
 			this.decideTradeState();
 		}catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (CantFindPlayerException e) {
 		}
 	}
 
 	@Override
 	public void sendTradeOffer() {
 		try {
-			this.proxy.movesOfferTrade(new OfferTrade(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex(), this.playerToTradeWith, ResourceCollection.getOffer(this.sendCounts, this.recieveCounts), "Domestic"));
-			
+			OfferTrade tradeOffer = new OfferTrade(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex(), this.playerToTradeWith, ResourceCollection.getOffer(this.sendCounts, this.recieveCounts), "offerTrade");
+			System.out.println("trade offer: " + tradeOffer.toString());
+			this.proxy.movesOfferTrade(tradeOffer);
 			getTradeOverlay().closeModal();
+			getTradeOverlay().reset();
 			getWaitOverlay().showModal();
+			System.out.println("sent trade to: " + this.playerToTradeWith + ", you: " + this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex() + ", offer: " + ResourceCollection.getOffer(this.sendCounts, this.recieveCounts).toString());
 		
 		} catch (CantFindPlayerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-//		System.out.println("Player: " + playerIndex);
 		this.playerToTradeWith = playerIndex;
+		
+		// restrict all counters to the max possible values if higher, add restrictions
+		this.restrictTotalCountForResourceType(ResourceType.BRICK);
+		this.restrictTotalCountForResourceType(ResourceType.ORE);
+		this.restrictTotalCountForResourceType(ResourceType.SHEEP);
+		this.restrictTotalCountForResourceType(ResourceType.WOOD);
+		this.restrictTotalCountForResourceType(ResourceType.WHEAT);
+		
+		
 		this.decideTradeState();
+	}
+
+	private void restrictTotalCountForResourceType(ResourceType resource) {
+		
+		try{
+			if(this.recieveTypes.indexOf(resource) != -1){
+				if(this.playerToTradeWith == -1){
+					this.tradeOverlay.setResourceAmount(resource, "0");
+					this.tradeOverlay.setResourceAmountChangeEnabled(resource, false, false);
+					this.recieveCounts.setResourceToZero(resource);
+				}else{
+					Map<IResourceCard, Integer> map = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards();
+					if(this.recieveCounts.getResourceCount(resource) > map.get(ResourceCard.getCardForType(resource))){
+						this.tradeOverlay.setResourceAmount(resource, map.get(ResourceCard.getCardForType(resource)).toString());
+						this.recieveCounts.setResourceCount(resource, map.get(ResourceCard.getCardForType(resource)));
+					}
+					
+					int currentTradeCount = this.recieveCounts.getResourceCount(resource);
+					int hasOfResource = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
+					System.out.println(hasOfResource + " > " + currentTradeCount);
+					this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+				}
+			}
+		} catch (CantFindPlayerException e) {
+		} catch (CantFindGameModelException e) {
+		}
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-//		System.out.println("resourceToRecieve: " + resource.toString());
 		this.sendTypes.remove(resource);
 		this.sendCounts.setResourceToZero(resource);
 		if(this.recieveTypes.indexOf(resource) != -1)
 			throw new RuntimeException("there is an error with set resource to recieve, already in list: " + this.recieveTypes.toString() + ", reosurce: " + resource.toString());
 		this.recieveTypes.add(resource);
 		this.recieveCounts.setResourceToZero(resource);
+		
+		try {
+			if(this.playerToTradeWith != -1){
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource)) > 0), false);
+			}
+		} catch (CantFindPlayerException | CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.decideTradeState();
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-//		System.out.println("resourceToSend: " + resource.toString());
 		this.recieveTypes.remove(resource);
 		this.recieveCounts.setResourceToZero(resource);
 		if(this.sendTypes.indexOf(resource) != -1)
 			throw new RuntimeException("the resource is already in the send list: " + resource.toString() + ", list: " + this.sendTypes.toString());
 		this.sendTypes.add(resource);
 		this.sendCounts.setResourceToZero(resource);
+		
+		try {
+			this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > 0), false);
+		} catch (CantFindGameModelException e) {
+		
+		}
+		
 		this.decideTradeState();
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-//		System.out.println("unsetResource: " + resource.toString());
 		this.recieveCounts.setResourceToZero(resource);
 		this.sendCounts.setResourceToZero(resource);
 		this.recieveTypes.remove(resource);
@@ -224,7 +260,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	
 	private void decideTradeState(){
 		this.state = "notrade";
-		System.out.println("deciding: " + this.playerToTradeWith + ", " + this.sendCounts.getTotalCount() + ", " + this.recieveCounts.getTotalCount());
+		this.tradeOverlay.setTradeEnabled(false);
 		if(this.playerToTradeWith == -1 && (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
 			this.tradeOverlay.setStateMessage("Set the trade you want to make");
 		else if(this.playerToTradeWith != -1 && (this.sendCounts.getTotalCount() == 0 && this.recieveCounts.getTotalCount() == 0))
@@ -233,6 +269,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			this.tradeOverlay.setStateMessage("Select a player");
 		else{
 			this.tradeOverlay.setStateMessage("Trade!");
+			this.tradeOverlay.setTradeEnabled(true);
 			this.state = "cantrade";
 		}
 	}
@@ -240,7 +277,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void cancelTrade() {
 		// everything gets cleared out when the modal gets shown
-		getTradeOverlay().closeModal();
+		if(getTradeOverlay().isModalShowing()){
+			getTradeOverlay().closeModal();
+			getTradeOverlay().reset();
+		}
 		this.state = "closed";
 	}
 
@@ -249,7 +289,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		try{
 			this.state = "accepted";
 			this.proxy.movesAcceptTrade(new AcceptTrade(this.proxy.getFacade().getCurrentTrade(), willAccept));
-			getAcceptOverlay().closeModal();
+			if(getAcceptOverlay().isModalShowing())
+				getAcceptOverlay().closeModal();
 		}catch(CantFindGameModelException e){
 			// dont do anything, wait for the model to update again
 		}
@@ -257,10 +298,22 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
-//		System.out.println("trade updating");
+//		System.out.println("updating");
 		try{
+			PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+			PlayerInfo[] finalPlayers = new PlayerInfo[players.length - 1];
+			int counter = 0;
+			for (PlayerInfo pi : players) {
+				if(pi.getPlayerIndex() != this.proxy.getFacade().getCurrentUserIndex())
+					finalPlayers[counter++] = pi;
+			}
+			if(finalPlayers == null || finalPlayers.length == 0){
+				System.out.println("no players");
+				return;
+			}
+			
 			if(this.playersHaveNotBeenSet){
-				this.tradeOverlay.setPlayers(this.proxy.getFacade().getAllPlayerInfos());
+				this.tradeOverlay.setPlayers(finalPlayers);
 				this.playersHaveNotBeenSet = false;
 			}
 			
@@ -285,7 +338,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				if(this.waitOverlay.isModalShowing())
 					this.waitOverlay.closeModal();
 			}else if(currentTrade.getReceiver() == this.proxy.getFacade().getCurrentUserIndex()){
-	
 				this.setupAcceptTradeWithTrade(currentTrade);
 			}
 		}catch(CantFindGameModelException e){
@@ -318,8 +370,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			else if(currentTrade.getOffer().getWood() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.WOOD, currentTrade.getOffer().getWood() * -1);
 		
-//			System.out.println(currentTrade.toString());
-			
 			Map<IResourceCard, Integer> resourceMap = this.proxy.getFacade().getResourcesForPlayerId(currentTrade.getReceiver());
 			
 			if(resourceMap.get(ResourceCard.BRICK) < currentTrade.getOffer().getBrick())
@@ -345,12 +395,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 
 	private void setResourceChangeForResource(ResourceType resource) {
-		try {
-			this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > 0), false);
-		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.tradeOverlay.setResourceAmountChangeEnabled(resource, false, false);
 	}
 
 	public String getState() {

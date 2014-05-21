@@ -75,29 +75,48 @@ public class Proxy implements IProxy {
 		return this.facade;
 	}
 	
-	private IGame saveGameModel(String model){
+	private synchronized IGame saveGameModel(String model){
+		if(model.length() < 1000)
+			return null;
+		
+		Integer version = -1;
+		try {
+			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidGameModelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Gson gson = new Gson();
-//		System.out.println(model);
+//		System.out.println("model: " + model);
 		ClientModel cm = gson.fromJson(model, ClientModel.class);
 		try {
 			cm.isValid();
 		} catch (InvalidTranslatorModelException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		IGame g = null;
-		try {
-			g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
-			for (int i = 0; i < this.games.size(); i++) {
-				if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
-					this.games.set(i, g);
-			}
-		} catch (NumberFormatException | InvalidLocationException e) {
-			e.printStackTrace();
+		if(version == null){
+			version = -1;
 		}
-		
-		this.facade.updatedCatanModel();
-//		System.out.println(g.toString());
-		return g;
+		System.out.println("version: " + version);
+		if(cm.getVersion() == version.intValue()){
+			// ignore update
+		}else{
+			IGame g = null;
+			try {
+				g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
+				for (int i = 0; i < this.games.size(); i++) {
+					if(this.games.get(i).getGameInfo().getId() == g.getGameInfo().getId())
+						this.games.set(i, g);
+				}
+			} catch (NumberFormatException | InvalidLocationException e) {
+			}
+			this.facade.updatedCatanModel();
+			return g;
+		}
+		return null;
 	}
 	
 	@Override
@@ -136,7 +155,6 @@ public class Proxy implements IProxy {
 		ServerResponse sr = doGet("/games/list", false, false);
 		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
 		List<IGame> list = new ArrayList<IGame>();
-		//System.out.println("games from server: " + games.toString());
 		for (GameServer g : games) {
 			Game game = new Game();
 			
@@ -163,7 +181,6 @@ public class Proxy implements IProxy {
 			list.add(game);
 		}
 		this.games = list;
-//		System.out.println("games: " + this.games.toString());
 		return this.games;
 	}
 	
@@ -176,7 +193,6 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse postGamesJoin(ServerJoinGame join){
 		ServerResponse sr = doPost("/games/join", gson.toJson(join), true, false);// responds with Success
-		//saveGameModel(sr.getJson());
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		gameId = setCookie.get(0);
@@ -185,6 +201,7 @@ public class Proxy implements IProxy {
 //		System.out.println(gameId);//catan.game=0
 		gameId = gameId.substring(11);
 		//System.out.println(gameId);//0
+//		this.getGameModel();// first time it gets gotten
 		return sr;
 	}
 	
@@ -193,6 +210,7 @@ public class Proxy implements IProxy {
 		Integer version = 0;
 		try {
 			version = this.getVersionForGameId(Integer.parseInt(this.gameId));
+			//System.out.println("version: " + version);
 		} catch (InvalidGameModelException e1) {
 			// fail silently
 			System.out.println("There is no current game model, getGameModel without version");
@@ -241,7 +259,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesRollNumber(ServerRoll roll){
 		ServerResponse sr = doPost("/moves/rollNumber", gson.toJson(roll), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
@@ -262,49 +280,49 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesBuyDevCard(BuyDevCard card){
 		ServerResponse sr = doPost("/moves/buyDevCard", gson.toJson(card), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesYear_of_Plenty(ServerYearofPlenty yop){
 		ServerResponse sr = doPost("/moves/Year_of_Plenty", gson.toJson(yop), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesRoad_Building(RoadBuilding rb){
 		ServerResponse sr = doPost("/moves/Road_Building", gson.toJson(rb), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesSoldier(ServerSoldier ss){
 		ServerResponse sr = doPost("/moves/Soldier", gson.toJson(ss), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonopoly(ServerMonopoly sm){
 		ServerResponse sr = doPost("/moves/Monopoly", gson.toJson(sm), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesMonument(ServerMonument sm){
 		ServerResponse sr = doPost("/moves/Monument", gson.toJson(sm), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildRoad(ServerBuildRoad br){
 		ServerResponse sr = doPost("/moves/buildRoad", gson.toJson(br), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	

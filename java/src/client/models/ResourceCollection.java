@@ -251,6 +251,22 @@ public class ResourceCollection {
 			return 0;
 		}
 	}
+
+
+	public void setResourceCount(ResourceType resource, int count) {
+		switch(resource){
+		case BRICK:
+			this.brick = count;
+		case ORE:
+			this.ore = count;
+		case SHEEP:
+			this.sheep = count;
+		case WHEAT:
+			this.wheat = count;
+		case WOOD:
+			this.wood = count;
+		}
+	}
 }
 
 
