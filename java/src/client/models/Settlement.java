@@ -16,11 +16,11 @@ public class Settlement extends Piece implements ISettlement
 	protected int pointValue;
 	protected Collection<Resource> cost;
 
-	public Settlement(ILocation location, IPlayer player, int pointValue)
+	public Settlement(ILocation location, IPlayer player)
 	{
 		this.setLocation(location);
 		this.setPlayer(player);
-		this.pointValue = pointValue;
+		this.pointValue = 1;
 		cost = new HashSet<>();
 		cost.add(new Resource(ResourceType.BRICK, 1));
 		cost.add(new Resource(ResourceType.WOOD, 1));

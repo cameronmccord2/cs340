@@ -11,8 +11,9 @@ import shared.locations.VertexLocation;
  */
 public class City extends Settlement implements ICity
 {
-	public City(VertexLocation vertexLocation, IPlayer newPlayer, int points) {
-		super(vertexLocation, newPlayer, points);
+	public City(VertexLocation vertexLocation, IPlayer newPlayer) {
+		super(vertexLocation, newPlayer);
+		this.pointValue = 2;
 		cost = new HashSet<>();
 		cost.add(new Resource(ResourceType.ORE, 3));
 		cost.add(new Resource(ResourceType.WHEAT, 2));
