@@ -229,13 +229,13 @@ public class Player extends Participant implements IPlayer {
 	@Override
 	public boolean canBuildSettlement(ISettlement settlement)
 	{
-		return this.hasResources(settlement.getResourceCost());
+		return this.hasResources(Settlement.getResourceCost());
 	}
 
 	@Override
 	public boolean canBuildCity(ICity city)
 	{
-		return this.hasResources(city.getResourceCost());
+		return this.hasResources(City.getResourceCost());
 	}
 
 	private boolean hasResources(Collection<Resource> cost) {
@@ -249,6 +249,6 @@ public class Player extends Participant implements IPlayer {
 	@Override
 	public boolean canBuildRoad(IRoadSegment segment)
 	{
-		return this.hasResources(segment.getResourceCost());
+		return this.hasResources(RoadSegment.getResourceCost());
 	}
 }
