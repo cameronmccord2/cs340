@@ -49,7 +49,7 @@ public class Translator {
 		}
 		
 		g.setCurrentTrade(cm.getTradeOffer());
-
+//		System.out.println("current trade: " + g.getCurrentTrade().toString());
 		g.setTurnTracker(new TurnTracker(cm.getTurnTracker()));
 		
 		g.setModelVersion(cm.getVersion());
@@ -111,11 +111,16 @@ public class Translator {
 
 			Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
 			TRResourceList resources = p.getResources();
-			resourceCards.put(ResourceCard.BRICK, resources.getBrick());
-			resourceCards.put(ResourceCard.ORE, resources.getOre());
-			resourceCards.put(ResourceCard.SHEEP, resources.getSheep());
-			resourceCards.put(ResourceCard.WHEAT, resources.getWheat());
-			resourceCards.put(ResourceCard.WOOD, resources.getWood());
+			resourceCards.put(ResourceCard.BRICK, 10 + index);
+			resourceCards.put(ResourceCard.ORE, 10 + index);
+			resourceCards.put(ResourceCard.SHEEP, 10 + index);
+			resourceCards.put(ResourceCard.WHEAT, 10 + index);
+			resourceCards.put(ResourceCard.WOOD, 10 + index);
+//			resourceCards.put(ResourceCard.BRICK, resources.getBrick());
+//			resourceCards.put(ResourceCard.ORE, resources.getOre());
+//			resourceCards.put(ResourceCard.SHEEP, resources.getSheep());
+//			resourceCards.put(ResourceCard.WHEAT, resources.getWheat());
+//			resourceCards.put(ResourceCard.WOOD, resources.getWood());
 			newPlayer.setResourceCards(resourceCards);
 
 			Map<IDevelopmentCard, Integer> developmentCards = new HashMap<IDevelopmentCard, Integer>();

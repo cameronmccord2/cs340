@@ -11,12 +11,12 @@ public class OfferTrade {
 	private String type;
 	private Integer playerIndex;
 	private TRResourceList offer;
-	private Integer reciever;
+	private Integer receiver;
 	
 	
 	public OfferTrade(int from, Integer to, TRResourceList offer, String type) {
 		this.playerIndex = from;
-		this.reciever = to;
+		this.receiver = to;
 		this.offer = offer;
 		this.type = type;
 	}
@@ -38,10 +38,22 @@ public class OfferTrade {
 	public void setOffer(TRResourceList offer) {
 		this.offer = offer;
 	}
-	public Integer getReciever() {
-		return reciever;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("OfferTrade [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", offer=");
+		builder.append(offer);
+		builder.append("]");
+		return builder.toString();
 	}
-	public void setReciever(Integer reciever) {
-		this.reciever = reciever;
+	public Integer getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(Integer receiver) {
+		this.receiver = receiver;
 	}
 }
