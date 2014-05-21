@@ -1,6 +1,11 @@
 package client.models;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 
 public enum DevelopmentCard implements IDevelopmentCard {
 
@@ -66,5 +71,15 @@ public enum DevelopmentCard implements IDevelopmentCard {
         public DevCardType getType() {
             return DevCardType.MONUMENT;
         }
+    };
+    
+    public static Collection<Resource> getResourceCost() {
+    	
+    	HashSet<Resource> cost = new HashSet<>();
+		cost.add(new Resource(ResourceType.ORE, 1));
+		cost.add(new Resource(ResourceType.SHEEP, 1));
+		cost.add(new Resource(ResourceType.WHEAT, 1));
+		
+		return cost;
     }
 }
