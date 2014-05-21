@@ -55,11 +55,32 @@ public class CatanMap implements ICatanMap
 		if(catanMap.get(segment.getLocation()) != null)
 			return false;
 		
+		VertexLocation start = segment.getStartLocation();
+		VertexLocation end = segment.getEndLocation();
+		
 		for(IPiece piece : catanMap.values())
 		{
 			if(piece.getPlayer().equals(segment.getPlayer()))
 			{
-				
+				switch(piece.getPieceType())
+				{
+					case SETTLEMENT:
+					case CITY:
+						VertexLocation corner = (VertexLocation)piece.getLocation();
+						if(corner.equals(start)||corner.equals(end))
+							return true;
+						break;
+					case ROAD:
+						IRoadSegment roadSegment = (IRoadSegment)piece;
+						if(start.equals(roadSegment.getStartLocation()) ||
+						   start.equals(roadSegment.getEndLocation())   ||
+						   end.equals(roadSegment.getStartLocation())   ||
+						   end.equals(roadSegment.getEndLocation()))
+							return true;
+						break;
+					default:
+						break;
+				}
 			}
 		}
 		return false;
@@ -77,7 +98,24 @@ public class CatanMap implements ICatanMap
 		HexLocation hex = settlement.getLocation().getHexLocation();
 		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
 			return false;
+		if(distanceRule(settlement) != null)
+			return false;
 		
+		for(IPiece piece : catanMap.values())
+		{
+			if(piece.getPlayer().equals(settlement.getPlayer()))
+			{
+				if(piece.getPieceType() == PieceType.ROAD)
+				{
+					IRoadSegment roadSegment = (IRoadSegment)piece;
+					VertexLocation start = roadSegment.getStartLocation();
+					VertexLocation end = roadSegment.getEndLocation();
+					VertexLocation corner = (VertexLocation)settlement.getLocation();
+					if(corner.equals(start) || corner.equals(end))
+						return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -313,28 +351,12 @@ public class CatanMap implements ICatanMap
 		this.radius = radius;
 	}
 
-	/*
-	 * I just realized that these help methods should go in the
-	 * Player implementation because these are intended to check
-	 * whether or not the player has the proper amount of resources.
-	 */
-	
 	@Override
-	public boolean canBuildSettlement(IPlayer player, ISettlement settlement)
+	public void placeInitialSettlement(ISettlement settlement) throws InvalidLocationException
 	{
-		return player.canBuildSettlement(settlement);
-	}
-
-	@Override
-	public boolean canBuildCity(IPlayer player, ICity city)
-	{
-		return player.canBuildCity(city);
-	}
-
-	@Override
-	public boolean canBuildRoad(IPlayer player, IRoadSegment segment)
-	{
-		return player.canBuildRoad(segment);
+		if(distanceRule(settlement) != null)
+			throw new InvalidLocationException();
+		catanMap.put(settlement.getLocation(), settlement);
 	}
 
 	@Override

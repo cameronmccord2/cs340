@@ -1,7 +1,11 @@
 package client.devcards;
 
 import shared.definitions.ResourceType;
-import client.base.*;
+import client.base.Controller;
+import client.base.IAction;
+import client.models.IProxy;
+import client.models.exceptions.CantFindGameModelException;
+import client.server.BuyDevCard;
 
 
 /**
@@ -12,6 +16,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private IProxy proxy;
 	
 	/**
 	 * DevCardController constructor
@@ -22,10 +27,10 @@ public class DevCardController extends Controller implements IDevCardController 
 	 * @param roadAction Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".
 	 */
 	public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, 
-								IAction soldierAction, IAction roadAction) {
+								IAction soldierAction, IAction roadAction, IProxy proxy) {
 
 		super(view);
-		
+		this.proxy = proxy;
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
@@ -53,7 +58,13 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void buyCard() {
-		
+		try {
+			BuyDevCard devCard = new BuyDevCard("buyDevCard",this.proxy.getFacade().getCurrentUserIndex().intValue());
+			this.proxy.movesBuyDevCard(devCard);
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+			System.out.println("problem buying dev card");
+		}
 		getBuyCardView().closeModal();
 	}
 
@@ -61,6 +72,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	public void startPlayCard() {
 		
 		getPlayCardView().showModal();
+		//getPlayCardView().
 	}
 
 	@Override

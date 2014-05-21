@@ -21,7 +21,6 @@ java/dist
 *.class
  
 # Package Files #
-*.jar
 *.war
 *.ear
 *.db

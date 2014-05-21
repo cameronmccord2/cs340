@@ -1,21 +1,37 @@
 package client.discard;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import shared.definitions.*;
 import client.base.*;
+import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.ICatanModelObserver;
+import client.models.IFacade;
+import client.models.IPlayer;
 import client.models.IProxy;
+import client.models.IResourceCard;
+import client.models.Resource;
+import client.models.ResourceCard;
+import client.models.exceptions.CantFindGameModelException;
+import client.models.exceptions.CantFindPlayerException;
 
 
 /**
  * Discard controller implementation
  */
+@SuppressWarnings({"unused"})
 public class DiscardController extends Controller implements IDiscardController,
 															 ICatanModelObserver
 {
-
 	private IWaitView waitView;
 	private IProxy proxy;
+	private PlayerInfo info;
+	private IPlayer player;
+	private Map<ResourceType, Integer> resourceSelection;
+	private Integer amountToDiscard;
+	private StringBuilder buttonMessage;
 
 	/**
 	 * DiscardController constructor
@@ -28,6 +44,17 @@ public class DiscardController extends Controller implements IDiscardController,
 		super(view);
 
 		this.waitView = waitView;
+		this.initializeMap();
+	}
+	
+	private void initializeMap()
+	{
+		resourceSelection = new HashMap<>();
+		resourceSelection.put(ResourceType.BRICK, 0);
+		resourceSelection.put(ResourceType.WOOD, 0);
+		resourceSelection.put(ResourceType.WHEAT, 0);
+		resourceSelection.put(ResourceType.SHEEP, 0);
+		resourceSelection.put(ResourceType.ORE, 0);
 	}
 	
 	public void setProxy(IProxy proxy)
@@ -56,7 +83,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void increaseAmount(ResourceType resource)
 	{
-		proxy.getFacade();
+		Map<IResourceCard, Integer> playerMap = player.getResourceCards();
 	}
 
 	/**
@@ -69,7 +96,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void decreaseAmount(ResourceType resource)
 	{
-		
+		Map<IResourceCard, Integer> playerMap = player.getResourceCards();
 	}
 
 	/**
@@ -78,14 +105,29 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard()
 	{
+		
 		getDiscardView().closeModal();
+		this.initializeMap();
 	}
-
+	
+	private void updateView()
+	{
+		
+	}
 	
 	@Override
 	public void update()
 	{
-		
+		IFacade facade = proxy.getFacade();
+		try
+		{
+			player = facade.getCurrentUser();
+		}
+		catch(CantFindGameModelException | CantFindPlayerException e)
+		{
+			e.printStackTrace();
+		}
+		updateView();
 	}
 }
 

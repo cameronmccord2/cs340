@@ -47,7 +47,7 @@ public class RightPanel extends JPanel
 			}
 		};
 		devCardController = new DevCardController(playCardView, buyCardView,
-												  soldierAction, roadAction);
+												  soldierAction, roadAction, proxy);
 		playCardView.setController(devCardController);
 		buyCardView.setController(devCardController);
 		

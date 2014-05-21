@@ -6,7 +6,6 @@ import client.base.*;
 import client.models.*;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
-import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 
@@ -79,7 +78,111 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			action.execute();
 		}
 	}
-    //this.proxy.getFacade().getCurrentUser().getResourceCards().keySet())
+	
+	private void setCityButtonState() {
+		
+		try {
+			
+			Collection<Resource> buildingCost = City.getResourceCost();
+			boolean canBuild = true;
+			
+			for(Resource resource : buildingCost) {
+				ResourceType type = resource.getResourceType();
+				Integer cost = resource.getAmount();
+				
+				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+					canBuild = false;
+				
+			}
+
+			if(this.proxy.getFacade().getCurrentUser().getSettlements().size() >= MAX_CITIES)
+				canBuild = false;
+			
+			getView().setElementEnabled(ResourceBarElement.CITY, canBuild);
+			
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setSettlementButtonState() {
+
+		try {
+			
+			Collection<Resource> buildingCost = Settlement.getResourceCost();
+			boolean canBuild = true;
+			
+			for(Resource resource : buildingCost) {
+				ResourceType type = resource.getResourceType();
+				Integer cost = resource.getAmount();
+				
+				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+					canBuild = false;
+				
+			}
+			
+			if(this.proxy.getFacade().getCurrentUser().getSettlements().size() >= MAX_SETTLEMENTS)
+				canBuild = false;
+			
+			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuild);
+			
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setRoadButtonState() {
+		try {
+			
+			Collection<Resource> buildingCost = RoadSegment.getResourceCost();
+			boolean canBuild = true;
+			
+			for(Resource resource : buildingCost) {
+				ResourceType type = resource.getResourceType();
+				Integer cost = resource.getAmount();
+				
+				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+					canBuild = false;
+				
+			}
+	
+			if(this.proxy.getFacade().getCurrentUser().getRoads().size() >= MAX_ROADS)
+				canBuild = false;
+	
+			getView().setElementEnabled(ResourceBarElement.ROAD, canBuild);
+			
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void setDevCardButtonState() {
+		try {
+			
+			Collection<Resource> buildingCost = DevelopmentCard.getResourceCost();
+			boolean canPlay = true;
+			
+			for(Resource resource : buildingCost) {
+				ResourceType type = resource.getResourceType();
+				Integer cost = resource.getAmount();
+				
+				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+					canPlay = false;
+				
+			}
+
+			if( ! this.proxy.getFacade().isMyTurn())
+				canPlay = false;
+	
+			getView().setElementEnabled(ResourceBarElement.BUY_CARD, canPlay);
+			
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
     @Override
     public void update() {
         try {
@@ -95,13 +198,16 @@ public class ResourceBarController extends Controller implements IResourceBarCon
             getView().setElementAmount(ResourceBarElement.SETTLEMENT, MAX_SETTLEMENTS - this.proxy.getFacade().getCurrentUser().getSettlements().size());
             getView().setElementAmount(ResourceBarElement.ROAD, MAX_ROADS - this.proxy.getFacade().getCurrentUser().getRoads().size());
 
+            setCityButtonState();
+            setSettlementButtonState();
+            setRoadButtonState();
+            setDevCardButtonState();
+            
         }
-        catch (CantFindPlayerException e) {
+        catch (CantFindPlayerException | CantFindGameModelException e) {
             e.getStackTrace();
-        } catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
+        
     }
 }
 

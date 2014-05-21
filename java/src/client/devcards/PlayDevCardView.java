@@ -91,7 +91,7 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 		// Use Dev Card Button
 		JPanel usePanel = new JPanel();
 		useButton = new JButton(DEFAULT_USE_BUTTON_LABEL);
-		useButton.setEnabled(false);
+		useButton.setEnabled(true);
 		FontUtils.setFont(useButton, BUTTON_TEXT_SIZE);
 		useButton.addActionListener(actionListener);
 		usePanel.add(useButton);

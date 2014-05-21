@@ -4,13 +4,8 @@ import java.util.*;
 
 public interface ICatanMap
 {
-	public boolean canBuildSettlement(IPlayer player, ISettlement settlement);
 	public boolean canPlaceSettlement(ISettlement settlement);
-
-	public boolean canBuildCity(IPlayer player, ICity city);
 	public boolean canPlaceCity(ICity city);
-
-	public boolean canBuildRoad(IPlayer player, IRoadSegment segment);
 	public boolean canPlaceRoad(IRoadSegment segment);
 
 	public boolean canMoveRobber(IPlayer player);
@@ -37,4 +32,5 @@ public interface ICatanMap
 	public int getRadius();
 	public void setRadius(int radius);
 	
+	public void placeInitialSettlement(ISettlement settlement) throws InvalidLocationException;
 }

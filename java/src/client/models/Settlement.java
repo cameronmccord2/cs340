@@ -14,18 +14,21 @@ import shared.locations.ILocation;
 public class Settlement extends Piece implements ISettlement
 {
 	protected int pointValue;
-	protected Collection<Resource> cost;
-
-	public Settlement(ILocation location, IPlayer player, int pointValue)
+	private static Collection<Resource> cost;
+	static
 	{
-		this.setLocation(location);
-		this.setPlayer(player);
-		this.pointValue = pointValue;
 		cost = new HashSet<>();
 		cost.add(new Resource(ResourceType.BRICK, 1));
 		cost.add(new Resource(ResourceType.WOOD, 1));
 		cost.add(new Resource(ResourceType.SHEEP, 1));
 		cost.add(new Resource(ResourceType.WHEAT, 1));
+	}
+
+	public Settlement(ILocation location, IPlayer player)
+	{
+		this.setLocation(location);
+		this.setPlayer(player);
+		this.pointValue = 1;
 	}
 
 	@Override
@@ -34,8 +37,7 @@ public class Settlement extends Piece implements ISettlement
 		return PieceType.SETTLEMENT;
 	}
 
-	@Override
-	public Collection<Resource> getResourceCost()
+	public static Collection<Resource> getResourceCost()
 	{
 		return cost;
 	}
