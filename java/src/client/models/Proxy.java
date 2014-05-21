@@ -91,7 +91,6 @@ public class Proxy implements IProxy {
 					this.games.set(i, g);
 			}
 		} catch (NumberFormatException | InvalidLocationException e) {
-			System.out.println("here");
 			e.printStackTrace();
 		}
 		
@@ -184,7 +183,7 @@ public class Proxy implements IProxy {
 		gameId = gameId.substring(0, gameId.length() - 8);
 //		System.out.println(gameId);//catan.game=0
 		gameId = gameId.substring(11);
-		System.out.println(gameId);//0
+		//System.out.println(gameId);//0
 		return sr;
 	}
 	

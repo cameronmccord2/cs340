@@ -70,7 +70,7 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 
 		// Resource Card 1
 		resCard1 = new ResourceCardChooser();
-		resCard1.setEnabled(false);
+		resCard1.setEnabled(true);
 		resCard1.setListener(btnGrpPnlListener);
 		mainPanel.add(resCard1);
 
