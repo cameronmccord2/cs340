@@ -7,9 +7,14 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.models.City;
+import client.models.ICatanMap;
 import client.models.ICatanModelObserver;
 import client.models.ICity;
+import client.models.IFacade;
+import client.models.IGame;
+import client.models.IHex;
 import client.models.IPlayer;
+import client.models.IPort;
 import client.models.IProxy;
 import client.models.IRoadSegment;
 import client.models.IRobber;
@@ -49,7 +54,7 @@ public class MapController extends Controller implements IMapController,
 
 		setRobView(robView);
 		
-		this.defaultInit();
+//		this.defaultInit();
 	}
 	
 	public void setProxy(IProxy proxy)
@@ -76,7 +81,54 @@ public class MapController extends Controller implements IMapController,
 	// THIS NEEDS TO BE UPDATED WITH THE REAL THING.
 	protected void initFromModel()
 	{
-		this.defaultInit();
+		IFacade facade = proxy.getFacade();
+		IGame game = proxy.getGameModel();
+		ICatanMap map = game.getMap();
+		
+		for(IHex hex : map.getHexes())
+		{
+			this.getView().addHex(hex.getLocation(), hex.getHexType());
+			this.getView().addNumber(hex.getLocation(), hex.getHexNumber());
+		}
+		
+		for(IPort port : map.getPorts())
+		{
+			this.getView().addPort((EdgeLocation)port.getLocation(),
+			                       port.getPortType());
+		}
+		
+		for(ISettlement settlement : map.getSettlements())
+		{
+			IPlayer player = settlement.getPlayer();
+			PlayerInfo info = player.getPlayerInfo();
+			CatanColor color = info.getColor();
+			VertexLocation location = (VertexLocation)settlement.getLocation();
+			
+			this.getView().placeSettlement(location, color);
+		}
+		
+		for(ICity city : map.getCities())
+		{
+			IPlayer player = city.getPlayer();
+			PlayerInfo info = player.getPlayerInfo();
+			CatanColor color = info.getColor();
+			VertexLocation location = (VertexLocation)city.getLocation();
+			
+			this.getView().placeCity(location, color);
+		}
+		
+		for(IRoadSegment segment : map.getRoads())
+		{
+			IPlayer player = segment.getPlayer();
+			PlayerInfo info = player.getPlayerInfo();
+			CatanColor color = info.getColor();
+			EdgeLocation location = (EdgeLocation)segment.getLocation();
+			
+			this.getView().placeRoad(location, color);
+		}
+		
+		IRobber robber = map.getRobber();
+		this.getView().placeRobber(robber.getLocation().getHexLocation());
 	}
 	
 	private void defaultInit()
