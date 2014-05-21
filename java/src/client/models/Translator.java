@@ -24,7 +24,7 @@ import client.models.translator.TRVertexObject;
 /**
  * This class receives either JSON or Java objects and converts it to the other format
  * @author scottdaly
- *
+ * 
  */
 public class Translator {
 

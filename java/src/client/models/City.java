@@ -24,7 +24,6 @@ public class City extends Settlement implements ICity
 	{
 		super(vertexLocation, newPlayer);
 		this.pointValue = 2;
-		System.out.println("City cost:\t" + City.getResourceCost());
 	}
 	
 	public static Collection<Resource> getResourceCost()

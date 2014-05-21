@@ -244,8 +244,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 			
-//			THIS IS CAUSING AN INFINITE LOOP!
+//			THIS IS SOMEHOW CAUSING AN INFINITE LOOP!
 			joinAction.execute();
+			System.out.println("After execute");
 		}	
 	}
 

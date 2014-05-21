@@ -108,6 +108,7 @@ public class Catan extends JFrame
 						poller.startTimer();
 						playerWaitingController.start();
 						proxy.getGameModel();
+						System.out.println("End of execute");
 					}
 				});
 				joinView.setController(joinController);
