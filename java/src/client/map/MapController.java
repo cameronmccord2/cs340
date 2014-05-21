@@ -25,7 +25,7 @@ import client.models.IProxy;
  * @author Craig Call
  *
  */
-
+@SuppressWarnings({"unused"})
 public class MapController extends Controller implements IMapController,
 														 ICatanModelObserver
 {
