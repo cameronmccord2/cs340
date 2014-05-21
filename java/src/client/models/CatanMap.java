@@ -55,11 +55,27 @@ public class CatanMap implements ICatanMap
 		if(catanMap.get(segment.getLocation()) != null)
 			return false;
 		
+		VertexLocation start = segment.getStartLocation();
+		VertexLocation end = segment.getEndLocation();
+		
 		for(IPiece piece : catanMap.values())
 		{
 			if(piece.getPlayer().equals(segment.getPlayer()))
 			{
-				
+				switch(piece.getPieceType())
+				{
+					case SETTLEMENT:
+						
+						break;
+					case CITY:
+						
+						break;
+					case ROAD:
+						
+						break;
+					default:
+						break;
+				}
 			}
 		}
 		return false;
@@ -77,8 +93,9 @@ public class CatanMap implements ICatanMap
 		HexLocation hex = settlement.getLocation().getHexLocation();
 		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
 			return false;
-		
-		return false;
+		if(distanceRule(settlement) != null)
+			return false;
+		return true;
 	}
 
 	/**
