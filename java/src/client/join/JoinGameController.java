@@ -198,7 +198,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelCreateNewGame()
 	{
-		getNewGameView().closeModal();
+		if(this.getNewGameView().isModalShowing())
+			getNewGameView().closeModal();
 	}
 	
 	@Override
@@ -210,7 +211,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 											getNewGameView().getTitle());
 		
 		if(proxy.postGamesCreate(newGame).getResponseCode() == 200){
-			getNewGameView().closeModal();
+			if(this.getNewGameView().isModalShowing())
+				getNewGameView().closeModal();
 			this.start();
 		}
 	}
@@ -229,7 +231,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void cancelJoinGame()
 	{
-		getJoinGameView().closeModal();
+		if(this.getJoinGameView().isModalShowing())
+			getJoinGameView().closeModal();
 	}
 	
 	@Override
@@ -239,10 +242,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(proxy.postGamesJoin(join).getJson().equals("Success")){
 			// If join succeeded
 			
-			System.out.println("Inside joinGame");
 			
-			getSelectColorView().closeModal();
-			getJoinGameView().closeModal();
+			if(this.getSelectColorView().isModalShowing())
+				getSelectColorView().closeModal();
+			if(this.getJoinGameView().isModalShowing())
+				getJoinGameView().closeModal();
+			
 			
 //			THIS IS CAUSING AN INFINITE LOOP!
 			joinAction.execute();

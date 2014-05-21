@@ -364,7 +364,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 	public void reset() {
 		this.removeAll();
 		this.buildView();
-		this.setPlayers(this.players);
+		if(this.players != null)
+			this.setPlayers(this.players);
 	}
 
 	@Override

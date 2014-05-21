@@ -6,6 +6,7 @@ import java.util.Map;
 
 import shared.definitions.*;
 import client.base.*;
+import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
@@ -297,9 +298,16 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void update() {
+		System.out.println("updating");
 		try{
+			PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+			if(players == null || players.length == 0){
+				System.out.println("no players");
+				return;
+			}
+			
 			if(this.playersHaveNotBeenSet){
-				this.tradeOverlay.setPlayers(this.proxy.getFacade().getAllPlayerInfos());
+				this.tradeOverlay.setPlayers(players);
 				this.playersHaveNotBeenSet = false;
 			}
 			

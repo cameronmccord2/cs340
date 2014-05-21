@@ -78,7 +78,6 @@ public class Proxy implements IProxy {
 	private IGame saveGameModel(String model){
 		System.out.println("here");
 		Gson gson = new Gson();
-//		System.out.println(model);
 		ClientModel cm = gson.fromJson(model, ClientModel.class);
 		try {
 			cm.isValid();
@@ -97,7 +96,6 @@ public class Proxy implements IProxy {
 		}
 		
 		this.facade.updatedCatanModel();
-//		System.out.println(g.toString());
 		return g;
 	}
 	
@@ -137,7 +135,6 @@ public class Proxy implements IProxy {
 		ServerResponse sr = doGet("/games/list", false, false);
 		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
 		List<IGame> list = new ArrayList<IGame>();
-		//System.out.println("games from server: " + games.toString());
 		for (GameServer g : games) {
 			Game game = new Game();
 			
@@ -164,7 +161,6 @@ public class Proxy implements IProxy {
 			list.add(game);
 		}
 		this.games = list;
-//		System.out.println("games: " + this.games.toString());
 		return this.games;
 	}
 	
@@ -177,7 +173,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse postGamesJoin(ServerJoinGame join){
 		ServerResponse sr = doPost("/games/join", gson.toJson(join), true, false);// responds with Success
-		//saveGameModel(sr.getJson());
+//		saveGameModel(sr.getJson());
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		gameId = setCookie.get(0);
@@ -186,6 +182,7 @@ public class Proxy implements IProxy {
 //		System.out.println(gameId);//catan.game=0
 		gameId = gameId.substring(11);
 		//System.out.println(gameId);//0
+//		this.getGameModel();// first time it gets gotten
 		return sr;
 	}
 	
@@ -210,6 +207,7 @@ public class Proxy implements IProxy {
 	}
 	
 	private IGame getGameForGameId(Integer gameId) {
+		System.out.println("games in getbyid: " + this.games.toString());
 		for (IGame g : this.games) {
 			if(g.getGameInfo().getId() == gameId)
 				return g;
