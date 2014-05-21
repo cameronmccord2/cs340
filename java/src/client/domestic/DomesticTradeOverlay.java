@@ -393,7 +393,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	@Override
 	public void setPlayerSelectionEnabled(boolean enable) {
-		System.out.println("player selection: " + enable);
+//		System.out.println("player selection: " + enable);
 		this.playerSelectionPanel.setVisible(enable);
 	}
 

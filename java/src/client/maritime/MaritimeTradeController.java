@@ -150,7 +150,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				this.getTradeOverlay().setStateMessage("Choose what to give up");
 				
 				
-				System.out.println(enabledGiveResources.toString());
+//				System.out.println(enabledGiveResources.toString());
 				
 				this.getTradeOverlay().showGetOptions(enabledGetResources);
 				this.getTradeOverlay().showGiveOptions(enabledGiveResources);

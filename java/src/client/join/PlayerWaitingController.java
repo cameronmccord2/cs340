@@ -32,12 +32,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		//fetch players from Game model
 		PlayerInfo[] players;
 		try {
+			getView().showModal();
 			players = this.proxy.getFacade().getAllPlayerInfos();
 			getView().setPlayers(players);
-			getView().showModal();
 			if(players.length == 4){
-				if(getView().isModalShowing())
-					getView().closeModal();
+				getView().closeModal();
 			}
 		} catch (CantFindGameModelException e) {
 			// TODO Auto-generated catch block
@@ -59,11 +58,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		try {
 			players = this.proxy.getFacade().getAllPlayerInfos();
 			getView().setPlayers(players);
-			
-			if(players.length == 4){
-				if(getView().isModalShowing())
-					getView().closeModal();
-			}
+			System.out.println(1);
+//			if(players.length == 4){
+//				getView().closeModal();
+//			}
 		} catch (CantFindGameModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
