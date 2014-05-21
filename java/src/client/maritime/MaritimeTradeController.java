@@ -128,8 +128,8 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		System.out.println(this.printArray(this.enabledGetResources) + ", " + this.printArray(this.enabledGiveResources));
 		this.getTradeOverlay().showGetOptions(this.enabledGetResources);
 		this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
-//		this.setGetResource(this.recieveResource);
-//		this.decideTradeState();
+		this.setGetResource(this.recieveResource);
+		this.decideTradeState();
 	}
 
 	@Override

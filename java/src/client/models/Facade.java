@@ -192,6 +192,11 @@ public class Facade implements IFacade {
 	}
 
 	@Override
+	public IPlayer[] getPlayers() throws CantFindGameModelException {
+		return this.getGameModel().getPlayers();
+	}
+
+	@Override
 	public List<LogEntry> getGameHistory() {
 		try {
 			IGame game = getGameModel();
