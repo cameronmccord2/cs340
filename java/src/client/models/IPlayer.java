@@ -96,4 +96,10 @@ public interface IPlayer extends IParticipant {
 
 	void setDiscarded(boolean discarded);
 
+	boolean canBuildSettlement(ISettlement settlement);
+
+	boolean canBuildCity(ICity city);
+
+	boolean canBuildRoad(IRoadSegment segment);
+
 }

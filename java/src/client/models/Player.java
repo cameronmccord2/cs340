@@ -1,6 +1,7 @@
 package client.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -223,5 +224,31 @@ public class Player extends Participant implements IPlayer {
 		builder.append(resourceCards);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public boolean canBuildSettlement(ISettlement settlement)
+	{
+		return this.hasResources(settlement.getResourceCost());
+	}
+
+	@Override
+	public boolean canBuildCity(ICity city)
+	{
+		return this.hasResources(city.getResourceCost());
+	}
+
+	private boolean hasResources(Collection<Resource> cost) {
+		for (Resource r : cost) {
+			if(this.getResourceCards().get(r.getResourceType()) < r.getAmount())
+				return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean canBuildRoad(IRoadSegment segment)
+	{
+		return this.hasResources(segment.getResourceCost());
 	}
 }
