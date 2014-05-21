@@ -37,7 +37,7 @@ public class LeftPanel extends JPanel {
 		tabPane.setFont(newFont);
 		
 		historyView = new GameHistoryView();
-		historyController = new GameHistoryController(historyView);
+		historyController = new GameHistoryController(historyView, proxy);
 		historyView.setController(historyController);
 		
 		chatView = new ChatView();

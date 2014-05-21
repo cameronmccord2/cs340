@@ -30,6 +30,8 @@ public interface IFacade {
 	Integer getCurrentUserIndex() throws CantFindGameModelException;
 	
 	List<LogEntry> getChats();
+	
+	List<LogEntry> getGameHistory();
 
 	Map<IResourceCard, Integer> getResourcesForPlayerId(Integer reciever) throws CantFindPlayerException, CantFindGameModelException;
 

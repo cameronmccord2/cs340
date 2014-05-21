@@ -34,10 +34,6 @@ public class ChatController extends Controller implements IChatController, ICata
 			System.out.println("error sending chat");
 		}
 	}
-	
-	public void updateMessages(List<LogEntry> entries){
-		getView().setEntries(entries);
-	}
 
 	@Override
 	public void update() {
