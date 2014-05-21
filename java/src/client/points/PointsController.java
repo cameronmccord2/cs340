@@ -1,6 +1,7 @@
 package client.points;
 
 import client.base.*;
+import client.data.PlayerInfo;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.models.exceptions.CantFindGameModelException;
@@ -51,24 +52,54 @@ public class PointsController extends Controller implements IPointsController,
 	}
 
 	private void initFromModel() {
-        try {
-            Integer points = this.proxy.getFacade().getCurrentUser().getVictoryPoints();
-            getPointsView().setPoints( points );
-            if( points == 10 ) {
-                // Notify server that our turn is over, as we just won!
-                //TODO set game state to "complete" or something so everyone knows
-                this.proxy.movesFinishTurn(new FinishedTurn("finishTurn", this.proxy.getFacade().getCurrentUserIndex()));
-                getFinishedView().setWinner(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getName(), true);
-                getFinishedView().showModal();
-            }
-
+		
+        if(this.proxy.getGameId() != null) {
+        	
+	        try {
+	            Integer points = this.proxy.getFacade().getCurrentUser().getVictoryPoints();
+	            getPointsView().setPoints( points );
+	            
+	            Integer winnerId = this.proxy.getGameModel().getWinner();
+	            
+	            if( winnerId >= 0 ) {
+	            	PlayerInfo winner = getPlayerById(winnerId);
+	            	
+	            	
+	            	
+	            	getFinishedView().setWinner(winner.getName(), isLocalPlayer(winnerId));
+	                getFinishedView().showModal();
+	            }	            
+	        }
+	        catch (CantFindPlayerException e) {
+	            e.printStackTrace();
+	        } catch (CantFindGameModelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
-        catch (CantFindPlayerException e) {
-            e.printStackTrace();
-        } catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
+	}
+	
+	private boolean isLocalPlayer(Integer id) throws CantFindGameModelException, CantFindPlayerException {
+		if(id == this.proxy.getFacade().getCurrentUser().getPlayerInfo().getId())
+			return true;
+		return false;
+	}
+	
+	private PlayerInfo getPlayerById(Integer id) {
+		if(id < 0 || id > 3)
+			assert false;
+		
+		try {
+	    	for(PlayerInfo player : this.proxy.getFacade().getAllPlayerInfos()) {
+	    		if(player.getId() == id)
+	    			return player;
+	    	}
+		}
+		catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		}
+			
+		return null;
 	}
 
     @Override
