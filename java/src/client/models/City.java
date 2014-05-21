@@ -1,5 +1,6 @@
 package client.models;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 import shared.definitions.ResourceType;
@@ -11,6 +12,7 @@ import shared.locations.VertexLocation;
  */
 public class City extends Settlement implements ICity
 {
+	private static Collection<Resource> cost;
 	static
 	{
 		cost = new HashSet<>();
@@ -22,5 +24,11 @@ public class City extends Settlement implements ICity
 	{
 		super(vertexLocation, newPlayer);
 		this.pointValue = 2;
+		System.out.println("City cost:\t" + City.getResourceCost());
+	}
+	
+	public static Collection<Resource> getResourceCost()
+	{
+		return cost;
 	}
 }

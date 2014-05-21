@@ -14,7 +14,7 @@ import shared.locations.ILocation;
 public class Settlement extends Piece implements ISettlement
 {
 	protected int pointValue;
-	protected static Collection<Resource> cost;
+	private static Collection<Resource> cost;
 	static
 	{
 		cost = new HashSet<>();

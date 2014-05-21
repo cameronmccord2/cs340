@@ -64,6 +64,18 @@ public class Catan extends JFrame
 		{
 			e.printStackTrace();
 		}
+
+//		System.out.println("Settlement cost:");
+//		for(client.models.Resource resource : client.models.Settlement.getResourceCost())
+//			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
+//		
+//		System.out.println("City cost:");
+//		for(client.models.Resource resource : client.models.City.getResourceCost())
+//			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
+//		
+//		System.out.println("RoadSegment cost:");
+//		for(client.models.Resource resource : client.models.RoadSegment.getResourceCost())
+//			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
