@@ -25,7 +25,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		super(view);
         this.proxy = proxy;
 		
-		elementActions = new HashMap<ResourceBarElement, IAction>();
+		elementActions = new HashMap<>();
         this.proxy.getFacade().registerAsObserver(this);
 	}
 
@@ -157,7 +157,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		
 	}
 	
-	private void setDevCardButtonState() {
+	private void setBuyDevCardButtonState() {
 		try {
 			
 			Collection<Resource> buildingCost = DevelopmentCard.getResourceCost();
@@ -180,12 +180,20 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		} catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
-    @Override
-    public void update() {
+    private void setPlayDevCardButtonState() {
         try {
+            getView().setElementEnabled(ResourceBarElement.PLAY_CARD, this.proxy.getFacade().isMyTurn());
+        } catch (CantFindGameModelException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateQuantities()  {
+
+        try {
+
 
             getView().setElementAmount(ResourceBarElement.WOOD, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD));
             getView().setElementAmount(ResourceBarElement.BRICK, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK));
@@ -198,16 +206,24 @@ public class ResourceBarController extends Controller implements IResourceBarCon
             getView().setElementAmount(ResourceBarElement.SETTLEMENT, MAX_SETTLEMENTS - this.proxy.getFacade().getCurrentUser().getSettlements().size());
             getView().setElementAmount(ResourceBarElement.ROAD, MAX_ROADS - this.proxy.getFacade().getCurrentUser().getRoads().size());
 
-            setCityButtonState();
-            setSettlementButtonState();
-            setRoadButtonState();
-            setDevCardButtonState();
-            
         }
         catch (CantFindPlayerException | CantFindGameModelException e) {
-            e.getStackTrace();
+                e.getStackTrace();
         }
-        
+    }
+
+    @Override
+    public void update() {
+
+        updateQuantities();
+
+        setCityButtonState();
+        setSettlementButtonState();
+        setRoadButtonState();
+        setBuyDevCardButtonState();
+
+        setPlayDevCardButtonState();
+
     }
 }
 
