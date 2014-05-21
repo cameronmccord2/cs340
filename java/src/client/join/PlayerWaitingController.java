@@ -3,6 +3,7 @@ package client.join;
 import client.base.Controller;
 import client.data.PlayerInfo;
 import client.models.ICatanModelObserver;
+import client.models.IFacade;
 import client.models.IProxy;
 import client.models.exceptions.CantFindGameModelException;
 
@@ -13,12 +14,14 @@ import client.models.exceptions.CantFindGameModelException;
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController, ICatanModelObserver {
 
 	private IProxy proxy;
+	private boolean gameStarted;
 	
 	public PlayerWaitingController(IPlayerWaitingView view, IProxy proxy) {
 
 		super(view);
 		this.proxy = proxy;
 		this.proxy.getFacade().registerAsObserver(this);
+		gameStarted = false;
 	}
 
 	@Override
@@ -29,20 +32,25 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-		//fetch players from Game model
-		PlayerInfo[] players;
-		try {
-			getView().showModal();
-			players = this.proxy.getFacade().getAllPlayerInfos();
-			getView().setPlayers(players);
-			if(players.length == 4){
-				getView().closeModal();
-			}
-		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		if(!gameStarted)
+//		{
+    		//fetch players from Game model
+    		PlayerInfo[] players;
+    		try {
+    			IFacade facade = this.proxy.getFacade();
+    			players = facade.getAllPlayerInfos();
+    			getView().setPlayers(players);
+    			getView().showModal();
+    			if(players.length == 4){
+    				gameStarted = true;
+    				getView().closeModal();
+    				proxy.getGameModel().startGame();
+    			}
+    		} catch (CantFindGameModelException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+//		}
 	}
 
 	@Override
@@ -54,19 +62,23 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void update() {
-		PlayerInfo[] players;
-		try {
-			players = this.proxy.getFacade().getAllPlayerInfos();
-			getView().setPlayers(players);
-			System.out.println(1);
-//			if(players.length == 4){
-//				getView().closeModal();
-//			}
-		} catch (CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+//		if(!gameStarted)
+//		{
+    		PlayerInfo[] players;
+    		try {
+    			players = this.proxy.getFacade().getAllPlayerInfos();
+    			getView().setPlayers(players);
+//    			System.out.println(1);
+    			if(players.length == 4){
+    				gameStarted = true;
+    				getView().closeModal();
+    				proxy.getGameModel().startGame();
+    			}
+    		} catch (CantFindGameModelException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+//		}
 	}
 
 }
