@@ -59,7 +59,7 @@ public class CatanMap implements ICatanMap
 		{
 			if(piece.getPlayer().equals(segment.getPlayer()))
 			{
-				String hello = "Hello Daniel!";
+				
 			}
 		}
 		return false;
@@ -322,19 +322,19 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canBuildSettlement(IPlayer player, ISettlement settlement)
 	{
-		return false;
+		return player.canBuildSettlement(settlement);
 	}
 
 	@Override
 	public boolean canBuildCity(IPlayer player, ICity city)
 	{
-		return false;
+		return player.canBuildCity(city);
 	}
 
 	@Override
 	public boolean canBuildRoad(IPlayer player, IRoadSegment segment)
 	{
-		return false;
+		return player.canBuildRoad(segment);
 	}
 
 	@Override

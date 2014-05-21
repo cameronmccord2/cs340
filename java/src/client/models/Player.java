@@ -224,4 +224,25 @@ public class Player extends Participant implements IPlayer {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	@Override
+	public boolean canBuildSettlement(ISettlement settlement)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canBuildCity(ICity city)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean canBuildRoad(IRoadSegment segment)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
