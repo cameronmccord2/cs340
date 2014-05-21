@@ -6,8 +6,19 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import client.models.City;
 import client.models.ICatanModelObserver;
+import client.models.ICity;
+import client.models.IPlayer;
 import client.models.IProxy;
+import client.models.IRoadSegment;
+import client.models.IRobber;
+import client.models.ISettlement;
+import client.models.InvalidLocationException;
+import client.models.RoadSegment;
+import client.models.Settlement;
+import client.models.exceptions.CantFindGameModelException;
+import client.models.exceptions.CantFindPlayerException;
 
 /**
  * Implementation for the map controller.
@@ -132,37 +143,102 @@ public class MapController extends Controller implements IMapController,
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc)
 	{
-		return true;
+		IRoadSegment segment = new RoadSegment();
+		segment.setLocation(edgeLoc);
+		try {
+			segment.setPlayer(this.proxy.getFacade().getCurrentUser());
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		return this.proxy.getGameModel().getMap().canPlaceRoad(segment);
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc)
 	{
-		return true;
+		IPlayer currentPlayer = null;
+		try {
+			currentPlayer = this.proxy.getFacade().getCurrentUser();
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
+		return this.proxy.getGameModel().getMap().canPlaceSettlement(settlement);
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc)
 	{
-		return true;
+		IPlayer currentPlayer = null;
+		try {
+			currentPlayer = this.proxy.getFacade().getCurrentUser();
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		ICity city = new City(vertLoc, currentPlayer);
+		return this.proxy.getGameModel().getMap().canPlaceCity(city);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc)
 	{
-		return true;
+		IRobber robber = this.proxy.getGameModel().getMap().getRobber();
+		HexLocation currentLocation = (HexLocation) robber.getLocation();
+		
+		return (hexLoc != currentLocation);
+		
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc)
 	{
 		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		
+		IRoadSegment segment = new RoadSegment();
+		segment.setLocation(edgeLoc);
+		try {
+			this.proxy.getGameModel().getMap().placeRoadSegment(segment);
+		} catch (InvalidLocationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc)
 	{
 		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+
+		IPlayer currentPlayer = null;
+		
+		try {
+			currentPlayer = this.proxy.getFacade().getCurrentUser();
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		
+		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
+		
+		try {
+			this.proxy.getGameModel().getMap().placeSettlement(settlement);
+		} catch (InvalidLocationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void placeCity(VertexLocation vertLoc)
 	{
 		getView().placeCity(vertLoc, CatanColor.ORANGE);
+
+		IPlayer currentPlayer = null;
+		
+		try {
+			currentPlayer = this.proxy.getFacade().getCurrentUser();
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		
+		ICity city = new City(vertLoc, currentPlayer);
+		
+		try {
+			this.proxy.getGameModel().getMap().placeCity(city);
+		} catch (InvalidLocationException e) {
+			e.printStackTrace();
+		};
 	}
 
 	public void placeRobber(HexLocation hexLoc)
@@ -184,7 +260,7 @@ public class MapController extends Controller implements IMapController,
 
 	public void playSoldierCard()
 	{
-
+		
 	}
 
 	public void playRoadBuildingCard()
