@@ -71,6 +71,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGetResource(ResourceType resource) {
 //		System.out.println("resourceToRecieve: " + resource.toString());
 		this.recieveResource = resource;
+		this.getTradeOverlay().selectGetOption(resource, 1);
 		this.decideTradeState();
 	}
 
@@ -78,12 +79,13 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void setGiveResource(ResourceType resource) {
 //		System.out.println("resourceToSend: " + resource.toString());
 		this.sendResource = resource;
+		this.getTradeOverlay().selectGiveOption(resource, this.neededCountToTrade);
 		this.decideTradeState();
 	}
 
 	private void decideTradeState() {
 		try {
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(this.sendResource)) >= 4 && this.recieveResource != null){
+			if(this.sendResource != null && this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(this.sendResource)) >= 4 && this.recieveResource != null){
 				if(this.recieveResource != null){
 					this.getTradeOverlay().setStateMessage("Trade!");
 					this.getTradeOverlay().setTradeEnabled(true);
@@ -102,15 +104,32 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void unsetGetValue() {
-//		System.out.println("unsetResource: " + resource.toString());
 		this.recieveResource = null;
+		
+		System.out.println(this.printArray(this.enabledGetResources) + ", " + this.printArray(this.enabledGiveResources));
+		this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
+		this.getTradeOverlay().showGetOptions(this.enabledGetResources);
+		this.setGiveResource(this.sendResource);
 		this.decideTradeState();
+	}
+
+	private String printArray(ResourceType[] enabledGetResources2) {
+		StringBuilder sb = new StringBuilder();
+		for (ResourceType r : enabledGetResources2) {
+			sb.append(r.toString());
+			sb.append(" ");
+		}
+		return sb.toString();
 	}
 
 	@Override
 	public void unsetGiveValue() {
 		this.sendResource = null;
-		this.decideTradeState();
+		System.out.println(this.printArray(this.enabledGetResources) + ", " + this.printArray(this.enabledGiveResources));
+		this.getTradeOverlay().showGetOptions(this.enabledGetResources);
+		this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
+//		this.setGetResource(this.recieveResource);
+//		this.decideTradeState();
 	}
 
 	@Override
@@ -120,40 +139,37 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			this.enabledGiveResources = new ResourceType[5];
 			int counter = 0;
 			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK) >= this.neededCountToTrade)
-				enabledGiveResources[counter++] = ResourceType.BRICK;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE) >= neededCountToTrade)
-				enabledGiveResources[counter++] = ResourceType.ORE;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT) >= neededCountToTrade)
-				enabledGiveResources[counter++] = ResourceType.WHEAT;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD) >= neededCountToTrade)
-				enabledGiveResources[counter++] = ResourceType.WOOD;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP) >= neededCountToTrade)
-				enabledGiveResources[counter++] = ResourceType.SHEEP;
+				this.enabledGiveResources[counter++] = ResourceType.BRICK;
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE) >= this.neededCountToTrade)
+				this.enabledGiveResources[counter++] = ResourceType.ORE;
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT) >= this.neededCountToTrade)
+				this.enabledGiveResources[counter++] = ResourceType.WHEAT;
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD) >= this.neededCountToTrade)
+				this.enabledGiveResources[counter++] = ResourceType.WOOD;
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP) >= this.neededCountToTrade)
+				this.enabledGiveResources[counter++] = ResourceType.SHEEP;
 			
 			this.enabledGetResources = new ResourceType[5];
 			counter = 0;
 			if(this.proxy.getFacade().getBankResourceCount(ResourceCard.BRICK) >= 1)
-				enabledGetResources[counter++] = ResourceType.BRICK;
+				this.enabledGetResources[counter++] = ResourceType.BRICK;
 			if(this.proxy.getFacade().getBankResourceCount(ResourceCard.ORE) >= 1)
-				enabledGetResources[counter++] = ResourceType.ORE;
+				this.enabledGetResources[counter++] = ResourceType.ORE;
 			if(this.proxy.getFacade().getBankResourceCount(ResourceCard.WHEAT) >= 1)
-				enabledGetResources[counter++] = ResourceType.WHEAT;
+				this.enabledGetResources[counter++] = ResourceType.WHEAT;
 			if(this.proxy.getFacade().getBankResourceCount(ResourceCard.WOOD) >= 1)
-				enabledGetResources[counter++] = ResourceType.WOOD;
+				this.enabledGetResources[counter++] = ResourceType.WOOD;
 			if(this.proxy.getFacade().getBankResourceCount(ResourceCard.SHEEP) >= 1)
-				enabledGetResources[counter++] = ResourceType.SHEEP;
+				this.enabledGetResources[counter++] = ResourceType.SHEEP;
 			
-			this.getTradeOverlay().showGetOptions(enabledGetResources);
-			this.getTradeOverlay().showGiveOptions(enabledGiveResources);
+			this.getTradeOverlay().showGetOptions(this.enabledGetResources);
+			this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
 			
 			if(this.proxy.getFacade().isMyTurn()){
 				this.getTradeOverlay().setStateMessage("Choose what to give up");
 				
-				
-//				System.out.println(enabledGiveResources.toString());
-				
-				this.getTradeOverlay().showGetOptions(enabledGetResources);
-				this.getTradeOverlay().showGiveOptions(enabledGiveResources);
+				this.getTradeOverlay().showGetOptions(this.enabledGetResources);
+				this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
 			}else{
 				this.getTradeOverlay().hideGetOptions();
 				this.getTradeOverlay().hideGiveOptions();

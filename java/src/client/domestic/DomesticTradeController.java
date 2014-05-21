@@ -296,44 +296,48 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update() {
 		try{
-			PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
-			PlayerInfo[] finalPlayers = new PlayerInfo[players.length - 1];
-			int counter = 0;
-			for (PlayerInfo pi : players) {
-				if(pi.getPlayerIndex() != this.proxy.getFacade().getCurrentUserIndex())
-					finalPlayers[counter++] = pi;
-			}
-			if(finalPlayers == null || finalPlayers.length == 0){
-				return;
-			}
 			
 			if(this.playersHaveNotBeenSet){
+				PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+				PlayerInfo[] finalPlayers = new PlayerInfo[players.length - 1];
+				int counter = 0;
+				for (PlayerInfo pi : players) {
+					if(pi.getPlayerIndex() != this.proxy.getFacade().getCurrentUserIndex())
+						finalPlayers[counter++] = pi;
+				}
+				if(finalPlayers == null || finalPlayers.length == 0)
+					return;
+				
 				this.tradeOverlay.setPlayers(finalPlayers);
 				this.playersHaveNotBeenSet = false;
-			}
-			
-			if(this.proxy.getFacade().isMyTurn()){
-				this.tradeOverlay.setResourceSelectionEnabled(true);
-				this.tradeOverlay.setPlayerSelectionEnabled(true);
-				this.tradeOverlay.setStateMessage("Set the trade you want to make");
-				this.setResourceChangeForResource(ResourceType.BRICK);
-				this.setResourceChangeForResource(ResourceType.ORE);
-				this.setResourceChangeForResource(ResourceType.SHEEP);
-				this.setResourceChangeForResource(ResourceType.WHEAT);
-				this.setResourceChangeForResource(ResourceType.WOOD);
-				// have the view reset counts to 0 when unhidden?
-			}else{
-				this.tradeOverlay.setResourceSelectionEnabled(false);
-				this.tradeOverlay.setPlayerSelectionEnabled(false);
-				this.tradeOverlay.setStateMessage("It is not your turn");
 			}
 			
 			TRTradeOffer currentTrade = this.proxy.getFacade().getCurrentTrade();
 			if(currentTrade == null){
 				if(this.waitOverlay.isModalShowing())
 					this.waitOverlay.closeModal();
+				
+				if(this.proxy.getFacade().isMyTurn()){
+					this.tradeOverlay.setResourceSelectionEnabled(true);
+					this.tradeOverlay.setPlayerSelectionEnabled(true);
+					this.tradeOverlay.setStateMessage("Set the trade you want to make");
+					this.setResourceChangeForResource(ResourceType.BRICK);
+					this.setResourceChangeForResource(ResourceType.ORE);
+					this.setResourceChangeForResource(ResourceType.SHEEP);
+					this.setResourceChangeForResource(ResourceType.WHEAT);
+					this.setResourceChangeForResource(ResourceType.WOOD);
+					// have the view reset counts to 0 when unhidden?
+				}else{
+					this.tradeOverlay.setResourceSelectionEnabled(false);
+					this.tradeOverlay.setPlayerSelectionEnabled(false);
+					this.tradeOverlay.setStateMessage("It is not your turn");
+				}
+				
 			}else if(currentTrade.getReceiver() == this.proxy.getFacade().getCurrentUserIndex()){
 				this.setupAcceptTradeWithTrade(currentTrade);
+			}else if(currentTrade.getSender() == this.proxy.getFacade().getCurrentUserIndex()){
+				if(!this.waitOverlay.isModalShowing())
+					this.waitOverlay.showModal();
 			}
 		}catch(CantFindGameModelException e){
 			// dont do anything, wait for the model to update again

@@ -196,6 +196,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 
 	@Override
 	public void showGetOptions(ResourceType[] enabledResources) {
+		System.out.println("get");
 		getAvailables = enabledResources;
 		getreload.setVisible(false);
 		getAmount.setVisible(false);
@@ -226,6 +227,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 
 	@Override
 	public void showGiveOptions(ResourceType[] enabledResources) {
+		System.out.println("give");
 		giveAvailables = enabledResources;
 		givereload.setVisible(false);
 		giveAmount.setVisible(false);
