@@ -30,8 +30,8 @@ public class ChatController extends Controller implements IChatController, ICata
 	@Override
 	public void sendMessage(String message) {
 		ServerChat chat = new ServerChat("sendChat",0,message);
-		if(proxy.movesSendChat(chat).getResponseCode() == 200){
-			System.out.println("message sent");
+		if(proxy.movesSendChat(chat).getResponseCode() != 200){
+			System.out.println("error sending chat");
 		}
 	}
 	
