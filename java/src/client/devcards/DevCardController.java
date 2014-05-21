@@ -72,6 +72,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	public void startPlayCard() {
 		
 		getPlayCardView().showModal();
+		//getPlayCardView().
 	}
 
 	@Override

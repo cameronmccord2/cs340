@@ -4,6 +4,7 @@ import client.base.Controller;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.models.Proxy;
+import client.models.exceptions.CantFindGameModelException;
 import client.server.ServerRoll;
 
 
@@ -55,7 +56,12 @@ public class RollController extends Controller implements IRollController, ICata
 
 	@Override
 	public void update() {
-		
+		try {
+			if(this.proxy.getFacade().isMyTurn())
+				getRollView().showModal();
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

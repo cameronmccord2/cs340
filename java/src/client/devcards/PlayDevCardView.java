@@ -70,7 +70,7 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 
 		// Resource Card 1
 		resCard1 = new ResourceCardChooser();
-		resCard1.setEnabled(true);
+		resCard1.setEnabled(false);
 		resCard1.setListener(btnGrpPnlListener);
 		mainPanel.add(resCard1);
 
@@ -91,7 +91,7 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 		// Use Dev Card Button
 		JPanel usePanel = new JPanel();
 		useButton = new JButton(DEFAULT_USE_BUTTON_LABEL);
-		useButton.setEnabled(false);
+		useButton.setEnabled(true);
 		FontUtils.setFont(useButton, BUTTON_TEXT_SIZE);
 		useButton.addActionListener(actionListener);
 		usePanel.add(useButton);
