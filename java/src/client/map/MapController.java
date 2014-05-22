@@ -220,13 +220,23 @@ public class MapController extends Controller implements IMapController,
 	public boolean canPlaceRoad(EdgeLocation edgeLoc)
 	{
 		IRoadSegment segment = new RoadSegment();
-		segment.setLocation(edgeLoc);
-		try {
-			segment.setPlayer(this.proxy.getFacade().getCurrentUser());
-		} catch (CantFindGameModelException | CantFindPlayerException e) {
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
+		try
+		{
+			segment.setLocation(edgeLoc);
+			segment.setPlayer(facade.getCurrentUser());
+			map = facade.getCatanMap();
+		}
+		catch(CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
-		return this.proxy.getGameModel().getMap().canPlaceRoad(segment);
+		
+		if(map != null)
+			return map.canPlaceRoad(segment);
+		else
+			return false;
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc)
@@ -238,7 +248,22 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
-		return this.proxy.getGameModel().getMap().canPlaceSettlement(settlement);
+		
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
+		try
+		{
+			map = facade.getCatanMap();
+		}
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(map != null)
+			return map.canPlaceSettlement(settlement);
+		else
+			return false;
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc)
@@ -250,7 +275,22 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 		ICity city = new City(vertLoc, currentPlayer);
-		return this.proxy.getGameModel().getMap().canPlaceCity(city);
+		
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
+		try
+		{
+			map = facade.getCatanMap();
+		}
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(map != null)
+			return map.canPlaceCity(city);
+		else
+			return false;
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc)
@@ -271,55 +311,65 @@ public class MapController extends Controller implements IMapController,
 
 	public void placeRoad(EdgeLocation edgeLoc)
 	{
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		try
+		{
+			IFacade facade = this.proxy.getFacade();
+			IPlayer player = facade.getCurrentUser();
+			ICatanMap map = facade.getCatanMap();
+			PlayerInfo info = player.getPlayerInfo();
+			
+			getView().placeRoad(edgeLoc, info.getColor());
 		
-		IRoadSegment segment = new RoadSegment();
-		segment.setLocation(edgeLoc);
-		try {
-			this.proxy.getGameModel().getMap().placeRoadSegment(segment);
-		} catch (InvalidLocationException e) {
+    		IRoadSegment segment = new RoadSegment();
+    		segment.setLocation(edgeLoc);
+    		segment.setPlayer(player);
+    		
+			map.placeRoadSegment(segment);
+		}
+		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc)
 	{
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
-
-		IPlayer currentPlayer = null;
-		
-		try {
-			currentPlayer = this.proxy.getFacade().getCurrentUser();
-		} catch (CantFindGameModelException | CantFindPlayerException e) {
-			e.printStackTrace();
+		try
+		{
+			IFacade facade = this.proxy.getFacade();
+			IPlayer player = facade.getCurrentUser();
+			ICatanMap map = facade.getCatanMap();
+			PlayerInfo info = player.getPlayerInfo();
+			
+			getView().placeSettlement(vertLoc, info.getColor());
+			
+			ISettlement settlement = new Settlement(vertLoc, player);
+			
+			map.placeSettlement(settlement);
 		}
-		
-		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
-		
-		try {
-			this.proxy.getGameModel().getMap().placeSettlement(settlement);
-		} catch (InvalidLocationException e) {
+		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
 	public void placeCity(VertexLocation vertLoc)
 	{
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
-
-		IPlayer currentPlayer = null;
-		
-		try {
-			currentPlayer = this.proxy.getFacade().getCurrentUser();
-		} catch (CantFindGameModelException | CantFindPlayerException e) {
-			e.printStackTrace();
+		try
+		{
+			IFacade facade = this.proxy.getFacade();
+			IPlayer player = facade.getCurrentUser();
+			ICatanMap map = facade.getCatanMap();
+			PlayerInfo info = player.getPlayerInfo();
+			
+			getView().placeCity(vertLoc, info.getColor());
+			
+			ICity city = new City(vertLoc, player);
+			
+			map.placeCity(city);
 		}
-		
-		ICity city = new City(vertLoc, currentPlayer);
-		
-		try {
-			this.proxy.getGameModel().getMap().placeCity(city);
-		} catch (InvalidLocationException e) {
+		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -329,7 +379,7 @@ public class MapController extends Controller implements IMapController,
         getView().placeRobber(hexLoc);
         IFacade facade = this.proxy.getFacade();
 
-        HashSet<RobPlayerInfo> robbable = new HashSet();
+        HashSet<RobPlayerInfo> robbable = new HashSet<>();
 
         try {
 
@@ -358,12 +408,30 @@ public class MapController extends Controller implements IMapController,
 	                      boolean isFree,
 	                      boolean allowDisconnected)
 	{
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		IFacade facade = this.proxy.getFacade();
+		IPlayer player = null;
+		PlayerInfo info = null;
+		try
+		{
+			player = facade.getCurrentUser();
+		}
+		catch(CantFindGameModelException | CantFindPlayerException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(player != null)
+			info = player.getPlayerInfo();
+		else
+			info = new PlayerInfo();
+		
+		
+		getView().startDrop(pieceType, info.getColor(), true);
 	}
 
 	public void cancelMove()
 	{
-
+		
 	}
 
 	public void playSoldierCard()
