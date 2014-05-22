@@ -83,6 +83,20 @@ public class CatanMap implements ICatanMap
 //			hexMap.put(two, second);
 //		}
 //	}
+
+    @Override
+    public Collection<IPlayer> getPlayersAroundHex(HexLocation hex) {
+
+        //TODO make this method work by creating some consistent mapping between hexes and edges/vertices
+        HashSet<IPlayer> players = new HashSet<>();
+        for(ISettlement settlement : this.getSettlements()) {
+            if( settlement.getLocation().getHexLocation().equals(hex) ) {
+                players.add(settlement.getPlayer());
+            }
+        }
+
+        return players;
+    }
 	
 	private void initializeOceanHexes()
 	{
@@ -111,6 +125,39 @@ public class CatanMap implements ICatanMap
 		hexMap.put(new HexLocation(3,-2), new Hex(new HexLocation(3,-2)));
 		hexMap.put(new HexLocation(3,-3), new Hex(new HexLocation(3,-3)));
 	}
+
+    // Very ugly method.
+    @Override
+    public boolean isOceanHex(HexLocation hex) {
+        if( hex.equals(new HexLocation(-3,3)) ||
+            hex.equals(new HexLocation(-3,2)) ||
+            hex.equals(new HexLocation(-3,1)) ||
+            hex.equals(new HexLocation(-3,0)) ||
+
+            hex.equals(new HexLocation(-2,3)) ||
+            hex.equals(new HexLocation(-2,-1)) ||
+
+            hex.equals(new HexLocation(-1,3)) ||
+            hex.equals(new HexLocation(-1,-2)) ||
+
+            hex.equals(new HexLocation(0,3)) ||
+            hex.equals(new HexLocation(0,-3)) ||
+
+            hex.equals(new HexLocation(1,2)) ||
+            hex.equals(new HexLocation(1,-3)) ||
+
+            hex.equals(new HexLocation(2,1)) ||
+            hex.equals(new HexLocation(2,-3)) ||
+
+            hex.equals(new HexLocation(3,0)) ||
+            hex.equals(new HexLocation(3,-1)) ||
+            hex.equals(new HexLocation(3,-2)) ||
+            hex.equals(new HexLocation(3,-3)))
+        {
+            return true;
+        }
+        return false;
+    }
 	
 	public void setProxy(IProxy proxy)
 	{
@@ -467,4 +514,6 @@ public class CatanMap implements ICatanMap
 		builder.append("]");
 		return builder.toString();
 	}
+
+    //TODO add method to standardize mapping from hexlocation to Ilocation
 }

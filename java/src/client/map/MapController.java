@@ -138,7 +138,21 @@ public class MapController extends Controller implements IMapController,
 		{
 			e.printStackTrace();
 		}
-	}
+
+        try
+        {
+            //TODO add check to see if the overlay is already shown
+            if(this.proxy.getFacade().isMyTurn() &&
+               this.proxy.getFacade().getTurnTracker().getStatus().equals("Robbing"))
+            {
+                this.getView().startDrop(PieceType.ROBBER, null, false);
+            }
+        }
+        catch (CantFindGameModelException e)
+        {
+            e.printStackTrace();
+        }
+    }
 	
 	private void defaultInit()
 	{
@@ -241,10 +255,17 @@ public class MapController extends Controller implements IMapController,
 
 	public boolean canPlaceRobber(HexLocation hexLoc)
 	{
-		IRobber robber = this.proxy.getGameModel().getMap().getRobber();
-		HexLocation currentLocation = (HexLocation) robber.getLocation();
-		
-		return (hexLoc != currentLocation);
+        HexLocation currentLocation = null;
+        boolean isOceanHex = false;
+        try {
+            currentLocation = this.proxy.getFacade().getRobberLocation();
+            isOceanHex = this.proxy.getFacade().getCatanMap().isOceanHex(hexLoc);
+
+        } catch (CantFindGameModelException e) {
+            e.printStackTrace();
+        }
+
+        return (( ! hexLoc.equals( currentLocation )) && ( ! isOceanHex ));
 		
 	}
 
@@ -300,15 +321,38 @@ public class MapController extends Controller implements IMapController,
 			this.proxy.getGameModel().getMap().placeCity(city);
 		} catch (InvalidLocationException e) {
 			e.printStackTrace();
-		};
+		}
 	}
 
 	public void placeRobber(HexLocation hexLoc)
 	{
-		getView().placeRobber(hexLoc);
+        getView().placeRobber(hexLoc);
+        IFacade facade = this.proxy.getFacade();
 
-		getRobView().showModal();
-	}
+        HashSet<RobPlayerInfo> robbable = new HashSet();
+
+        try {
+
+            for( IPlayer player : facade.getCatanMap().getPlayersAroundHex(hexLoc) )
+            {
+                RobPlayerInfo rob = new RobPlayerInfo(player.getPlayerInfo());
+                int playerId = player.getPlayerInfo().getId();
+
+                rob.setNumCards( facade.getResourcesForPlayerId( playerId ).size() );
+                robbable.add(rob);
+
+            }
+
+        } catch (CantFindGameModelException | CantFindPlayerException e) {
+            e.printStackTrace();
+        }
+
+        RobPlayerInfo[] victims = robbable.toArray(new RobPlayerInfo[robbable.size()]);
+
+        getRobView().setPlayers( victims );
+        getRobView().showModal();
+
+    }
 
 	public void startMove(PieceType pieceType,
 	                      boolean isFree,
@@ -334,15 +378,20 @@ public class MapController extends Controller implements IMapController,
 
 	public void robPlayer(RobPlayerInfo victim)
 	{
-
+        getRobView().showModal();
 	}
 
 	@Override
 	public void update()
 	{
-		try {
-		initFromModel();
-		} catch(Exception e){}
+		try
+        {
+            initFromModel();
+		}
+        catch(Exception e)
+        {
+            System.out.println("Error initializing Map from Model");
+        }
 	}
 
 }
