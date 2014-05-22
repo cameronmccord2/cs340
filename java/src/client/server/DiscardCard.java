@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package client.server;
 
@@ -14,6 +14,7 @@ public class DiscardCard {
 	private String type;
 	private Integer playerIndex;
 	private TRResourceList discardedCards;
+
 	public DiscardCard(String type, Integer playerIndex,
 			TRResourceList discardedCards) {
 		this.type = type;
@@ -56,6 +57,6 @@ public class DiscardCard {
 	public void setDiscardedCards(TRResourceList discardedCards) {
 		this.discardedCards = discardedCards;
 	}
-	
-	
+
+
 }
