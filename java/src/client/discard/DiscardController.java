@@ -18,6 +18,7 @@ import client.models.Resource;
 import client.models.ResourceCard;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.DiscardCard;
 
 
 /**
@@ -36,7 +37,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	private StringBuilder buttonMessage;
 	private boolean discardEnabled;
 	private Integer selectedAmountTotal;
-	
+
 	private boolean finishedDiscarding;
 
 	/**
@@ -52,14 +53,14 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.waitView = waitView;
 		this.initialize();
 	}
-	
+
 	private void initialize()
 	{
 		this.initializeMap();
 		this.initializeValues();
 		this.initializeButtons();
 	}
-	
+
 	private void initializeButtons()
 	{
 		for(ResourceType type : ResourceType.values())
@@ -67,14 +68,14 @@ public class DiscardController extends Controller implements IDiscardController,
 			this.getDiscardView().setResourceAmountChangeEnabled(type, false, false);
 		}
 	}
-	
+
 	private void initializeValues()
 	{
 		discardEnabled = false;
 		buttonMessage = new StringBuilder();
 		finishedDiscarding = false;
 	}
-	
+
 	private void initializeMap()
 	{
 		resourceSelection = new HashMap<>();
@@ -84,7 +85,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		resourceSelection.put(ResourceType.SHEEP, 0);
 		resourceSelection.put(ResourceType.ORE, 0);
 	}
-	
+
 	public void setProxy(IProxy proxy)
 	{
 		this.proxy = proxy;
@@ -141,10 +142,13 @@ public class DiscardController extends Controller implements IDiscardController,
 	{
 		// I need to calculate and update the amount of each resource
 		// and send it back to the server.
+		finishedDiscarding = true;
+		DiscardCard cards = new DiscardCard(null, amountToDiscard, null);
+		proxy.movesDiscardCards(cards);
 		getDiscardView().closeModal();
 		this.initialize();
 	}
-	
+
 	private Set<Resource> getResourcesFromPlayer()
 	{
 		Map<IResourceCard, Integer> playerMap = player.getResourceCards();
@@ -157,18 +161,18 @@ public class DiscardController extends Controller implements IDiscardController,
 		}
 		return resources;
 	}
-	
+
 	private Integer getAmountToDiscard()
 	{
 		Integer amount = 0;
 		Set<Resource> resources = this.getResourcesFromPlayer();
-		
+
 		for(Resource resource : resources)
 			amount += resource.getAmount();
-		
+
 		return amount/2;
 	}
-	
+
 	private Integer getSelectedAmountTotal()
 	{
 		Integer total = 0;
@@ -176,18 +180,18 @@ public class DiscardController extends Controller implements IDiscardController,
 			total += amount;
 		return total;
 	}
-	
+
 	private void updateDisplayValues()
 	{
 		this.amountToDiscard = this.getAmountToDiscard();
 		this.selectedAmountTotal = this.getSelectedAmountTotal();
-		
+
 		buttonMessage = new StringBuilder();
 		buttonMessage.append(this.selectedAmountTotal);
 		buttonMessage.append("/");
 		buttonMessage.append(this.amountToDiscard);
 	}
-	
+
 	private void updateBooleanValues()
 	{
 		this.discardEnabled = selectedAmountTotal.intValue() ==
@@ -197,49 +201,49 @@ public class DiscardController extends Controller implements IDiscardController,
 		{
 			ResourceType type = resource.getResourceType();
 			int discardAmount = resourceSelection.get(type);
-			
+
 //			boolean increase = false;
 //			boolean decrease = false;
 //			if(discardAmount < resource.getAmount())
 //				increase = true;
 //			if(discardAmount > 0)
 //				decrease = true;
-			
+
 			boolean increase = discardAmount < resource.getAmount() &&
 							   !discardEnabled;
 			boolean decrease = discardAmount > 0;
-			
+
 			getDiscardView().setResourceAmountChangeEnabled(type, increase, decrease);
 		}
 	}
-	
+
 	private void updateValues()
 	{
 		this.updateDisplayValues();
 		this.updateBooleanValues();
 	}
-	
+
 	private void updateView()
 	{
 		this.updateValues();
-		
+
 		this.getDiscardView().setStateMessage(buttonMessage.toString());
 		this.getDiscardView().setDiscardButtonEnabled(discardEnabled);
-		
+
 		for(Map.Entry<IResourceCard, Integer> resource : player.getResourceCards().entrySet())
 		{
 			ResourceType type = resource.getKey().getType();
 			int amount = resource.getValue();
 			this.getDiscardView().setResourceMaxAmount(type, amount);
 		}
-		
+
 		for(Map.Entry<ResourceType, Integer> resource : resourceSelection.entrySet())
 		{
 			this.getDiscardView().setResourceDiscardAmount(resource.getKey(),
 			                                               resource.getValue());
 		}
 	}
-	
+
 	@Override
 	public void update()
 	{
@@ -272,7 +276,7 @@ public class DiscardController extends Controller implements IDiscardController,
 
 /**
  * Used to enable or disable the discard button.
- * 
+ *
  * @param enabled
  *            Whether or not the discard button should be enabled
  */
@@ -280,7 +284,7 @@ public class DiscardController extends Controller implements IDiscardController,
 
 /**
  * Sets the discard amount displayed for the specified resource.
- * 
+ *
  * @param resource
  *            The resource for which the discard amount is being set
  * @param amount
@@ -290,7 +294,7 @@ public class DiscardController extends Controller implements IDiscardController,
 
 /**
  * Sets the maximum amount displayed for the specified resource.
- * 
+ *
  * @param resource
  *            The resource for which the maximum amount is being set
  * @param maxAmount
@@ -303,7 +307,7 @@ public class DiscardController extends Controller implements IDiscardController,
  * resource can be increased and decreased. (The buttons for increasing or
  * decreasing the discard amount are only visible when the corresponding
  * operations are allowed.)
- * 
+ *
  * @param resource
  *            The resource for which amount changes are being enabled or
  *            disabled
@@ -320,7 +324,7 @@ public class DiscardController extends Controller implements IDiscardController,
 /**
  * Sets the state message, which indicates how many cards a player has set
  * to discard, and how many remain to set.
- * 
+ *
  * @param message
  *            The new state message (e.g., "0/6")
  */

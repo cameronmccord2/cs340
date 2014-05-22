@@ -164,7 +164,7 @@ public interface IProxy {
 	 * Discards cards because a 7 was rolled
 	 * @param the player object that has to discard cards
 	 */
-	public ServerResponse movesdiscardCards(DiscardCard cards);
+	public ServerResponse movesDiscardCards(DiscardCard cards);
 
 	/**
 	 * Sets the log level of the server

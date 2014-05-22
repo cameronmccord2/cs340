@@ -363,7 +363,7 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public ServerResponse movesdiscardCards(DiscardCard cards){
+	public ServerResponse movesDiscardCards(DiscardCard cards){
 		ServerResponse sr = doPost("/moves/discardCards", gson.toJson(cards), true, true);
 		saveGameModel(sr.getJson());
 		return sr;

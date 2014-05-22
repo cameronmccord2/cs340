@@ -495,7 +495,7 @@ public class DummyProxy implements IProxy{
 	}
 
 	@Override
-	public ServerResponse movesdiscardCards(DiscardCard cards) {
+	public ServerResponse movesDiscardCards(DiscardCard cards) {
 		// TODO Auto-generated method stub
 		return null;
 	}
