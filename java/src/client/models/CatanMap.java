@@ -52,7 +52,7 @@ public class CatanMap implements ICatanMap
 //			int a = -3;
 //			int b = 3-x;
 //			
-//			IHex first = new Hex();
+//			IHex first = new Hex();hex
 //			HexLocation one = new HexLocation(a, b);
 //			first.setLocation(one);
 //			

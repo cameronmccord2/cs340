@@ -36,6 +36,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	private StringBuilder buttonMessage;
 	private boolean discardEnabled;
 	private Integer selectedAmountTotal;
+	
+	private boolean finishedDiscarding;
 
 	/**
 	 * DiscardController constructor
@@ -54,7 +56,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	private void initialize()
 	{
 		this.initializeMap();
-		this.initializeMessage();
+		this.initializeValues();
 		this.initializeButtons();
 	}
 	
@@ -66,10 +68,11 @@ public class DiscardController extends Controller implements IDiscardController,
 		}
 	}
 	
-	private void initializeMessage()
+	private void initializeValues()
 	{
 		discardEnabled = false;
 		buttonMessage = new StringBuilder();
+		finishedDiscarding = false;
 	}
 	
 	private void initializeMap()
@@ -246,11 +249,18 @@ public class DiscardController extends Controller implements IDiscardController,
 			String status = facade.getCurrentState();
 			if(status.equals("Discarding"))
 			{
-				if(!getDiscardView().isModalShowing())
-					getDiscardView().showModal();
-    			System.out.println("DiscardController update()");
-    			player = facade.getCurrentUser();
-    			updateView();
+				if(!finishedDiscarding)
+				{
+    				if(!getDiscardView().isModalShowing())
+    					getDiscardView().showModal();
+        			System.out.println("DiscardController update()");
+        			player = facade.getCurrentUser();
+        			updateView();
+				}
+				else
+				{
+//					if()
+				}
 			}
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
