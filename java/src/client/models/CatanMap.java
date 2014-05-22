@@ -3,6 +3,7 @@ package client.models;
 import java.util.*;
 
 import client.data.PlayerInfo;
+import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.locations.*;
 
@@ -51,7 +52,7 @@ public class CatanMap implements ICatanMap
 //			int a = -3;
 //			int b = 3-x;
 //			
-//			IHex first = new Hex();
+//			IHex first = new Hex();hex
 //			HexLocation one = new HexLocation(a, b);
 //			first.setLocation(one);
 //			
@@ -127,36 +128,39 @@ public class CatanMap implements ICatanMap
 	}
 
     // Very ugly method.
+	// 	-Not any more.
     @Override
-    public boolean isOceanHex(HexLocation hex) {
-        if( hex.equals(new HexLocation(-3,3)) ||
-            hex.equals(new HexLocation(-3,2)) ||
-            hex.equals(new HexLocation(-3,1)) ||
-            hex.equals(new HexLocation(-3,0)) ||
-
-            hex.equals(new HexLocation(-2,3)) ||
-            hex.equals(new HexLocation(-2,-1)) ||
-
-            hex.equals(new HexLocation(-1,3)) ||
-            hex.equals(new HexLocation(-1,-2)) ||
-
-            hex.equals(new HexLocation(0,3)) ||
-            hex.equals(new HexLocation(0,-3)) ||
-
-            hex.equals(new HexLocation(1,2)) ||
-            hex.equals(new HexLocation(1,-3)) ||
-
-            hex.equals(new HexLocation(2,1)) ||
-            hex.equals(new HexLocation(2,-3)) ||
-
-            hex.equals(new HexLocation(3,0)) ||
-            hex.equals(new HexLocation(3,-1)) ||
-            hex.equals(new HexLocation(3,-2)) ||
-            hex.equals(new HexLocation(3,-3)))
-        {
-            return true;
-        }
-        return false;
+    public boolean isOceanHex(HexLocation location) {
+//        if( hex.equals(new HexLocation(-3,3)) ||
+//            hex.equals(new HexLocation(-3,2)) ||
+//            hex.equals(new HexLocation(-3,1)) ||
+//            hex.equals(new HexLocation(-3,0)) ||
+//
+//            hex.equals(new HexLocation(-2,3)) ||
+//            hex.equals(new HexLocation(-2,-1)) ||
+//
+//            hex.equals(new HexLocation(-1,3)) ||
+//            hex.equals(new HexLocation(-1,-2)) ||
+//
+//            hex.equals(new HexLocation(0,3)) ||
+//            hex.equals(new HexLocation(0,-3)) ||
+//
+//            hex.equals(new HexLocation(1,2)) ||
+//            hex.equals(new HexLocation(1,-3)) ||
+//
+//            hex.equals(new HexLocation(2,1)) ||
+//            hex.equals(new HexLocation(2,-3)) ||
+//
+//            hex.equals(new HexLocation(3,0)) ||
+//            hex.equals(new HexLocation(3,-1)) ||
+//            hex.equals(new HexLocation(3,-2)) ||
+//            hex.equals(new HexLocation(3,-3)))
+//        {
+//            return true;
+//        }
+//        return false;
+    	IHex hex = hexMap.get(location);
+    	return hex.getHexType() == HexType.WATER;
     }
 	
 	public void setProxy(IProxy proxy)
@@ -193,6 +197,9 @@ public class CatanMap implements ICatanMap
 							return true;
 						break;
 					case ROAD:
+						// THIS NEEDS TO BE UPDATED TO TAKE INTO ACCOUNT
+						// THE OCEAN HEXES! Currently, it allows you to
+						// build roads on ocean hex sides.
 						IRoadSegment roadSegment = (IRoadSegment)piece;
 						if(start.equals(roadSegment.getStartLocation()) ||
 						   start.equals(roadSegment.getEndLocation())   ||
@@ -209,10 +216,10 @@ public class CatanMap implements ICatanMap
 	}
 
 	/**
+	 *	
 	 *
-	 *
-	 *		@param	settlement
-	 *					The ISettlement to be placed on the map.
+	 *	@param	settlement
+	 *				The ISettlement to be placed on the map.
 	 */
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)

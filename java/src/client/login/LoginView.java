@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -12,9 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.base.*;
+
 import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -33,11 +37,11 @@ import javax.swing.event.DocumentListener;
 public class LoginView extends OverlayView implements ILoginView
 {
 
-    private final int LABEL_TEXT_SIZE = 40;
-    private final float SMALL_LABEL_TEXT_SIZE = 16.0F;
-    private final float BIG_LABEL_TEXT_SIZE = LABEL_TEXT_SIZE * 1.5F;
-    private final int BUTTON_TEXT_SIZE = 28;
-    private final int BORDER_WIDTH = 10;
+    private static final int LABEL_TEXT_SIZE = 40;
+    private static final float SMALL_LABEL_TEXT_SIZE = 16.0F;
+    private static final float BIG_LABEL_TEXT_SIZE = LABEL_TEXT_SIZE * 1.5F;
+    private static final int BUTTON_TEXT_SIZE = 28;
+    private static final int BORDER_WIDTH = 10;
 
     private SignInPanel signInPanel = null;
     private RegisterPanel registerPanel = null;
@@ -188,7 +192,8 @@ public class LoginView extends OverlayView implements ILoginView
 
     private class SignInPanel extends JPanel
     {
-
+    	private static final int NUM_TXT_COLS = 16;
+    	
         private JLabel lblLogin = null;
         private JLabel lblUsername = null;
         private JTextField txtUsername = null;
@@ -209,8 +214,6 @@ public class LoginView extends OverlayView implements ILoginView
             Font labelFont = lblLogin.getFont();
             labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
             lblLogin.setFont(labelFont);
-
-            final int NUM_TXT_COLS = 16;
 
             lblUsername = new JLabel("Username");
             txtUsername = new JTextField(NUM_TXT_COLS);
@@ -256,14 +259,33 @@ public class LoginView extends OverlayView implements ILoginView
         {
             btnSignIn.addActionListener(new ActionListener()
             {
-
                 @Override
-                public void actionPerformed(ActionEvent e)
+                public void actionPerformed(ActionEvent event)
                 {
                     getController().signIn();
                 }
-
             });
+            
+            KeyListener keyListener = new KeyListener() {
+				@Override
+				public void keyTyped(KeyEvent event)
+				{
+					if(event.getKeyCode() == KeyEvent.VK_ENTER)
+						btnSignIn.doClick();
+				}
+
+				@Override
+				public void keyPressed(KeyEvent event)
+				{
+					this.keyTyped(event);
+				}
+
+				@Override
+				public void keyReleased(KeyEvent event){}
+            };
+            
+            txtUsername.addKeyListener(keyListener);
+            txtPassword.addKeyListener(keyListener);
         }
     }
 

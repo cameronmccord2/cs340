@@ -329,24 +329,25 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 		@Override
 		public void keyTyped(KeyEvent e)
 		{
-			switch (e.getKeyChar())
-			{
-				case '1':
-					getController().buildRoad();
-					break;
-				case '2':
-					getController().buildSettlement();
-					break;
-				case '3':
-					getController().buildCity();
-					break;
-				case '4':
-					getController().buyCard();
-					break;
-				case '5':
-					getController().playCard();
-					break;
-			}
+//			switch (e.getKeyChar())
+//			{
+//				case '1':
+//					getController().buildRoad();
+//					break;
+//				case '2':
+//					getController().buildSettlement();
+//					break;
+//				case '3':
+//					getController().buildCity();
+//					break;
+//				case '4':
+//					getController().buyCard();
+//					break;
+//				case '5':
+//					getController().playCard();
+//					break;
+//			}
+			System.out.println("You are not allowed to bypass the system.");
 		}
 	};
 	

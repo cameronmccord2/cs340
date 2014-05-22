@@ -217,18 +217,48 @@ public class MapController extends Controller implements IMapController,
 		getView().addNumber(new HexLocation(2, 0), 12);
 	}
 
+	/**
+	 * This method is called whenever the user is trying to place a road on the
+	 * map. It is called by the view for each "mouse move" event. The returned
+	 * value tells the view whether or not to allow the road to be placed at the
+	 * specified location.
+	 * 
+	 * @param edgeLoc
+	 *            The proposed road location
+	 * @return true if the road can be placed at edgeLoc, false otherwise
+	 */
 	public boolean canPlaceRoad(EdgeLocation edgeLoc)
 	{
 		IRoadSegment segment = new RoadSegment();
-		segment.setLocation(edgeLoc);
-		try {
-			segment.setPlayer(this.proxy.getFacade().getCurrentUser());
-		} catch (CantFindGameModelException | CantFindPlayerException e) {
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
+		try
+		{
+			segment.setLocation(edgeLoc);
+			segment.setPlayer(facade.getCurrentUser());
+			map = facade.getCatanMap();
+		}
+		catch(CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
-		return this.proxy.getGameModel().getMap().canPlaceRoad(segment);
+		
+		if(map != null)
+			return map.canPlaceRoad(segment);
+		else
+			return false;
 	}
 
+	/**
+	 * This method is called whenever the user is trying to place a settlement
+	 * on the map. It is called by the view for each "mouse move" event. The
+	 * returned value tells the view whether or not to allow the settlement to
+	 * be placed at the specified location.
+	 * 
+	 * @param vertLoc
+	 *            The proposed settlement location
+	 * @return true if the settlement can be placed at vertLoc, false otherwise
+	 */
 	public boolean canPlaceSettlement(VertexLocation vertLoc)
 	{
 		IPlayer currentPlayer = null;
@@ -238,9 +268,34 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
-		return this.proxy.getGameModel().getMap().canPlaceSettlement(settlement);
+		
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
+		try
+		{
+			map = facade.getCatanMap();
+		}
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(map != null)
+			return map.canPlaceSettlement(settlement);
+		else
+			return false;
 	}
 
+	/**
+	 * This method is called whenever the user is trying to place a city on the
+	 * map. It is called by the view for each "mouse move" event. The returned
+	 * value tells the view whether or not to allow the city to be placed at the
+	 * specified location.
+	 * 
+	 * @param vertLoc
+	 *            The proposed city location
+	 * @return true if the city can be placed at vertLoc, false otherwise
+	 */
 	public boolean canPlaceCity(VertexLocation vertLoc)
 	{
 		IPlayer currentPlayer = null;
@@ -250,9 +305,34 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 		ICity city = new City(vertLoc, currentPlayer);
-		return this.proxy.getGameModel().getMap().canPlaceCity(city);
+		
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
+		try
+		{
+			map = facade.getCatanMap();
+		}
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+		
+		if(map != null)
+			return map.canPlaceCity(city);
+		else
+			return false;
 	}
 
+	/**
+	 * This method is called whenever the user is trying to place the robber on
+	 * the map. It is called by the view for each "mouse move" event. The
+	 * returned value tells the view whether or not to allow the robber to be
+	 * placed at the specified location.
+	 * 
+	 * @param hexLoc
+	 *            The proposed robber location
+	 * @return true if the robber can be placed at hexLoc, false otherwise
+	 */
 	public boolean canPlaceRobber(HexLocation hexLoc)
 	{
         HexLocation currentLocation = null;
@@ -266,70 +346,104 @@ public class MapController extends Controller implements IMapController,
         }
 
         return (( ! hexLoc.equals( currentLocation )) && ( ! isOceanHex ));
-		
 	}
 
+	/**
+	 * This method is called when the user clicks the mouse to place a road.
+	 * 
+	 * @param edgeLoc
+	 *            The road location
+	 */
 	public void placeRoad(EdgeLocation edgeLoc)
 	{
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		try
+		{
+			IFacade facade = this.proxy.getFacade();
+			IPlayer player = facade.getCurrentUser();
+			ICatanMap map = facade.getCatanMap();
+			PlayerInfo info = player.getPlayerInfo();
+			
+			getView().placeRoad(edgeLoc, info.getColor());
 		
-		IRoadSegment segment = new RoadSegment();
-		segment.setLocation(edgeLoc);
-		try {
-			this.proxy.getGameModel().getMap().placeRoadSegment(segment);
-		} catch (InvalidLocationException e) {
+    		IRoadSegment segment = new RoadSegment();
+    		segment.setLocation(edgeLoc);
+    		segment.setPlayer(player);
+    		
+			map.placeRoadSegment(segment);
+		}
+		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * This method is called when the user clicks the mouse to place a
+	 * settlement.
+	 * 
+	 * @param vertLoc
+	 *            The settlement location
+	 */
 	public void placeSettlement(VertexLocation vertLoc)
 	{
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
-
-		IPlayer currentPlayer = null;
-		
-		try {
-			currentPlayer = this.proxy.getFacade().getCurrentUser();
-		} catch (CantFindGameModelException | CantFindPlayerException e) {
-			e.printStackTrace();
+		try
+		{
+			IFacade facade = this.proxy.getFacade();
+			IPlayer player = facade.getCurrentUser();
+			ICatanMap map = facade.getCatanMap();
+			PlayerInfo info = player.getPlayerInfo();
+			
+			getView().placeSettlement(vertLoc, info.getColor());
+			
+			ISettlement settlement = new Settlement(vertLoc, player);
+			
+			map.placeSettlement(settlement);
 		}
-		
-		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
-		
-		try {
-			this.proxy.getGameModel().getMap().placeSettlement(settlement);
-		} catch (InvalidLocationException e) {
+		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * This method is called when the user clicks the mouse to place a city.
+	 * 
+	 * @param vertLoc
+	 *            The city location
+	 */
 	public void placeCity(VertexLocation vertLoc)
 	{
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
-
-		IPlayer currentPlayer = null;
-		
-		try {
-			currentPlayer = this.proxy.getFacade().getCurrentUser();
-		} catch (CantFindGameModelException | CantFindPlayerException e) {
-			e.printStackTrace();
+		try
+		{
+			IFacade facade = this.proxy.getFacade();
+			IPlayer player = facade.getCurrentUser();
+			ICatanMap map = facade.getCatanMap();
+			PlayerInfo info = player.getPlayerInfo();
+			
+			getView().placeCity(vertLoc, info.getColor());
+			
+			ICity city = new City(vertLoc, player);
+			
+			map.placeCity(city);
 		}
-		
-		ICity city = new City(vertLoc, currentPlayer);
-		
-		try {
-			this.proxy.getGameModel().getMap().placeCity(city);
-		} catch (InvalidLocationException e) {
+		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * This method is called when the user clicks the mouse to place the robber.
+	 * 
+	 * @param hexLoc
+	 *            The robber location
+	 */
 	public void placeRobber(HexLocation hexLoc)
 	{
         getView().placeRobber(hexLoc);
         IFacade facade = this.proxy.getFacade();
 
-        HashSet<RobPlayerInfo> robbable = new HashSet();
+        HashSet<RobPlayerInfo> robbable = new HashSet<>();
 
         try {
 
@@ -349,33 +463,77 @@ public class MapController extends Controller implements IMapController,
 
         RobPlayerInfo[] victims = robbable.toArray(new RobPlayerInfo[robbable.size()]);
 
-        getRobView().setPlayers( victims );
+        getRobView().setPlayers(victims);
         getRobView().showModal();
 
     }
 
+	/**
+	 * This method is called when the user requests to place a piece on the map
+	 * (road, city, or settlement)
+	 * 
+	 * @param pieceType
+	 *            The type of piece to be placed
+	 * @param isFree
+	 *            true if the piece should not cost the player resources, false
+	 *            otherwise. Set to true during initial setup and when a road
+	 *            building card is played.
+	 * @param allowDisconnected
+	 *            true if the piece can be disconnected, false otherwise. Set to
+	 *            true only during initial setup.
+	 */
 	public void startMove(PieceType pieceType,
 	                      boolean isFree,
 	                      boolean allowDisconnected)
 	{
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		IFacade facade = this.proxy.getFacade();
+		try
+		{
+			IPlayer player = facade.getCurrentUser();
+			PlayerInfo info = player.getPlayerInfo();
+			getView().startDrop(pieceType, info.getColor(), true);
+		}
+		catch(CantFindGameModelException | CantFindPlayerException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
+	/**
+	 * This method is called from the modal map overlay when the cancel button
+	 * is pressed.
+	 */
 	public void cancelMove()
 	{
-
+		
 	}
 
+	/**
+	 * This method is called when the user plays a "soldier" development card.
+	 * It should initiate robber placement.
+	 */
 	public void playSoldierCard()
 	{
 		
 	}
 
+	/**
+	 * This method is called when the user plays a "road building" progress
+	 * development card. It should initiate the process of allowing the player
+	 * to place two roads.
+	 */
 	public void playRoadBuildingCard()
 	{
 
 	}
 
+	/**
+	 * This method is called by the Rob View when a player to rob is selected
+	 * via a button click.
+	 * 
+	 * @param victim
+	 *            The player to be robbed
+	 */
 	public void robPlayer(RobPlayerInfo victim)
 	{
         getRobView().showModal();
