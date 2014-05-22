@@ -49,6 +49,7 @@ public class MapController extends Controller implements IMapController {
 		this.robView = robView;
 	}
 
+	// THIS METHOD NEEDS TO BE CHANGED TO REALLY READ FROM THE MODEL.
 	protected void initFromModel() {
 
 		//<temp>

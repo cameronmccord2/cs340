@@ -17,16 +17,19 @@ public class RoadSegment extends Piece implements IRoadSegment
 
 	public RoadSegment()
 	{
-
+		cost = new HashSet<>();
+		cost.add(new Resource(ResourceType.BRICK, 1));
+		cost.add(new Resource(ResourceType.WOOD, 1));
 	}
 
 	public RoadSegment(TRRoad road, IPlayer player)
 	{
+		this();
 		this.setPlayer(player);
 		this.setLocation(new EdgeLocation(road.getLocation()));
-		cost = new HashSet<>();
-		cost.add(new Resource(ResourceType.BRICK, 1));
-		cost.add(new Resource(ResourceType.WOOD, 1));
+//		cost = new HashSet<>();
+//		cost.add(new Resource(ResourceType.BRICK, 1));
+//		cost.add(new Resource(ResourceType.WOOD, 1));
 	}
 
 	@Override
