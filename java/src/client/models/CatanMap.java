@@ -216,10 +216,10 @@ public class CatanMap implements ICatanMap
 	}
 
 	/**
+	 *	
 	 *
-	 *
-	 *		@param	settlement
-	 *					The ISettlement to be placed on the map.
+	 *	@param	settlement
+	 *				The ISettlement to be placed on the map.
 	 */
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)

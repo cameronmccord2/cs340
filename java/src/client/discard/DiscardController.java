@@ -159,10 +159,9 @@ public class DiscardController extends Controller implements IDiscardController,
 	{
 		Integer amount = 0;
 		Set<Resource> resources = this.getResourcesFromPlayer();
+		
 		for(Resource resource : resources)
-		{
 			amount += resource.getAmount();
-		}
 		
 		return amount/2;
 	}
