@@ -16,7 +16,8 @@ public class DiscardCard {
 	private TRResourceList discardedCards;
 
 	public DiscardCard(String type, Integer playerIndex,
-			TRResourceList discardedCards) {
+			TRResourceList discardedCards)
+	{
 		this.type = type;
 		this.playerIndex = playerIndex;
 		this.discardedCards = discardedCards;
