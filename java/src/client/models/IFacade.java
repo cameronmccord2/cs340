@@ -54,4 +54,6 @@ public interface IFacade {
 	IPlayer[] getPlayers() throws CantFindGameModelException;
 
     HexLocation getRobberLocation() throws CantFindGameModelException;
+
+	Integer getMaritimeTradeAmountForResource(ResourceType resource) throws CantFindPlayerException, CantFindGameModelException;
 }
