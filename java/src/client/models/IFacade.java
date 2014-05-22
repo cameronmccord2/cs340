@@ -9,6 +9,7 @@ import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import client.models.translator.TRTradeOffer;
+import shared.locations.HexLocation;
 
 public interface IFacade {
 
@@ -52,5 +53,5 @@ public interface IFacade {
 	
 	IPlayer[] getPlayers() throws CantFindGameModelException;
 
-	Integer getMaritimeTradeAmountForResource(ResourceType resource) throws CantFindPlayerException, CantFindGameModelException;
+    HexLocation getRobberLocation() throws CantFindGameModelException;
 }

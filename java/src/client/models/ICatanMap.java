@@ -1,12 +1,20 @@
 package client.models;
 
+import shared.locations.HexLocation;
+
 import java.util.*;
 
 public interface ICatanMap
 {
 	public boolean canPlaceSettlement(ISettlement settlement);
 	public boolean canPlaceCity(ICity city);
-	public boolean canPlaceRoad(IRoadSegment segment);
+
+    Collection<IPlayer> getPlayersAroundHex(HexLocation hex);
+
+    // Very ugly method.
+    boolean isOceanHex(HexLocation hex);
+
+    public boolean canPlaceRoad(IRoadSegment segment);
 
 	public boolean canMoveRobber(IPlayer player);
 	public IPiece distanceRule(IPiece piece);

@@ -44,6 +44,7 @@ import client.server.User;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sun.org.apache.xml.internal.utils.IntVector;
 
 /**
  * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server.
@@ -95,10 +96,8 @@ public class Proxy implements IProxy {
 		if(version == null){
 			version = -1;
 		}
-		//System.out.println("version: " + version);
-		if(cm.getVersion() == version.intValue()){
-			// ignore update
-		}else{
+		System.out.println("version: " + version);
+		if(cm.getVersion() != version.intValue() || version.intValue() == 0){
 			IGame g = null;
 			try {
 				g = this.translator.convertClientModelToGame(cm, this.getGameForGameId(Integer.parseInt(gameId)));
@@ -110,6 +109,8 @@ public class Proxy implements IProxy {
 			}
 			this.facade.updatedCatanModel();
 			return g;
+		}else{
+			//ignore update
 		}
 		return null;
 	}
@@ -154,17 +155,24 @@ public class Proxy implements IProxy {
 			Game game = new Game();
 			
 			if(g.getPlayers()[0].getColor() != null){
-				IPlayer[] players = new IPlayer[g.getPlayers().length];
+				int count = 0; //determine how many players are actually in the array
+				for(int i = 0; i < g.getPlayers().length; i++){
+					if(g.getPlayers()[i].getColor() != null)
+						count++;
+				}
+				IPlayer[] players = new IPlayer[count];
 				int playerIndex = 0;
 				for (PlayerServer p : g.getPlayers()) {
-					PlayerInfo pi = new PlayerInfo();
-					pi.setColor(CatanColor.getColorForName(p.getColor()));
-					pi.setId(p.getId());
-					pi.setName(p.getName());
-					pi.setPlayerIndex(playerIndex);
-					IPlayer player = new Player(pi);
-					players[playerIndex] = player;
-					playerIndex++;
+					if(p.getColor() != null){
+						PlayerInfo pi = new PlayerInfo();
+						pi.setColor(CatanColor.getColorForName(p.getColor()));
+						pi.setId(p.getId());
+						pi.setName(p.getName());
+						pi.setPlayerIndex(playerIndex);
+						IPlayer player = new Player(pi);
+						players[playerIndex] = player;
+						playerIndex++;
+					}
 				}
 				game.setPlayers(players);
 			}

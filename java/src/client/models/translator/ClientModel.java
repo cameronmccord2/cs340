@@ -68,7 +68,9 @@ public class ClientModel implements IModelValid{
 	public void isValid() throws InvalidTranslatorModelException {
 		map.isValid();
 		for (TRPlayer p : this.players) {
-			p.isValid();
+			if(p != null){
+				p.isValid();
+			}
 		}
 		this.log.isValid();
 		this.chat.isValid();
