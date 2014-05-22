@@ -29,11 +29,12 @@ public class Facade implements IFacade {
         // Must have a default Integer for parseInt. getGameId() returns null
         // before a game is chosen.
         Integer gameId;
+       
         if(this.proxy.getGameId() == null)
             gameId = 0;
 		else
             gameId = Integer.parseInt(this.proxy.getGameId());
-
+     
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){
 				return g;
@@ -109,11 +110,14 @@ public class Facade implements IFacade {
 
 	@Override
 	public PlayerInfo[] getAllPlayerInfos() throws CantFindGameModelException {
-		PlayerInfo[] pi = new PlayerInfo[this.getGameModel().getPlayers().length];
-		for (int i = 0; i < this.getGameModel().getPlayers().length; i++) {
-			pi[i] = this.getGameModel().getPlayers()[i].getPlayerInfo();
+		if(this.getGameModel().getPlayers() != null){
+			PlayerInfo[] pi = new PlayerInfo[this.getGameModel().getPlayers().length];
+			for (int i = 0; i < this.getGameModel().getPlayers().length; i++) {
+				pi[i] = this.getGameModel().getPlayers()[i].getPlayerInfo();
+			}
+			return pi;
 		}
-		return pi;
+		return null;
 	}
 
 	@Override

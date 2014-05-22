@@ -95,7 +95,7 @@ public class Proxy implements IProxy {
 		if(version == null){
 			version = -1;
 		}
-		System.out.println("version: " + version);
+		//System.out.println("version: " + version);
 		if(cm.getVersion() == version.intValue()){
 			// ignore update
 		}else{

@@ -37,16 +37,21 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     		//fetch players from Game model
     		PlayerInfo[] players;
     		try {
-    			IFacade facade = this.proxy.getFacade();
-    			players = facade.getAllPlayerInfos();
-    			getView().setPlayers(players);
-    			getView().showModal();
-    			System.out.println((players.length));
-    			if(players.length == 4){
-    				gameStarted = true;
-//    				if(this.getView().isModalShowing())
-//    					getView().closeModal();
+    			if(this.proxy.getFacade().getAllPlayerInfos() != null){
+    				players = this.proxy.getFacade().getAllPlayerInfos();
+        			getView().setPlayers(players);
+        			getView().showModal();
+        			if(players.length == 4){
+        				gameStarted = true;
+        				if(this.getView().isModalShowing())
+        					getView().closeModal();
+        			}
     			}
+    			else{
+    				if(!this.getView().isModalShowing())
+    					getView().showModal();
+    			}
+    			
     		} catch (CantFindGameModelException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -56,8 +61,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-
-		// TEMPORARY
 		
 	}
 
