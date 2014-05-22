@@ -41,10 +41,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     			players = facade.getAllPlayerInfos();
     			getView().setPlayers(players);
     			getView().showModal();
+    			System.out.println((players.length));
     			if(players.length == 4){
     				gameStarted = true;
-    				if(this.getView().isModalShowing())
-    					getView().closeModal();
+//    				if(this.getView().isModalShowing())
+//    					getView().closeModal();
     			}
     		} catch (CantFindGameModelException e) {
     			// TODO Auto-generated catch block

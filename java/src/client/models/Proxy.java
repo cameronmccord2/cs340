@@ -322,14 +322,14 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesBuildSettlement(ServerBuildSettlement bs){
 		ServerResponse sr = doPost("/moves/buildSettlement", gson.toJson(bs), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesBuildCity(ServerBuildCity bc){
 		ServerResponse sr = doPost("/moves/buildCity", gson.toJson(bc), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
@@ -350,7 +350,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesMaritimeTrade(MaritimeTradeOff mTrade){
 		ServerResponse sr = doPost("/moves/maritimeTrade", gson.toJson(mTrade), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
@@ -362,7 +362,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse utilChangeLogLevel(ServerLogLevel loglevel){
 		ServerResponse sr = doPost("/util/changeLogLevel", gson.toJson(loglevel), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
