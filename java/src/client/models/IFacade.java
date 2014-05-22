@@ -3,6 +3,7 @@ package client.models;
 import java.util.Map;
 import java.util.List;
 
+import shared.definitions.ResourceType;
 import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
@@ -50,4 +51,6 @@ public interface IFacade {
 	ICatanMap getCatanMap() throws CantFindGameModelException;
 	
 	IPlayer[] getPlayers() throws CantFindGameModelException;
+
+	Integer getMaritimeTradeAmountForResource(ResourceType resource) throws CantFindPlayerException, CantFindGameModelException;
 }

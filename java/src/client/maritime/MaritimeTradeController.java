@@ -6,6 +6,7 @@ import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.models.ResourceCard;
 import client.models.exceptions.CantFindGameModelException;
+import client.models.exceptions.CantFindPlayerException;
 
 
 /**
@@ -63,52 +64,55 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void cancelTrade() {
-
+		this.getTradeOverlay().reset();
 		getTradeOverlay().closeModal();
 	}
 
 	@Override
 	public void setGetResource(ResourceType resource) {
-//		System.out.println("resourceToRecieve: " + resource.toString());
 		this.recieveResource = resource;
-		this.getTradeOverlay().selectGetOption(resource, 1);
+		if(resource != null)
+			this.getTradeOverlay().selectGetOption(resource, 1);
 		this.decideTradeState();
 	}
 
 	@Override
 	public void setGiveResource(ResourceType resource) {
-//		System.out.println("resourceToSend: " + resource.toString());
-		this.sendResource = resource;
-		this.getTradeOverlay().selectGiveOption(resource, this.neededCountToTrade);
-		this.decideTradeState();
+		try {
+			this.sendResource = resource;
+			System.out.println("send resource: " + resource);
+			if(resource != null){
+				this.neededCountToTrade = this.proxy.getFacade().getMaritimeTradeAmountForResource(resource);
+				this.getTradeOverlay().selectGiveOption(resource, this.neededCountToTrade);
+			}
+			this.decideTradeState();
+		} catch (CantFindPlayerException e) {
+			System.out.println("cant find player");
+		} catch (CantFindGameModelException e) {
+			System.out.println("cant find game model");
+		}
 	}
 
 	private void decideTradeState() {
-		try {
-			if(this.sendResource != null && this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(this.sendResource)) >= 4 && this.recieveResource != null){
-				if(this.recieveResource != null){
-					this.getTradeOverlay().setStateMessage("Trade!");
-					this.getTradeOverlay().setTradeEnabled(true);
-				}else{
-					this.getTradeOverlay().setStateMessage("Choose what to get");
-					this.getTradeOverlay().setTradeEnabled(false);
-				}
-				return;
-			}
-		} catch (CantFindGameModelException e) {
-			// do nothing
+		if(this.sendResource == null){
+			this.getTradeOverlay().setStateMessage("Choose what to give up");
+			this.getTradeOverlay().setTradeEnabled(false);
+			return;
+		}else if(this.recieveResource == null){
+			this.getTradeOverlay().setStateMessage("Choose what to get");
+			this.getTradeOverlay().setTradeEnabled(false);
+		}else{
+			this.getTradeOverlay().setStateMessage("Trade!");
+			this.getTradeOverlay().setTradeEnabled(true);
 		}
-		this.getTradeOverlay().setStateMessage("You don't have enough resources");
-		this.getTradeOverlay().setTradeEnabled(false);
 	}
 
 	@Override
 	public void unsetGetValue() {
 		this.recieveResource = null;
 		
-		System.out.println(this.printArray(this.enabledGetResources) + ", " + this.printArray(this.enabledGiveResources));
-		this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
 		this.getTradeOverlay().showGetOptions(this.enabledGetResources);
+		this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
 		this.setGiveResource(this.sendResource);
 		this.decideTradeState();
 	}
@@ -116,8 +120,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private String printArray(ResourceType[] enabledGetResources2) {
 		StringBuilder sb = new StringBuilder();
 		for (ResourceType r : enabledGetResources2) {
-			sb.append(r.toString());
-			sb.append(" ");
+			if(r != null){
+				sb.append(r.toString());
+				sb.append(" ");
+			}
 		}
 		return sb.toString();
 	}
@@ -125,7 +131,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void unsetGiveValue() {
 		this.sendResource = null;
-		System.out.println(this.printArray(this.enabledGetResources) + ", " + this.printArray(this.enabledGiveResources));
 		this.getTradeOverlay().showGetOptions(this.enabledGetResources);
 		this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
 		this.setGetResource(this.recieveResource);
@@ -138,15 +143,16 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		try{
 			this.enabledGiveResources = new ResourceType[5];
 			int counter = 0;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK) >= this.neededCountToTrade)
+			System.out.println("needed count: " + this.neededCountToTrade);
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK) >= this.proxy.getFacade().getMaritimeTradeAmountForResource(ResourceType.BRICK))
 				this.enabledGiveResources[counter++] = ResourceType.BRICK;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE) >= this.neededCountToTrade)
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE) >= this.proxy.getFacade().getMaritimeTradeAmountForResource(ResourceType.ORE))
 				this.enabledGiveResources[counter++] = ResourceType.ORE;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT) >= this.neededCountToTrade)
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT) >= this.proxy.getFacade().getMaritimeTradeAmountForResource(ResourceType.WHEAT))
 				this.enabledGiveResources[counter++] = ResourceType.WHEAT;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD) >= this.neededCountToTrade)
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD) >= this.proxy.getFacade().getMaritimeTradeAmountForResource(ResourceType.WOOD))
 				this.enabledGiveResources[counter++] = ResourceType.WOOD;
-			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP) >= this.neededCountToTrade)
+			if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP) >= this.proxy.getFacade().getMaritimeTradeAmountForResource(ResourceType.SHEEP))
 				this.enabledGiveResources[counter++] = ResourceType.SHEEP;
 			
 			this.enabledGetResources = new ResourceType[5];
@@ -162,14 +168,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			if(this.proxy.getFacade().getBankResourceCount(ResourceCard.SHEEP) >= 1)
 				this.enabledGetResources[counter++] = ResourceType.SHEEP;
 			
-			this.getTradeOverlay().showGetOptions(this.enabledGetResources);
-			this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
-			
 			if(this.proxy.getFacade().isMyTurn()){
-				this.getTradeOverlay().setStateMessage("Choose what to give up");
 				
 				this.getTradeOverlay().showGetOptions(this.enabledGetResources);
 				this.getTradeOverlay().showGiveOptions(this.enabledGiveResources);
+				this.decideTradeState();
 			}else{
 				this.getTradeOverlay().hideGetOptions();
 				this.getTradeOverlay().hideGiveOptions();
@@ -180,6 +183,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			}
 		}catch(CantFindGameModelException e){
 			// dont do any updating
+		} catch (CantFindPlayerException e) {
 		}
 	}
 

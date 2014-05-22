@@ -1,11 +1,17 @@
 package client.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.List;
 import java.util.Set;
 
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
@@ -220,6 +226,66 @@ public class Facade implements IFacade {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public Integer getMaritimeTradeAmountForResource(ResourceType resource) throws CantFindPlayerException, CantFindGameModelException {
+		
+		Integer tradeRatio = 4;
+		
+		Collection<IPort> ports = this.getCatanMap().getPorts();
+		
+		List<ISettlement> cities = new ArrayList<ISettlement>();
+		cities.addAll(this.getCurrentUser().getCities());
+		cities.addAll(this.getCurrentUser().getSettlements());
+		
+		for (ISettlement s : cities) {
+			VertexLocation location = (VertexLocation)s.getLocation();
+
+			List<HexLocation> hexes = new ArrayList<HexLocation>();
+			
+			if(location.getDirection() == VertexDirection.NorthEast)
+			{
+				HexLocation hex = location.getHexLocation();
+				hexes.add(hex);
+				
+				HexLocation aboveHex = new HexLocation(hex.getX()+1, hex.getY()-1);
+				hexes.add(aboveHex);
+				
+				HexLocation belowHex = new HexLocation(hex.getX()+1, hex.getY());
+				hexes.add(belowHex);
+			}
+			else if(location.getDirection() == VertexDirection.NorthWest)
+			{
+				HexLocation hex = location.getHexLocation();
+				hexes.add(hex);
+				
+				HexLocation aboveHex = new HexLocation(hex.getX()-1, hex.getY());
+				hexes.add(aboveHex);
+				
+				HexLocation belowHex = new HexLocation(hex.getX()-1, hex.getY()+1);
+				hexes.add(belowHex);
+			}
+			
+			for (IPort p : ports) {
+				PortType portType = p.getPortType();
+				if(portType != PortType.THREE && portType != PortType.valueOf(resource.toString().toUpperCase())){
+					continue;
+				}
+				
+				for (HexLocation h : hexes) {
+					if(p.getHexLocation().getX() == h.getX() && p.getHexLocation().getY() == h.getY()){
+						if(p.getExchangeRate() < tradeRatio)
+							tradeRatio = p.getExchangeRate();
+					}
+				}
+			}
+			
+			
+		}
+		
+		System.out.println("trade ratio: " + tradeRatio);
+		return tradeRatio;
 	}
 }
 

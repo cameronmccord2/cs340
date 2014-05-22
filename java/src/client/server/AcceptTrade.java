@@ -20,7 +20,7 @@ public class AcceptTrade {
 		this.willAccept = willAccept;
 	}
 	public AcceptTrade(TRTradeOffer currentTrade, boolean willAccept) {
-		this.type = "willAccept";
+		this.type = "acceptTrade";
 		this.playerIndex = currentTrade.getReceiver();
 		this.willAccept = willAccept;
 	}
@@ -59,6 +59,18 @@ public class AcceptTrade {
 	 */
 	public void setWillAccept(boolean willAccept) {
 		this.willAccept = willAccept;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AcceptTrade [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", willAccept=");
+		builder.append(willAccept);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

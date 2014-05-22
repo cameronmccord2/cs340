@@ -285,6 +285,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 		try{
 			this.state = "accepted";
+			System.out.println("will accept: " + willAccept);
 			this.proxy.movesAcceptTrade(new AcceptTrade(this.proxy.getFacade().getCurrentTrade(), willAccept));
 			if(getAcceptOverlay().isModalShowing())
 				getAcceptOverlay().closeModal();
@@ -296,7 +297,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void update() {
 		try{
-			
 			if(this.playersHaveNotBeenSet){
 				PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
 				PlayerInfo[] finalPlayers = new PlayerInfo[players.length - 1];
@@ -334,6 +334,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 				
 			}else if(currentTrade.getReceiver() == this.proxy.getFacade().getCurrentUserIndex()){
+				System.out.println(currentTrade.toString());
 				this.setupAcceptTradeWithTrade(currentTrade);
 			}else if(currentTrade.getSender() == this.proxy.getFacade().getCurrentUserIndex()){
 				if(!this.waitOverlay.isModalShowing())
@@ -383,11 +384,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				throw new CantDoTradeException();
 			
 			this.acceptOverlay.setAcceptEnabled(true);
-			this.acceptOverlay.showModal();
+			if(!this.getAcceptOverlay().isModalShowing())
+				this.acceptOverlay.showModal();
 		} catch (CantFindPlayerException e) {
 			throw new RuntimeException("couldnt find player for trade: " + currentTrade.toString());
 		} catch (CantDoTradeException e) {
 			this.acceptOverlay.setAcceptEnabled(false);
+			if(!this.getAcceptOverlay().isModalShowing())
+				this.getAcceptOverlay().showModal();
 		} catch (CantFindGameModelException e) {
 			// wait for the game model to update
 		}
