@@ -11,6 +11,7 @@ import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import client.models.translator.TRTradeOffer;
+import shared.locations.HexLocation;
 
 public class Facade implements IFacade {
 	
@@ -221,6 +222,11 @@ public class Facade implements IFacade {
 		}
 		return null;
 	}
+
+    @Override
+    public HexLocation getRobberLocation() throws CantFindGameModelException {
+        return this.getCatanMap().getRobber().getLocation().getHexLocation();
+    }
 }
 
 

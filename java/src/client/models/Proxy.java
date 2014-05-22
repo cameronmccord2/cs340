@@ -274,7 +274,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesFinishTurn(FinishedTurn turn){
 		ServerResponse sr = doPost("/moves/finishTurn", gson.toJson(turn), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	

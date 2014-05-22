@@ -1,13 +1,12 @@
 package client.turntracker;
 
-import shared.definitions.CatanColor;
 import client.base.*;
-import client.data.PlayerInfo;
 import client.models.ICatanModelObserver;
 import client.models.IPlayer;
 import client.models.IProxy;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.FinishedTurn;
 
 
 /**
@@ -22,6 +21,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	{
 		super(view);
 		this.proxy = proxy;
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 	
 	@Override
@@ -33,7 +33,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void endTurn()
 	{
-		
+		try {
+			this.proxy.movesFinishTurn(new FinishedTurn("finishTurn", this.proxy.getFacade().getCurrentUserIndex()));
+		} catch (CantFindGameModelException e) {
+
+		}
 	}
 
 	@Override
@@ -41,7 +45,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		try {
 			IPlayer[] players = this.proxy.getFacade().getPlayers();
 			if(players.length > 0){
-				this.getView().updateGameState(this.proxy.getFacade().getCurrentState(), true);
 					for(IPlayer p : players){
 						if(!this.hasLoadedPlayers)
 							this.getView().initializePlayer(p.getPlayerInfo().getPlayerIndex(), p.getPlayerInfo().getName(), p.getPlayerInfo().getColor());
@@ -56,9 +59,14 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 						this.hasLoadedPlayers = true;
 					
 					this.getView().setLocalPlayerColor(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getColor());
+					if(this.proxy.getFacade().isMyTurn() && this.proxy.getFacade().getCurrentState().equals("Playing"))
+						this.getView().updateGameState("Finish Turn", true);
+					else
+						this.getView().updateGameState("Waiting for other players", false);
 			}
 			
 		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			
 		}
 	}
 
