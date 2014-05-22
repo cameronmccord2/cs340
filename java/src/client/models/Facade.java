@@ -74,7 +74,12 @@ public class Facade implements IFacade {
 
 	@Override
 	public void updatedCatanModel() {
-			
+		try {
+			System.out.println(this.getCurrentState());
+		} catch(CantFindGameModelException e) {
+			e.printStackTrace();
+		}
+		
 		for (ICatanModelObserver o : this.observers) {
 			o.update();
 		}

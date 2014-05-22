@@ -447,7 +447,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 			_upButton.setEnabled(_canIncrease);
 			_downButton.setEnabled(_canDecrease);
 			_discardAmountLabel.setText(""+_discardAmount);
-			_maxAmountLabel.setText(""+_maxAmount);
+			_maxAmountLabel.setText("Total "+_maxAmount);
 			_discardResourcePanel.repaint();
 		}
 		
@@ -522,7 +522,8 @@ public class DiscardView extends OverlayView implements IDiscardView
 			c.weighty = 0.25;
 			
 			// Discard Amount Label Settings
-			_maxAmountLabel = new JLabel("Total "+_maxAmount, JLabel.CENTER);
+			String totalAmount = "Total " + _maxAmount;
+			_maxAmountLabel = new JLabel(totalAmount, JLabel.CENTER);
 			FontUtils.setFont(_maxAmountLabel, LABEL_FONT_SIZE);
 			c.gridx = 1;
 			c.gridy = 0;

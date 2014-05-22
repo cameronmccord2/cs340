@@ -1,7 +1,9 @@
 package client.discard;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import shared.definitions.*;
 import client.base.*;
@@ -33,6 +35,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	private Integer amountToDiscard;
 	private StringBuilder buttonMessage;
 	private boolean discardEnabled;
+	private Integer selectedAmountTotal;
 
 	/**
 	 * DiscardController constructor
@@ -103,9 +106,12 @@ public class DiscardController extends Controller implements IDiscardController,
 	 *            The resource that was increased
 	 */
 	@Override
-	public void increaseAmount(ResourceType resource)
+	public void increaseAmount(ResourceType type)
 	{
-		Map<IResourceCard, Integer> playerMap = player.getResourceCards();
+		Set<Resource> resources = this.getResourcesFromPlayer();
+		Integer amount = resourceSelection.get(type);
+		resourceSelection.put(type, amount+1);
+		updateView();
 	}
 
 	/**
@@ -116,9 +122,12 @@ public class DiscardController extends Controller implements IDiscardController,
 	 *            The resource that was decreased
 	 */
 	@Override
-	public void decreaseAmount(ResourceType resource)
+	public void decreaseAmount(ResourceType type)
 	{
-		Map<IResourceCard, Integer> playerMap = player.getResourceCards();
+		Set<Resource> resources = this.getResourcesFromPlayer();
+		Integer amount = resourceSelection.get(type);
+		resourceSelection.put(type, amount-1);
+		updateView();
 	}
 
 	/**
@@ -127,13 +136,91 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard()
 	{
-		
+		// I need to calculate and update the amount of each resource
+		// and send it back to the server.
 		getDiscardView().closeModal();
 		this.initialize();
 	}
 	
+	private Set<Resource> getResourcesFromPlayer()
+	{
+		Map<IResourceCard, Integer> playerMap = player.getResourceCards();
+		Set<Resource> resources = new HashSet<>();
+		for(Map.Entry<IResourceCard, Integer> cardEntry : playerMap.entrySet())
+		{
+			IResourceCard card = cardEntry.getKey();
+			Integer amount = cardEntry.getValue();
+			resources.add(new Resource(card.getType(), amount));
+		}
+		return resources;
+	}
+	
+	private Integer getAmountToDiscard()
+	{
+		Integer amount = 0;
+		Set<Resource> resources = this.getResourcesFromPlayer();
+		for(Resource resource : resources)
+		{
+			amount += resource.getAmount();
+		}
+		
+		return amount/2;
+	}
+	
+	private Integer getSelectedAmountTotal()
+	{
+		Integer total = 0;
+		for(Integer amount : resourceSelection.values())
+			total += amount;
+		return total;
+	}
+	
+	private void updateDisplayValues()
+	{
+		this.amountToDiscard = this.getAmountToDiscard();
+		this.selectedAmountTotal = this.getSelectedAmountTotal();
+		
+		buttonMessage = new StringBuilder();
+		buttonMessage.append(this.selectedAmountTotal);
+		buttonMessage.append("/");
+		buttonMessage.append(this.amountToDiscard);
+	}
+	
+	private void updateBooleanValues()
+	{
+		this.discardEnabled = selectedAmountTotal.intValue() ==
+							  amountToDiscard.intValue();
+		Set<Resource> playerResources = this.getResourcesFromPlayer();
+		for(Resource resource : playerResources)
+		{
+			ResourceType type = resource.getResourceType();
+			int discardAmount = resourceSelection.get(type);
+			
+//			boolean increase = false;
+//			boolean decrease = false;
+//			if(discardAmount < resource.getAmount())
+//				increase = true;
+//			if(discardAmount > 0)
+//				decrease = true;
+			
+			boolean increase = discardAmount < resource.getAmount() &&
+							   !discardEnabled;
+			boolean decrease = discardAmount > 0;
+			
+			getDiscardView().setResourceAmountChangeEnabled(type, increase, decrease);
+		}
+	}
+	
+	private void updateValues()
+	{
+		this.updateDisplayValues();
+		this.updateBooleanValues();
+	}
+	
 	private void updateView()
 	{
+		this.updateValues();
+		
 		this.getDiscardView().setStateMessage(buttonMessage.toString());
 		this.getDiscardView().setDiscardButtonEnabled(discardEnabled);
 		
@@ -154,16 +241,23 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void update()
 	{
-		IFacade facade = proxy.getFacade();
 		try
 		{
-			player = facade.getCurrentUser();
+			IFacade facade = proxy.getFacade();
+			String status = facade.getCurrentState();
+			if(status.equals("Discarding"))
+			{
+				if(!getDiscardView().isModalShowing())
+					getDiscardView().showModal();
+    			System.out.println("DiscardController update()");
+    			player = facade.getCurrentUser();
+    			updateView();
+			}
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
 		{
 			e.printStackTrace();
 		}
-		updateView();
 	}
 }
 
