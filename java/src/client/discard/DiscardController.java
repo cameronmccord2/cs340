@@ -143,9 +143,11 @@ public class DiscardController extends Controller implements IDiscardController,
 		// I need to calculate and update the amount of each resource
 		// and send it back to the server.
 		finishedDiscarding = true;
+
 		// DiscardCard(String type, Integer playerIndex, TRResourceList list)
 		DiscardCard cards = new DiscardCard(null, amountToDiscard, null);
 		proxy.movesDiscardCards(cards);
+
 		getDiscardView().closeModal();
 		this.initialize();
 	}
