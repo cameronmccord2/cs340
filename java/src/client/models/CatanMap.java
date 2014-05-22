@@ -128,7 +128,7 @@ public class CatanMap implements ICatanMap
 	}
 
     // Very ugly method.
-	// 	Not any more.
+	// 	-Not any more.
     @Override
     public boolean isOceanHex(HexLocation location) {
 //        if( hex.equals(new HexLocation(-3,3)) ||

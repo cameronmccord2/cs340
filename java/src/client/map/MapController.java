@@ -399,7 +399,7 @@ public class MapController extends Controller implements IMapController,
 
         RobPlayerInfo[] victims = robbable.toArray(new RobPlayerInfo[robbable.size()]);
 
-        getRobView().setPlayers( victims );
+        getRobView().setPlayers(victims);
         getRobView().showModal();
 
     }
@@ -409,24 +409,16 @@ public class MapController extends Controller implements IMapController,
 	                      boolean allowDisconnected)
 	{
 		IFacade facade = this.proxy.getFacade();
-		IPlayer player = null;
-		PlayerInfo info = null;
 		try
 		{
-			player = facade.getCurrentUser();
+			IPlayer player = facade.getCurrentUser();
+			PlayerInfo info = player.getPlayerInfo();
+			getView().startDrop(pieceType, info.getColor(), true);
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
 		{
 			e.printStackTrace();
 		}
-		
-		if(player != null)
-			info = player.getPlayerInfo();
-		else
-			info = new PlayerInfo();
-		
-		
-		getView().startDrop(pieceType, info.getColor(), true);
 	}
 
 	public void cancelMove()
