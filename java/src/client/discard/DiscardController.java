@@ -18,7 +18,8 @@ import client.models.Resource;
 import client.models.ResourceCard;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
-import client.server.DiscardCard;
+import client.models.translator.TRResourceList;
+import client.server.DiscardedCards;
 
 
 /**
@@ -140,16 +141,31 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void discard()
 	{
-		// I need to calculate and update the amount of each resource
-		// and send it back to the server.
-		finishedDiscarding = true;
+		try
+		{
+   		// I need to calculate and update the amount of each resource
+   		// and send it back to the server.
+   		finishedDiscarding = true;
 
-		// DiscardCard(String type, Integer playerIndex, TRResourceList list)
-		DiscardCard cards = new DiscardCard(null, amountToDiscard, null);
-		proxy.movesDiscardCards(cards);
+   		IFacade facade = this.proxy.getFacade();
+   		IPlayer player = facade.getCurrentUser();
+   		PlayerInfo info = player.getPlayerInfo();
 
-		getDiscardView().closeModal();
-		this.initialize();
+   		String type = "discardCards";
+   		Integer playerIndex = info.getPlayerIndex();
+   		TRResourceList list = new TRResourceList(resourceSelection);
+   		DiscardedCards cards = new DiscardedCards(type, playerIndex, list);
+   		proxy.movesDiscardCards(cards);
+
+   		if(getDiscardView().isModalShowing())
+   			getDiscardView().closeModal();
+
+   		this.initialize();
+		}
+		catch(CantFindGameModelException | CantFindPlayerException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	private Set<Resource> getResourcesFromPlayer()
@@ -165,15 +181,25 @@ public class DiscardController extends Controller implements IDiscardController,
 		return resources;
 	}
 
-	private Integer getAmountToDiscard()
+	private int getTotalResourceAmount()
 	{
-		Integer amount = 0;
+		int amount = 0;
 		Set<Resource> resources = this.getResourcesFromPlayer();
 
 		for(Resource resource : resources)
 			amount += resource.getAmount();
 
-		return amount/2;
+		return amount;
+	}
+
+	private int getAmountToDiscard()
+	{
+		int amount = this.getTotalResourceAmount();
+
+		if(amount <= 7)
+			return 0;
+		else
+			return amount/2;
 	}
 
 	private Integer getSelectedAmountTotal()
@@ -213,7 +239,7 @@ public class DiscardController extends Controller implements IDiscardController,
 //				decrease = true;
 
 			boolean increase = discardAmount < resource.getAmount() &&
-							   !discardEnabled;
+							   	 !discardEnabled;
 			boolean decrease = discardAmount > 0;
 
 			getDiscardView().setResourceAmountChangeEnabled(type, increase, decrease);
@@ -256,18 +282,29 @@ public class DiscardController extends Controller implements IDiscardController,
 			String status = facade.getCurrentState();
 			if(status.equals("Discarding"))
 			{
+        		player = facade.getCurrentUser();
+				int discardAmount = this.getAmountToDiscard();
+
+				if(discardAmount == 0)
+					finishedDiscarding = true;
+
 				if(!finishedDiscarding)
 				{
     				if(!getDiscardView().isModalShowing())
     					getDiscardView().showModal();
-        			System.out.println("DiscardController update()");
-        			player = facade.getCurrentUser();
+
         			updateView();
 				}
 				else
 				{
-//					if()
+					if(!getWaitView().isModalShowing())
+						getWaitView().showModal();
 				}
+			}
+			else
+			{
+				if(getWaitView().isModalShowing())
+					getWaitView().closeModal();
 			}
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
