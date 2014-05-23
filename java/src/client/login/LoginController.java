@@ -68,7 +68,8 @@ public class LoginController extends Controller implements ILoginController {
 		User user = new User(((ILoginView) super.getView()).getLoginUsername(), ((ILoginView) super.getView()).getLoginPassword());
 		if(proxy.postUserLogin(user).getJson().equals("Success")){
 			// If log in succeeded
-			getLoginView().closeModal();
+			if(getLoginView().isModalShowing())
+				getLoginView().closeModal();
 			loginAction.execute();
 		}
 		else{
