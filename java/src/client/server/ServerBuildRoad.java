@@ -11,14 +11,14 @@ import shared.locations.EdgeLocation;
 public class ServerBuildRoad {
 
 	private String type;
-	private int playerindex;
-	private EdgeLocation roadLocation;
+	private int playerIndex;
+	private SimplifiedEdgeLocation roadLocation;
 	private boolean free;
-	public ServerBuildRoad(String type, int playerindex,
+	public ServerBuildRoad(String type, int playerIndex,
 			EdgeLocation roadLocation, boolean free) {
 		this.type = type;
-		this.playerindex = playerindex;
-		this.roadLocation = roadLocation;
+		this.playerIndex = playerIndex;
+		this.roadLocation = new SimplifiedEdgeLocation(roadLocation);
 		this.free = free;
 	}
 	/**
@@ -34,28 +34,28 @@ public class ServerBuildRoad {
 		this.type = type;
 	}
 	/**
-	 * @return the playerindex
+	 * @return the playerIndex
 	 */
-	public int getPlayerindex() {
-		return playerindex;
+	public int getPlayerIndex() {
+		return playerIndex;
 	}
 	/**
-	 * @param playerindex the playerindex to set
+	 * @param playerIndex the playerIndex to set
 	 */
-	public void setPlayerindex(int playerindex) {
-		this.playerindex = playerindex;
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
 	}
 	/**
 	 * @return the roadLocation
 	 */
-	public EdgeLocation getRoadLocation() {
+	public SimplifiedEdgeLocation getRoadLocation() {
 		return roadLocation;
 	}
 	/**
 	 * @param roadLocation the roadLocation to set
 	 */
 	public void setRoadLocation(EdgeLocation roadLocation) {
-		this.roadLocation = roadLocation;
+		this.roadLocation = new SimplifiedEdgeLocation(roadLocation);
 	}
 	/**
 	 * @return the free
@@ -71,4 +71,34 @@ public class ServerBuildRoad {
 	}
 	
 	
+}
+
+class SimplifiedEdgeLocation {
+    int x;
+    int y;
+    String direction;
+
+    public SimplifiedEdgeLocation() {
+        x = 0;
+        y = 0;
+        direction = "N";
+    }
+    public SimplifiedEdgeLocation(EdgeLocation edge) {
+        x = edge.getHexLocation().getX();
+        y = edge.getHexLocation().getY();
+        switch(edge.getDirection().toString().toUpperCase()){
+            case "NORTHWEST":
+                direction = "NW"; break;
+            case "NORTH":
+                direction = "N"; break;
+            case "NORTHEAST":
+                direction = "NE"; break;
+            case "SOUTHEAST":
+                direction = "SE"; break;
+            case "SOUTH":
+                direction = "S"; break;
+            case "SOUTHWEST":
+                direction = "SW"; break;
+        }
+    }
 }

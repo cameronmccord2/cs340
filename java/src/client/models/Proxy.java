@@ -341,6 +341,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesBuildRoad(ServerBuildRoad br){
 		ServerResponse sr = doPost("/moves/buildRoad", gson.toJson(br), true, true);
+        System.out.println("BUILD ROAD: " + gson.toJson(br));
 		saveGameModel(sr.getJson());
 		return sr;
 	}
