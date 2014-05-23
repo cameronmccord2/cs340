@@ -100,13 +100,14 @@ public class OverlayView extends PanelView implements IOverlayView
 	public void closeModal()
 	{
 		
+		System.out.println("hidden2");
 		assert overlayStack.size() > 0;
 		assert window.getGlassPane() == overlayStack.peek().getOverlayPanel();
-		
 		if(overlayStack.size() > 0)
 		{
 			
 			overlayStack.pop().getOverlayPanel().setVisible(false);
+			System.out.println("hidden1");
 			
 			if(overlayStack.size() > 0)
 			{
@@ -117,6 +118,7 @@ public class OverlayView extends PanelView implements IOverlayView
 			else
 			{
 				window.setGlassPane(defaultGlassPane);
+				System.out.println("hidden");
 				window.getGlassPane().setVisible(false);
 			}
 		}
@@ -130,7 +132,7 @@ public class OverlayView extends PanelView implements IOverlayView
 	@Override
 	public boolean isModalShowing()
 	{
-		
+		System.out.println("is showing");
 		for (OverlayInfo info : overlayStack)
 		{
 			

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.CatanColor;
-import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.data.PlayerInfo;
 import client.models.translator.ClientModel;
@@ -108,7 +107,6 @@ public class Translator {
 					if(road.getOwner() != p.getPlayerIndex())
 						continue;
 					IRoadSegment r = new RoadSegment(road, newPlayer);
-//					System.out.println(r);
 					roads.add(r);
 				}
 //				System.out.println(roads);
@@ -142,8 +140,6 @@ public class Translator {
 				newPlayer.setDevelopmentCards(developmentCards);
 
 				g.getPlayers()[index] = newPlayer;
-//				System.out.println(g.getPlayers()[index]);
-//				System.out.println(newPlayer);
 				index++;
 			}
 
@@ -167,7 +163,6 @@ public class Translator {
 		}
 		for(TRRoad road : cm.getMap().getRoads()){
 			IPlayer player = this.getPlayerWithId(road.getOwner(), g.getPlayers());
-//			System.out.println(player);
 			map.placeInitialRoadSegment(new RoadSegment(road, player));
 		}
 
