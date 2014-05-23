@@ -14,6 +14,7 @@ import client.models.IGame;
 import client.models.IPlayer;
 import client.models.IProxy;
 import client.models.Poller;
+import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import client.server.CreateGame;
 import client.server.ServerJoinGame;
@@ -114,62 +115,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		self.setId(this.proxy.getrUser().getPlayerID());
 		self.setName(this.proxy.getrUser().getName());
 		
-//		// This is just for testing purposes
-//		PlayerInfo first = new PlayerInfo();
-//		first.setId(7);
-//		first.setPlayerIndex(1);
-//		first.setName("First");
-//		first.setColor(CatanColor.RED);
-//		
-//		PlayerInfo second = new PlayerInfo();
-//		second.setId(11);
-//		second.setPlayerIndex(2);
-//		second.setName("Second");
-//		second.setColor(CatanColor.GREEN);
-//		
-//		PlayerInfo third = new PlayerInfo();
-//		third.setId(15);
-//		third.setPlayerIndex(3);
-//		third.setName("Third");
-//		third.setColor(CatanColor.ORANGE);
-//		
-//		PlayerInfo fourth = new PlayerInfo();
-//		fourth.setId(19);
-//		fourth.setPlayerIndex(4);
-//		fourth.setName("Fourth");
-//		fourth.setColor(CatanColor.PURPLE);
-//		
-//		GameInfo one = new GameInfo();
-//		one.setId(1);
-//		one.setTitle("Game One");
-//		one.addPlayer(first);
-//		one.addPlayer(third);
-//		
-//		GameInfo two = new GameInfo();
-//		two.setId(3);
-//		two.setTitle("Game Two");
-//		two.addPlayer(second);
-//		two.addPlayer(third);
-//		
-//		GameInfo three = new GameInfo();
-//		three.setId(5);
-//		three.setTitle("Game Three");
-//		three.addPlayer(first);
-//		three.addPlayer(second);
-//		three.addPlayer(self);
-//		
-//		GameInfo four = new GameInfo();
-//		four.setId(7);
-//		four.setTitle("Game Four");
-//		four.addPlayer(first);
-//		four.addPlayer(second);
-//		four.addPlayer(third);
-//		four.addPlayer(fourth);
-//		
-//		GameInfo[] games = {one, two, three, four};
-		
-		//getJoinGameView().setGames(games, self);
-		
 		List<IGame> allGames = this.proxy.getGamesList();
 		List<GameInfo> games = new ArrayList<GameInfo>();
 		for (IGame g : allGames) {
@@ -186,12 +131,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 		
 		getJoinGameView().setGames(games, self);
-		getJoinGameView().showModal();
+		
+		System.out.println("called");
+		try {
+			if(this.proxy.getFacade().getCatanMap() == null)
+				getJoinGameView().showModal();
+		} catch (CantFindGameModelException e) {
+			getJoinGameView().showModal();
+		}
+		
 	}
 	
 	@Override
 	public void startCreateNewGame()
 	{
+		System.out.println("CALLED 2");
 		getNewGameView().showModal();
 	}
 	
@@ -225,6 +179,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
 		selectedGame = game;
+		System.out.println("Join game");
 		getSelectColorView().showModal();
 	}
 	
@@ -252,9 +207,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			
 			
 //			THIS IS SOMEHOW CAUSING AN INFINITE LOOP!
-			System.out.println("before execute");
 			joinAction.execute();
-			System.out.println("After execute");
 		}	
 	}
 
