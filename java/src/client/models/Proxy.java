@@ -17,6 +17,8 @@ import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
+import client.models.exceptions.CantFindGameModelException;
+import client.models.exceptions.CantFindPlayerException;
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
 import client.server.AcceptTrade;
@@ -196,6 +198,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse postGamesJoin(ServerJoinGame join){
 		ServerResponse sr = doPost("/games/join", gson.toJson(join), true, false);// responds with Success
+//		System.out.println(sr.toString());
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		gameId = setCookie.get(0);
@@ -205,6 +208,18 @@ public class Proxy implements IProxy {
 		gameId = gameId.substring(11);
 		//System.out.println(gameId);//0
 //		this.getGameModel();// first time it gets gotten
+//		String requestUrl = "/game/model";
+//		this.saveGameModel(this.actuallyGetGameModelFromServer(requestUrl).getJson());
+		try {
+			this.movesSendChat(new ServerChat("sendChat", this.getFacade().getCurrentUserIndex(), this.getFacade().getCurrentUser().getPlayerInfo().getName() + " has joined the game. Chat now!"));
+		} catch (CantFindGameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CantFindPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("sent chat");
 		return sr;
 	}
 	
@@ -223,8 +238,14 @@ public class Proxy implements IProxy {
 		String requestUrl = "/game/model";
 		if(version != 0)
 			requestUrl += "?version=" + version;
-		ServerResponse sr = this.doGet(requestUrl, true, true);
+		ServerResponse sr = this.actuallyGetGameModelFromServer(requestUrl);
+//		ServerResponse sr = this.doGet(requestUrl, true, true);
 		return this.saveGameModel(sr.getJson());
+	}
+	
+	private ServerResponse actuallyGetGameModelFromServer(String url){
+		ServerResponse sr = this.doGet(url, true, true);
+		return sr;
 	}
 	
 	private IGame getGameForGameId(Integer gameId) {
@@ -267,7 +288,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse moveRobPlayer(ServerRobPlayer rob){
 		ServerResponse sr = doPost("/moves/robPlayer", gson.toJson(rob), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
