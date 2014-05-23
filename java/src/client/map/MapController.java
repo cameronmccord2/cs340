@@ -347,28 +347,31 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void placeRoad(EdgeLocation edgeLoc)
 	{
-		try
+		if(canPlaceRoad(edgeLoc))
 		{
-			IFacade facade = this.proxy.getFacade();
-			IPlayer player = facade.getCurrentUser();
-			ICatanMap map = facade.getCatanMap();
-			PlayerInfo info = player.getPlayerInfo();
-
-			getView().placeRoad(edgeLoc, info.getColor());
-
-    		IRoadSegment segment = new RoadSegment();
-    		segment.setLocation(edgeLoc);
-    		segment.setPlayer(player);
-
-			map.placeRoadSegment(segment);
-			String state = facade.getCurrentState();
-
-			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
-				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, false));
-		}
-		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
-		{
-			e.printStackTrace();
+    		try
+    		{
+    			IFacade facade = this.proxy.getFacade();
+    			IPlayer player = facade.getCurrentUser();
+    			ICatanMap map = facade.getCatanMap();
+    			PlayerInfo info = player.getPlayerInfo();
+    
+    			getView().placeRoad(edgeLoc, info.getColor());
+    
+        		IRoadSegment segment = new RoadSegment();
+        		segment.setLocation(edgeLoc);
+        		segment.setPlayer(player);
+    
+    			map.placeRoadSegment(segment);
+    			String state = facade.getCurrentState();
+    
+    			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
+    				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, false));
+    		}
+    		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+    		{
+    			e.printStackTrace();
+    		}
 		}
 	}
 
@@ -381,25 +384,28 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void placeSettlement(VertexLocation vertLoc)
 	{
-		try
+		if(canPlaceSettlement(vertLoc))
 		{
-			IFacade facade = this.proxy.getFacade();
-			IPlayer player = facade.getCurrentUser();
-			ICatanMap map = facade.getCatanMap();
-			PlayerInfo info = player.getPlayerInfo();
-
-			getView().placeSettlement(vertLoc, info.getColor());
-
-			ISettlement settlement = new Settlement(vertLoc, player);
-
-			map.placeSettlement(settlement);
-
-			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
-				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, false));
-		}
-		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
-		{
-			e.printStackTrace();
+    		try
+    		{
+    			IFacade facade = this.proxy.getFacade();
+    			IPlayer player = facade.getCurrentUser();
+    			ICatanMap map = facade.getCatanMap();
+    			PlayerInfo info = player.getPlayerInfo();
+    
+    			getView().placeSettlement(vertLoc, info.getColor());
+    
+    			ISettlement settlement = new Settlement(vertLoc, player);
+    
+    			map.placeSettlement(settlement);
+    
+    			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
+    				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, false));
+    		}
+    		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+    		{
+    			e.printStackTrace();
+    		}
 		}
 	}
 
@@ -411,24 +417,27 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void placeCity(VertexLocation vertLoc)
 	{
-		try
+		if(canPlaceCity(vertLoc))
 		{
-			IFacade facade = this.proxy.getFacade();
-			IPlayer player = facade.getCurrentUser();
-			ICatanMap map = facade.getCatanMap();
-			PlayerInfo info = player.getPlayerInfo();
-
-			getView().placeCity(vertLoc, info.getColor());
-
-			ICity city = new City(vertLoc, player);
-
-			map.placeCity(city);
-
-			proxy.movesBuildCity(new ServerBuildCity("buildCity", info.getPlayerIndex(), vertLoc));
-		}
-		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
-		{
-			e.printStackTrace();
+    		try
+    		{
+    			IFacade facade = this.proxy.getFacade();
+    			IPlayer player = facade.getCurrentUser();
+    			ICatanMap map = facade.getCatanMap();
+    			PlayerInfo info = player.getPlayerInfo();
+    
+    			getView().placeCity(vertLoc, info.getColor());
+    
+    			ICity city = new City(vertLoc, player);
+    
+    			map.placeCity(city);
+    
+    			proxy.movesBuildCity(new ServerBuildCity("buildCity", info.getPlayerIndex(), vertLoc));
+    		}
+    		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
+    		{
+    			e.printStackTrace();
+    		}
 		}
 	}
 
@@ -440,33 +449,36 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void placeRobber(HexLocation hexLoc)
 	{
-        // Save the new robber location for later (after the user decides who to rob from)
-        robberLocCache = hexLoc;
-
-        getView().placeRobber(hexLoc);
-        IFacade facade = this.proxy.getFacade();
-
-        HashSet<RobPlayerInfo> robbable = new HashSet<>();
-
-        try {
-
-            for( IPiece piece : facade.getCatanMap().getSettlementsAroundHex(hexLoc) )
-            {
-                if(piece.getPlayer() == facade.getCurrentUser())
-                        continue;
-                RobPlayerInfo rob = new RobPlayerInfo(piece.getPlayer().getPlayerInfo());
-                rob.setNumCards( piece.getPlayer().getNumResourceCards() );
-                robbable.add(rob);
+		if(canPlaceRobber(hexLoc))
+		{
+            // Save the new robber location for later (after the user decides who to rob from)
+            robberLocCache = hexLoc;
+    
+            getView().placeRobber(hexLoc);
+            IFacade facade = this.proxy.getFacade();
+    
+            HashSet<RobPlayerInfo> robbable = new HashSet<>();
+    
+            try {
+    
+                for( IPiece piece : facade.getCatanMap().getSettlementsAroundHex(hexLoc) )
+                {
+                    if(piece.getPlayer() == facade.getCurrentUser())
+                            continue;
+                    RobPlayerInfo rob = new RobPlayerInfo(piece.getPlayer().getPlayerInfo());
+                    rob.setNumCards( piece.getPlayer().getNumResourceCards() );
+                    robbable.add(rob);
+                }
+    
+            } catch (CantFindGameModelException | CantFindPlayerException e) {
+                e.printStackTrace();
             }
-
-        } catch (CantFindGameModelException | CantFindPlayerException e) {
-            e.printStackTrace();
-        }
-
-        RobPlayerInfo[] victims = robbable.toArray(new RobPlayerInfo[robbable.size()]);
-
-        getRobView().setPlayers(victims);
-        getRobView().showModal();
+    
+            RobPlayerInfo[] victims = robbable.toArray(new RobPlayerInfo[robbable.size()]);
+    
+            getRobView().setPlayers(victims);
+            getRobView().showModal();
+		}
 
     }
 
