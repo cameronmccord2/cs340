@@ -386,7 +386,7 @@ public class MapController extends Controller implements IMapController,
     					Spot spot1 = new Spot(seg1.getX(), seg1.getY(), seg1.getDirection());
     					Spot spot2 = new Spot(seg2.getX(), seg2.getY(), seg2.getDirection());
     					RoadBuilding rb = new RoadBuilding("roadBuilding", info.getPlayerIndex(), spot1, spot2);
-    					this.proxy.movesRoad_Building(rb);
+//    					this.proxy.movesRoad_Building(rb);
     					this.firstSegment = null;
     					this.secondSegment = null;
     					this.remainingRoadBuildCardSegments = 0;
@@ -588,7 +588,7 @@ public class MapController extends Controller implements IMapController,
             IPlayer player = facade.getCurrentUser();
             CatanColor color = player.getPlayerInfo().getColor();
             
-            this.startMove(PieceType.ROAD, true, false);
+            this.getView().startDrop(PieceType.ROAD, color, false);
             
         } catch (CantFindGameModelException | CantFindPlayerException e) {
             e.printStackTrace();
