@@ -14,6 +14,7 @@ import client.models.IGame;
 import client.models.IPlayer;
 import client.models.IProxy;
 import client.models.Poller;
+import client.models.ServerResponse;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import client.server.CreateGame;
@@ -123,62 +124,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		self.setId(this.proxy.getrUser().getPlayerID());
 		self.setName(this.proxy.getrUser().getName());
 
-//		// This is just for testing purposes
-//		PlayerInfo first = new PlayerInfo();
-//		first.setId(7);
-//		first.setPlayerIndex(1);
-//		first.setName("First");
-//		first.setColor(CatanColor.RED);
-//
-//		PlayerInfo second = new PlayerInfo();
-//		second.setId(11);
-//		second.setPlayerIndex(2);
-//		second.setName("Second");
-//		second.setColor(CatanColor.GREEN);
-//
-//		PlayerInfo third = new PlayerInfo();
-//		third.setId(15);
-//		third.setPlayerIndex(3);
-//		third.setName("Third");
-//		third.setColor(CatanColor.ORANGE);
-//
-//		PlayerInfo fourth = new PlayerInfo();
-//		fourth.setId(19);
-//		fourth.setPlayerIndex(4);
-//		fourth.setName("Fourth");
-//		fourth.setColor(CatanColor.PURPLE);
-//
-//		GameInfo one = new GameInfo();
-//		one.setId(1);
-//		one.setTitle("Game One");
-//		one.addPlayer(first);
-//		one.addPlayer(third);
-//
-//		GameInfo two = new GameInfo();
-//		two.setId(3);
-//		two.setTitle("Game Two");
-//		two.addPlayer(second);
-//		two.addPlayer(third);
-//
-//		GameInfo three = new GameInfo();
-//		three.setId(5);
-//		three.setTitle("Game Three");
-//		three.addPlayer(first);
-//		three.addPlayer(second);
-//		three.addPlayer(self);
-//
-//		GameInfo four = new GameInfo();
-//		four.setId(7);
-//		four.setTitle("Game Four");
-//		four.addPlayer(first);
-//		four.addPlayer(second);
-//		four.addPlayer(third);
-//		four.addPlayer(fourth);
-//
-//		GameInfo[] games = {one, two, three, four};
-
-		//getJoinGameView().setGames(games, self);
-
 		List<IGame> allGames = this.proxy.getGamesList();
 		List<GameInfo> games = new ArrayList<GameInfo>();
 		for (IGame g : allGames) {
@@ -196,17 +141,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		getJoinGameView().setGames(games, self);
 
-		System.out.println("called");
 		try {
 			if(this.proxy.getFacade().getCatanMap() == null)
 			{
-				System.out.println("CatanMap is null");
 				if(!getJoinGameView().isModalShowing())
 					getJoinGameView().showModal();
 			}
 		} catch (CantFindGameModelException e) {
-			if(!getJoinGameView().isModalShowing())
+			if(!getJoinGameView().isModalShowing()){
 				getJoinGameView().showModal();
+			}
 		}
 
 	}
@@ -214,7 +158,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startCreateNewGame()
 	{
-		System.out.println("CALLED 2");
 		if(!getNewGameView().isModalShowing())
 			getNewGameView().showModal();
 	}
@@ -252,7 +195,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 
 		selectedGame = game;
-		System.out.println("Join game");
 
 		if(!getSelectColorView().isModalShowing())
 			getSelectColorView().showModal();
@@ -272,28 +214,26 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void joinGame(CatanColor color)
 	{
 		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());
-		if(proxy.postGamesJoin(join).getJson().equals("Success"))
+		ServerResponse sr = this.proxy.postGamesJoin(join);
+		if(sr.getJson().equals("Success"))
 		{
 			// If join succeeded
-
+			joinAction.execute();
+			
 			if(getSelectColorView().isModalShowing())
 				getSelectColorView().closeModal();
 			if(getJoinGameView().isModalShowing())
 				getJoinGameView().closeModal();
-
-			System.out.println("before execute");
-			joinAction.execute();
-			System.out.println("After execute");
 		}
 	}
 
 	@Override
 	public void update()
 	{
-//		if(getSelectColorView().isModalShowing())
-//			getSelectColorView().closeModal();
-//		if(getJoinGameView().isModalShowing())
-//			getJoinGameView().closeModal();
+		if(getSelectColorView().isModalShowing())
+			getSelectColorView().closeModal();
+		if(getJoinGameView().isModalShowing())
+			getJoinGameView().closeModal();
 	}
 
 }
