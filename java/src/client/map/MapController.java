@@ -516,7 +516,21 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void playSoldierCard()
 	{
-
+		System.out.println("Playing Soldier CArd");
+		IFacade facade = this.proxy.getFacade();
+		
+		int numSoldierCards = 0;
+		
+		try {
+			numSoldierCards = facade.getCurrentUser().getSoldiers();
+			facade.getCurrentUser().setSoldiers( ++ numSoldierCards );
+			System.out.println("Currently has " + numSoldierCards);
+		} catch (CantFindGameModelException | CantFindPlayerException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Showing Robber View");
+        this.getView().startDrop(PieceType.ROBBER, null, false);
 	}
 
 	/**
