@@ -254,6 +254,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		selectedGame = game;
 		System.out.println("Join game");
 
+		if(getJoinGameView().isModalShowing())
+			getJoinGameView().closeModal();
 		if(!getSelectColorView().isModalShowing())
 			getSelectColorView().showModal();
 	}
@@ -264,13 +266,18 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		for(CatanColor color : CatanColor.values())
 			getSelectColorView().setColorEnabled(color, true);
 
-		if(getJoinGameView().isModalShowing())
-			getJoinGameView().closeModal();
+		if(getSelectColorView().isModalShowing())
+			getSelectColorView().closeModal();
+		if(!getJoinGameView().isModalShowing())
+			getJoinGameView().showModal();
 	}
 
 	@Override
 	public void joinGame(CatanColor color)
 	{
+
+		if(getSelectColorView().isModalShowing())
+			getSelectColorView().closeModal();
 		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());
 		if(proxy.postGamesJoin(join).getJson().equals("Success"))
 		{

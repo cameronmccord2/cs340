@@ -64,6 +64,12 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		this.initializeView();
 	}
 
+//	public void showModal()
+//	{
+//		System.out.println("showModal called");
+//		super.showModal();
+//	}
+
 	private void initializeView()
 	{
 		this.setOpaque(true);
@@ -130,34 +136,34 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				gamePanel.add(tmp3);
 
 				//gamePanel.add(box1);
-				JButton joinButton = null;
+				JButton joinBtn = null;
 
-				
+
 				for(PlayerInfo p : game.getPlayers()){
-					if(p.getId() == localPlayer.getId() 
+					if(p.getId() == localPlayer.getId()
 							&& p.getName().equals(localPlayer.getName())){
-						joinButton = new JButton("Re-Join");
+						joinBtn = new JButton("Re-Join");
 					}
 				}
 //				if (game.getPlayers().contains(localPlayer))
 //				{
 //					joinButton = new JButton("Re-Join");
 //				}
-				if(joinButton == null){
+				if(joinBtn == null){
 					if (game.getPlayers().size() >= 4)
 					{
-						joinButton = new JButton("Full");
-						joinButton.setEnabled(false);
+						joinBtn = new JButton("Full");
+						joinBtn.setEnabled(false);
 					}
 					else
 					{
-						joinButton = new JButton("Join");
+						joinBtn = new JButton("Join");
 					}
 				}
-				
-				joinButton.setActionCommand("" + game.getId());
-				joinButton.addActionListener(actionListener);
-				gamePanel.add(joinButton);
+
+				joinBtn.setActionCommand("" + game.getId());
+				joinBtn.addActionListener(actionListener);
+				gamePanel.add(joinBtn);
 			}
 		}
 
@@ -177,7 +183,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(createButton);
-//		buttonPanel.add(joinButton);		
+//		buttonPanel.add(joinButton);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 
@@ -191,12 +197,12 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 //					JLabel tmp = new JLabel(String.valueOf(games[i].getId()));
 //					tmp.setFont(labelFont);
 //					gamePanel.add(tmp);
-//					
+//
 //					gamePanel.add(box0);
 //					tmp = new JLabel(games[i].getTitle());
 //					tmp.setFont(labelFont);
 //					gamePanel.add(tmp);
-//					
+//
 //					gamePanel.add(box1);
 //					String players = String.valueOf(games[i].getPlayers().size()) + "/4 : ";
 //					for (int j = 0; j < games[i].getPlayers().size(); j++) {
@@ -205,13 +211,13 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 //					tmp = new JLabel(players);
 //					tmp.setFont(labelFont);
 //					gamePanel.add(tmp);
-//					
+//
 //					gamePanel.add(box1);
 //					JButton joinButton;
 //					if (games[i].getPlayers().size() < 4) {
 //						if (games[i].getPlayers().contains(localPlayer)) {
 //							joinButton = new JButton("Re-Join");
-//						} else { 
+//						} else {
 //							joinButton = new JButton("Join");
 //						}
 //					} else {
@@ -220,10 +226,10 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 //					}
 //					gamePanel.add(joinButton);
 //					gamePanel.add(box1);
-//				} 
+//				}
 //			}
 //	}
-	
+
 	private ActionListener actionListener = new ActionListener()
 	{
 		@Override
