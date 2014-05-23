@@ -1,5 +1,8 @@
 package client.communication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.base.Controller;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
@@ -43,7 +46,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 	@Override
 	public void update() {
-		System.out.println("update");
+		System.out.println("hist update");
 		initFromModel();	
 	}
 	

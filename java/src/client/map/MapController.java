@@ -88,11 +88,9 @@ public class MapController extends Controller implements IMapController,
 		try
 		{
 			IFacade facade = proxy.getFacade();
-//			System.out.println(facade.getCurrentState());
 			ICatanMap map = facade.getCatanMap();
 			for(IHex hex : map.getHexes())
 			{
-//				System.out.println(hex.toString());
 				this.getView().addHex(hex.getLocation(), hex.getHexType());
 				if(hex.getHexNumber() != null)
 					this.getView().addNumber(hex.getLocation(), hex.getHexNumber());
@@ -106,7 +104,6 @@ public class MapController extends Controller implements IMapController,
 
 			for(ISettlement settlement : map.getSettlements())
 			{
-//				System.out.println(settlement.toString());
 				IPlayer player = settlement.getPlayer();
 				PlayerInfo info = player.getPlayerInfo();
 				CatanColor color = info.getColor();
@@ -464,8 +461,15 @@ public class MapController extends Controller implements IMapController,
 
             for( IPiece piece : facade.getCatanMap().getSettlementsAroundHex(hexLoc) )
             {
+<<<<<<< HEAD
                 RobPlayerInfo rob = new RobPlayerInfo(piece.getPlayer().getPlayerInfo());
                 rob.setNumCards( piece.getPlayer().getNumResourceCards() );
+=======
+                RobPlayerInfo rob = new RobPlayerInfo(player.getPlayerInfo());
+                int playerIndex = player.getPlayerInfo().getPlayerIndex();
+
+                rob.setNumCards( facade.getResourcesForPlayerIndex( playerIndex ).size() );
+>>>>>>> 8e358968bf5e83450102566ff9179744d9e548e2
                 robbable.add(rob);
             }
 

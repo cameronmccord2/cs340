@@ -31,8 +31,6 @@ public class Facade implements IFacade {
 	}
 	
 	private IGame getGameModel() throws CantFindGameModelException{
-        //System.out.println("GAMEID: " + this.proxy.getGameId());
-
         // Must have a default Integer for parseInt. getGameId() returns null
         // before a game is chosen.
         Integer gameId;
@@ -68,18 +66,11 @@ public class Facade implements IFacade {
 	
 	@Override
 	public void registerAsObserver(ICatanModelObserver observer) {
-		System.out.println("registering: " + observer.getClass().toString());
 		this.observers.add(observer);
 	}
 
 	@Override
 	public void updatedCatanModel() {
-		try {
-			System.out.println(this.getCurrentState());
-		} catch(CantFindGameModelException e) {
-			e.printStackTrace();
-		}
-		
 		for (ICatanModelObserver o : this.observers) {
 			o.update();
 		}
@@ -111,10 +102,10 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public IPlayer getPlayerWithIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
+	public IPlayer getPlayerWithPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
 		IGame g = this.getGameModel();
 		for (IPlayer p : g.getPlayers()) {
-			if(p.getPlayerInfo().getName().equals(this.playerName))
+			if(p.getPlayerInfo().getPlayerIndex() == playerIndex)
 				return p;
 		}
 		throw new CantFindPlayerException("Cant find player by index: " + playerIndex);
@@ -161,13 +152,13 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public Map<IResourceCard, Integer> getResourcesForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException {
-		return this.getPlayerWithIndex(playerId).getResourceCards();
+	public Map<IResourceCard, Integer> getResourcesForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
+		return this.getPlayerWithPlayerIndex(playerIndex).getResourceCards();
 	}
 	
 	@Override
-	public Map<IDevelopmentCard, Integer> getDevCardsForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException {
-		return this.getPlayerWithIndex(playerId).getDevelopmentCards();
+	public Map<IDevelopmentCard, Integer> getDevCardsForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
+		return this.getPlayerWithPlayerIndex(playerIndex).getDevelopmentCards();
 	}
 
 	@Override
@@ -217,7 +208,6 @@ public class Facade implements IFacade {
 		try {
 			IGame game = getGameModel();
 			List<MessageLine> list = game.getLog().getLines();
-			System.out.println("game log: " + list);
 			PlayerInfo[] players = getAllPlayerInfos(); 
 			List<LogEntry> logList = new ArrayList<LogEntry>();
 			for(MessageLine l : list){

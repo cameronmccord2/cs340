@@ -132,10 +132,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if(this.recieveTypes.indexOf(resource) != -1){
 				this.recieveCounts.increaseResourceAmount(resource);
 				int currentTradeCount = this.recieveCounts.getResourceCount(resource);
-				if(this.playerToTradeWith != -1){
-					hasOfResource = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
-					this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
-				}
+				hasOfResource = this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
 			}
 			else if(this.sendTypes.indexOf(resource) != -1){
 				hasOfResource = this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource));
@@ -178,7 +176,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.restrictTotalCountForResourceType(ResourceType.WOOD);
 		this.restrictTotalCountForResourceType(ResourceType.WHEAT);
 		
-		
 		this.decideTradeState();
 	}
 
@@ -191,14 +188,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					this.tradeOverlay.setResourceAmountChangeEnabled(resource, false, false);
 					this.recieveCounts.setResourceToZero(resource);
 				}else{
-					Map<IResourceCard, Integer> map = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards();
+					Map<IResourceCard, Integer> map = this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards();
 					if(this.recieveCounts.getResourceCount(resource) > map.get(ResourceCard.getCardForType(resource))){
 						this.tradeOverlay.setResourceAmount(resource, map.get(ResourceCard.getCardForType(resource)).toString());
 						this.recieveCounts.setResourceCount(resource, map.get(ResourceCard.getCardForType(resource)));
 					}
 					
 					int currentTradeCount = this.recieveCounts.getResourceCount(resource);
-					int hasOfResource = this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
+					int hasOfResource = this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
 					this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
 				}
 			}
@@ -218,7 +215,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 		try {
 			if(this.playerToTradeWith != -1){
-				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerWithIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource)) > 0), false);
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource)) > 0), false);
 			}
 		} catch (CantFindPlayerException | CantFindGameModelException e) {
 			// TODO Auto-generated catch block
@@ -285,10 +282,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 		try{
 			this.state = "accepted";
-			System.out.println("will accept: " + willAccept);
 			this.proxy.movesAcceptTrade(new AcceptTrade(this.proxy.getFacade().getCurrentTrade(), willAccept));
 			if(getAcceptOverlay().isModalShowing())
 				getAcceptOverlay().closeModal();
+			this.getAcceptOverlay().reset();
 		}catch(CantFindGameModelException e){
 			// dont do anything, wait for the model to update again
 		}
@@ -314,8 +311,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			
 			TRTradeOffer currentTrade = this.proxy.getFacade().getCurrentTrade();
 			if(currentTrade == null){
-				if(this.waitOverlay.isModalShowing())
+				if(this.waitOverlay.isModalShowing()){
 					this.waitOverlay.closeModal();
+					if(this.tradeOverlay.isModalShowing())
+						this.tradeOverlay.closeModal();
+				}
 				
 				if(this.proxy.getFacade().isMyTurn()){
 					this.tradeOverlay.setResourceSelectionEnabled(true);
@@ -334,7 +334,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 				
 			}else if(currentTrade.getReceiver() == this.proxy.getFacade().getCurrentUserIndex()){
-				System.out.println(currentTrade.toString());
 				this.setupAcceptTradeWithTrade(currentTrade);
 			}else if(currentTrade.getSender() == this.proxy.getFacade().getCurrentUserIndex()){
 				if(!this.waitOverlay.isModalShowing())
@@ -347,41 +346,51 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	private void setupAcceptTradeWithTrade(TRTradeOffer currentTrade) {
 		try {
-			this.acceptOverlay.setPlayerName(this.proxy.getFacade().getPlayerWithIndex(currentTrade.getSender()).getPlayerInfo().getName());
+			this.acceptOverlay.setPlayerName(this.proxy.getFacade().getPlayerWithPlayerIndex(currentTrade.getSender()).getPlayerInfo().getName());
 			
 			if(currentTrade.getOffer().getBrick() > 0)
-				this.acceptOverlay.addGetResource(ResourceType.BRICK, currentTrade.getOffer().getBrick());
+				this.acceptOverlay.addGetResource(ResourceType.BRICK, currentTrade.getOffer().getBrick() * 1);
 			else if(currentTrade.getOffer().getBrick() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.BRICK, currentTrade.getOffer().getBrick() * -1);
 			if(currentTrade.getOffer().getOre() > 0)
-				this.acceptOverlay.addGetResource(ResourceType.ORE, currentTrade.getOffer().getOre());
+				this.acceptOverlay.addGetResource(ResourceType.ORE, currentTrade.getOffer().getOre() * 1);
 			else if(currentTrade.getOffer().getOre() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.ORE, currentTrade.getOffer().getOre() * -1);
 			if(currentTrade.getOffer().getSheep() > 0)
-				this.acceptOverlay.addGetResource(ResourceType.SHEEP, currentTrade.getOffer().getSheep());
+				this.acceptOverlay.addGetResource(ResourceType.SHEEP, currentTrade.getOffer().getSheep() * 1);
 			else if(currentTrade.getOffer().getSheep() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.SHEEP, currentTrade.getOffer().getSheep() * -1);
 			if(currentTrade.getOffer().getWheat() > 0)
-				this.acceptOverlay.addGetResource(ResourceType.WHEAT, currentTrade.getOffer().getWheat());
+				this.acceptOverlay.addGetResource(ResourceType.WHEAT, currentTrade.getOffer().getWheat() * 1);
 			else if(currentTrade.getOffer().getWheat() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.WHEAT, currentTrade.getOffer().getWheat() * -1);
 			if(currentTrade.getOffer().getWood() > 0)
-				this.acceptOverlay.addGetResource(ResourceType.WOOD, currentTrade.getOffer().getWood());
+				this.acceptOverlay.addGetResource(ResourceType.WOOD, currentTrade.getOffer().getWood() * 1);
 			else if(currentTrade.getOffer().getWood() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.WOOD, currentTrade.getOffer().getWood() * -1);
 		
-			Map<IResourceCard, Integer> resourceMap = this.proxy.getFacade().getResourcesForPlayerId(currentTrade.getReceiver());
+			Map<IResourceCard, Integer> resourceMap = this.proxy.getFacade().getResourcesForPlayerIndex(currentTrade.getReceiver());
 			
-			if(resourceMap.get(ResourceCard.BRICK) < currentTrade.getOffer().getBrick())
-				throw new CantDoTradeException();
-			if(resourceMap.get(ResourceCard.ORE) < currentTrade.getOffer().getOre())
-				throw new CantDoTradeException();
-			if(resourceMap.get(ResourceCard.SHEEP) < currentTrade.getOffer().getSheep())
-				throw new CantDoTradeException();
-			if(resourceMap.get(ResourceCard.WHEAT) < currentTrade.getOffer().getWheat())
-				throw new CantDoTradeException();
-			if(resourceMap.get(ResourceCard.WOOD) < currentTrade.getOffer().getWood())
-				throw new CantDoTradeException();
+			if(resourceMap.get(ResourceCard.BRICK) < 0){
+				if((resourceMap.get(ResourceCard.BRICK) * -1) < currentTrade.getOffer().getBrick())
+					throw new CantDoTradeException();
+			}
+			if(resourceMap.get(ResourceCard.ORE) < 0){
+				if((resourceMap.get(ResourceCard.ORE) * -1) < currentTrade.getOffer().getOre())
+					throw new CantDoTradeException();
+			}
+			if(resourceMap.get(ResourceCard.SHEEP) < 0){
+				if((resourceMap.get(ResourceCard.SHEEP) * -1) < currentTrade.getOffer().getSheep())
+					throw new CantDoTradeException();
+			}
+			if(resourceMap.get(ResourceCard.WHEAT) < 0){
+				if((resourceMap.get(ResourceCard.WHEAT) * -1) < currentTrade.getOffer().getWheat())
+					throw new CantDoTradeException();
+			}
+			if(resourceMap.get(ResourceCard.WOOD) < 0){
+				if((resourceMap.get(ResourceCard.WOOD) * -1) < currentTrade.getOffer().getWood())
+					throw new CantDoTradeException();
+			}
 			
 			this.acceptOverlay.setAcceptEnabled(true);
 			if(!this.getAcceptOverlay().isModalShowing())

@@ -45,14 +45,14 @@ public class GameHistoryView extends PanelView implements IGameHistoryView
 		// calculations in LogComponent. Therefore, we call
 		// invokeLater.
 		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run()
-			{
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//			public void run()
+//			{
 				logPanel.setEntries(entries);
 				JScrollBar vertical = logScroll.getVerticalScrollBar();
 				vertical.setValue(vertical.getMaximum());
-			}
-		});
+//			}
+//		});
 	}
 	
 }

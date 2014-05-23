@@ -22,6 +22,7 @@ import client.models.translator.ClientModel;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;
+import client.server.DiscardCard;
 import client.server.FinishedTurn;
 import client.server.GameServer;
 import client.server.MaritimeTradeOff;
@@ -44,7 +45,6 @@ import client.server.User;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.sun.org.apache.xml.internal.utils.IntVector;
 
 /**
  * The Proxy class acts as a proxy for the real server and has similar methods that are found on the server.
@@ -363,8 +363,10 @@ public class Proxy implements IProxy {
 	}
 	
 	@Override
-	public ServerResponse movesdiscardCards(PlayerInfo player){
-		return null;
+	public ServerResponse movesdiscardCards(DiscardCard cards){
+		ServerResponse sr = doPost("/moves/discardCards", gson.toJson(cards), true, true);
+		saveGameModel(sr.getJson());
+		return sr;
 	}
 	
 	@Override
