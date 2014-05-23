@@ -35,21 +35,21 @@ public interface IPlayer extends IParticipant {
 	 *
 	 * @return the roads for the player
 	 */
-	List<IRoad> getRoads();
+	List<IRoadSegment> getRoads();
 
 	/**
 	 * Adds the road to the player.
 	 *
 	 * @param road the road to add
 	 */
-	void addRoad(IRoad road);
+	void addRoad(IRoadSegment road);
 
 	/**
 	 * Sets the roads for the player.
 	 *
 	 * @param roads the new roads list for the player
 	 */
-	void setRoads(List<IRoad> roads);
+	void setRoads(List<IRoadSegment> roads);
 
 	/**
 	 * Gets the player info.

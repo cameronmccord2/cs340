@@ -5,6 +5,7 @@ import client.models.exceptions.InvalidTranslatorModelException;
 public class TRRoad implements IModelValid {
 	protected Integer owner;
 	protected TREdgeLocation location;
+
 	public Integer getOwner() {
 		return owner;
 	}

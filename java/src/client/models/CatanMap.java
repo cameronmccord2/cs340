@@ -510,7 +510,8 @@ public class CatanMap implements ICatanMap
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("CatanMap [hexMap=");
 		builder.append(hexMap);
@@ -523,6 +524,4 @@ public class CatanMap implements ICatanMap
 		builder.append("]");
 		return builder.toString();
 	}
-
-    //TODO add method to standardize mapping from hexlocation to Ilocation
 }

@@ -24,7 +24,7 @@ import client.models.translator.TRVertexObject;
 /**
  * This class receives either JSON or Java objects and converts it to the other format
  * @author scottdaly
- * 
+ *
  */
 public class Translator {
 
@@ -42,18 +42,18 @@ public class Translator {
 		for (TRMessageLine line : cm.getLog().getLines()) {
 			g.addLog(new MessageLine(line));
 		}
-		
+
 		g.setChat(new MessageList());
 		for (TRMessageLine line : cm.getChat().getLines()) {
 			g.addChat(new MessageLine(line));
 		}
-		
+
 		g.setCurrentTrade(cm.getTradeOffer());
 
 		g.setTurnTracker(new TurnTracker(cm.getTurnTracker()));
-		
+
 		g.setModelVersion(cm.getVersion());
-		
+
 		g.setWinner(cm.getWinner());
 
 		IBank bank = new Bank(cm.getDeck(), cm.getBank());
@@ -74,15 +74,15 @@ public class Translator {
 				playerInfo.setPlayerIndex(p.getPlayerIndex());
 				playerInfo.setName(p.getName());
 				playerInfo.setColor(CatanColor.getColorForName(p.getColor()));
-	
+
 				Player newPlayer = new Player(playerInfo);
-	
+
 				newPlayer.setSoldiers(p.getSoldiers());
 				newPlayer.setVictoryPoints(p.getVictoryPoints());
 				newPlayer.setMonuments(p.getMonuments());
 				newPlayer.setPlayedDevCard(p.isPlayedDevCard());
 				newPlayer.setDiscarded(p.isDiscarded());
-	
+
 				List<ISettlement> settlements = new ArrayList<ISettlement>();
 				for (TRVertexObject s : cm.getMap().getSettlements()) {
 					if((long)s.getOwner() != p.getPlayerID())
@@ -92,7 +92,7 @@ public class Translator {
 				}
 				newPlayer.setSettlements(settlements);
 	//			assert(settlements.size() == p.getSettlements());
-	
+
 				List<ICity> cities = new ArrayList<ICity>();
 				for (TRVertexObject c : cm.getMap().getCities()) {
 					if((long)c.getOwner() != p.getPlayerID())
@@ -102,18 +102,28 @@ public class Translator {
 				}
 				newPlayer.setCities(cities);
 	//			assert(cities.size() == p.getCities());
-	
-				List<IRoad> roads = new ArrayList<IRoad>();
+
+//				List<IRoad> roads = new ArrayList<IRoad>();
+//				for (TRRoad road : cm.getMap().getRoads()) {
+//					if((long)road.getOwner() != p.getPlayerID())
+//						continue;
+//					IRoad r = new Road(playerInfo.getColor(), newPlayer, false, new EdgeLocation(road.getLocation()));
+//					roads.add(r);
+//				}
+//				newPlayer.setRoads(roads);
+
+				List<IRoadSegment> roads = new ArrayList<>();
 				for (TRRoad road : cm.getMap().getRoads()) {
 					if((long)road.getOwner() != p.getPlayerID())
 						continue;
-					IRoad r = new Road(playerInfo.getColor(), newPlayer, false, new EdgeLocation(road.getLocation()));
+					IRoadSegment r = new RoadSegment(road, newPlayer);
 					roads.add(r);
 				}
 				newPlayer.setRoads(roads);
+
 	//			assert(roads.size() == p.getRoads());
-	
-	
+
+
 				Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
 				TRResourceList resources = p.getResources();
 	//			resourceCards.put(ResourceCard.BRICK, 10 + index);
@@ -127,7 +137,7 @@ public class Translator {
 				resourceCards.put(ResourceCard.WHEAT, resources.getWheat());
 				resourceCards.put(ResourceCard.WOOD, resources.getWood());
 				newPlayer.setResourceCards(resourceCards);
-	
+
 				Map<IDevelopmentCard, Integer> developmentCards = new HashMap<IDevelopmentCard, Integer>();
 				TRDevCardList newDevCards = p.getNewDevCards();
 	//			TRDevCardList oldDevCards = p.getOldDevCards();
@@ -137,11 +147,11 @@ public class Translator {
 				developmentCards.put(DevelopmentCard.SOLDIER, newDevCards.getSoldier());
 				developmentCards.put(DevelopmentCard.YEAR_OF_PLENTY, newDevCards.getYearOfPlenty());
 				newPlayer.setDevelopmentCards(developmentCards);
-	
+
 				g.getPlayers()[index] = newPlayer;
 				index++;
 			}
-			
+
 		}
 
 		ICatanMap map = new CatanMap();
@@ -153,7 +163,7 @@ public class Translator {
 		}
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
 			IPlayer player = this.getPlayerWithId(settl.getOwner(), g.getPlayers());
-			map.placeInitialSettlement(new Settlement(new VertexLocation(settl.getLocation()), 
+			map.placeInitialSettlement(new Settlement(new VertexLocation(settl.getLocation()),
 			                                          player));
 		}
 		for (TRVertexObject city : cm.getMap().getCities()) {
@@ -162,12 +172,12 @@ public class Translator {
 		for(TRRoad road : cm.getMap().getRoads()){
 			map.placeInitialRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
 		}
-		
+
 		IRobber robber = new Robber(cm.getMap().getRobber());
 		map.setRobber(robber);
 		map.setRadius(cm.getMap().getRadius());
 		g.setMap(map);
-		
+
 		return g;
 	}
 

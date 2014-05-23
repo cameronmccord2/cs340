@@ -18,7 +18,7 @@ public class Player extends Participant implements IPlayer {
 	protected List<ICity> cities;
 
 	/** The roads. */
-	protected List<IRoad> roads;
+	protected List<IRoadSegment> roads;
 
 	/** The player info. */
 	protected PlayerInfo playerInfo;
@@ -36,9 +36,9 @@ public class Player extends Participant implements IPlayer {
 	public Player(PlayerInfo playerInfo){
 		super();
 		this.playerInfo = playerInfo;
-		this.settlements = new ArrayList<ISettlement>();
-		this.roads = new ArrayList<IRoad>();
-		this.cities = new ArrayList<ICity>();
+		this.settlements = new ArrayList<>();
+		this.roads = new ArrayList<>();
+		this.cities = new ArrayList<>();
         this.victoryPoints = 0;
 	}
 
@@ -55,7 +55,7 @@ public class Player extends Participant implements IPlayer {
 	              Map<IDevelopmentCard, Integer> developmentCards,
 	              Map<IResourceCard, Integer> resourceCards,
 	              List<ISettlement> settlements,
-	              List<IRoad> roads,
+	              List<IRoadSegment> roads,
 	              List<ICity> cities) {
 		super(developmentCards, resourceCards);
 		this.playerInfo = playerInfo;
@@ -85,7 +85,7 @@ public class Player extends Participant implements IPlayer {
 	 * @see client.models.IPlayer#getRoads()
 	 */
 	@Override
-	public List<IRoad> getRoads() {
+	public List<IRoadSegment> getRoads() {
 		return roads;
 	}
 
@@ -93,7 +93,7 @@ public class Player extends Participant implements IPlayer {
 	 * @see client.models.IPlayer#setRoads(java.util.List)
 	 */
 	@Override
-	public void setRoads(List<IRoad> roads) {
+	public void setRoads(List<IRoadSegment> roads) {
 		this.roads = roads;
 	}
 
@@ -137,7 +137,7 @@ public class Player extends Participant implements IPlayer {
 	}
 
 	@Override
-	public void addRoad(IRoad road) {
+	public void addRoad(IRoadSegment road) {
 		this.roads.add(road);
 	}
 

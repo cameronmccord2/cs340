@@ -9,6 +9,8 @@ import client.base.*;
 import client.data.PlayerInfo;
 import client.misc.*;
 import client.models.ICatanModelObserver;
+import client.models.IFacade;
+import client.models.IPlayer;
 import client.models.IProxy;
 import client.models.IResourceCard;
 import client.models.ResourceCard;
@@ -40,7 +42,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	/**
 	 * DomesticTradeController constructor
-	 * 
+	 *
 	 * @param tradeView Domestic trade view (i.e., view that contains the "Domestic Trade" button)
 	 * @param tradeOverlay Domestic trade overlay (i.e., view that lets the user propose a domestic trade)
 	 * @param waitOverlay Wait overlay used to notify the user they are waiting for another player to accept a trade
@@ -55,14 +57,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.state = "Inited";
 		this.proxy = proxy;
 		this.proxy.getFacade().registerAsObserver(this);
-		
+
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 	}
-	
+
 	public IDomesticTradeView getTradeView() {
-		
+
 		return (IDomesticTradeView)super.getView();
 	}
 
@@ -98,7 +100,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.sendCounts = new ResourceCollection(this.proxy);
 		this.playerToTradeWith = -1;
 		this.state = "starting";
-		getTradeOverlay().showModal();
+		if(!getTradeOverlay().isModalShowing())
+			getTradeOverlay().showModal();
 	}
 
 	@Override
@@ -118,8 +121,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 			else
 				throw new RuntimeException("decrease error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
-			
-			
+
+
 			this.decideTradeState();
 		}catch (CantFindGameModelException e) {
 		}
@@ -143,8 +146,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 			else
 				throw new RuntimeException("increase error, " + resource.toString() + ", " + this.recieveCounts.toString() + ":" + this.recieveTypes.toString() + ", " + this.sendCounts.toString() + ":" + this.sendTypes.toString());
-			
-			
+
+
 			this.decideTradeState();
 		}catch (CantFindGameModelException e) {
 		} catch (CantFindPlayerException e) {
@@ -156,10 +159,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		try {
 			OfferTrade tradeOffer = new OfferTrade(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex(), this.playerToTradeWith, ResourceCollection.getOffer(this.sendCounts, this.recieveCounts), "offerTrade");
 			this.proxy.movesOfferTrade(tradeOffer);
-			getTradeOverlay().closeModal();
+
+			if(getTradeOverlay().isModalShowing())
+				getTradeOverlay().closeModal();
 			getTradeOverlay().reset();
-			getWaitOverlay().showModal();
-		
+
+			if(!getWaitOverlay().isModalShowing())
+				getWaitOverlay().showModal();
+
 		} catch (CantFindPlayerException e) {
 		} catch (CantFindGameModelException e) {
 		}
@@ -168,19 +175,19 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
 		this.playerToTradeWith = playerIndex;
-		
+
 		// restrict all counters to the max possible values if higher, add restrictions
 		this.restrictTotalCountForResourceType(ResourceType.BRICK);
 		this.restrictTotalCountForResourceType(ResourceType.ORE);
 		this.restrictTotalCountForResourceType(ResourceType.SHEEP);
 		this.restrictTotalCountForResourceType(ResourceType.WOOD);
 		this.restrictTotalCountForResourceType(ResourceType.WHEAT);
-		
+
 		this.decideTradeState();
 	}
 
 	private void restrictTotalCountForResourceType(ResourceType resource) {
-		
+
 		try{
 			if(this.recieveTypes.indexOf(resource) != -1){
 				if(this.playerToTradeWith == -1){
@@ -193,7 +200,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 						this.tradeOverlay.setResourceAmount(resource, map.get(ResourceCard.getCardForType(resource)).toString());
 						this.recieveCounts.setResourceCount(resource, map.get(ResourceCard.getCardForType(resource)));
 					}
-					
+
 					int currentTradeCount = this.recieveCounts.getResourceCount(resource);
 					int hasOfResource = this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
 					this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
@@ -212,7 +219,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			throw new RuntimeException("there is an error with set resource to recieve, already in list: " + this.recieveTypes.toString() + ", reosurce: " + resource.toString());
 		this.recieveTypes.add(resource);
 		this.recieveCounts.setResourceToZero(resource);
-		
+
 		try {
 			if(this.playerToTradeWith != -1){
 				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource)) > 0), false);
@@ -221,7 +228,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		this.decideTradeState();
 	}
 
@@ -233,13 +240,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			throw new RuntimeException("the resource is already in the send list: " + resource.toString() + ", list: " + this.sendTypes.toString());
 		this.sendTypes.add(resource);
 		this.sendCounts.setResourceToZero(resource);
-		
+
 		try {
 			this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > 0), false);
 		} catch (CantFindGameModelException e) {
-		
+
 		}
-		
+
 		this.decideTradeState();
 	}
 
@@ -251,7 +258,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.sendTypes.remove(resource);
 		this.decideTradeState();
 	}
-	
+
 	private void decideTradeState(){
 		this.state = "notrade";
 		this.tradeOverlay.setTradeEnabled(false);
@@ -304,19 +311,19 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				}
 				if(finalPlayers == null || finalPlayers.length == 0)
 					return;
-				
+
 				this.tradeOverlay.setPlayers(finalPlayers);
 				this.playersHaveNotBeenSet = false;
 			}
-			
+
 			TRTradeOffer currentTrade = this.proxy.getFacade().getCurrentTrade();
 			if(currentTrade == null){
-				if(this.waitOverlay.isModalShowing()){
-					this.waitOverlay.closeModal();
-					if(this.tradeOverlay.isModalShowing())
-						this.tradeOverlay.closeModal();
+				if(getWaitOverlay().isModalShowing()){
+					getWaitOverlay().closeModal();
+					if(getTradeOverlay().isModalShowing())
+						getTradeOverlay().closeModal();
 				}
-				
+
 				if(this.proxy.getFacade().isMyTurn()){
 					this.tradeOverlay.setResourceSelectionEnabled(true);
 					this.tradeOverlay.setPlayerSelectionEnabled(true);
@@ -332,12 +339,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					this.tradeOverlay.setPlayerSelectionEnabled(false);
 					this.tradeOverlay.setStateMessage("It is not your turn");
 				}
-				
+
 			}else if(currentTrade.getReceiver() == this.proxy.getFacade().getCurrentUserIndex()){
 				this.setupAcceptTradeWithTrade(currentTrade);
 			}else if(currentTrade.getSender() == this.proxy.getFacade().getCurrentUserIndex()){
-				if(!this.waitOverlay.isModalShowing())
-					this.waitOverlay.showModal();
+				if(!getWaitOverlay().isModalShowing())
+					getWaitOverlay().showModal();
 			}
 		}catch(CantFindGameModelException e){
 			// dont do anything, wait for the model to update again
@@ -346,8 +353,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	private void setupAcceptTradeWithTrade(TRTradeOffer currentTrade) {
 		try {
-			this.acceptOverlay.setPlayerName(this.proxy.getFacade().getPlayerWithPlayerIndex(currentTrade.getSender()).getPlayerInfo().getName());
-			
+			IFacade facade = proxy.getFacade();
+			IPlayer player = facade.getPlayerWithPlayerIndex(currentTrade.getSender());
+			PlayerInfo info = player.getPlayerInfo();
+
+			this.acceptOverlay.setPlayerName(info.getName());
+
 			if(currentTrade.getOffer().getBrick() > 0)
 				this.acceptOverlay.addGetResource(ResourceType.BRICK, currentTrade.getOffer().getBrick() * 1);
 			else if(currentTrade.getOffer().getBrick() < 0)
@@ -368,9 +379,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				this.acceptOverlay.addGetResource(ResourceType.WOOD, currentTrade.getOffer().getWood() * 1);
 			else if(currentTrade.getOffer().getWood() < 0)
 				this.acceptOverlay.addGiveResource(ResourceType.WOOD, currentTrade.getOffer().getWood() * -1);
-		
-			Map<IResourceCard, Integer> resourceMap = this.proxy.getFacade().getResourcesForPlayerIndex(currentTrade.getReceiver());
-			
+
+//			getAcceptOverlay().add
+
+			Map<IResourceCard, Integer> resourceMap = facade.getResourcesForPlayerIndex(currentTrade.getReceiver());
+
 			if(resourceMap.get(ResourceCard.BRICK) < 0){
 				if((resourceMap.get(ResourceCard.BRICK) * -1) < currentTrade.getOffer().getBrick())
 					throw new CantDoTradeException();
@@ -391,10 +404,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				if((resourceMap.get(ResourceCard.WOOD) * -1) < currentTrade.getOffer().getWood())
 					throw new CantDoTradeException();
 			}
-			
+
 			this.acceptOverlay.setAcceptEnabled(true);
 			if(!this.getAcceptOverlay().isModalShowing())
-				this.acceptOverlay.showModal();
+				this.getAcceptOverlay().showModal();
 		} catch (CantFindPlayerException e) {
 			throw new RuntimeException("couldnt find player for trade: " + currentTrade.toString());
 		} catch (CantDoTradeException e) {

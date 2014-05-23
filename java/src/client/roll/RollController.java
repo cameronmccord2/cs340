@@ -2,8 +2,10 @@ package client.roll;
 
 import client.base.Controller;
 import client.models.ICatanModelObserver;
+import client.models.IFacade;
 import client.models.IProxy;
 import client.models.Proxy;
+import client.models.ServerResponse;
 import client.models.exceptions.CantFindGameModelException;
 import client.server.ServerRoll;
 
@@ -43,16 +45,30 @@ public class RollController extends Controller implements IRollController, ICata
 	}
 
 	@Override
-	public void rollDice() {
+	public void rollDice()
+	{
 		if(this.getRollView().isModalShowing())
 			getRollView().closeModal();
-		int rolledResult = (int) (1 + (Math.random() * 12));
-		ServerRoll serverRoll = new ServerRoll("rollNumber",0,rolledResult);
-		if(proxy.movesRollNumber(serverRoll).getResponseCode() == 200){
-			getResultView().setRollValue(rolledResult);
-			getResultView().showModal();
 
+		try
+		{
+			IFacade facade = proxy.getFacade();
+			Integer playerIndex = facade.getCurrentUserIndex();
+			int rolledResult = (int) (1 + (Math.random() * 12));
+
+   		ServerRoll serverRoll = new ServerRoll("rollNumber", playerIndex, rolledResult);
+   		ServerResponse response = proxy.movesRollNumber(serverRoll);
+
+   		if(response.getResponseCode() == 200){
+   			getResultView().setRollValue(rolledResult);
+   			getResultView().showModal();
+   		}
 		}
+		catch (CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override

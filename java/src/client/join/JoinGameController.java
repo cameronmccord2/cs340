@@ -199,9 +199,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.println("called");
 		try {
 			if(this.proxy.getFacade().getCatanMap() == null)
-				getJoinGameView().showModal();
+			{
+				System.out.println("CatanMap is null");
+				if(!getJoinGameView().isModalShowing())
+					getJoinGameView().showModal();
+			}
 		} catch (CantFindGameModelException e) {
-			getJoinGameView().showModal();
+			if(!getJoinGameView().isModalShowing())
+				getJoinGameView().showModal();
 		}
 
 	}
@@ -210,13 +215,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startCreateNewGame()
 	{
 		System.out.println("CALLED 2");
-		getNewGameView().showModal();
+		if(!getNewGameView().isModalShowing())
+			getNewGameView().showModal();
 	}
 
 	@Override
 	public void cancelCreateNewGame()
 	{
-		if(this.getNewGameView().isModalShowing())
+		if(getNewGameView().isModalShowing())
 			getNewGameView().closeModal();
 	}
 
@@ -230,7 +236,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(proxy.postGamesCreate(newGame).getResponseCode() == 200)
 		{
-			if(this.getNewGameView().isModalShowing())
+			if(getNewGameView().isModalShowing())
 				getNewGameView().closeModal();
 			this.start();
 		}
@@ -244,9 +250,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			if(p.getId() != self.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
+
 		selectedGame = game;
 		System.out.println("Join game");
-		getSelectColorView().showModal();
+
+		if(!getSelectColorView().isModalShowing())
+			getSelectColorView().showModal();
 	}
 
 	@Override
@@ -255,7 +264,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		for(CatanColor color : CatanColor.values())
 			getSelectColorView().setColorEnabled(color, true);
 
-		if(this.getJoinGameView().isModalShowing())
+		if(getJoinGameView().isModalShowing())
 			getJoinGameView().closeModal();
 	}
 
@@ -267,9 +276,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		{
 			// If join succeeded
 
-			if(this.getSelectColorView().isModalShowing())
+			if(getSelectColorView().isModalShowing())
 				getSelectColorView().closeModal();
-			if(this.getJoinGameView().isModalShowing())
+			if(getJoinGameView().isModalShowing())
 				getJoinGameView().closeModal();
 
 			System.out.println("before execute");
@@ -281,7 +290,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void update()
 	{
-
+//		if(getSelectColorView().isModalShowing())
+//			getSelectColorView().closeModal();
+//		if(getJoinGameView().isModalShowing())
+//			getJoinGameView().closeModal();
 	}
 
 }

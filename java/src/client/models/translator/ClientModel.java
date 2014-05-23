@@ -5,16 +5,17 @@ import java.util.Arrays;
 import client.models.exceptions.InvalidTranslatorModelException;
 
 public class ClientModel implements IModelValid{
-	  protected TRMap map;
-	  protected TRPlayer[] players;
-	  protected TRMessageList log;
-	  protected TRMessageList chat;
-	  protected TRResourceList bank;
-	  protected TRTurnTracker turnTracker;
-	  protected TRTradeOffer tradeOffer;
-	  protected TRDevCardList deck;
-	  int winner;
-	  int version = 0;
+   protected TRMap map;
+   protected TRPlayer[] players;
+   protected TRMessageList log;
+   protected TRMessageList chat;
+   protected TRResourceList bank;
+   protected TRTurnTracker turnTracker;
+   protected TRTradeOffer tradeOffer;
+   protected TRDevCardList deck;
+   protected int winner;
+   protected int version = 0;
+
 	public TRMap getMap() {
 		return map;
 	}
@@ -99,23 +100,23 @@ public class ClientModel implements IModelValid{
 		StringBuilder builder = new StringBuilder();
 		builder.append("ClientModel [map=");
 		builder.append(map);
-		builder.append(", \n\tplayers=");
+		builder.append(", players=");
 		builder.append(players);
-		builder.append(", \n\tlog=");
+		builder.append(", log=");
 		builder.append(log);
-		builder.append(", \n\tchat=");
+		builder.append(", chat=");
 		builder.append(chat);
-		builder.append(", \n\tbank=");
+		builder.append(", bank=");
 		builder.append(bank);
-		builder.append(", \n\tturnTracker=");
+		builder.append(", turnTracker=");
 		builder.append(turnTracker);
-		builder.append(", \n\ttradeOffer=");
+		builder.append(", tradeOffer=");
 		builder.append(tradeOffer);
-		builder.append(", \n\tdeck=");
+		builder.append(", deck=");
 		builder.append(deck);
-		builder.append(", \n\twinner=");
+		builder.append(", winner=");
 		builder.append(winner);
-		builder.append(", \n\tversion=");
+		builder.append(", version=");
 		builder.append(version);
 		builder.append("]");
 		return builder.toString();
@@ -190,5 +191,5 @@ public class ClientModel implements IModelValid{
 			return false;
 		return true;
 	}
-	
+
 }

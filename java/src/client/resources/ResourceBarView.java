@@ -53,6 +53,8 @@ import client.utils.ImageUtils;
 public class ResourceBarView extends PanelView implements IResourceBarView
 {
 	private final boolean TESTING = false;
+	private final int MIN_WIDTH = 300;
+	private final int MIN_HEIGHT = 400;
 
 	private final String RESOURCE_IMAGE_PATH = "images" + File.separator +
 											   "resources" + File.separator;
@@ -215,10 +217,12 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 		this.setLayout(new BorderLayout());
 
 		JPanel rPanel = new JPanel();
+		rPanel.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 		rPanel.setLayout(new BoxLayout(rPanel, BoxLayout.Y_AXIS));
 		rPanel.setBackground(Color.WHITE);
 
 		resourcePanel = new JPanel();
+		resourcePanel.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 		resourcePanel.setLayout(new BoxLayout(resourcePanel, BoxLayout.Y_AXIS));
 		resourcePanel.setBackground(Color.WHITE);
 
@@ -228,6 +232,7 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 		}
 
 		JScrollPane scroll = new JScrollPane(rPanel);
+		scroll.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 		resourcePanel.add(scroll);
 
 		this.add(resourcePanel, BorderLayout.CENTER);
