@@ -291,7 +291,8 @@ public class DiscardController extends Controller implements IDiscardController,
 
 			if(status.equals("Discarding"))
 			{
-        		System.out.println(player);
+//        		System.out.println(player);
+				finishedDiscarding = player.hasDiscarded();
         		
 				int discardAmount = this.getAmountToDiscard();
 

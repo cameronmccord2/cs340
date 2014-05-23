@@ -5,6 +5,7 @@ import java.util.Map;
 import shared.definitions.ResourceType;
 import client.base.Controller;
 import client.base.IAction;
+import client.models.ICatanModelObserver;
 import client.models.IDevelopmentCard;
 import client.models.IProxy;
 import client.models.exceptions.CantFindGameModelException;
@@ -18,7 +19,7 @@ import client.server.ServerYearofPlenty;
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController {
+public class DevCardController extends Controller implements IDevCardController, ICatanModelObserver {
 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
@@ -41,6 +42,7 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -143,6 +145,22 @@ public class DevCardController extends Controller implements IDevCardController 
 			System.out.println("error playing year of plenty card");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void update() {
+		try {
+			Map<IDevelopmentCard, Integer> map = this.proxy.getFacade().getDevCardsForPlayerIndex(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex());
+			for(Map.Entry<IDevelopmentCard, Integer> entry : map.entrySet()){
+				getPlayCardView().setCardEnabled(entry.getKey().getType(), (entry.getValue().intValue() > 0));
+				getPlayCardView().setCardAmount(entry.getKey().getType(), entry.getValue());
+			}
+		} catch (CantFindPlayerException e) {
+			e.printStackTrace();
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

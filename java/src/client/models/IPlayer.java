@@ -92,7 +92,7 @@ public interface IPlayer extends IParticipant {
 
 	void setPlayedDevCard(boolean playedDevCard);
 
-	boolean isDiscarded();
+	boolean hasDiscarded();
 
 	void setDiscarded(boolean discarded);
 
