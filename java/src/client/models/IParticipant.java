@@ -35,7 +35,7 @@ public interface IParticipant {
 	 * @param developmentCards the new development cards
 	 */
 	void setDevelopmentCards(Map<IDevelopmentCard, Integer> developmentCards);
-	
+
 	/**
 	 * Will accept trade. Asks the player if they will accept this trade.
 	 *
@@ -43,5 +43,12 @@ public interface IParticipant {
 	 * @return true, if accepted
 	 */
 	boolean willAcceptTrade(ITrade trade);
+
+	/**
+	 * Get Number of Resource Cards held by the player.
+	 *
+	 * @return number of resource cards
+	 */
+	int getNumResourceCards();
 
 }

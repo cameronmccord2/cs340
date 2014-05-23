@@ -22,7 +22,7 @@ public interface IPlayer extends IParticipant {
 	 * @param settlements the new settlements
 	 */
 	void setSettlements(List<ISettlement> settlements);
-	
+
 	/**
 	 * Adds the settlement to the player.
 	 *
@@ -36,7 +36,7 @@ public interface IPlayer extends IParticipant {
 	 * @return the roads for the player
 	 */
 	List<IRoad> getRoads();
-	
+
 	/**
 	 * Adds the road to the player.
 	 *
@@ -64,7 +64,7 @@ public interface IPlayer extends IParticipant {
 	 * @param playerInfo the new player info
 	 */
 	void setPlayerInfo(PlayerInfo playerInfo);
-	
+
 	/**
 	 * Rob player.
 	 *

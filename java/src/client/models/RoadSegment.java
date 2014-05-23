@@ -59,7 +59,7 @@ public class RoadSegment extends Piece implements IRoadSegment
 		this.player = player;
 	}
 
-	
+
 	public static Collection<Resource> getResourceCost()
 	{
 		return cost;

@@ -29,7 +29,7 @@ public class CatanMap implements ICatanMap
 	private Map<ILocation, IPiece> catanMap;
 	private Map<ILocation, IPort> portMap;
 	private IRobber robber;
-	
+
 	private IProxy proxy;
 
 	private int radius;
@@ -41,86 +41,88 @@ public class CatanMap implements ICatanMap
 		this.portMap = new HashMap<>();
 		this.robber = null;
 		this.radius = 3;
-		
+
 		this.initializeOceanHexes();
 	}
-	
+
 //	private void initializeOceanHexes()
 //	{
 //		for(int x = 0; x <= 3; x++)
 //		{
 //			int a = -3;
 //			int b = 3-x;
-//			
+//
 //			IHex first = new Hex();hex
 //			HexLocation one = new HexLocation(a, b);
 //			first.setLocation(one);
-//			
+//
 //			IHex second = new Hex();
 //			HexLocation two = new HexLocation(-b, -a);
 //			second.setLocation(two);
-//			
+//
 //			System.out.printf("( a,  b) : (%2d, %2d)\n", a, b);
 //			System.out.printf("(-b, -a) : (%2d, %2d)\n", -b, -a);
-//			
+//
 //			hexMap.put(one, first);
 //			hexMap.put(two, second);
 //		}
-//		
+//
 //		for(int x = 1; x <= 2; x++)
 //		{
 //			int a = x;
 //			int b = 3-x;
-//			
+//
 //			IHex first = new Hex();
 //			HexLocation one = new HexLocation(a, b);
 //			first.setLocation(one);
-//			
+//
 //			IHex second = new Hex();
 //			HexLocation two = new HexLocation(-b, -a);
 //			second.setLocation(two);
-//			
+//
 //			hexMap.put(one, first);
 //			hexMap.put(two, second);
 //		}
 //	}
 
     @Override
-    public Collection<IPlayer> getPlayersAroundHex(HexLocation hex) {
+    public Collection<IPiece> getSettlementsAroundHex(HexLocation hex) {
 
-        //TODO make this method work by creating some consistent mapping between hexes and edges/vertices
-        HashSet<IPlayer> players = new HashSet<>();
-        for(ISettlement settlement : this.getSettlements()) {
-            if( settlement.getLocation().getHexLocation().equals(hex) ) {
-                players.add(settlement.getPlayer());
-            }
+       Collection<IPiece> pieces = new HashSet<>();
+
+       for(VertexDirection dir: VertexDirection.values()) {
+      	 VertexLocation loc = new VertexLocation(hex, dir).getNormalizedLocation();
+
+      	 IPiece piece = catanMap.get(loc);
+      	 if (piece != null)
+      		 pieces.add(piece);
         }
 
-        return players;
+        return pieces;
     }
-	
+
 	private void initializeOceanHexes()
 	{
 		hexMap.put(new HexLocation(-3,3), new Hex(new HexLocation(-3,3)));
 		hexMap.put(new HexLocation(-3,2), new Hex(new HexLocation(-3,2)));
 		hexMap.put(new HexLocation(-3,1), new Hex(new HexLocation(-3,1)));
 		hexMap.put(new HexLocation(-3,0), new Hex(new HexLocation(-3,0)));
-		
+
 		hexMap.put(new HexLocation(-2,3), new Hex(new HexLocation(-2,3)));
 		hexMap.put(new HexLocation(-2,-1), new Hex(new HexLocation(-2,-1)));
-		
+
 		hexMap.put(new HexLocation(-1,3), new Hex(new HexLocation(-1,3)));
 		hexMap.put(new HexLocation(-1,-2), new Hex(new HexLocation(-1,-2)));
-		
+
 		hexMap.put(new HexLocation(0,3), new Hex(new HexLocation(0,3)));
 		hexMap.put(new HexLocation(0,-3), new Hex(new HexLocation(0,-3)));
-		
+
 		hexMap.put(new HexLocation(1,2), new Hex(new HexLocation(1,2)));
 		hexMap.put(new HexLocation(1,-3), new Hex(new HexLocation(1,-3)));
-		
+
 		hexMap.put(new HexLocation(2,1), new Hex(new HexLocation(2,1)));
 		hexMap.put(new HexLocation(2,-3), new Hex(new HexLocation(2,-3)));
-		
+
 		hexMap.put(new HexLocation(3,0), new Hex(new HexLocation(3,0)));
 		hexMap.put(new HexLocation(3,-1), new Hex(new HexLocation(3,-1)));
 		hexMap.put(new HexLocation(3,-2), new Hex(new HexLocation(3,-2)));
@@ -162,7 +164,7 @@ public class CatanMap implements ICatanMap
     	IHex hex = hexMap.get(location);
     	return hex.getHexType() == HexType.WATER;
     }
-	
+
 	public void setProxy(IProxy proxy)
 	{
 		this.proxy = proxy;
@@ -176,10 +178,10 @@ public class CatanMap implements ICatanMap
 	{
 		if(catanMap.get(segment.getLocation()) != null)
 			return false;
-		
+
 		VertexLocation start = segment.getStartLocation();
 		VertexLocation end = segment.getEndLocation();
-		
+
 		for(IPiece piece : catanMap.values())
 		{
 			PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
@@ -216,7 +218,7 @@ public class CatanMap implements ICatanMap
 	}
 
 	/**
-	 *	
+	 *
 	 *
 	 *	@param	settlement
 	 *				The ISettlement to be placed on the map.
@@ -229,7 +231,7 @@ public class CatanMap implements ICatanMap
 			return false;
 		if(distanceRule(settlement) != null)
 			return false;
-		
+
 		for(IPiece piece : catanMap.values())
 		{
 			if(piece.getPlayer().equals(settlement.getPlayer()))
@@ -300,25 +302,25 @@ public class CatanMap implements ICatanMap
 		 * 					+ (x  , y  ).NE -> right
 		 * 					+ (x-1, y  ).NE -> above
 		 * 					+ (x-1, y+1).NE -> below
-		 * 
+		 *
 		 */
 		IPiece conflictPiece = null;
 		VertexLocation location = (VertexLocation)piece.getLocation();
 		List<VertexLocation> adjacentCorners = new ArrayList<>();
-		
+
 		if(location.getDirection() == VertexDirection.NorthEast)
 		{
 			HexLocation hex = location.getHexLocation();
 			VertexDirection direction = VertexDirection.NorthWest;
-			
+
 			VertexLocation left = new VertexLocation(hex, direction);
-			
+
 			HexLocation aboveHex = new HexLocation(hex.getX()+1, hex.getY()-1);
 			VertexLocation above = new VertexLocation(aboveHex, direction);
-			
+
 			HexLocation belowHex = new HexLocation(hex.getX()+1, hex.getY());
 			VertexLocation below = new VertexLocation(belowHex, direction);
-			
+
 			adjacentCorners.add(left);
 			adjacentCorners.add(above);
 			adjacentCorners.add(below);
@@ -327,15 +329,15 @@ public class CatanMap implements ICatanMap
 		{
 			HexLocation hex = location.getHexLocation();
 			VertexDirection direction = VertexDirection.NorthEast;
-			
+
 			VertexLocation right = new VertexLocation(hex, direction);
-			
+
 			HexLocation aboveHex = new HexLocation(hex.getX()-1, hex.getY());
 			VertexLocation above = new VertexLocation(aboveHex, direction);
-			
+
 			HexLocation belowHex = new HexLocation(hex.getX()-1, hex.getY()+1);
 			VertexLocation below = new VertexLocation(belowHex, direction);
-			
+
 			adjacentCorners.add(right);
 			adjacentCorners.add(above);
 			adjacentCorners.add(below);
@@ -344,7 +346,7 @@ public class CatanMap implements ICatanMap
 		{
 			assert false;
 		}
-		
+
 		for(VertexLocation corner : adjacentCorners)
 		{
 			conflictPiece = catanMap.get(corner.getNormalizedLocation());
@@ -441,7 +443,7 @@ public class CatanMap implements ICatanMap
 		}
 		return cities;
 	}
-	
+
 	@Override
 	public Collection<IPiece> getPieces()
 	{
@@ -490,7 +492,7 @@ public class CatanMap implements ICatanMap
 			throw new InvalidLocationException();
 		catanMap.put(settlement.getLocation(), settlement);
 	}
-	
+
 	@Override
 	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException
 	{
@@ -498,7 +500,7 @@ public class CatanMap implements ICatanMap
 			throw new InvalidLocationException();
 		catanMap.put(segment.getLocation(), segment);
 	}
-	
+
 	@Override
 	public void placeInitialCity(ICity city) throws InvalidLocationException
 	{

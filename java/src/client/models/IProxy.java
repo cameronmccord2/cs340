@@ -2,10 +2,10 @@ package client.models;
 
 import java.util.List;
 
-import client.data.PlayerInfo;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;
+import client.server.DiscardCard;
 import client.server.FinishedTurn;
 import client.server.MaritimeTradeOff;
 import client.server.OfferTrade;
@@ -164,7 +164,7 @@ public interface IProxy {
 	 * Discards cards because a 7 was rolled
 	 * @param the player object that has to discard cards
 	 */
-	public ServerResponse movesdiscardCards(PlayerInfo player);
+	public ServerResponse movesdiscardCards(DiscardCard cards);
 
 	/**
 	 * Sets the log level of the server

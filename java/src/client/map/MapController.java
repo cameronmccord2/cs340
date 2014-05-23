@@ -13,6 +13,7 @@ import client.models.ICity;
 import client.models.IFacade;
 import client.models.IGame;
 import client.models.IHex;
+import client.models.IPiece;
 import client.models.IPlayer;
 import client.models.IPort;
 import client.models.IProxy;
@@ -24,6 +25,9 @@ import client.models.RoadSegment;
 import client.models.Settlement;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.ServerBuildCity;
+import client.server.ServerBuildRoad;
+import client.server.ServerBuildSettlement;
 
 /**
  * Implementation for the map controller.
@@ -173,6 +177,7 @@ public class MapController extends Controller implements IMapController,
 				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
 
+			System.out.println("Modal Closed");
 			if (x != 0) {
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) {
@@ -335,8 +340,9 @@ public class MapController extends Controller implements IMapController,
         HexLocation currentLocation = null;
         boolean isOceanHex = false;
         try {
-            currentLocation = this.proxy.getFacade().getRobberLocation();
-            isOceanHex = this.proxy.getFacade().getCatanMap().isOceanHex(hexLoc);
+      	  IFacade facade = this.proxy.getFacade();
+           currentLocation = facade.getRobberLocation();
+           isOceanHex = facade.getCatanMap().isOceanHex(hexLoc);
 
         } catch (CantFindGameModelException e) {
             e.printStackTrace();
@@ -367,6 +373,9 @@ public class MapController extends Controller implements IMapController,
     		segment.setPlayer(player);
 
 			map.placeRoadSegment(segment);
+
+			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
+				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, true));
 		}
 		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
 		{
@@ -395,6 +404,9 @@ public class MapController extends Controller implements IMapController,
 			ISettlement settlement = new Settlement(vertLoc, player);
 
 			map.placeSettlement(settlement);
+
+			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
+				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, true));
 		}
 		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
 		{
@@ -402,7 +414,7 @@ public class MapController extends Controller implements IMapController,
 		}
 	}
 
-	/**
+	/**" + i
 	 * This method is called when the user clicks the mouse to place a city.
 	 *
 	 * @param vertLoc
@@ -422,6 +434,9 @@ public class MapController extends Controller implements IMapController,
 			ICity city = new City(vertLoc, player);
 
 			map.placeCity(city);
+
+			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
+				proxy.movesBuildCity(new ServerBuildCity("buildCity", info.getPlayerIndex(), vertLoc));
 		}
 		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
 		{
@@ -429,7 +444,7 @@ public class MapController extends Controller implements IMapController,
 		}
 	}
 
-	/**
+	/**https://github.com/cameronmccord2/cs340
 	 * This method is called when the user clicks the mouse to place the robber.
 	 *
 	 * @param hexLoc
@@ -444,17 +459,21 @@ public class MapController extends Controller implements IMapController,
 
         try {
 
-            for( IPlayer player : facade.getCatanMap().getPlayersAroundHex(hexLoc) )
+            for( IPiece piece : facade.getCatanMap().getSettlementsAroundHex(hexLoc) )
             {
+<<<<<<< HEAD
+                RobPlayerInfo rob = new RobPlayerInfo(piece.getPlayer().getPlayerInfo());
+                rob.setNumCards( piece.getPlayer().getNumResourceCards() );
+=======
                 RobPlayerInfo rob = new RobPlayerInfo(player.getPlayerInfo());
                 int playerIndex = player.getPlayerInfo().getPlayerIndex();
 
                 rob.setNumCards( facade.getResourcesForPlayerIndex( playerIndex ).size() );
+>>>>>>> 8e358968bf5e83450102566ff9179744d9e548e2
                 robbable.add(rob);
-
             }
 
-        } catch (CantFindGameModelException | CantFindPlayerException e) {
+        } catch (CantFindGameModelException e) {
             e.printStackTrace();
         }
 
@@ -462,6 +481,8 @@ public class MapController extends Controller implements IMapController,
 
         getRobView().setPlayers(victims);
         getRobView().showModal();
+
+
 
     }
 
@@ -472,7 +493,7 @@ public class MapController extends Controller implements IMapController,
 	 * @param pieceType
 	 *            The type of piece to be placed
 	 * @param isFree
-	 *            true if the piece should not cost the player resources, false
+	 *            true" + i if the piece should not cost the player resources, false
 	 *            otherwise. Set to true during initial setup and when a road
 	 *            building card is played.
 	 * @param allowDisconnected
@@ -533,7 +554,7 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void robPlayer(RobPlayerInfo victim)
 	{
-        getRobView().showModal();
+//        getRobView().showModal();
 	}
 
 	@Override

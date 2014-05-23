@@ -19,7 +19,7 @@ public class RollController extends Controller implements IRollController, ICata
 
 	/**
 	 * RollController constructor
-	 * 
+	 *
 	 * @param view Roll view
 	 * @param resultView Roll result view
 	 */
@@ -30,7 +30,7 @@ public class RollController extends Controller implements IRollController, ICata
 		setResultView(resultView);
 		this.proxy.getFacade().registerAsObserver(this);
 	}
-	
+
 	public IRollResultView getResultView() {
 		return resultView;
 	}
@@ -41,17 +41,18 @@ public class RollController extends Controller implements IRollController, ICata
 	public IRollView getRollView() {
 		return (IRollView)getView();
 	}
-	
+
 	@Override
 	public void rollDice() {
 		if(this.getRollView().isModalShowing())
 			getRollView().closeModal();
 		int rolledResult = (int) (1 + (Math.random() * 12));
+		rolledResult = 7;
 		ServerRoll serverRoll = new ServerRoll("rollNumber",0,rolledResult);
 		if(proxy.movesRollNumber(serverRoll).getResponseCode() == 200){
 			getResultView().setRollValue(rolledResult);
 			getResultView().showModal();
-			
+
 		}
 	}
 
@@ -63,7 +64,7 @@ public class RollController extends Controller implements IRollController, ICata
 				if(!getRollView().isModalShowing() && !getResultView().isModalShowing())
 					getRollView().showModal();
 			}
-				
+
 		} catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		}
