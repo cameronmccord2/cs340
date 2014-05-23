@@ -26,9 +26,11 @@ import client.models.RoadSegment;
 import client.models.Settlement;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.RoadBuilding;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
 import client.server.ServerBuildSettlement;
+import client.server.Spot;
 
 /**
  * Implementation for the map controller.
@@ -52,8 +54,11 @@ public class MapController extends Controller implements IMapController,
 {
 	private IRobView robView;
 	private IProxy proxy;
-    private int playedRoadCard = 0;
     private HexLocation robberLocCache;
+	private boolean playingRoadBuildCard;
+	private int remainingRoadBuildCardSegments;
+	private IRoadSegment firstSegment;
+	private IRoadSegment secondSegment;
 
 	public MapController(IMapView view, IRobView robView)
 	{
@@ -365,8 +370,31 @@ public class MapController extends Controller implements IMapController,
     			map.placeRoadSegment(segment);
     			String state = facade.getCurrentState();
     
+    			boolean isFree = true;
     			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
-    				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, false));
+    				isFree = false;
+    			
+    			if(this.playingRoadBuildCard){
+    				this.remainingRoadBuildCardSegments--;
+    				if(this.remainingRoadBuildCardSegments > 0){
+    					this.firstSegment = segment;
+    					this.startMove(PieceType.ROAD, true, false);
+    				}else{
+    					this.secondSegment = segment;
+    					SimplifiedEdgeLocation seg1 = new SimplifiedEdgeLocation((EdgeLocation)this.firstSegment.getLocation());
+    					SimplifiedEdgeLocation seg2 = new SimplifiedEdgeLocation((EdgeLocation)this.secondSegment.getLocation());
+    					Spot spot1 = new Spot(seg1.getX(), seg1.getY(), seg1.getDirection());
+    					Spot spot2 = new Spot(seg2.getX(), seg2.getY(), seg2.getDirection());
+    					RoadBuilding rb = new RoadBuilding("roadBuilding", info.getPlayerIndex(), spot1, spot2);
+    					this.proxy.movesRoad_Building(rb);
+    					this.firstSegment = null;
+    					this.secondSegment = null;
+    					this.remainingRoadBuildCardSegments = 0;
+    					this.playingRoadBuildCard = false;
+    				}
+    			}else
+    				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, isFree));
+    			
     		}
     		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
     		{
@@ -538,23 +566,20 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void playRoadBuildingCard()
 	{
-        this.playedRoadCard = 2;
-        CatanColor color = null;
+        this.playingRoadBuildCard = true;
+        this.remainingRoadBuildCardSegments = 2;
+        
         try {
             IFacade facade = this.proxy.getFacade();
             IPlayer player = facade.getCurrentUser();
-            color = player.getPlayerInfo().getColor();
+            CatanColor color = player.getPlayerInfo().getColor();
+            
+            this.startMove(PieceType.ROAD, true, false);
+            
         } catch (CantFindGameModelException | CantFindPlayerException e) {
             e.printStackTrace();
         }
 
-        while (playedRoadCard > 0) {
-
-            this.getView().startDrop(PieceType.ROAD, color, false);
-
-            playedRoadCard--;
-
-        }
 	}
 
 	/**
