@@ -217,6 +217,7 @@ public class Facade implements IFacade {
 		try {
 			IGame game = getGameModel();
 			List<MessageLine> list = game.getLog().getLines();
+			System.out.println("game log: " + list);
 			PlayerInfo[] players = getAllPlayerInfos(); 
 			List<LogEntry> logList = new ArrayList<LogEntry>();
 			for(MessageLine l : list){
@@ -286,11 +287,7 @@ public class Facade implements IFacade {
 					}
 				}
 			}
-			
-			
 		}
-		
-		System.out.println("trade ratio: " + tradeRatio);
 		return tradeRatio;
 	}
 

@@ -1,7 +1,5 @@
 package client.communication;
 
-import java.util.List;
-
 import client.base.Controller;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
@@ -37,6 +35,7 @@ public class ChatController extends Controller implements IChatController, ICata
 
 	@Override
 	public void update() {
+		System.out.println("chat update");
 		getView().setEntries(this.proxy.getFacade().getChats());
 	}
 
