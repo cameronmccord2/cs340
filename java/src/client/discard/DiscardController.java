@@ -287,10 +287,12 @@ public class DiscardController extends Controller implements IDiscardController,
 		{
 			IFacade facade = proxy.getFacade();
 			String status = facade.getCurrentState();
+    		player = facade.getCurrentUser();
 
 			if(status.equals("Discarding"))
 			{
-        		player = facade.getCurrentUser();
+        		System.out.println(player);
+        		
 				int discardAmount = this.getAmountToDiscard();
 
 				if(discardAmount == 0)
@@ -311,10 +313,10 @@ public class DiscardController extends Controller implements IDiscardController,
 			}
 			else
 			{
+				finishedDiscarding = false;
+				
 				if(getWaitView().isModalShowing())
 					getWaitView().closeModal();
-
-				finishedDiscarding = false;
 			}
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
