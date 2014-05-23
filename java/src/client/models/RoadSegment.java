@@ -23,13 +23,26 @@ public class RoadSegment extends Piece implements IRoadSegment
 
 	public RoadSegment()
 	{
+<<<<<<< HEAD
+		cost = new HashSet<>();
+		cost.add(new Resource(ResourceType.BRICK, 1));
+		cost.add(new Resource(ResourceType.WOOD, 1));
+=======
 		
+>>>>>>> 9874a99d76660b1d0baa1eabe6893c1798bb6e0e
 	}
 
 	public RoadSegment(TRRoad road, IPlayer player)
 	{
+		this();
 		this.setPlayer(player);
 		this.setLocation(new EdgeLocation(road.getLocation()));
+<<<<<<< HEAD
+//		cost = new HashSet<>();
+//		cost.add(new Resource(ResourceType.BRICK, 1));
+//		cost.add(new Resource(ResourceType.WOOD, 1));
+=======
+>>>>>>> 9874a99d76660b1d0baa1eabe6893c1798bb6e0e
 	}
 
 	@Override

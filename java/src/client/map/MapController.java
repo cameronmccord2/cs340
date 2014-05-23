@@ -53,10 +53,10 @@ public class MapController extends Controller implements IMapController,
 		super(view);
 
 		setRobView(robView);
-		
+
 //		this.defaultInit();
 	}
-	
+
 	public void setProxy(IProxy proxy)
 	{
 		this.proxy = proxy;
@@ -72,7 +72,7 @@ public class MapController extends Controller implements IMapController,
 	{
 		return robView;
 	}
-	
+
 	private void setRobView(IRobView robView)
 	{
 		this.robView = robView;
@@ -93,13 +93,13 @@ public class MapController extends Controller implements IMapController,
 				if(hex.getHexNumber() != null)
 					this.getView().addNumber(hex.getLocation(), hex.getHexNumber());
 			}
-			
+
 			for(IPort port : map.getPorts())
 			{
 				this.getView().addPort((EdgeLocation)port.getLocation(),
 				                       port.getPortType());
 			}
-			
+
 			for(ISettlement settlement : map.getSettlements())
 			{
 //				System.out.println(settlement.toString());
@@ -107,30 +107,30 @@ public class MapController extends Controller implements IMapController,
 				PlayerInfo info = player.getPlayerInfo();
 				CatanColor color = info.getColor();
 				VertexLocation location = (VertexLocation)settlement.getLocation();
-				
+
 				this.getView().placeSettlement(location, color);
 			}
-			
+
 			for(ICity city : map.getCities())
 			{
 				IPlayer player = city.getPlayer();
 				PlayerInfo info = player.getPlayerInfo();
 				CatanColor color = info.getColor();
 				VertexLocation location = (VertexLocation)city.getLocation();
-				
+
 				this.getView().placeCity(location, color);
 			}
-			
+
 			for(IRoadSegment segment : map.getRoads())
 			{
 				IPlayer player = segment.getPlayer();
 				PlayerInfo info = player.getPlayerInfo();
 				CatanColor color = info.getColor();
 				EdgeLocation location = (EdgeLocation)segment.getLocation();
-				
+
 				this.getView().placeRoad(location, color);
 			}
-			
+
 			IRobber robber = map.getRobber();
 			this.getView().placeRobber(robber.getLocation().getHexLocation());
 		}
@@ -139,21 +139,21 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 
-        try
-        {
-            //TODO add check to see if the overlay is already shown
-            if(this.proxy.getFacade().isMyTurn() &&
-               this.proxy.getFacade().getTurnTracker().getStatus().equals("Robbing"))
-            {
-                this.getView().startDrop(PieceType.ROBBER, null, false);
-            }
-        }
-        catch (CantFindGameModelException e)
-        {
-            e.printStackTrace();
-        }
-    }
-	
+		try
+		{
+	      //TODO add check to see if the overlay is already shown
+			if(this.proxy.getFacade().isMyTurn() &&
+					this.proxy.getFacade().getTurnTracker().getStatus().equals("Robbing"))
+	      {
+	          this.getView().startDrop(PieceType.ROBBER, null, false);
+	      }
+		}
+		catch (CantFindGameModelException e)
+		{
+	      e.printStackTrace();
+		}
+	}
+
 	private void defaultInit()
 	{
 		Random rand = new Random();
@@ -222,7 +222,7 @@ public class MapController extends Controller implements IMapController,
 	 * map. It is called by the view for each "mouse move" event. The returned
 	 * value tells the view whether or not to allow the road to be placed at the
 	 * specified location.
-	 * 
+	 *
 	 * @param edgeLoc
 	 *            The proposed road location
 	 * @return true if the road can be placed at edgeLoc, false otherwise
@@ -242,7 +242,7 @@ public class MapController extends Controller implements IMapController,
 		{
 			e.printStackTrace();
 		}
-		
+
 		if(map != null)
 			return map.canPlaceRoad(segment);
 		else
@@ -254,7 +254,7 @@ public class MapController extends Controller implements IMapController,
 	 * on the map. It is called by the view for each "mouse move" event. The
 	 * returned value tells the view whether or not to allow the settlement to
 	 * be placed at the specified location.
-	 * 
+	 *
 	 * @param vertLoc
 	 *            The proposed settlement location
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
@@ -268,7 +268,7 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
-		
+
 		IFacade facade = this.proxy.getFacade();
 		ICatanMap map = null;
 		try
@@ -279,7 +279,7 @@ public class MapController extends Controller implements IMapController,
 		{
 			e.printStackTrace();
 		}
-		
+
 		if(map != null)
 			return map.canPlaceSettlement(settlement);
 		else
@@ -291,7 +291,7 @@ public class MapController extends Controller implements IMapController,
 	 * map. It is called by the view for each "mouse move" event. The returned
 	 * value tells the view whether or not to allow the city to be placed at the
 	 * specified location.
-	 * 
+	 *
 	 * @param vertLoc
 	 *            The proposed city location
 	 * @return true if the city can be placed at vertLoc, false otherwise
@@ -305,7 +305,7 @@ public class MapController extends Controller implements IMapController,
 			e.printStackTrace();
 		}
 		ICity city = new City(vertLoc, currentPlayer);
-		
+
 		IFacade facade = this.proxy.getFacade();
 		ICatanMap map = null;
 		try
@@ -316,7 +316,7 @@ public class MapController extends Controller implements IMapController,
 		{
 			e.printStackTrace();
 		}
-		
+
 		if(map != null)
 			return map.canPlaceCity(city);
 		else
@@ -328,7 +328,7 @@ public class MapController extends Controller implements IMapController,
 	 * the map. It is called by the view for each "mouse move" event. The
 	 * returned value tells the view whether or not to allow the robber to be
 	 * placed at the specified location.
-	 * 
+	 *
 	 * @param hexLoc
 	 *            The proposed robber location
 	 * @return true if the robber can be placed at hexLoc, false otherwise
@@ -350,7 +350,7 @@ public class MapController extends Controller implements IMapController,
 
 	/**
 	 * This method is called when the user clicks the mouse to place a road.
-	 * 
+	 *
 	 * @param edgeLoc
 	 *            The road location
 	 */
@@ -362,13 +362,13 @@ public class MapController extends Controller implements IMapController,
 			IPlayer player = facade.getCurrentUser();
 			ICatanMap map = facade.getCatanMap();
 			PlayerInfo info = player.getPlayerInfo();
-			
+
 			getView().placeRoad(edgeLoc, info.getColor());
-		
+
     		IRoadSegment segment = new RoadSegment();
     		segment.setLocation(edgeLoc);
     		segment.setPlayer(player);
-    		
+
 			map.placeRoadSegment(segment);
 		}
 		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
@@ -380,7 +380,7 @@ public class MapController extends Controller implements IMapController,
 	/**
 	 * This method is called when the user clicks the mouse to place a
 	 * settlement.
-	 * 
+	 *
 	 * @param vertLoc
 	 *            The settlement location
 	 */
@@ -392,11 +392,11 @@ public class MapController extends Controller implements IMapController,
 			IPlayer player = facade.getCurrentUser();
 			ICatanMap map = facade.getCatanMap();
 			PlayerInfo info = player.getPlayerInfo();
-			
+
 			getView().placeSettlement(vertLoc, info.getColor());
-			
+
 			ISettlement settlement = new Settlement(vertLoc, player);
-			
+
 			map.placeSettlement(settlement);
 		}
 		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
@@ -407,7 +407,7 @@ public class MapController extends Controller implements IMapController,
 
 	/**
 	 * This method is called when the user clicks the mouse to place a city.
-	 * 
+	 *
 	 * @param vertLoc
 	 *            The city location
 	 */
@@ -419,11 +419,11 @@ public class MapController extends Controller implements IMapController,
 			IPlayer player = facade.getCurrentUser();
 			ICatanMap map = facade.getCatanMap();
 			PlayerInfo info = player.getPlayerInfo();
-			
+
 			getView().placeCity(vertLoc, info.getColor());
-			
+
 			ICity city = new City(vertLoc, player);
-			
+
 			map.placeCity(city);
 		}
 		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
@@ -434,7 +434,7 @@ public class MapController extends Controller implements IMapController,
 
 	/**
 	 * This method is called when the user clicks the mouse to place the robber.
-	 * 
+	 *
 	 * @param hexLoc
 	 *            The robber location
 	 */
@@ -471,7 +471,7 @@ public class MapController extends Controller implements IMapController,
 	/**
 	 * This method is called when the user requests to place a piece on the map
 	 * (road, city, or settlement)
-	 * 
+	 *
 	 * @param pieceType
 	 *            The type of piece to be placed
 	 * @param isFree
@@ -505,7 +505,7 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void cancelMove()
 	{
-		
+
 	}
 
 	/**
@@ -514,7 +514,7 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void playSoldierCard()
 	{
-		
+
 	}
 
 	/**
@@ -530,7 +530,7 @@ public class MapController extends Controller implements IMapController,
 	/**
 	 * This method is called by the Rob View when a player to rob is selected
 	 * via a button click.
-	 * 
+	 *
 	 * @param victim
 	 *            The player to be robbed
 	 */
