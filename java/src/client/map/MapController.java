@@ -137,7 +137,6 @@ public class MapController extends Controller implements IMapController,
 
 			IRobber robber = map.getRobber();
 			this.getView().placeRobber(robber.getLocation().getHexLocation());
-            System.out.println(robber.getLocation().getHexLocation());
 		}
 		catch(CantFindGameModelException e)
 		{
@@ -560,9 +559,14 @@ public class MapController extends Controller implements IMapController,
             IFacade facade = this.proxy.getFacade();
             IPlayer player = facade.getCurrentUser();
             int playerIndex = player.getPlayerInfo().getPlayerIndex();
-
-            ServerRobPlayer robData = new ServerRobPlayer("robPlayer",playerIndex, victim.getPlayerIndex(), robberLocCache);
-            proxy.moveRobPlayer(robData);
+            
+            ServerRobPlayer robData = new ServerRobPlayer("robPlayer", playerIndex, victim.getPlayerIndex(), robberLocCache);
+            
+            if(victim.getNumCards() == 0)
+            	robData = new ServerRobPlayer("robPlayer", playerIndex, new RobPlayerInfo().getPlayerIndex(), robberLocCache);
+            
+            System.out.println(robData.toString());
+            System.out.println(proxy.moveRobPlayer(robData).toString());
 
         } catch (CantFindGameModelException | CantFindPlayerException e) {
             e.printStackTrace();

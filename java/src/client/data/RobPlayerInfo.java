@@ -1,8 +1,5 @@
 package client.data;
 
-
-import client.models.IPlayer;
-
 /**
  * Used to pass player information into the rob view<br>
  * <br>

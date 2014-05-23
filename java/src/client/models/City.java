@@ -3,6 +3,7 @@ package client.models;
 import java.util.Collection;
 import java.util.HashSet;
 
+import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.VertexLocation;
 
@@ -24,6 +25,12 @@ public class City extends Settlement implements ICity
 	{
 		super(vertexLocation, newPlayer);
 		this.pointValue = 2;
+	}
+	
+	@Override
+	public PieceType getPieceType()
+	{
+		return PieceType.CITY;
 	}
 	
 	public static Collection<Resource> getResourceCost()

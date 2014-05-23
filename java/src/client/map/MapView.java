@@ -235,7 +235,7 @@ public class MapView extends PanelView implements IMapView
 			this.setLayout(new BorderLayout());
 			this.setBorder(BorderFactory.createLineBorder(Color.black,
 														  BORDER_WIDTH));
-			
+			System.out.println("Type: " + pieceType);
 			label = new JLabel(getLabelText(pieceType), JLabel.CENTER);
 			label.setOpaque(true);
 			label.setBackground(Color.white);
