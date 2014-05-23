@@ -4,6 +4,7 @@ import client.base.Controller;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
 import client.models.Proxy;
+import client.models.exceptions.CantFindGameModelException;
 import client.server.ServerRoll;
 
 
@@ -43,7 +44,8 @@ public class RollController extends Controller implements IRollController, ICata
 	
 	@Override
 	public void rollDice() {
-		getRollView().closeModal();
+		if(this.getRollView().isModalShowing())
+			getRollView().closeModal();
 		int rolledResult = (int) (1 + (Math.random() * 12));
 		ServerRoll serverRoll = new ServerRoll("rollNumber",0,rolledResult);
 		if(proxy.movesRollNumber(serverRoll).getResponseCode() == 200){
@@ -55,7 +57,16 @@ public class RollController extends Controller implements IRollController, ICata
 
 	@Override
 	public void update() {
-		
+		try {
+//			System.out.println(this.proxy.getFacade().getTurnTracker().toString() + ", my index: " + this.proxy.getFacade().getCurrentUserIndex());
+			if(this.proxy.getFacade().isMyTurn() && this.proxy.getFacade().getCurrentState().equals("Rolling")){
+				if(!getRollView().isModalShowing() && !getResultView().isModalShowing())
+					getRollView().showModal();
+			}
+				
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

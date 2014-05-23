@@ -70,5 +70,28 @@ public enum ResourceCard implements IResourceCard {
         public ResourceType getType() {
             return ResourceType.ORE;
         }
-    }
+    };
+
+	public static ResourceCard getCardForType(ResourceType resource) {
+		switch(resource){
+		case BRICK:
+			return ResourceCard.BRICK;
+			
+		case ORE:
+			return ResourceCard.ORE;
+			
+		case SHEEP:
+			return ResourceCard.SHEEP;
+			
+		case WHEAT:
+			return ResourceCard.WHEAT;
+			
+		case WOOD:
+			return ResourceCard.WOOD;
+			
+		default:
+			return null;
+		
+		}
+	}
 }

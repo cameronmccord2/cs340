@@ -37,7 +37,7 @@ public class LeftPanel extends JPanel {
 		tabPane.setFont(newFont);
 		
 		historyView = new GameHistoryView();
-		historyController = new GameHistoryController(historyView);
+		historyController = new GameHistoryController(historyView, proxy);
 		historyView.setController(historyController);
 		
 		chatView = new ChatView();
@@ -45,7 +45,7 @@ public class LeftPanel extends JPanel {
                 chatView.setController(chatController);
 		
 		turnView = new TurnTrackerView(titlePanel, gameStatePanel);
-		turnController = new TurnTrackerController(turnView);
+		turnController = new TurnTrackerController(turnView, proxy);
 		turnView.setController(turnController);
 		
 		tabPane.add("Game History", historyView);

@@ -16,7 +16,6 @@ import shared.definitions.*;
  */
 public class PlayerInfo
 {
-	
 	private int id;
 	private int playerIndex;
 	private String name;
@@ -90,5 +89,12 @@ public class PlayerInfo
 		final PlayerInfo other = (PlayerInfo) obj;
 		
 		return this.id == other.id;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "PlayerInfo [id=" + id + ", playerIndex=" + playerIndex
+			   + ", name=" + name + ", color=" + color + "]";
 	}
 }

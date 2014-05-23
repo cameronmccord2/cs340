@@ -153,13 +153,25 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 			} 
 			else if (e.getSource() == useButton) {
 				if (devCards.getSelectedDevCard() == DevCardType.MONOPOLY) {					
-					closeModal();
 					getController().playMonopolyCard(resCard1.getSelectedResourceCard());
+					closeModal();
+				}
+				else if (devCards.getSelectedDevCard() == DevCardType.MONUMENT) {
+					getController().playMonumentCard();
+					closeModal();
+				}
+				else if (devCards.getSelectedDevCard() == DevCardType.ROAD_BUILD) {
+					getController().playRoadBuildCard();
+					closeModal();
+				}
+				else if (devCards.getSelectedDevCard() == DevCardType.SOLDIER) {
+					getController().playSoldierCard();
+					closeModal();
 				}
 				else if (devCards.getSelectedDevCard() == DevCardType.YEAR_OF_PLENTY) {
-					closeModal();
 					getController().playYearOfPlentyCard(resCard1.getSelectedResourceCard(),
 														resCard2.getSelectedResourceCard());
+					closeModal();
 				}
 			}
 		}	
@@ -179,40 +191,31 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 				resCard2.setEnabled(false);
 			}
 			else if (selectedDevCard == DevCardType.MONUMENT) {
-				useButton.setText(DEFAULT_USE_BUTTON_LABEL);
-				useButton.setEnabled(false);
+				useButton.setText("Use Monument Card");
+				useButton.setEnabled(true);
 				resCard1.setEnabled(false);
 				resCard2.setEnabled(false);
-				
-				closeModal();
-				getController().playMonumentCard();
 			}
 			else if (selectedDevCard == DevCardType.ROAD_BUILD) {
-				useButton.setText(DEFAULT_USE_BUTTON_LABEL);
-				useButton.setEnabled(false);
+				useButton.setText("Use Road Building Card");
+				useButton.setEnabled(true);
 				resCard1.setEnabled(false);
 				resCard2.setEnabled(false);
-				
-				closeModal();
-				getController().playRoadBuildCard();
 			}
 			else if (selectedDevCard == DevCardType.SOLDIER) {
-				useButton.setText(DEFAULT_USE_BUTTON_LABEL);
-				useButton.setEnabled(false);
+				useButton.setText("User Soldier Card");
+				useButton.setEnabled(true);
 				resCard1.setEnabled(false);
 				resCard2.setEnabled(false);
-				
-				closeModal();
-				getController().playSoldierCard();
 			}
 			else if (selectedDevCard == DevCardType.MONOPOLY) {
-				useButton.setText("use monopoly");
+				useButton.setText("Use Monopoly Card");
 				useButton.setEnabled(resCard1.getSelectedResourceCard() != null);
 				resCard1.setEnabled(true);
 				resCard2.setEnabled(false);
 			}
 			else if (selectedDevCard == DevCardType.YEAR_OF_PLENTY) {
-				useButton.setText("use year of plenty");
+				useButton.setText("Use Year of Plenty Card");
 				useButton.setEnabled(resCard1.getSelectedResourceCard() != null &&
 										resCard2.getSelectedResourceCard() != null);
 				resCard1.setEnabled(true);

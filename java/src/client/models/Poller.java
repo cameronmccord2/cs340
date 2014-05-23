@@ -8,25 +8,26 @@ import java.util.TimerTask;
  * @author Scott Daly
  *
  */
-public class Poller {
+public class Poller{
 
-	private Proxy proxy;
+	private IProxy proxy;
 	private Timer t;
 	
-	public Poller() {
-		this(new Proxy());
-	}
+//	public Poller() {
+//		this(new Proxy());
+//	}
 	
 	
 	/**
 	 * 
 	 */
-	public Poller(Proxy proxy) {
+	public Poller(IProxy proxy) {
 		this.proxy = proxy;
 		this.startTimer();
 	}
+
 	
-	static int interval;
+//	static int interval;
 	
 	/**
 	 * Starts the timer of the poller
@@ -35,24 +36,29 @@ public class Poller {
 		
 		t = new Timer();
 
-		t.scheduleAtFixedRate(
+		t.schedule(
 		    new TimerTask(){
+		    	@Override
 		        public void run(){
-		            updateModel();
+		            proxy.getGameModel();
 		        }
 		    },
-		    0,      // run first occurrence immediately
+		    10,      // run first occurrence immediately
 		    2000); // run every two seconds
+		
 	}
 	/**
 	 * Calls the Proxy and tells it to pull current game state from the server
 	 */
-	public void updateModel(){
-		proxy.getGameModel();
-	}
+//	public void updateModel(){
+//		//proxy.getGameModel();
+//	}
 	
 	public void endTImer(){
 		t.cancel();
 	}
+
+
+	
 
 }

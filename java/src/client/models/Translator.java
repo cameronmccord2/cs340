@@ -24,7 +24,7 @@ import client.models.translator.TRVertexObject;
 /**
  * This class receives either JSON or Java objects and converts it to the other format
  * @author scottdaly
- *
+ * 
  */
 public class Translator {
 
@@ -59,108 +59,138 @@ public class Translator {
 		IBank bank = new Bank(cm.getDeck(), cm.getBank());
 		g.setBank(bank);
 
-		g.setPlayers((IPlayer[]) new Player[cm.getPlayers().length]);
+		//check to see how many players are actually in the players list for the game
+		int count = 0;
+		for(int i = 0; i < cm.getPlayers().length; i++){
+			if(cm.getPlayers()[i] != null)
+				count++;
+		}
+		g.setPlayers((IPlayer[]) new Player[count]);
 		int index = 0;
 		for (TRPlayer p : cm.getPlayers()) {
-
-			PlayerInfo playerInfo = new PlayerInfo();
-			playerInfo.setId(p.getPlayerID());
-			playerInfo.setPlayerIndex(p.getPlayerIndex());
-			playerInfo.setName(p.getName());
-			playerInfo.setColor(CatanColor.getColorForName(p.getColor()));
-
-			Player newPlayer = new Player(playerInfo);
-
-			newPlayer.setSoldiers(p.getSoldiers());
-			newPlayer.setVictoryPoints(p.getVictoryPoints());
-			newPlayer.setMonuments(p.getMonuments());
-			newPlayer.setPlayedDevCard(p.isPlayedDevCard());
-			newPlayer.setDiscarded(p.isDiscarded());
-
-			List<ISettlement> settlements = new ArrayList<ISettlement>();
-			for (TRVertexObject s : cm.getMap().getSettlements()) {
-				if((long)s.getOwner() != p.getPlayerID())
-					continue;
-				ISettlement newS = new Settlement(new VertexLocation(s.getLocation()), newPlayer, 1);// TODO point value?
-				settlements.add(newS);
+			if(p != null){
+				PlayerInfo playerInfo = new PlayerInfo();
+				playerInfo.setId(p.getPlayerID());
+				playerInfo.setPlayerIndex(p.getPlayerIndex());
+				playerInfo.setName(p.getName());
+				playerInfo.setColor(CatanColor.getColorForName(p.getColor()));
+	
+				Player newPlayer = new Player(playerInfo);
+	
+				newPlayer.setSoldiers(p.getSoldiers());
+				newPlayer.setVictoryPoints(p.getVictoryPoints());
+				newPlayer.setMonuments(p.getMonuments());
+				newPlayer.setPlayedDevCard(p.isPlayedDevCard());
+				newPlayer.setDiscarded(p.isDiscarded());
+	
+				List<ISettlement> settlements = new ArrayList<ISettlement>();
+				for (TRVertexObject s : cm.getMap().getSettlements()) {
+					if((long)s.getOwner() != p.getPlayerID())
+						continue;
+					ISettlement newS = new Settlement(new VertexLocation(s.getLocation()), newPlayer);
+					settlements.add(newS);
+				}
+				newPlayer.setSettlements(settlements);
+	//			System.out.println(settlements.size() + "," + p.getSettlements());
+	//			assert(settlements.size() == p.getSettlements());
+	
+				List<ICity> cities = new ArrayList<ICity>();
+				for (TRVertexObject c : cm.getMap().getCities()) {
+					if((long)c.getOwner() != p.getPlayerID())
+						continue;
+					ICity newC = new City(new VertexLocation(c.getLocation()), newPlayer);
+					cities.add(newC);
+				}
+				newPlayer.setCities(cities);
+	//			assert(cities.size() == p.getCities());
+	
+				List<IRoad> roads = new ArrayList<IRoad>();
+				for (TRRoad road : cm.getMap().getRoads()) {
+					if((long)road.getOwner() != p.getPlayerID())
+						continue;
+					IRoad r = new Road(playerInfo.getColor(), newPlayer, false, new EdgeLocation(road.getLocation()));
+					roads.add(r);
+				}
+				newPlayer.setRoads(roads);
+	//			assert(roads.size() == p.getRoads());
+	
+	
+				Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
+				TRResourceList resources = p.getResources();
+	//			resourceCards.put(ResourceCard.BRICK, 10 + index);
+	//			resourceCards.put(ResourceCard.ORE, 10 + index);
+	//			resourceCards.put(ResourceCard.SHEEP, 10 + index);
+	//			resourceCards.put(ResourceCard.WHEAT, 10 + index);
+	//			resourceCards.put(ResourceCard.WOOD, 10 + index);
+				resourceCards.put(ResourceCard.BRICK, resources.getBrick());
+				resourceCards.put(ResourceCard.ORE, resources.getOre());
+				resourceCards.put(ResourceCard.SHEEP, resources.getSheep());
+				resourceCards.put(ResourceCard.WHEAT, resources.getWheat());
+				resourceCards.put(ResourceCard.WOOD, resources.getWood());
+				newPlayer.setResourceCards(resourceCards);
+	
+				Map<IDevelopmentCard, Integer> developmentCards = new HashMap<IDevelopmentCard, Integer>();
+				TRDevCardList newDevCards = p.getNewDevCards();
+	//			TRDevCardList oldDevCards = p.getOldDevCards();
+				developmentCards.put(DevelopmentCard.MONOPOLY, newDevCards.getMonopoly());
+				developmentCards.put(DevelopmentCard.MONUMENT, newDevCards.getMonument());
+				developmentCards.put(DevelopmentCard.ROAD_BUILD, newDevCards.getRoadBuilding());
+				developmentCards.put(DevelopmentCard.SOLDIER, newDevCards.getSoldier());
+				developmentCards.put(DevelopmentCard.YEAR_OF_PLENTY, newDevCards.getYearOfPlenty());
+				newPlayer.setDevelopmentCards(developmentCards);
+	
+				g.getPlayers()[index] = newPlayer;
+				index++;
 			}
-			newPlayer.setSettlements(settlements);
-//			System.out.println(settlements.size() + "," + p.getSettlements());
-//			assert(settlements.size() == p.getSettlements());
-
-			List<ICity> cities = new ArrayList<ICity>();
-			for (TRVertexObject c : cm.getMap().getCities()) {
-				if((long)c.getOwner() != p.getPlayerID())
-					continue;
-				ICity newC = new City(new VertexLocation(c.getLocation()), newPlayer, 1);// TODO point value?
-				cities.add(newC);
-			}
-			newPlayer.setCities(cities);
-//			assert(cities.size() == p.getCities());
-
-			List<IRoad> roads = new ArrayList<IRoad>();
-			for (TRRoad road : cm.getMap().getRoads()) {
-				if((long)road.getOwner() != p.getPlayerID())
-					continue;
-				IRoad r = new Road(playerInfo.getColor(), newPlayer, false, new EdgeLocation(road.getLocation()));
-				roads.add(r);
-			}
-			newPlayer.setRoads(roads);
-//			assert(roads.size() == p.getRoads());
-
-
-			Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
-			TRResourceList resources = p.getResources();
-			resourceCards.put(ResourceCard.BRICK, resources.getBrick());
-			resourceCards.put(ResourceCard.ORE, resources.getOre());
-			resourceCards.put(ResourceCard.SHEEP, resources.getSheep());
-			resourceCards.put(ResourceCard.WHEAT, resources.getWheat());
-			resourceCards.put(ResourceCard.WOOD, resources.getWood());
-			newPlayer.setResourceCards(resourceCards);
-
-			Map<IDevelopmentCard, Integer> developmentCards = new HashMap<IDevelopmentCard, Integer>();
-			TRDevCardList newDevCards = p.getNewDevCards();
-//			TRDevCardList oldDevCards = p.getOldDevCards();
-			developmentCards.put(DevelopmentCard.MONOPOLY, newDevCards.getMonopoly());
-			developmentCards.put(DevelopmentCard.MONUMENT, newDevCards.getMonument());
-			developmentCards.put(DevelopmentCard.ROAD_BUILD, newDevCards.getRoadBuilding());
-			developmentCards.put(DevelopmentCard.SOLDIER, newDevCards.getSoldier());
-			developmentCards.put(DevelopmentCard.YEAR_OF_PLENTY, newDevCards.getYearOfPlenty());
-			newPlayer.setDevelopmentCards(developmentCards);
-
-			g.getPlayers()[index] = newPlayer;
-			index++;
+			
 		}
 
 		ICatanMap map = new CatanMap();
 		for (TRHex hex : cm.getMap().getHexes()) {
 			map.addHex(new Hex(hex));
 		}
-		for (TRVertexObject city : cm.getMap().getCities()) {
-			map.placeCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers()), 2));
-		}
 		for (TRPort port : cm.getMap().getPorts()) {
 			map.addPort(new Port(port));
 		}
-		for(TRRoad road : cm.getMap().getRoads()){
-			map.placeRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
-		}
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
-			map.placeSettlement(new Settlement(new VertexLocation(settl.getLocation()), this.getPlayerWithId(settl.getOwner(), g.getPlayers()), 1));
+//			System.out.println("settl owner: " + settl.getOwner());
+			IPlayer player = this.getPlayerWithId(settl.getOwner(), g.getPlayers());
+//			System.out.println("player: " + player);
+			map.placeInitialSettlement(new Settlement(new VertexLocation(settl.getLocation()), 
+			                                          player));
+		}
+		for (TRVertexObject city : cm.getMap().getCities()) {
+			map.placeInitialCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers())));
+		}
+		for(TRRoad road : cm.getMap().getRoads()){
+//			System.out.println(g.toString());
+//			System.out.println(cm.toString());
+			map.placeInitialRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
 		}
 		
 		IRobber robber = new Robber(cm.getMap().getRobber());
+//		System.out.println(robber.getLocation());
 		map.setRobber(robber);
 		map.setRadius(cm.getMap().getRadius());
 		g.setMap(map);
+		
+//		System.out.println("Number of hexes: " + map.getHexes().size());
+//		for(IHex hex : map.getHexes())
+//			System.out.println(hex);
 
+//		System.out.println("Returning from convertClientModelToGame");
+		
 		return g;
 	}
 
 	private IPlayer getPlayerWithId(Integer owner, IPlayer[] players) {
 		for (IPlayer iPlayer : players) {
-			if(iPlayer.getPlayerInfo().getId() == owner)
+//			System.out.println(iPlayer);
+			if(iPlayer.getPlayerInfo().getPlayerIndex() == owner.intValue())
+			{
+				
 				return iPlayer;
+			}
 		}
 		return null;
 	}

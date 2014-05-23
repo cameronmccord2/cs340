@@ -362,8 +362,10 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	@Override
 	public void reset() {
+		this.removeAll();
 		this.buildView();
-		this.setPlayers(this.players);
+		if(this.players != null)
+			this.setPlayers(this.players);
 	}
 
 	@Override
@@ -391,7 +393,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	@Override
 	public void setPlayerSelectionEnabled(boolean enable) {
-		System.out.println("player selection: " + enable);
+//		System.out.println("player selection: " + enable);
 		this.playerSelectionPanel.setVisible(enable);
 	}
 

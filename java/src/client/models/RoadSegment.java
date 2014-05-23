@@ -13,13 +13,23 @@ import shared.locations.VertexLocation;
 
 public class RoadSegment extends Piece implements IRoadSegment
 {
-	private Collection<Resource> cost;
-
-	public RoadSegment()
+	private static Collection<Resource> cost;
+	static
 	{
 		cost = new HashSet<>();
 		cost.add(new Resource(ResourceType.BRICK, 1));
 		cost.add(new Resource(ResourceType.WOOD, 1));
+	}
+
+	public RoadSegment()
+	{
+<<<<<<< HEAD
+		cost = new HashSet<>();
+		cost.add(new Resource(ResourceType.BRICK, 1));
+		cost.add(new Resource(ResourceType.WOOD, 1));
+=======
+		
+>>>>>>> 9874a99d76660b1d0baa1eabe6893c1798bb6e0e
 	}
 
 	public RoadSegment(TRRoad road, IPlayer player)
@@ -27,9 +37,12 @@ public class RoadSegment extends Piece implements IRoadSegment
 		this();
 		this.setPlayer(player);
 		this.setLocation(new EdgeLocation(road.getLocation()));
+<<<<<<< HEAD
 //		cost = new HashSet<>();
 //		cost.add(new Resource(ResourceType.BRICK, 1));
 //		cost.add(new Resource(ResourceType.WOOD, 1));
+=======
+>>>>>>> 9874a99d76660b1d0baa1eabe6893c1798bb6e0e
 	}
 
 	@Override
@@ -56,8 +69,8 @@ public class RoadSegment extends Piece implements IRoadSegment
 		this.player = player;
 	}
 
-	@Override
-	public Collection<Resource> getResourceCost()
+	
+	public static Collection<Resource> getResourceCost()
 	{
 		return cost;
 	}
@@ -95,7 +108,7 @@ public class RoadSegment extends Piece implements IRoadSegment
 				break;
 		}
 		VertexLocation start = new VertexLocation(roadEdge.getHexLocation(),
-																direction);
+												  direction);
 		return start.getNormalizedLocation();
 	}
 
@@ -126,7 +139,7 @@ public class RoadSegment extends Piece implements IRoadSegment
 				break;
 		}
 		VertexLocation end = new VertexLocation(roadEdge.getHexLocation(),
-															 direction);
+												direction);
 		return end.getNormalizedLocation();
 	}
 

@@ -1,7 +1,5 @@
 package client.models;
 
-// TODO: Auto-generated Javadoc
-
 import shared.definitions.DevCardType;
 
 /**

@@ -1,17 +1,20 @@
 package client.models;
 
+import shared.locations.HexLocation;
+
 import java.util.*;
 
 public interface ICatanMap
 {
-	public boolean canBuildSettlement(IPlayer player, ISettlement settlement);
 	public boolean canPlaceSettlement(ISettlement settlement);
-
-	public boolean canBuildCity(IPlayer player, ICity city);
 	public boolean canPlaceCity(ICity city);
 
-	public boolean canBuildRoad(IPlayer player, IRoadSegment segment);
-	public boolean canPlaceRoad(IRoadSegment segment);
+    Collection<IPlayer> getPlayersAroundHex(HexLocation hex);
+
+    // Very ugly method.
+    boolean isOceanHex(HexLocation hex);
+
+    public boolean canPlaceRoad(IRoadSegment segment);
 
 	public boolean canMoveRobber(IPlayer player);
 	public IPiece distanceRule(IPiece piece);
@@ -25,7 +28,7 @@ public interface ICatanMap
 	public IRobber getRobber();
 	public void setRobber(IRobber robber);
 
-	public Collection<IRoad> getRoads();
+	public Collection<IRoadSegment> getRoads();
 	public void placeRoadSegment(IRoadSegment segment) throws InvalidLocationException;
 
 	public Collection<ISettlement> getSettlements();
@@ -33,8 +36,13 @@ public interface ICatanMap
 
 	public Collection<ICity> getCities();
 	public void placeCity(ICity city) throws InvalidLocationException;
+	
+	public Collection<IPiece> getPieces();
 
 	public int getRadius();
 	public void setRadius(int radius);
 	
+	public void placeInitialSettlement(ISettlement settlement) throws InvalidLocationException;
+	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException;
+	public void placeInitialCity(ICity city) throws InvalidLocationException;
 }

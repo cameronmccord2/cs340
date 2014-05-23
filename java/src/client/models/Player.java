@@ -1,6 +1,7 @@
 package client.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,8 @@ import client.data.PlayerInfo;
  * The Class Player.
  */
 public class Player extends Participant implements IPlayer {
-	
+
+    private static final int START_POINTS = 2;
 	/** The settlements. */
 	protected List<ISettlement> settlements;
 	
@@ -38,6 +40,7 @@ public class Player extends Participant implements IPlayer {
 		this.settlements = new ArrayList<ISettlement>();
 		this.roads = new ArrayList<IRoad>();
 		this.cities = new ArrayList<ICity>();
+        this.victoryPoints = START_POINTS;
 	}
 	
 	/**
@@ -49,12 +52,18 @@ public class Player extends Participant implements IPlayer {
 	 * @param settlements the settlements
 	 * @param roads the roads
 	 */
-	public Player(PlayerInfo playerInfo, Map<IDevelopmentCard, Integer> developmentCards, Map<IResourceCard, Integer> resourceCards, List<ISettlement> settlements, List<IRoad> roads, List<ICity> cities){
+	public Player(PlayerInfo playerInfo,
+	              Map<IDevelopmentCard, Integer> developmentCards,
+	              Map<IResourceCard, Integer> resourceCards,
+	              List<ISettlement> settlements,
+	              List<IRoad> roads,
+	              List<ICity> cities) {
 		super(developmentCards, resourceCards);
 		this.playerInfo = playerInfo;
 		this.settlements = settlements;
 		this.roads = roads;
 		this.cities = cities;
+        this.victoryPoints = START_POINTS;
 	}
 	
 	/* (non-Javadoc)
@@ -198,23 +207,53 @@ public class Player extends Participant implements IPlayer {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Player [settlements=");
 		builder.append(settlements);
-		builder.append(", cities=");
+		builder.append(", \n\tcities=");
 		builder.append(cities);
-		builder.append(", roads=");
+		builder.append(", \n\troads=");
 		builder.append(roads);
-		builder.append(", playerInfo=");
+		builder.append(", \n\tplayerInfo=");
 		builder.append(playerInfo);
-		builder.append(", soldiers=");
+		builder.append(", \n\tsoldiers=");
 		builder.append(soldiers);
-		builder.append(", victoryPoints=");
+		builder.append(", \n\tvictoryPoints=");
 		builder.append(victoryPoints);
-		builder.append(", monuments=");
+		builder.append(", \n\tmonuments=");
 		builder.append(monuments);
-		builder.append(", playedDevCard=");
+		builder.append(", \n\tplayedDevCard=");
 		builder.append(playedDevCard);
-		builder.append(", discarded=");
+		builder.append(", \n\tdiscarded=");
 		builder.append(discarded);
+		builder.append(", \n\tdevelopmentCards=");
+		builder.append(developmentCards);
+		builder.append(", \n\tresourceCards=");
+		builder.append(resourceCards);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public boolean canBuildSettlement(ISettlement settlement)
+	{
+		return this.hasResources(Settlement.getResourceCost());
+	}
+
+	@Override
+	public boolean canBuildCity(ICity city)
+	{
+		return this.hasResources(City.getResourceCost());
+	}
+
+	private boolean hasResources(Collection<Resource> cost) {
+		for (Resource r : cost) {
+			if(this.getResourceCards().get(r.getResourceType()) < r.getAmount())
+				return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean canBuildRoad(IRoadSegment segment)
+	{
+		return this.hasResources(RoadSegment.getResourceCost());
 	}
 }

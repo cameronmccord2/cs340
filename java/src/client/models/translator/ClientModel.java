@@ -68,7 +68,9 @@ public class ClientModel implements IModelValid{
 	public void isValid() throws InvalidTranslatorModelException {
 		map.isValid();
 		for (TRPlayer p : this.players) {
-			p.isValid();
+			if(p != null){
+				p.isValid();
+			}
 		}
 		this.log.isValid();
 		this.chat.isValid();
@@ -97,23 +99,23 @@ public class ClientModel implements IModelValid{
 		StringBuilder builder = new StringBuilder();
 		builder.append("ClientModel [map=");
 		builder.append(map);
-		builder.append(", players=");
+		builder.append(", \n\tplayers=");
 		builder.append(players);
-		builder.append(", log=");
+		builder.append(", \n\tlog=");
 		builder.append(log);
-		builder.append(", chat=");
+		builder.append(", \n\tchat=");
 		builder.append(chat);
-		builder.append(", bank=");
+		builder.append(", \n\tbank=");
 		builder.append(bank);
-		builder.append(", turnTracker=");
+		builder.append(", \n\tturnTracker=");
 		builder.append(turnTracker);
-		builder.append(", tradeOffer=");
+		builder.append(", \n\ttradeOffer=");
 		builder.append(tradeOffer);
-		builder.append(", deck=");
+		builder.append(", \n\tdeck=");
 		builder.append(deck);
-		builder.append(", winner=");
+		builder.append(", \n\twinner=");
 		builder.append(winner);
-		builder.append(", version=");
+		builder.append(", \n\tversion=");
 		builder.append(version);
 		builder.append("]");
 		return builder.toString();

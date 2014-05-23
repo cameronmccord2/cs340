@@ -7,19 +7,27 @@ import shared.definitions.*;
 public class Hex implements IHex
 {
 	private HexLocation location;
-	private int hexNumber;
+	private Integer hexNumber;
 	private HexType type;
 
 	public Hex()
 	{
-		this.setHexNumber(0);
-		this.setHexType(HexType.DESERT);
+		this.setHexNumber(null);
+		this.setHexType(HexType.WATER);
+	}
+	
+	public Hex(HexLocation location)
+	{
+		this();
+		this.setLocation(location);
 	}
 
 	public Hex(TRHex hex) {
 		this.location = new HexLocation(hex.getLocation().getX(), hex.getLocation().getY());
 		if(hex.getNumber() != null)
 			this.hexNumber = hex.getNumber();
+		else
+			this.hexNumber = null;
 		
 		// This isthe preferred, dynamic way to get an enum from a String
 		// instead of using a switch statement.
@@ -27,6 +35,8 @@ public class Hex implements IHex
 		{
     		if(hex.getResource() != null)
     			this.type = HexType.valueOf(hex.getResource().toUpperCase());
+    		else
+    			this.type = HexType.DESERT;
 		}
 		catch(IllegalArgumentException e)
 		{
@@ -82,13 +92,13 @@ public class Hex implements IHex
 	 * 			this Hex, or 0 if it is the Desert.
 	 */
 	@Override
-	public int getHexNumber()
+	public Integer getHexNumber()
 	{
 		return hexNumber;
 	}
 
 	@Override
-	public void setHexNumber(int number)
+	public void setHexNumber(Integer number)
 	{
 		this.hexNumber = number;
 	}
@@ -103,5 +113,18 @@ public class Hex implements IHex
 	public void setHexType(HexType type)
 	{
 		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Hex [location=");
+		builder.append(location);
+		builder.append(", hexNumber=");
+		builder.append(hexNumber);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append("]");
+		return builder.toString();
 	}
 }

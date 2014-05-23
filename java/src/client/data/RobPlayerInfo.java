@@ -1,6 +1,8 @@
 package client.data;
 
 
+import client.models.IPlayer;
+
 /**
  * Used to pass player information into the rob view<br>
  * <br>
@@ -21,6 +23,13 @@ public class RobPlayerInfo extends PlayerInfo {
 	public RobPlayerInfo() {
 		super();
 	}
+
+    public RobPlayerInfo(PlayerInfo info) {
+        this.setColor(info.getColor());
+        this.setId(info.getId());
+        this.setName(info.getName());
+        this.setPlayerIndex(info.getPlayerIndex());
+    }
 
 	public int getNumCards() {
 		return numCards;

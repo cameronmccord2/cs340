@@ -36,7 +36,7 @@ public class CatanPanel extends JPanel
 		titlePanel = new TitlePanel();
 		midPanel = new MidPanel(proxy);
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel(), proxy);
-		rightPanel = new RightPanel(midPanel.getMapController());
+		rightPanel = new RightPanel(midPanel.getMapController(), proxy);
 		
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(leftPanel, BorderLayout.WEST);
@@ -47,6 +47,8 @@ public class CatanPanel extends JPanel
 		discardWaitView = new WaitView();
 		discardWaitView.setMessage("Waiting for other Players to Discard");
 		discardController = new DiscardController(discardView, discardWaitView);
+		discardController.setProxy(proxy);
+		
 		discardView.setController(discardController);
 		discardWaitView.setController(discardController);
 		

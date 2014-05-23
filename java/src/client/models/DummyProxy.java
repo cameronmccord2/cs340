@@ -50,6 +50,8 @@ public class DummyProxy implements IProxy{
 	private String gameId = "0";
 	private IFacade facade;
 	
+	private final long DEFAULT_WAIT = 1000;
+	
 	public DummyProxy() {
 		this.translator = new Translator();
 		this.games = new ArrayList<IGame>();
@@ -98,7 +100,7 @@ public class DummyProxy implements IProxy{
 	}
 	
 	@Override
-	public ServerResponse getGamesList(){
+	public List<IGame> getGamesList(){
 		String response = "[{'title':'Default Game',"
 						  + "'id':0,"
 						  + "'players':[{'color':'orange','name':'Sam','id':0},"
@@ -143,7 +145,7 @@ public class DummyProxy implements IProxy{
 			list.add(game);
 		}
 		this.games = list;
-		return sr;
+		return this.games;
 	}
 	
 	@Override
@@ -284,14 +286,14 @@ public class DummyProxy implements IProxy{
 	@Override
 	public ServerResponse movesOfferTrade(OfferTrade ot){
 		ServerResponse sr = new ServerResponse(updateModel,200);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
 	@Override
 	public ServerResponse movesAcceptTrade(AcceptTrade at){
 		ServerResponse sr = new ServerResponse(updateModel,200);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	
@@ -374,7 +376,7 @@ public class DummyProxy implements IProxy{
 		   			   					   			  
 		   					   			   + "'robber': { 'x': 0, 'y': -2 } }, "
 		   					   			   
-		   					   			   + "'players': [ { 'resources': { 'brick': 0, 'wood': 1, 'sheep': 1, 'wheat': 1, 'ore': 0 }, "
+		   					   			   + "'players': [ { 'resources': { 'brick': 4, 'wood': 3, 'sheep': 4, 'wheat': 4, 'ore': 4 }, "
 		   					   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'roads': 13, "
@@ -389,7 +391,7 @@ public class DummyProxy implements IProxy{
 		   					   			   				  + "'playerIndex': 0, "
 		   					   			   				  + "'name': 'Sam', "
 		   					   			   				  + "'color': 'orange' }, "
-		   					   			   				+ "{ 'resources': { 'brick': 1, 'wood': 0, 'sheep': 1, 'wheat': 0, 'ore': 1 }, "
+		   					   			   				+ "{ 'resources': { 'brick': 4, 'wood': 4, 'sheep': 4, 'wheat': 4, 'ore': 4 }, "
 		   					   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'roads': 13, "
@@ -404,7 +406,7 @@ public class DummyProxy implements IProxy{
 		   					   			   				  + "'playerIndex': 1, "
 		   					   			   				  + "'name': 'Brooke', "
 		   					   			   				  + "'color': 'blue' }, "
-		   					   			   				+ "{ 'resources': { 'brick': 0, 'wood': 1, 'sheep': 1, 'wheat': 1, 'ore': 0 }, "
+		   					   			   				+ "{ 'resources': { 'brick': 4, 'wood': 4, 'sheep': 4, 'wheat': 4, 'ore': 4 }, "
 		   					   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'roads': 13, "
@@ -419,7 +421,7 @@ public class DummyProxy implements IProxy{
 		   					   			   				  + "'playerIndex': 2, "
 		   					   			   				  + "'name': 'Pete', "
 		   					   			   				  + "'color': 'red' }, "
-		   					   			   				+ "{ 'resources': { 'brick': 0, 'wood': 1, 'sheep': 1, 'wheat': 0, 'ore': 1 }, "
+		   					   			   				+ "{ 'resources': { 'brick': 4, 'wood': 4, 'sheep': 4, 'wheat': 4, 'ore': 4 }, "
 		   					   			   				  + "'oldDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'newDevCards': { 'yearOfPlenty': 0, 'monopoly': 0, 'soldier': 0, 'roadBuilding': 0, 'monument': 0 }, "
 		   					   			   				  + "'roads': 13, "
@@ -468,6 +470,8 @@ public class DummyProxy implements IProxy{
 	   				   					   
 	   				   					   + "'winner': -1, "
 	   				   					   
+//	   				   					   + "'tradeOffer': { 'sender': 1, 'receiver': 0, 'offer': { 'brick': 1, 'wood': 2, 'sheep': -1, 'wheat': -1, 'ore': -3 } },"
+	   				   					   
 	   				   					   + "'version': 0 }";
 
 	public List<IGame> getGames() {
@@ -481,6 +485,12 @@ public class DummyProxy implements IProxy{
 
 	@Override
 	public String getGameId() {
-		return this.getGameId();
+		return this.gameId;
+	}
+
+	@Override
+	public ReturnedUser getrUser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

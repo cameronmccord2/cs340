@@ -272,7 +272,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 			public void actionPerformed(ActionEvent e) {
 
 				if (e.getSource() == givereload)	
-				{getController().unsetGiveValue();hideGetOptions();}
+				{getController().unsetGiveValue();}
 
 				else if (e.getSource() == givewood) 
 				{getController().setGiveResource(ResourceType.WOOD);}

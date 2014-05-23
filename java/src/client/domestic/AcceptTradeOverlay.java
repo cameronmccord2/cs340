@@ -45,8 +45,13 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 	private JLabel request_component;
 	private JPanel requesting_component;
 	
-	public AcceptTradeOverlay() {
-
+	public AcceptTradeOverlay()
+	{
+		this.initialize();
+	}
+	
+	private void initialize()
+	{
 		this.setOpaque(true);
 		this.setLayout(new GridBagLayout());
 		this.setBorder(new EmptyBorder(20,20,20,20));
@@ -139,7 +144,7 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 			contentPanel.add(offering_component,offering_component_gbc);
 		}
 		//The Image
-		Image i = ImageUtils.loadImage("images/resources/"+resource+".png");
+		Image i = ImageUtils.loadImage("images/resources/"+resource.toString().toLowerCase()+".png");
 		ImageIcon ii = new ImageIcon(i.getScaledInstance(50, 50, 0));
 
 		//The Number (and image)
@@ -237,6 +242,17 @@ public class AcceptTradeOverlay extends OverlayView implements IAcceptTradeOverl
 			}			
 		}	
 	};
+
+	@Override
+	public void reset()
+	{
+		offerer_component = null;
+		offering_component = null;
+		request_component = null;
+		requesting_component = null;
+		this.removeAll();
+		this.initialize();
+	}
 	
 }
 

@@ -4,9 +4,14 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import client.domestic.*;
-import client.maritime.*;
-import client.misc.*;
+import client.domestic.AcceptTradeOverlay;
+import client.domestic.DomesticTradeController;
+import client.domestic.DomesticTradeOverlay;
+import client.domestic.DomesticTradeView;
+import client.maritime.MaritimeTradeController;
+import client.maritime.MaritimeTradeOverlay;
+import client.maritime.MaritimeTradeView;
+import client.misc.WaitView;
 import client.models.IProxy;
 
 @SuppressWarnings("serial")
@@ -48,7 +53,8 @@ public class TradePanel extends JPanel
 		maritimeView = new MaritimeTradeView();
 		maritimeOverlay = new MaritimeTradeOverlay();
 		maritimeController = new MaritimeTradeController(maritimeView,
-														 maritimeOverlay);
+														 maritimeOverlay,
+														 proxy);
 		maritimeView.setController(maritimeController);
 		maritimeOverlay.setController(maritimeController);
 		

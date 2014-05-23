@@ -103,13 +103,13 @@ public class Game implements IGame{
 		StringBuilder builder = new StringBuilder();
 		builder.append("Game [gameInfo=");
 		builder.append(gameInfo);
-		builder.append(", map=");
+		builder.append(", \n\tmap=");
 		builder.append(map);
-		builder.append(", players=");
+		builder.append(", \n\tplayers=");
 		builder.append(players);
-		builder.append(", modelVersion=");
+		builder.append(", \n\tmodelVersion=");
 		builder.append(modelVersion);
-		builder.append(", bank=");
+		builder.append(", \n\tbank=");
 		builder.append(bank);
 		builder.append("]");
 		return builder.toString();

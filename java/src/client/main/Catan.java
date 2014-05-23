@@ -15,6 +15,9 @@ import client.join.SelectColorView;
 import client.login.LoginController;
 import client.login.LoginView;
 import client.misc.MessageView;
+import client.models.DummyProxy;
+import client.models.IProxy;
+import client.models.Poller;
 import client.models.Proxy;
 
 /**
@@ -25,7 +28,8 @@ public class Catan extends JFrame
 {
 	
 	private CatanPanel catanPanel;
-	private static Proxy proxy;
+	private static IProxy proxy;
+	private static Poller poller;
 	
 	public Catan()
 	{
@@ -61,11 +65,24 @@ public class Catan extends JFrame
 		{
 			e.printStackTrace();
 		}
+
+//		System.out.println("Settlement cost:");
+//		for(client.models.Resource resource : client.models.Settlement.getResourceCost())
+//			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
+//		
+//		System.out.println("City cost:");
+//		for(client.models.Resource resource : client.models.City.getResourceCost())
+//			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
+//		
+//		System.out.println("RoadSegment cost:");
+//		for(client.models.Resource resource : client.models.RoadSegment.getResourceCost())
+//			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
 				proxy = new Proxy();
+				
 				new Catan();
 				
 				
@@ -88,8 +105,17 @@ public class Catan extends JFrame
 					@Override
 					public void execute()
 					{
+						System.out.println("in execute");
+						poller = new Poller(proxy);
+//						poller = new Thread(new Poller(proxy));
+//						System.out.println("after created");
+//						poller.start();
+//						System.out.println("after start");
+//						poller.startTimer();
 						playerWaitingController.start();
-						proxy.getGameModel();
+						System.out.println("after start 2");
+//						proxy.getGameModel();
+						System.out.println("End of execute");
 					}
 				});
 				joinView.setController(joinController);
