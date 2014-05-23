@@ -12,7 +12,6 @@ import client.data.PlayerInfo;
  */
 public class Player extends Participant implements IPlayer {
 
-    private static final int START_POINTS = 2;
 	/** The settlements. */
 	protected List<ISettlement> settlements;
 
@@ -40,7 +39,7 @@ public class Player extends Participant implements IPlayer {
 		this.settlements = new ArrayList<ISettlement>();
 		this.roads = new ArrayList<IRoad>();
 		this.cities = new ArrayList<ICity>();
-        this.victoryPoints = START_POINTS;
+        this.victoryPoints = 0;
 	}
 
 	/**
@@ -63,7 +62,7 @@ public class Player extends Participant implements IPlayer {
 		this.settlements = settlements;
 		this.roads = roads;
 		this.cities = cities;
-        this.victoryPoints = START_POINTS;
+        this.victoryPoints = 0;
 	}
 
 	/* (non-Javadoc)

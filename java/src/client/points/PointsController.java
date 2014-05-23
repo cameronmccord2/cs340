@@ -2,10 +2,11 @@ package client.points;
 
 import client.base.Controller;
 import client.data.PlayerInfo;
-import client.models.ICatanModelObserver;
-import client.models.IProxy;
+import client.models.*;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+
+import java.util.Collection;
 
 
 /**
@@ -53,51 +54,73 @@ public class PointsController extends Controller implements IPointsController,
 	private void initFromModel() {
 		
         if(this.proxy.getGameId() != null) {
-        	
-	        try {
-	            Integer points = this.proxy.getFacade().getCurrentUser().getVictoryPoints();
-	            getPointsView().setPoints( points );
-	            
-	            Integer winnerId = this.proxy.getFacade().getWinner();
-	            
-	            if( winnerId >= 0 ) {
-	            	PlayerInfo winner = getPlayerById(winnerId);
-	            	
-	            	
-	            	
-	            	getFinishedView().setWinner(winner.getName(), isLocalPlayer(winnerId));
-	                getFinishedView().showModal();
-	            }	            
-	        }
-	        catch (CantFindPlayerException | CantFindGameModelException e) {
-	            e.printStackTrace();
-	        }
+
+            IFacade facade = this.proxy.getFacade();
+
+            try {
+
+                getPointsView().setPoints( facade.getCurrentUser().getVictoryPoints() );
+
+                Integer winnerId = facade.getWinner();
+
+                if( winnerId >= 0 ) {
+                    PlayerInfo winner = getPlayerById(winnerId);
+                    getFinishedView().setWinner(winner.getName(), isLocalPlayer(winnerId));
+                    getFinishedView().showModal();
+                }
+
+            } catch (CantFindGameModelException | CantFindPlayerException e) {
+                e.printStackTrace();
+            }
         }
 	}
-	
+
+    /*
+    private int calculateSettlementPoints() {
+
+        int points = 0;
+        IGame game = this.proxy.getGameModel();
+        Collection<ISettlement> settlements = game.getMap().getSettlements();
+
+        try {
+            for( ISettlement settlement: settlements) {
+                if(settlement.getPlayer() == this.proxy.getFacade().getCurrentUser())
+                    points += settlement.getPointValue();
+            }
+        } catch (CantFindGameModelException e) {
+           e.printStackTrace();
+        } catch (CantFindPlayerException e) {
+          e.printStackTrace();
+        }
+
+        return points;
+    }
+	*/
+
+
 	private boolean isLocalPlayer(Integer id) throws CantFindGameModelException, CantFindPlayerException {
         return id == this.proxy.getFacade().getCurrentUser().getPlayerInfo().getId();
     }
-	
+
+
+
 	private PlayerInfo getPlayerById(Integer id) {
 		if(id < 0 || id > 3)
 			assert false;
 
-		PlayerInfo[] players = null;
-		
 		try
 		{
-			players = this.proxy.getFacade().getAllPlayerInfos();
+            PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+            for(PlayerInfo player : players) {
+                if(player.getId() == id)
+                    return player;
+            }
 		}
 		catch(CantFindGameModelException e)
 		{
 			e.printStackTrace();
 		}
-		
-        for(PlayerInfo player : players) {
-            if(player.getId() == id)
-                return player;
-        }
+
 
         return null;
 	}

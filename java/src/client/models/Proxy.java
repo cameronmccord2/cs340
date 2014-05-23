@@ -267,7 +267,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse moveRobPlayer(ServerRobPlayer rob){
 		ServerResponse sr = doPost("/moves/robPlayer", gson.toJson(rob), true, true);
-		//saveGameModel(sr.getJson());
+		saveGameModel(sr.getJson());
 		return sr;
 	}
 	

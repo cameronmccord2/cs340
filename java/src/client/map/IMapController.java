@@ -136,4 +136,5 @@ public interface IMapController extends IController
 	 *            The player to be robbed
 	 */
 	void robPlayer(RobPlayerInfo victim);
+
 }
