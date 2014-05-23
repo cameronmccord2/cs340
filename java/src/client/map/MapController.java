@@ -461,15 +461,8 @@ public class MapController extends Controller implements IMapController,
 
             for( IPiece piece : facade.getCatanMap().getSettlementsAroundHex(hexLoc) )
             {
-<<<<<<< HEAD
                 RobPlayerInfo rob = new RobPlayerInfo(piece.getPlayer().getPlayerInfo());
                 rob.setNumCards( piece.getPlayer().getNumResourceCards() );
-=======
-                RobPlayerInfo rob = new RobPlayerInfo(player.getPlayerInfo());
-                int playerIndex = player.getPlayerInfo().getPlayerIndex();
-
-                rob.setNumCards( facade.getResourcesForPlayerIndex( playerIndex ).size() );
->>>>>>> 8e358968bf5e83450102566ff9179744d9e548e2
                 robbable.add(rob);
             }
 

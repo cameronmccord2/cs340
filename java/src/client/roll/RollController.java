@@ -47,7 +47,6 @@ public class RollController extends Controller implements IRollController, ICata
 		if(this.getRollView().isModalShowing())
 			getRollView().closeModal();
 		int rolledResult = (int) (1 + (Math.random() * 12));
-		rolledResult = 7;
 		ServerRoll serverRoll = new ServerRoll("rollNumber",0,rolledResult);
 		if(proxy.movesRollNumber(serverRoll).getResponseCode() == 200){
 			getResultView().setRollValue(rolledResult);

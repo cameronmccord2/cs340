@@ -15,6 +15,7 @@ import client.models.translator.ClientModel;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;
+import client.server.DiscardCard;
 import client.server.FinishedTurn;
 import client.server.GameServer;
 import client.server.MaritimeTradeOff;
@@ -304,7 +305,6 @@ public class DummyProxy implements IProxy{
 		return sr;
 	}
 	
-	@Override
 	public ServerResponse movesdiscardCards(PlayerInfo player){
 		return null;
 	}
@@ -490,6 +490,12 @@ public class DummyProxy implements IProxy{
 
 	@Override
 	public ReturnedUser getrUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServerResponse movesdiscardCards(DiscardCard cards) {
 		// TODO Auto-generated method stub
 		return null;
 	}
