@@ -15,7 +15,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	private IProxy proxy;
 	private boolean gameStarted;
-	
+
 	public PlayerWaitingController(IPlayerWaitingView view, IProxy proxy) {
 
 		super(view);
@@ -51,7 +51,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     				if(!this.getView().isModalShowing())
     					getView().showModal();
     			}
-    			
+
     		} catch (CantFindGameModelException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -61,7 +61,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-		
+
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         					getView().closeModal();
         			}
     			}
-    			
+
     		} catch (CantFindGameModelException e) {
     			e.printStackTrace();
     		}

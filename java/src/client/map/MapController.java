@@ -425,8 +425,7 @@ public class MapController extends Controller implements IMapController,
 
 			map.placeCity(city);
 
-			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
-				proxy.movesBuildCity(new ServerBuildCity("buildCity", info.getPlayerIndex(), vertLoc));
+			proxy.movesBuildCity(new ServerBuildCity("buildCity", info.getPlayerIndex(), vertLoc));
 		}
 		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
 		{

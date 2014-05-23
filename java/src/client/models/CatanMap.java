@@ -228,6 +228,8 @@ public class CatanMap implements ICatanMap
 	@Override
 	public boolean canPlaceSettlement(ISettlement settlement)
 	{
+		if(catanMap.get(settlement.getLocation()) != null)
+			return false;
 		HexLocation hex = settlement.getLocation().getHexLocation();
 		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
 			return false;
@@ -323,9 +325,9 @@ public class CatanMap implements ICatanMap
 			HexLocation belowHex = new HexLocation(hex.getX()+1, hex.getY());
 			VertexLocation below = new VertexLocation(belowHex, direction);
 
-			adjacentCorners.add(left);
-			adjacentCorners.add(above);
-			adjacentCorners.add(below);
+			adjacentCorners.add(left.getNormalizedLocation());
+			adjacentCorners.add(above.getNormalizedLocation());
+			adjacentCorners.add(below.getNormalizedLocation());
 		}
 		else if(location.getDirection() == VertexDirection.NorthWest)
 		{
@@ -340,9 +342,9 @@ public class CatanMap implements ICatanMap
 			HexLocation belowHex = new HexLocation(hex.getX()-1, hex.getY()+1);
 			VertexLocation below = new VertexLocation(belowHex, direction);
 
-			adjacentCorners.add(right);
-			adjacentCorners.add(above);
-			adjacentCorners.add(below);
+			adjacentCorners.add(right.getNormalizedLocation());
+			adjacentCorners.add(above.getNormalizedLocation());
+			adjacentCorners.add(below.getNormalizedLocation());
 		}
 		else
 		{
@@ -351,7 +353,8 @@ public class CatanMap implements ICatanMap
 
 		for(VertexLocation corner : adjacentCorners)
 		{
-			conflictPiece = catanMap.get(corner.getNormalizedLocation());
+			conflictPiece = catanMap.get(corner);
+//			System.out.println(conflictPiece);
 			if(conflictPiece != null)
 				return conflictPiece;
 		}

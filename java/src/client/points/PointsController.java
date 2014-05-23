@@ -17,42 +17,42 @@ public class PointsController extends Controller implements IPointsController,
 {
 	private IGameFinishedView finishedView;
     private IProxy proxy;
-	
+
 	/**
 	 * PointsController constructor
-	 * 
+	 *
 	 * @param view Points view
 	 * @param finishedView Game finished view, which is displayed when the game is over
 	 */
 	public PointsController(IPointsView view, IGameFinishedView finishedView, IProxy proxy)
 	{
-		
+
 		super(view);
         this.proxy = proxy;
-		
+
 		setFinishedView(finishedView);
-		
+
 		initFromModel();
         this.proxy.getFacade().registerAsObserver(this);
 	}
-	
+
 	public IPointsView getPointsView()
 	{
 		return (IPointsView)super.getView();
 	}
-	
+
 	public IGameFinishedView getFinishedView()
 	{
 		return finishedView;
 	}
-	
+
 
 	public void setFinishedView(IGameFinishedView finishedView) {
 		this.finishedView = finishedView;
 	}
 
 	private void initFromModel() {
-		
+
         if(this.proxy.getGameId() != null) {
 
             IFacade facade = this.proxy.getFacade();
@@ -105,8 +105,6 @@ public class PointsController extends Controller implements IPointsController,
 
 
 	private PlayerInfo getPlayerById(Integer id) {
-		if(id < 0 || id > 3)
-			assert false;
 
 		try
 		{
