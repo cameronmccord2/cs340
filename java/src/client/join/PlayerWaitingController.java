@@ -70,10 +70,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 //		{
 			PlayerInfo[] players;
     		try {
+    			System.out.println("wait update");
     			if(this.proxy.getFacade().getAllPlayerInfos() != null){
     				players = this.proxy.getFacade().getAllPlayerInfos();
         			getView().setPlayers(players);
-//        			if(!getView().isModalShowing())
+        			//if(!getView().isModalShowing())
         				getView().showModal();
         			if(players.length == 4){
         				gameStarted = true;
