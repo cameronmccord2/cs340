@@ -291,6 +291,24 @@ public class Facade implements IFacade {
     public HexLocation getRobberLocation() throws CantFindGameModelException {
         return this.getCatanMap().getRobber().getLocation().getHexLocation();
     }
+
+	@Override
+	public boolean isGameModelInitialized()
+	{
+		boolean initialized = true;
+		
+		try
+		{
+			if(this.getGameModel() == null)
+				initialized = false;
+		}
+		catch(CantFindGameModelException e)
+		{
+			initialized = false;
+		}
+		
+		return initialized;
+	}
 }
 
 

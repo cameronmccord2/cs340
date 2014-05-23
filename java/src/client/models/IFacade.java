@@ -57,4 +57,6 @@ public interface IFacade {
 	Map<IResourceCard, Integer> getResourcesForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException;
 
 	Map<IDevelopmentCard, Integer> getDevCardsForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException;
+
+	boolean isGameModelInitialized();
 }
