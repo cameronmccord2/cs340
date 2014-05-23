@@ -56,8 +56,11 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Proxy implements IProxy {
 
+	private static final String DEFAULT_HOST = "localhost";
+	private static final int DEFAULT_PORT = 8081;
+	
 	private HttpURLConnection connection;
-
+	
 	private Gson gson = new Gson();
 	private Translator translator;
 	private List<IGame> games;
@@ -65,12 +68,51 @@ public class Proxy implements IProxy {
 	private String gameId = null;
 	private IFacade facade;
 	private ReturnedUser rUser;
+	
+	private String host;
+	private int port;
 
 
 	public Proxy() {
+		this(DEFAULT_HOST, DEFAULT_PORT);
+	}
+	
+	public Proxy(String host)
+	{
+		this(host, DEFAULT_PORT);
+	}
+	
+	public Proxy(int port)
+	{
+		this(DEFAULT_HOST, port);
+	}
+	
+	public Proxy(String host, int port) {
+		this.setHost(host);
+		this.setPort(port);
 		this.translator = new Translator();
 		this.games = new ArrayList<IGame>();
 		this.facade = new Facade(this);
+	}
+
+	public int getPort()
+	{
+		return port;
+	}
+
+	public void setPort(int port)
+	{
+		this.port = port;
+	}
+
+	public String getHost()
+	{
+		return host;
+	}
+
+	public void setHost(String host)
+	{
+		this.host = host;
 	}
 
 	@Override
@@ -403,7 +445,7 @@ public class Proxy implements IProxy {
 	private ServerResponse doRequest(String urlPath, String verb, boolean withCookie, boolean withGameId, String postData){
 		URL url;
 		try {
-			url = new URL("http://localhost:8081" + urlPath);
+			url = new URL("http://" + host + ":" + port + urlPath);
 			connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod(verb);
 			String cookieProperty = "";

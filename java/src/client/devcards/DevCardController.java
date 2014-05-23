@@ -125,13 +125,13 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playRoadBuildCard() {
-		//goes to map
+		getPlayCardView().closeModal();
 		roadAction.execute();
 	}
 
 	@Override
 	public void playSoldierCard() {
-		//goes to map
+		getPlayCardView().closeModal();
 		soldierAction.execute();
 	}
 

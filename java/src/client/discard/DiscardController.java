@@ -316,8 +316,11 @@ public class DiscardController extends Controller implements IDiscardController,
 			{
 				finishedDiscarding = false;
 				
-				if(getWaitView().isModalShowing())
+				if(getWaitView().isModalShowing()) {
+
+					System.out.println("Discard modal should close now");
 					getWaitView().closeModal();
+				}
 			}
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
