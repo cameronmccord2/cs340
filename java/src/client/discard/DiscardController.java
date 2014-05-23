@@ -143,6 +143,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	{
 		try
 		{
+   		if(getDiscardView().isModalShowing())
+   			getDiscardView().closeModal();
    		// I need to calculate and update the amount of each resource
    		// and send it back to the server.
    		finishedDiscarding = true;
@@ -153,12 +155,17 @@ public class DiscardController extends Controller implements IDiscardController,
 
    		String type = "discardCards";
    		Integer playerIndex = info.getPlayerIndex();
-   		TRResourceList list = new TRResourceList(resourceSelection);
+
+   		TRResourceList list = new TRResourceList();
+   		list.setBrick(resourceSelection.get(ResourceType.BRICK));
+   		list.setOre(resourceSelection.get(ResourceType.ORE));
+   		list.setSheep(resourceSelection.get(ResourceType.SHEEP));
+   		list.setWheat(resourceSelection.get(ResourceType.WHEAT));
+   		list.setWood(resourceSelection.get(ResourceType.WOOD));
+
    		DiscardedCards cards = new DiscardedCards(type, playerIndex, list);
    		proxy.movesDiscardCards(cards);
 
-   		if(getDiscardView().isModalShowing())
-   			getDiscardView().closeModal();
 
    		this.initialize();
 		}
@@ -280,6 +287,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		{
 			IFacade facade = proxy.getFacade();
 			String status = facade.getCurrentState();
+
 			if(status.equals("Discarding"))
 			{
         		player = facade.getCurrentUser();
@@ -305,6 +313,8 @@ public class DiscardController extends Controller implements IDiscardController,
 			{
 				if(getWaitView().isModalShowing())
 					getWaitView().closeModal();
+
+				finishedDiscarding = false;
 			}
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)

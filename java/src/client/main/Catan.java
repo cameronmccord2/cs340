@@ -26,35 +26,33 @@ import client.models.Proxy;
 @SuppressWarnings("serial")
 public class Catan extends JFrame
 {
-	
 	private CatanPanel catanPanel;
 	private static IProxy proxy;
 	private static Poller poller;
-	
+
 	public Catan()
 	{
-		
 		client.base.OverlayView.setWindow(this);
-		
+
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+
 		catanPanel = new CatanPanel(proxy);
 		this.setContentPane(catanPanel);
-		
+
 		display();
 	}
-	
+
 	private void display()
 	{
 		pack();
 		setVisible(true);
 	}
-	
+
 	//
 	// Main
 	//
-	
+
 	public static void main(final String[] args)
 	{
 		try
@@ -69,29 +67,29 @@ public class Catan extends JFrame
 //		System.out.println("Settlement cost:");
 //		for(client.models.Resource resource : client.models.Settlement.getResourceCost())
 //			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
-//		
+//
 //		System.out.println("City cost:");
 //		for(client.models.Resource resource : client.models.City.getResourceCost())
 //			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
-//		
+//
 //		System.out.println("RoadSegment cost:");
 //		for(client.models.Resource resource : client.models.RoadSegment.getResourceCost())
 //			System.out.printf("\t%-5s : %-2d\n", resource.getResourceType(), resource.getAmount());
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
 				proxy = new Proxy();
-				
+
 				new Catan();
-				
-				
+
+
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView,
 				                                                                                    proxy);
 				playerWaitingView.setController(playerWaitingController);
-				
-				
+
+
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
 				SelectColorView selectColorView = new SelectColorView();
@@ -122,7 +120,7 @@ public class Catan extends JFrame
 				newGameView.setController(joinController);
 				selectColorView.setController(joinController);
 				joinMessageView.setController(joinController);
-				
+
 				LoginView loginView = new LoginView();
 				MessageView loginMessageView = new MessageView();
 				LoginController loginController = new LoginController(loginView,
@@ -137,10 +135,10 @@ public class Catan extends JFrame
 				});
 				loginView.setController(loginController);
 				loginView.setController(loginController);
-				
+
 				loginController.start();
 			}
 		});
 	}
-	
+
 }

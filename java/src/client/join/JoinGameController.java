@@ -25,7 +25,7 @@ import client.server.ServerJoinGame;
 @SuppressWarnings({"unused"})
 public class JoinGameController extends Controller implements IJoinGameController, ICatanModelObserver
 {
-	
+
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
@@ -33,10 +33,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private GameInfo selectedGame;
 	private IProxy proxy;
 	private PlayerInfo self;
-	
+
 	/**
 	 * JoinGameController constructor
-	 * 
+	 *
 	 * @param view
 	 *            Join game view
 	 * @param newGameView
@@ -48,8 +48,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 *            the user is joining a game)
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView,
-							  ISelectColorView selectColorView,
-							  IMessageView messageView, IProxy proxy)
+									  ISelectColorView selectColorView,
+									  IMessageView messageView, IProxy proxy)
 	{
 		super(view);
 		this.proxy = proxy;
@@ -58,14 +58,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setMessageView(messageView);
 		this.proxy.getFacade().registerAsObserver(this);
 	}
-	
-	public IJoinGameView getJoinGameView(){
+
+	public IJoinGameView getJoinGameView()
+	{
 		return (IJoinGameView)super.getView();
 	}
-	
+
 	/**
 	 * Returns the action to be executed when the user joins a game
-	 * 
+	 *
 	 * @return The action to be executed when the user joins a game
 	 */
 
@@ -73,48 +74,111 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	{
 		return joinAction;
 	}
-	
+
 	/**
 	 * Sets the action to be executed when the user joins a game
-	 * 
+	 *
 	 * @param value
 	 *            The action to be executed when the user joins a game
 	 */
-	public void setJoinAction(IAction value){	
+	public void setJoinAction(IAction value)
+	{
 		joinAction = value;
 	}
-	
-	public INewGameView getNewGameView(){
+
+	public INewGameView getNewGameView()
+	{
 		return newGameView;
 	}
-	
-	public void setNewGameView(INewGameView newGameView){
+
+	public void setNewGameView(INewGameView newGameView)
+	{
 		this.newGameView = newGameView;
 	}
-	
-	public ISelectColorView getSelectColorView(){
+
+	public ISelectColorView getSelectColorView()
+	{
 		return selectColorView;
 	}
-	
-	public void setSelectColorView(ISelectColorView selectColorView){
+
+	public void setSelectColorView(ISelectColorView selectColorView)
+	{
 		this.selectColorView = selectColorView;
 	}
-	
-	public IMessageView getMessageView(){
+
+	public IMessageView getMessageView()
+	{
 		return messageView;
 	}
-	
-	public void setMessageView(IMessageView messageView){
+
+	public void setMessageView(IMessageView messageView)
+	{
 		this.messageView = messageView;
 	}
-	
+
 	@Override
 	public void start()
 	{
 		self = new PlayerInfo();
 		self.setId(this.proxy.getrUser().getPlayerID());
 		self.setName(this.proxy.getrUser().getName());
-		
+
+//		// This is just for testing purposes
+//		PlayerInfo first = new PlayerInfo();
+//		first.setId(7);
+//		first.setPlayerIndex(1);
+//		first.setName("First");
+//		first.setColor(CatanColor.RED);
+//
+//		PlayerInfo second = new PlayerInfo();
+//		second.setId(11);
+//		second.setPlayerIndex(2);
+//		second.setName("Second");
+//		second.setColor(CatanColor.GREEN);
+//
+//		PlayerInfo third = new PlayerInfo();
+//		third.setId(15);
+//		third.setPlayerIndex(3);
+//		third.setName("Third");
+//		third.setColor(CatanColor.ORANGE);
+//
+//		PlayerInfo fourth = new PlayerInfo();
+//		fourth.setId(19);
+//		fourth.setPlayerIndex(4);
+//		fourth.setName("Fourth");
+//		fourth.setColor(CatanColor.PURPLE);
+//
+//		GameInfo one = new GameInfo();
+//		one.setId(1);
+//		one.setTitle("Game One");
+//		one.addPlayer(first);
+//		one.addPlayer(third);
+//
+//		GameInfo two = new GameInfo();
+//		two.setId(3);
+//		two.setTitle("Game Two");
+//		two.addPlayer(second);
+//		two.addPlayer(third);
+//
+//		GameInfo three = new GameInfo();
+//		three.setId(5);
+//		three.setTitle("Game Three");
+//		three.addPlayer(first);
+//		three.addPlayer(second);
+//		three.addPlayer(self);
+//
+//		GameInfo four = new GameInfo();
+//		four.setId(7);
+//		four.setTitle("Game Four");
+//		four.addPlayer(first);
+//		four.addPlayer(second);
+//		four.addPlayer(third);
+//		four.addPlayer(fourth);
+//
+//		GameInfo[] games = {one, two, three, four};
+
+		//getJoinGameView().setGames(games, self);
+
 		List<IGame> allGames = this.proxy.getGamesList();
 		List<GameInfo> games = new ArrayList<GameInfo>();
 		for (IGame g : allGames) {
@@ -126,12 +190,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 					serverGame.addPlayer(p.getPlayerInfo());
 				}
 			}
-			
+
 			games.add(serverGame);
 		}
-		
+
 		getJoinGameView().setGames(games, self);
-		
+
 		System.out.println("called");
 		try {
 			if(this.proxy.getFacade().getCatanMap() == null)
@@ -139,23 +203,23 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		} catch (CantFindGameModelException e) {
 			getJoinGameView().showModal();
 		}
-		
+
 	}
-	
+
 	@Override
 	public void startCreateNewGame()
 	{
 		System.out.println("CALLED 2");
 		getNewGameView().showModal();
 	}
-	
+
 	@Override
 	public void cancelCreateNewGame()
 	{
 		if(this.getNewGameView().isModalShowing())
 			getNewGameView().closeModal();
 	}
-	
+
 	@Override
 	public void createNewGame()
 	{
@@ -163,18 +227,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 											getNewGameView().getRandomlyPlaceNumbers(),
 											getNewGameView().getUseRandomPorts(),
 											getNewGameView().getTitle());
-		
-		if(proxy.postGamesCreate(newGame).getResponseCode() == 200){
+
+		if(proxy.postGamesCreate(newGame).getResponseCode() == 200)
+		{
 			if(this.getNewGameView().isModalShowing())
 				getNewGameView().closeModal();
 			this.start();
 		}
 	}
-	
+
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
-		for(PlayerInfo p : game.getPlayers()){
+		for(PlayerInfo p : game.getPlayers())
+		{
 			if(p.getId() != self.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);
 		}
@@ -182,38 +248,40 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		System.out.println("Join game");
 		getSelectColorView().showModal();
 	}
-	
+
 	@Override
 	public void cancelJoinGame()
 	{
 		for(CatanColor color : CatanColor.values())
-			this.getSelectColorView().setColorEnabled(color, false);
+			getSelectColorView().setColorEnabled(color, true);
+
 		if(this.getJoinGameView().isModalShowing())
 			getJoinGameView().closeModal();
 	}
-	
+
 	@Override
 	public void joinGame(CatanColor color)
 	{
 		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());
-		if(proxy.postGamesJoin(join).getJson().equals("Success")){
+		if(proxy.postGamesJoin(join).getJson().equals("Success"))
+		{
 			// If join succeeded
-			
-			
+
 			if(this.getSelectColorView().isModalShowing())
 				getSelectColorView().closeModal();
 			if(this.getJoinGameView().isModalShowing())
 				getJoinGameView().closeModal();
-			
-			
-//			THIS IS SOMEHOW CAUSING AN INFINITE LOOP!
+
+			System.out.println("before execute");
 			joinAction.execute();
-		}	
+			System.out.println("After execute");
+		}
 	}
 
 	@Override
-	public void update() {
-		
+	public void update()
+	{
+
 	}
-	
+
 }

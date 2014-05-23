@@ -20,26 +20,26 @@ import client.models.translator.TRTradeOffer;
 import shared.locations.HexLocation;
 
 public class Facade implements IFacade {
-	
+
 	private IProxy proxy;
 	private Set<ICatanModelObserver> observers;
 	private String playerName;
-	
+
 	public Facade(IProxy proxy){
 		this.proxy = proxy;
 		this.observers = new HashSet<ICatanModelObserver>();
 	}
-	
+
 	private IGame getGameModel() throws CantFindGameModelException{
         // Must have a default Integer for parseInt. getGameId() returns null
         // before a game is chosen.
         Integer gameId;
-       
+
         if(this.proxy.getGameId() == null)
             gameId = 0;
 		else
             gameId = Integer.parseInt(this.proxy.getGameId());
-     
+
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){
 				return g;
@@ -47,13 +47,13 @@ public class Facade implements IFacade {
 		}
 		throw new CantFindGameModelException();
 	}
-	
+
 	@Override
 	public ICatanMap getCatanMap() throws CantFindGameModelException
 	{
 		return this.getGameModel().getMap();
 	}
-	
+
 	@Override
 	public IPlayer getCurrentUser() throws CantFindPlayerException, CantFindGameModelException{
 		IGame g = this.getGameModel();
@@ -63,7 +63,7 @@ public class Facade implements IFacade {
 		}
 		throw new CantFindPlayerException("sorry");
 	}
-	
+
 	@Override
 	public void registerAsObserver(ICatanModelObserver observer) {
 		this.observers.add(observer);
@@ -71,6 +71,12 @@ public class Facade implements IFacade {
 
 	@Override
 	public void updatedCatanModel() {
+		try {
+			System.out.println(this.getCurrentState());
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
+
 		for (ICatanModelObserver o : this.observers) {
 			o.update();
 		}
@@ -87,7 +93,7 @@ public class Facade implements IFacade {
 			throw new RuntimeException("Couldnt find player: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	@Override
 	public Integer getBankResourceCount(ResourceCard resource) throws CantFindGameModelException {
 		Integer count = this.getGameModel().getBank().getResourceCards().get(resource);
@@ -155,7 +161,7 @@ public class Facade implements IFacade {
 	public Map<IResourceCard, Integer> getResourcesForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
 		return this.getPlayerWithPlayerIndex(playerIndex).getResourceCards();
 	}
-	
+
 	@Override
 	public Map<IDevelopmentCard, Integer> getDevCardsForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException {
 		return this.getPlayerWithPlayerIndex(playerIndex).getDevelopmentCards();
@@ -166,7 +172,7 @@ public class Facade implements IFacade {
 		try {
 			IGame game = getGameModel();
 			List<MessageLine> list = game.getChat().getLines();
-			PlayerInfo[] players = getAllPlayerInfos(); 
+			PlayerInfo[] players = getAllPlayerInfos();
 			List<LogEntry> chatList = new ArrayList<LogEntry>();
 			for(MessageLine l : list){
 				for(PlayerInfo p : players){
@@ -192,7 +198,7 @@ public class Facade implements IFacade {
 	public TurnTracker getTurnTracker() throws CantFindGameModelException {
 		return this.getGameModel().getTurnTracker();
 	}
-	
+
 	@Override
 	public String getCurrentState() throws CantFindGameModelException{
 		return this.getGameModel().getTurnTracker().getStatus();
@@ -208,7 +214,7 @@ public class Facade implements IFacade {
 		try {
 			IGame game = getGameModel();
 			List<MessageLine> list = game.getLog().getLines();
-			PlayerInfo[] players = getAllPlayerInfos(); 
+			PlayerInfo[] players = getAllPlayerInfos();
 			List<LogEntry> logList = new ArrayList<LogEntry>();
 			for(MessageLine l : list){
 				for(PlayerInfo p : players){
@@ -227,28 +233,28 @@ public class Facade implements IFacade {
 
 	@Override
 	public Integer getMaritimeTradeAmountForResource(ResourceType resource) throws CantFindPlayerException, CantFindGameModelException {
-		
+
 		Integer tradeRatio = 4;
-		
+
 		Collection<IPort> ports = this.getCatanMap().getPorts();
-		
+
 		List<ISettlement> cities = new ArrayList<ISettlement>();
 		cities.addAll(this.getCurrentUser().getCities());
 		cities.addAll(this.getCurrentUser().getSettlements());
-		
+
 		for (ISettlement s : cities) {
 			VertexLocation location = (VertexLocation)s.getLocation();
 
 			List<HexLocation> hexes = new ArrayList<HexLocation>();
-			
+
 			if(location.getDirection() == VertexDirection.NorthEast)
 			{
 				HexLocation hex = location.getHexLocation();
 				hexes.add(hex);
-				
+
 				HexLocation aboveHex = new HexLocation(hex.getX()+1, hex.getY()-1);
 				hexes.add(aboveHex);
-				
+
 				HexLocation belowHex = new HexLocation(hex.getX()+1, hex.getY());
 				hexes.add(belowHex);
 			}
@@ -256,20 +262,20 @@ public class Facade implements IFacade {
 			{
 				HexLocation hex = location.getHexLocation();
 				hexes.add(hex);
-				
+
 				HexLocation aboveHex = new HexLocation(hex.getX()-1, hex.getY());
 				hexes.add(aboveHex);
-				
+
 				HexLocation belowHex = new HexLocation(hex.getX()-1, hex.getY()+1);
 				hexes.add(belowHex);
 			}
-			
+
 			for (IPort p : ports) {
 				PortType portType = p.getPortType();
 				if(portType != PortType.THREE && portType != PortType.valueOf(resource.toString().toUpperCase())){
 					continue;
 				}
-				
+
 				for (HexLocation h : hexes) {
 					if(p.getHexLocation().getX() == h.getX() && p.getHexLocation().getY() == h.getY()){
 						if(p.getExchangeRate() < tradeRatio)

@@ -1,9 +1,5 @@
 package client.models.translator;
 
-import java.util.Map;
-
-import shared.definitions.ResourceType;
-
 import client.models.exceptions.InvalidTranslatorModelException;
 
 public class TRResourceList implements IModelValid
@@ -13,52 +9,6 @@ public class TRResourceList implements IModelValid
 	protected Integer ore;
 	protected Integer sheep;
 	protected Integer wheat;
-
-	public TRResourceList()
-	{
-		this(0,0,0,0,0);
-	}
-
-	public TRResourceList(Map<ResourceType, Integer> resources)
-	{
-		for(ResourceType type : resources.keySet())
-		{
-			switch(type)
-			{
-				case WOOD:
-					this.setWood(resources.get(type));
-					break;
-				case BRICK:
-					this.setBrick(resources.get(type));
-					break;
-				case ORE:
-					this.setOre(resources.get(type));
-					break;
-				case SHEEP:
-					this.setSheep(resources.get(type));
-					break;
-				case WHEAT:
-					this.setWheat(resources.get(type));
-					break;
-				default:
-					assert false;
-					break;
-			}
-		}
-	}
-
-	public TRResourceList(Integer wood,
-								 Integer brick,
-								 Integer ore,
-								 Integer sheep,
-								 Integer wheat)
-	{
-		this.setWood(wood);
-		this.setBrick(brick);
-		this.setOre(ore);
-		this.setSheep(sheep);
-		this.setWheat(wheat);
-	}
 
 	public Integer getWood()
 	{

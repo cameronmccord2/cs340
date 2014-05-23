@@ -6,6 +6,7 @@ public class TRHex implements IModelValid {
 	protected TRHexLocation location;
 	protected String resource;
 	protected Integer number;
+
 	public TRHexLocation getLocation() {
 		return location;
 	}
@@ -45,9 +46,9 @@ public class TRHex implements IModelValid {
 	}
 }
 /*
-location (HexLocation), 
-resource (string, optional) = ['Wood' or 'Brick' or 'Sheep' or 'Wheat' or 'Ore']: What resource this 
-tile gives - it's only here if the tile is not desert., 
-number (integer, optional): What number is on this tile. It's omitted if this is a desert hex. 
+location (HexLocation),
+resource (string, optional) = ['Wood' or 'Brick' or 'Sheep' or 'Wheat' or 'Ore']: What resource this
+tile gives - it's only here if the tile is not desert.,
+number (integer, optional): What number is on this tile. It's omitted if this is a desert hex.
 
 */
