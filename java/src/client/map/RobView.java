@@ -71,16 +71,20 @@ public class RobView extends OverlayView implements IRobView {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == defaultButton) {
-				closeModal();
+				RobPlayerInfo victim = new RobPlayerInfo();
+				getController().robPlayer(victim);
+				if(isModalShowing())
+					closeModal();
 			}
 			else{
 				for(int i = 0; i < victimButtons.size(); i++){
 					if(e.getSource() == victimButtons.get(i)){
-						System.out.println("Robbing Player" + i);
+						System.out.println("Robbing Player " + i);
 						if(isModalShowing()) {
 							closeModal();
 							System.out.println("Modal Closed");
 						}
+						System.out.println("victims[] length: " + victims.length);
 						getController().robPlayer(victims[i]);
 					}
 				}
@@ -129,6 +133,7 @@ public class RobView extends OverlayView implements IRobView {
 				victimButtons.add(victimButton);
 				this.add(buttonPanel, BorderLayout.CENTER);
 				revalidate();
+				repaint();
 			}
 		}
 	}

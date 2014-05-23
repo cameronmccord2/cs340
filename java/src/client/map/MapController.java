@@ -365,7 +365,7 @@ public class MapController extends Controller implements IMapController,
 			String state = facade.getCurrentState();
 
 			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
-				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, true));
+				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, false));
 		}
 		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
 		{
@@ -396,7 +396,7 @@ public class MapController extends Controller implements IMapController,
 			map.placeSettlement(settlement);
 
 			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
-				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, true));
+				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, false));
 		}
 		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
 		{
@@ -434,7 +434,7 @@ public class MapController extends Controller implements IMapController,
 		}
 	}
 
-	/**https://github.com/cameronmccord2/cs340
+	/**
 	 * This method is called when the user clicks the mouse to place the robber.
 	 *
 	 * @param hexLoc
