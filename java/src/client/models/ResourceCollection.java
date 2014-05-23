@@ -34,23 +34,18 @@ public class ResourceCollection {
 		
 			switch(resource){
 				case BRICK:
-					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.brick)
 						this.brick++;
 					break;
 				case ORE:
-					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.ore)
 						this.ore++;
 					break;
 				case SHEEP:
-					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.sheep)
 						this.sheep++;
 					break;
 				case WHEAT:
-					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.wheat)
 						this.wheat++;
 					break;
 				case WOOD:
-					if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource)) > this.wood)
 						this.wood++;
 					break;
 					
@@ -59,6 +54,7 @@ public class ResourceCollection {
 			}
 			
 		} catch (CantFindGameModelException e) {
+			System.out.println("increase exception");
 			// dont do anything, nothing should call this before the game model exists
 		}
 		
@@ -149,33 +145,33 @@ public class ResourceCollection {
 		TRResourceList l = new TRResourceList();
 		l.setBrick(0);
 		if(sendCounts.getBrick() > 0)
-			l.setBrick(sendCounts.getBrick() * -1);
+			l.setBrick(sendCounts.getBrick() * 1);
 		else
-			l.setBrick(recieveCounts.getBrick());
+			l.setBrick(recieveCounts.getBrick() * -1);
 		
 		l.setOre(0);
 		if(sendCounts.getOre() > 0)
-			l.setOre(sendCounts.getOre() * -1);
+			l.setOre(sendCounts.getOre() * 1);
 		else
-			l.setOre(recieveCounts.getOre());
+			l.setOre(recieveCounts.getOre() * -1);
 		
 		l.setWheat(0);
 		if(sendCounts.getWheat() > 0)
-			l.setWheat(sendCounts.getWheat() * -1);
+			l.setWheat(sendCounts.getWheat() * 1);
 		else
-			l.setWheat(recieveCounts.getWheat());
+			l.setWheat(recieveCounts.getWheat() * -1);
 		
 		l.setSheep(0);
 		if(sendCounts.getSheep() > 0)
-			l.setSheep(sendCounts.getSheep() * -1);
+			l.setSheep(sendCounts.getSheep() * 1);
 		else
-			l.setSheep(recieveCounts.getSheep());
+			l.setSheep(recieveCounts.getSheep() * -1);
 		
 		l.setWood(0);
 		if(sendCounts.getWood() > 0)
-			l.setWood(sendCounts.getWood() * -1);
+			l.setWood(sendCounts.getWood() * 1);
 		else
-			l.setWood(recieveCounts.getWood());
+			l.setWood(recieveCounts.getWood() * -1);
 		return l;
 	}
 

@@ -91,7 +91,6 @@ public class Translator {
 					settlements.add(newS);
 				}
 				newPlayer.setSettlements(settlements);
-	//			System.out.println(settlements.size() + "," + p.getSettlements());
 	//			assert(settlements.size() == p.getSettlements());
 	
 				List<ICity> cities = new ArrayList<ICity>();
@@ -153,9 +152,7 @@ public class Translator {
 			map.addPort(new Port(port));
 		}
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
-//			System.out.println("settl owner: " + settl.getOwner());
 			IPlayer player = this.getPlayerWithId(settl.getOwner(), g.getPlayers());
-//			System.out.println("player: " + player);
 			map.placeInitialSettlement(new Settlement(new VertexLocation(settl.getLocation()), 
 			                                          player));
 		}
@@ -163,32 +160,21 @@ public class Translator {
 			map.placeInitialCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers())));
 		}
 		for(TRRoad road : cm.getMap().getRoads()){
-//			System.out.println(g.toString());
-//			System.out.println(cm.toString());
 			map.placeInitialRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
 		}
 		
 		IRobber robber = new Robber(cm.getMap().getRobber());
-//		System.out.println(robber.getLocation());
 		map.setRobber(robber);
 		map.setRadius(cm.getMap().getRadius());
 		g.setMap(map);
-		
-//		System.out.println("Number of hexes: " + map.getHexes().size());
-//		for(IHex hex : map.getHexes())
-//			System.out.println(hex);
-
-//		System.out.println("Returning from convertClientModelToGame");
 		
 		return g;
 	}
 
 	private IPlayer getPlayerWithId(Integer owner, IPlayer[] players) {
 		for (IPlayer iPlayer : players) {
-//			System.out.println(iPlayer);
 			if(iPlayer.getPlayerInfo().getPlayerIndex() == owner.intValue())
 			{
-				
 				return iPlayer;
 			}
 		}

@@ -78,7 +78,7 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void startPlayCard() {
 		try {
-			Map<IDevelopmentCard, Integer> map = this.proxy.getFacade().getDevCardsForPlayerId(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getId());
+			Map<IDevelopmentCard, Integer> map = this.proxy.getFacade().getDevCardsForPlayerIndex(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex());
 			for(Map.Entry<IDevelopmentCard, Integer> entry : map.entrySet()){
 				getPlayCardView().setCardEnabled(entry.getKey().getType(), (entry.getValue().intValue() > 0));
 				getPlayCardView().setCardAmount(entry.getKey().getType(), entry.getValue());

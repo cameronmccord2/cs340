@@ -21,8 +21,6 @@ public interface IFacade {
 
 	IPlayer getCurrentUser() throws CantFindGameModelException, CantFindPlayerException;
 
-	IPlayer getPlayerWithIndex(Integer playerToTradeWith) throws CantFindPlayerException, CantFindGameModelException;
-
 	PlayerInfo[] getAllPlayerInfos() throws CantFindGameModelException;
 
 	boolean isMyTurn() throws CantFindGameModelException;
@@ -35,8 +33,6 @@ public interface IFacade {
 	
 	List<LogEntry> getGameHistory();
 
-	Map<IResourceCard, Integer> getResourcesForPlayerId(Integer reciever) throws CantFindPlayerException, CantFindGameModelException;
-
 	Integer getBankResourceCount(ResourceCard resource) throws CantFindGameModelException;
 
 	Integer getPlayerResourceCount(ResourceCard resource) throws CantFindGameModelException;
@@ -44,8 +40,6 @@ public interface IFacade {
 	Integer getWinner() throws CantFindGameModelException;
 
 	TurnTracker getTurnTracker() throws CantFindGameModelException;
-
-	Map<IDevelopmentCard, Integer> getDevCardsForPlayerId(Integer playerId) throws CantFindPlayerException, CantFindGameModelException;
 
 	String getCurrentState() throws CantFindGameModelException;
 
@@ -57,4 +51,10 @@ public interface IFacade {
 
 	Integer getMaritimeTradeAmountForResource(ResourceType resource) throws CantFindPlayerException,
 																			CantFindGameModelException;
+
+	IPlayer getPlayerWithPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException;
+
+	Map<IResourceCard, Integer> getResourcesForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException;
+
+	Map<IDevelopmentCard, Integer> getDevCardsForPlayerIndex(Integer playerIndex) throws CantFindPlayerException, CantFindGameModelException;
 }
