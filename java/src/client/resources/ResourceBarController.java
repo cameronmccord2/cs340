@@ -97,7 +97,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 //			System.out.println(facade.getCurrentUser());
 
-			if(facade.getCurrentUser().getSettlements().size() >= MAX_CITIES)
+			if(facade.getCurrentUser().getCities().size() >= MAX_CITIES)
 				canBuild = false;
 
 			getView().setElementEnabled(ResourceBarElement.CITY, canBuild);
