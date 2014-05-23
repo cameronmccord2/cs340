@@ -19,12 +19,12 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     private static final int MAX_SETTLEMENTS = 5;
     private static final int MAX_CITIES = 4;
     private IProxy proxy;
-	
+
 	public ResourceBarController(IResourceBarView view, IProxy proxy) {
 
 		super(view);
         this.proxy = proxy;
-		
+
 		elementActions = new HashMap<>();
         this.proxy.getFacade().registerAsObserver(this);
 	}
@@ -36,7 +36,7 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	/**
 	 * Sets the action to be executed when the specified resource bar element is clicked by the user
-	 * 
+	 *
 	 * @param element The resource bar element with which the action is associated
 	 * @param action The action to be executed
 	 */
@@ -69,114 +69,118 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	public void playCard() {
 		executeElementAction(ResourceBarElement.PLAY_CARD);
 	}
-	
+
 	private void executeElementAction(ResourceBarElement element) {
-		
+
 		if (elementActions.containsKey(element)) {
-			
+
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
 	}
-	
+
 	private void setCityButtonState() {
-		
+
 		try {
-			
+
+			IFacade facade = proxy.getFacade();
 			Collection<Resource> buildingCost = City.getResourceCost();
 			boolean canBuild = true;
-			
+
 			for(Resource resource : buildingCost) {
 				ResourceType type = resource.getResourceType();
 				Integer cost = resource.getAmount();
-				
-				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+
+				if(facade.getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
 					canBuild = false;
-				
 			}
 
-			if(this.proxy.getFacade().getCurrentUser().getSettlements().size() >= MAX_CITIES)
+//			System.out.println(facade.getCurrentUser());
+
+			if(facade.getCurrentUser().getSettlements().size() >= MAX_CITIES)
 				canBuild = false;
-			
+
 			getView().setElementEnabled(ResourceBarElement.CITY, canBuild);
-			
+
 		} catch (CantFindGameModelException | CantFindPlayerException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setSettlementButtonState() {
 
 		try {
-			
+			IFacade facade = proxy.getFacade();
 			Collection<Resource> buildingCost = Settlement.getResourceCost();
 			boolean canBuild = true;
-			
+
 			for(Resource resource : buildingCost) {
 				ResourceType type = resource.getResourceType();
 				Integer cost = resource.getAmount();
-				
-				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+
+				if(facade.getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
 					canBuild = false;
-				
 			}
-			
-			if(this.proxy.getFacade().getCurrentUser().getSettlements().size() >= MAX_SETTLEMENTS)
+
+//			System.out.println(facade.getCurrentUser());
+
+			if(facade.getCurrentUser().getSettlements().size() >= MAX_SETTLEMENTS)
 				canBuild = false;
-			
+
 			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuild);
-			
+
 		} catch (CantFindGameModelException | CantFindPlayerException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setRoadButtonState() {
 		try {
-			
+			IFacade facade = proxy.getFacade();
 			Collection<Resource> buildingCost = RoadSegment.getResourceCost();
 			boolean canBuild = true;
-			
+
 			for(Resource resource : buildingCost) {
 				ResourceType type = resource.getResourceType();
 				Integer cost = resource.getAmount();
-				
-				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
+
+				if(facade.getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
 					canBuild = false;
-				
 			}
-	
-			if(this.proxy.getFacade().getCurrentUser().getRoads().size() >= MAX_ROADS)
+
+//			System.out.println(facade.getCurrentUser());
+
+			if(facade.getCurrentUser().getRoads().size() >= MAX_ROADS)
 				canBuild = false;
-	
+
 			getView().setElementEnabled(ResourceBarElement.ROAD, canBuild);
-			
+
 		} catch (CantFindGameModelException | CantFindPlayerException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void setBuyDevCardButtonState() {
 		try {
-			
+
 			Collection<Resource> buildingCost = DevelopmentCard.getResourceCost();
 			boolean canPlay = true;
-			
+
 			for(Resource resource : buildingCost) {
 				ResourceType type = resource.getResourceType();
 				Integer cost = resource.getAmount();
-				
+
 				if(this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(type)) < cost)
 					canPlay = false;
-				
+
 			}
 
 			if( ! this.proxy.getFacade().isMyTurn())
 				canPlay = false;
-	
+
 			getView().setElementEnabled(ResourceBarElement.BUY_CARD, canPlay);
-			
+
 		} catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		}

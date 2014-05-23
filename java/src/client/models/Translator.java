@@ -83,9 +83,9 @@ public class Translator {
 				newPlayer.setPlayedDevCard(p.isPlayedDevCard());
 				newPlayer.setDiscarded(p.isDiscarded());
 
-				List<ISettlement> settlements = new ArrayList<ISettlement>();
+				List<ISettlement> settlements = new ArrayList<>();
 				for (TRVertexObject s : cm.getMap().getSettlements()) {
-					if((long)s.getOwner() != p.getPlayerID())
+					if(s.getOwner() != p.getPlayerIndex())
 						continue;
 					ISettlement newS = new Settlement(new VertexLocation(s.getLocation()), newPlayer);
 					settlements.add(newS);
@@ -93,9 +93,9 @@ public class Translator {
 				newPlayer.setSettlements(settlements);
 	//			assert(settlements.size() == p.getSettlements());
 
-				List<ICity> cities = new ArrayList<ICity>();
+				List<ICity> cities = new ArrayList<>();
 				for (TRVertexObject c : cm.getMap().getCities()) {
-					if((long)c.getOwner() != p.getPlayerID())
+					if(c.getOwner() != p.getPlayerIndex())
 						continue;
 					ICity newC = new City(new VertexLocation(c.getLocation()), newPlayer);
 					cities.add(newC);
@@ -103,22 +103,15 @@ public class Translator {
 				newPlayer.setCities(cities);
 	//			assert(cities.size() == p.getCities());
 
-//				List<IRoad> roads = new ArrayList<IRoad>();
-//				for (TRRoad road : cm.getMap().getRoads()) {
-//					if((long)road.getOwner() != p.getPlayerID())
-//						continue;
-//					IRoad r = new Road(playerInfo.getColor(), newPlayer, false, new EdgeLocation(road.getLocation()));
-//					roads.add(r);
-//				}
-//				newPlayer.setRoads(roads);
-
 				List<IRoadSegment> roads = new ArrayList<>();
 				for (TRRoad road : cm.getMap().getRoads()) {
-					if((long)road.getOwner() != p.getPlayerID())
+					if(road.getOwner() != p.getPlayerIndex())
 						continue;
 					IRoadSegment r = new RoadSegment(road, newPlayer);
+//					System.out.println(r);
 					roads.add(r);
 				}
+//				System.out.println(roads);
 				newPlayer.setRoads(roads);
 
 	//			assert(roads.size() == p.getRoads());
@@ -149,6 +142,8 @@ public class Translator {
 				newPlayer.setDevelopmentCards(developmentCards);
 
 				g.getPlayers()[index] = newPlayer;
+//				System.out.println(g.getPlayers()[index]);
+//				System.out.println(newPlayer);
 				index++;
 			}
 
@@ -167,10 +162,13 @@ public class Translator {
 			                                          player));
 		}
 		for (TRVertexObject city : cm.getMap().getCities()) {
-			map.placeInitialCity(new City(new VertexLocation(city.getLocation()), this.getPlayerWithId(city.getOwner(), g.getPlayers())));
+			map.placeInitialCity(new City(new VertexLocation(city.getLocation()),
+					this.getPlayerWithId(city.getOwner(), g.getPlayers())));
 		}
 		for(TRRoad road : cm.getMap().getRoads()){
-			map.placeInitialRoadSegment(new RoadSegment(road, this.getPlayerWithId(road.getOwner(), g.getPlayers())));
+			IPlayer player = this.getPlayerWithId(road.getOwner(), g.getPlayers());
+//			System.out.println(player);
+			map.placeInitialRoadSegment(new RoadSegment(road, player));
 		}
 
 		IRobber robber = new Robber(cm.getMap().getRobber());

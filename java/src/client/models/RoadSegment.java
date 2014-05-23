@@ -105,4 +105,24 @@ public class RoadSegment extends Piece implements IRoadSegment
 		return end.getNormalizedLocation();
 	}
 
+	@Override
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("RoadSegment [player=");
+		if(player != null)
+			builder.append(player.getPlayerInfo().getId());
+		else
+			builder.append("null");
+		builder.append(", color=");
+		builder.append(color);
+		builder.append(", location=");
+		builder.append(location);
+		builder.append(", getPieceType()=");
+		builder.append(getPieceType());
+		builder.append("]");
+		return builder.toString();
+	}
+
+
 }

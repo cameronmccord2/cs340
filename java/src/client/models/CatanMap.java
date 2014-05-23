@@ -186,8 +186,10 @@ public class CatanMap implements ICatanMap
 		{
 			PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
 			PlayerInfo segmentOwner = segment.getPlayer().getPlayerInfo();
-//			System.out.println(pieceOwner);
-//			System.out.println(segmentOwner);
+
+//			System.out.println("pieceOwner:   " + pieceOwner);
+//			System.out.println("segmentOwner: " + segmentOwner);
+
 			if(pieceOwner.equals(segmentOwner))
 			{
 				switch(piece.getPieceType())
