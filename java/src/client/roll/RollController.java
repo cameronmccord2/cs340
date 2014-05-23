@@ -54,15 +54,13 @@ public class RollController extends Controller implements IRollController, ICata
 		{
 			IFacade facade = proxy.getFacade();
 			Integer playerIndex = facade.getCurrentUserIndex();
-			int rolledResult = (int) (1 + (Math.random() * 12));
-
-   		ServerRoll serverRoll = new ServerRoll("rollNumber", playerIndex, rolledResult);
-   		ServerResponse response = proxy.movesRollNumber(serverRoll);
-
-   		if(response.getResponseCode() == 200){
-   			getResultView().setRollValue(rolledResult);
-   			getResultView().showModal();
-   		}
+			int rolledResult = (int) (2 + (Math.random() * 12));
+			ServerRoll serverRoll = new ServerRoll("rollNumber", playerIndex, rolledResult);
+	   		ServerResponse response = proxy.movesRollNumber(serverRoll);
+	   		if(response.getResponseCode() == 200){
+	   			getResultView().setRollValue(rolledResult);
+	   			getResultView().showModal();
+	   		}
 		}
 		catch (CantFindGameModelException e)
 		{

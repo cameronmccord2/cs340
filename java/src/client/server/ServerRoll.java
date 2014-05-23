@@ -58,6 +58,17 @@ public class ServerRoll {
 	public void setNumber(int number) {
 		this.number = number;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ServerRoll [type=" + type + ", playerIndex=" + playerIndex
+				+ ", number=" + number + "]";
+	}
+	
+	
 	
 	
 }
