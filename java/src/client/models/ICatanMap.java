@@ -9,9 +9,6 @@ public interface ICatanMap
 	public boolean canPlaceSettlement(ISettlement settlement);
 	public boolean canPlaceCity(ICity city);
 
-    Collection<IPlayer> getPlayersAroundHex(HexLocation hex);
-
-    // Very ugly method.
     boolean isOceanHex(HexLocation hex);
 
     public boolean canPlaceRoad(IRoadSegment segment);
@@ -36,13 +33,14 @@ public interface ICatanMap
 
 	public Collection<ICity> getCities();
 	public void placeCity(ICity city) throws InvalidLocationException;
-	
+
 	public Collection<IPiece> getPieces();
 
 	public int getRadius();
 	public void setRadius(int radius);
-	
+
 	public void placeInitialSettlement(ISettlement settlement) throws InvalidLocationException;
 	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException;
 	public void placeInitialCity(ICity city) throws InvalidLocationException;
+	public Collection<IPiece> getSettlementsAroundHex(HexLocation hex);
 }

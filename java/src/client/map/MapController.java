@@ -13,6 +13,7 @@ import client.models.ICity;
 import client.models.IFacade;
 import client.models.IGame;
 import client.models.IHex;
+import client.models.IPiece;
 import client.models.IPlayer;
 import client.models.IPort;
 import client.models.IProxy;
@@ -447,17 +448,14 @@ public class MapController extends Controller implements IMapController,
 
         try {
 
-            for( IPlayer player : facade.getCatanMap().getPlayersAroundHex(hexLoc) )
+            for( IPiece piece : facade.getCatanMap().getSettlementsAroundHex(hexLoc) )
             {
-                RobPlayerInfo rob = new RobPlayerInfo(player.getPlayerInfo());
-                int playerId = player.getPlayerInfo().getId();
-
-                rob.setNumCards( facade.getResourcesForPlayerId( playerId ).size() );
+                RobPlayerInfo rob = new RobPlayerInfo(piece.getPlayer().getPlayerInfo());
+                rob.setNumCards( piece.getPlayer().getNumResourceCards() );
                 robbable.add(rob);
-
             }
 
-        } catch (CantFindGameModelException | CantFindPlayerException e) {
+        } catch (CantFindGameModelException e) {
             e.printStackTrace();
         }
 
@@ -465,6 +463,8 @@ public class MapController extends Controller implements IMapController,
 
         getRobView().setPlayers(victims);
         getRobView().showModal();
+
+
 
     }
 

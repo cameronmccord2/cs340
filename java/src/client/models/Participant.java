@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import shared.definitions.ResourceType;
+
 /**
  * The Class Participant.
  */
@@ -11,10 +13,10 @@ public abstract class Participant implements IParticipant {
 
 	/** The development cards. */
 	protected Map<IDevelopmentCard, Integer> developmentCards;
-	
+
 	/** The resource cards. */
 	protected Map<IResourceCard, Integer> resourceCards;
-	
+
 	/**
 	 * Instantiates a new participant.
 	 *
@@ -25,7 +27,7 @@ public abstract class Participant implements IParticipant {
 		this.developmentCards = _developmentCards;
 		this.resourceCards = _resourceCards;
 	}
-	
+
 	/**
 	 * Instantiates a new participant.
 	 */
@@ -33,7 +35,7 @@ public abstract class Participant implements IParticipant {
 		this.developmentCards = new HashMap<IDevelopmentCard, Integer>();
 		this.resourceCards = new HashMap<IResourceCard, Integer>();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IParticipant#getDevelopmentCards()
 	 */
@@ -41,7 +43,7 @@ public abstract class Participant implements IParticipant {
 	public Map<IDevelopmentCard, Integer> getDevelopmentCards() {
         return developmentCards;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IParticipant#setDevelopmentCards(java.util.List)
 	 */
@@ -59,13 +61,24 @@ public abstract class Participant implements IParticipant {
 	public void setDevelopmentCards(Map<IDevelopmentCard, Integer> developmentCards) {
         this.developmentCards = developmentCards;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IParticipant#getResourceCards()
 	 */
 	@Override
 	public Map<IResourceCard, Integer> getResourceCards() {
 		return resourceCards;
+	}
+
+	@Override
+	public int getNumResourceCards() {
+		int count = 0;
+
+		for ( Integer numCards: resourceCards.values() )
+			count += numCards;
+
+		return count;
+
 	}
 
     /* (non-Javadoc)

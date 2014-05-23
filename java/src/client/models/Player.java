@@ -15,21 +15,21 @@ public class Player extends Participant implements IPlayer {
     private static final int START_POINTS = 2;
 	/** The settlements. */
 	protected List<ISettlement> settlements;
-	
+
 	protected List<ICity> cities;
-	
+
 	/** The roads. */
 	protected List<IRoad> roads;
-	
+
 	/** The player info. */
 	protected PlayerInfo playerInfo;
-	
+
 	  protected int soldiers;
 	  protected int victoryPoints;
 	  protected int monuments;
 	  protected boolean playedDevCard;
 	  protected boolean discarded;
-	
+
 	/**
 	 * Instantiates a new player.
 	 * @param playerInfo the player info
@@ -42,7 +42,7 @@ public class Player extends Participant implements IPlayer {
 		this.cities = new ArrayList<ICity>();
         this.victoryPoints = START_POINTS;
 	}
-	
+
 	/**
 	 * Instantiates a new player.
 	 *
@@ -65,7 +65,7 @@ public class Player extends Participant implements IPlayer {
 		this.cities = cities;
         this.victoryPoints = START_POINTS;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#getSettlements()
 	 */
@@ -73,7 +73,7 @@ public class Player extends Participant implements IPlayer {
 	public List<ISettlement> getSettlements() {
 		return settlements;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#setSettlements(java.util.List)
 	 */
@@ -81,7 +81,7 @@ public class Player extends Participant implements IPlayer {
 	public void setSettlements(List<ISettlement> settlements) {
 		this.settlements = settlements;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#getRoads()
 	 */
@@ -89,7 +89,7 @@ public class Player extends Participant implements IPlayer {
 	public List<IRoad> getRoads() {
 		return roads;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#setRoads(java.util.List)
 	 */
@@ -97,7 +97,7 @@ public class Player extends Participant implements IPlayer {
 	public void setRoads(List<IRoad> roads) {
 		this.roads = roads;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#getPlayerInfo()
 	 */
@@ -105,7 +105,7 @@ public class Player extends Participant implements IPlayer {
 	public PlayerInfo getPlayerInfo() {
 		return playerInfo;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#setPlayerInfo(client.data.PlayerInfo)
 	 */
@@ -113,7 +113,7 @@ public class Player extends Participant implements IPlayer {
 	public void setPlayerInfo(PlayerInfo playerInfo) {
 		this.playerInfo = playerInfo;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see client.models.IPlayer#robPlayer()
 	 */
@@ -123,7 +123,7 @@ public class Player extends Participant implements IPlayer {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/* (non-Javadoc)his.proxy.getFacade().;
 	 * @see client.models.IParticipant#willAcceptTrade(client.models.ITrade)
 	 */
 	@Override
@@ -160,7 +160,7 @@ public class Player extends Participant implements IPlayer {
 	@Override
 	public void setSoldiers(int soldiers) {
 		this.soldiers = soldiers;
-	}
+	};
 
 	@Override
 	public int getVictoryPoints() {
