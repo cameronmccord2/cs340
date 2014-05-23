@@ -16,6 +16,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		
 		super(view);
 		this.proxy = proxy;
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 	
 	@Override
@@ -42,6 +43,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 	@Override
 	public void update() {
+		System.out.println("update");
 		initFromModel();	
 	}
 	
