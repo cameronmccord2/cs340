@@ -362,8 +362,9 @@ public class MapController extends Controller implements IMapController,
     		segment.setPlayer(player);
 
 			map.placeRoadSegment(segment);
+			String state = facade.getCurrentState();
 
-			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
+			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
 				proxy.movesBuildRoad(new ServerBuildRoad("buildRoad", info.getPlayerIndex(), edgeLoc, true));
 		}
 		catch (InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
