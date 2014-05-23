@@ -3,6 +3,7 @@
  */
 package client.server;
 
+import shared.locations.SimplifiedVertexLocation;
 import shared.locations.VertexLocation;
 
 /**
@@ -12,13 +13,13 @@ import shared.locations.VertexLocation;
  */
 public class ServerBuildCity {
 	private String type;
-	private int playerindex;
-	private VertexLocation vertexLocation;
-	public ServerBuildCity(String type, int playerindex,
+	private int playerIndex;
+	private SimplifiedVertexLocation vertexLocation;
+	public ServerBuildCity(String type, int playerIndex,
 			VertexLocation vertexLocation) {
 		this.type = type;
-		this.playerindex = playerindex;
-		this.vertexLocation = vertexLocation;
+		this.playerIndex = playerIndex;
+		this.vertexLocation = new SimplifiedVertexLocation(vertexLocation);
 	}
 	/**
 	 * @return the type
@@ -33,28 +34,28 @@ public class ServerBuildCity {
 		this.type = type;
 	}
 	/**
-	 * @return the playerindex
+	 * @return the playerIndex
 	 */
-	public int getPlayerindex() {
-		return playerindex;
+	public int getPlayerIndex() {
+		return playerIndex;
 	}
 	/**
-	 * @param playerindex the playerindex to set
+	 * @param playerIndex the playerIndex to set
 	 */
-	public void setPlayerindex(int playerindex) {
-		this.playerindex = playerindex;
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
 	}
 	/**
 	 * @return the vertexLocation
 	 */
-	public VertexLocation getVertexLocation() {
+	public SimplifiedVertexLocation getVertexLocation() {
 		return vertexLocation;
 	}
 	/**
 	 * @param vertexLocation the vertexLocation to set
 	 */
 	public void setVertexLocation(VertexLocation vertexLocation) {
-		this.vertexLocation = vertexLocation;
+		this.vertexLocation = new SimplifiedVertexLocation(vertexLocation);
 	}
 	
 }

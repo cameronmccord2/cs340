@@ -3,6 +3,7 @@
  */
 package client.server;
 
+import shared.locations.SimplifiedVertexLocation;
 import shared.locations.VertexLocation;
 
 /**
@@ -12,14 +13,14 @@ import shared.locations.VertexLocation;
  */
 public class ServerBuildSettlement {
 	private String type;
-	private int playerindex;
-	private VertexLocation vertexLocation;
+	private int playerIndex;
+	private SimplifiedVertexLocation vertexLocation;
 	private boolean free;
-	public ServerBuildSettlement(String type, int playerindex,
+	public ServerBuildSettlement(String type, int playerIndex,
 			VertexLocation vertexLocation, boolean free) {
 		this.type = type;
-		this.playerindex = playerindex;
-		this.vertexLocation = vertexLocation;
+		this.playerIndex = playerIndex;
+		this.vertexLocation = new SimplifiedVertexLocation(vertexLocation);
 		this.free = free;
 	}
 	/**
@@ -35,28 +36,28 @@ public class ServerBuildSettlement {
 		this.type = type;
 	}
 	/**
-	 * @return the playerindex
+	 * @return the playerIndex
 	 */
-	public int getPlayerindex() {
-		return playerindex;
+	public int getPlayerIndex() {
+		return playerIndex;
 	}
 	/**
-	 * @param playerindex the playerindex to set
+	 * @param playerIndex the playerIndex to set
 	 */
-	public void setPlayerindex(int playerindex) {
-		this.playerindex = playerindex;
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
 	}
 	/**
 	 * @return the vertexLocation
 	 */
-	public VertexLocation getVertexLocation() {
+	public SimplifiedVertexLocation getVertexLocation() {
 		return vertexLocation;
 	}
 	/**
 	 * @param vertexLocation the vertexLocation to set
 	 */
 	public void setVertexLocation(VertexLocation vertexLocation) {
-		this.vertexLocation = vertexLocation;
+		this.vertexLocation = new SimplifiedVertexLocation(vertexLocation);
 	}
 	/**
 	 * @return the free

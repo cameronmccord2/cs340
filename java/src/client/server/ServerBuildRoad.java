@@ -2,6 +2,7 @@
 package client.server;
 
 import shared.locations.EdgeLocation;
+import shared.locations.SimplifiedEdgeLocation;
 
 /**
  * Holds info to build a road on the server
@@ -71,34 +72,4 @@ public class ServerBuildRoad {
 	}
 	
 	
-}
-
-class SimplifiedEdgeLocation {
-    int x;
-    int y;
-    String direction;
-
-    public SimplifiedEdgeLocation() {
-        x = 0;
-        y = 0;
-        direction = "N";
-    }
-    public SimplifiedEdgeLocation(EdgeLocation edge) {
-        x = edge.getHexLocation().getX();
-        y = edge.getHexLocation().getY();
-        switch(edge.getDirection().toString().toUpperCase()){
-            case "NORTHWEST":
-                direction = "NW"; break;
-            case "NORTH":
-                direction = "N"; break;
-            case "NORTHEAST":
-                direction = "NE"; break;
-            case "SOUTHEAST":
-                direction = "SE"; break;
-            case "SOUTH":
-                direction = "S"; break;
-            case "SOUTHWEST":
-                direction = "SW"; break;
-        }
-    }
 }
