@@ -192,7 +192,7 @@ public class Player extends Participant implements IPlayer {
 	}
 
 	@Override
-	public boolean isDiscarded() {
+	public boolean hasDiscarded() {
 		return discarded;
 	}
 

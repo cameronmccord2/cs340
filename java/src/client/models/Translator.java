@@ -115,7 +115,7 @@ public class Translator {
 	//			assert(roads.size() == p.getRoads());
 
 
-				Map<IResourceCard, Integer> resourceCards = new HashMap<IResourceCard, Integer>();
+				Map<IResourceCard, Integer> resourceCards = new HashMap<>();
 				TRResourceList resources = p.getResources();
 	//			resourceCards.put(ResourceCard.BRICK, 10 + index);
 	//			resourceCards.put(ResourceCard.ORE, 10 + index);
