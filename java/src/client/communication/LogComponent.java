@@ -29,7 +29,6 @@ public class LogComponent extends JComponent
 	
 	public LogComponent()
 	{
-		
 		this.setBackground(Color.white);
 		this.setOpaque(true);
 		
@@ -77,7 +76,6 @@ public class LogComponent extends JComponent
 	
 	private int draw(Graphics2D g2)
 	{
-		
 		int y = 0;
 		
 		FontMetrics fontMetrics = this.getFontMetrics(font);
@@ -85,14 +83,15 @@ public class LogComponent extends JComponent
 		
 		g2.setFont(font);
 		
-		for (LogEntry entry : entries)
+		//for (LogEntry entry : entries)
+		for(int i = entries.size() - 1; i >= 0; i--)
 		{
 			
-			List<String> lines = wrapText(fontContext, entry.getMessage());
+			List<String> lines = wrapText(fontContext, entries.get(i).getMessage());
 			int rectHeight = TOP_MARGIN + BOTTOM_MARGIN + lines.size()
 							 * fontMetrics.getHeight();
 			
-			g2.setColor(entry.getColor().getJavaColor());
+			g2.setColor(entries.get(i).getColor().getJavaColor());
 			g2.fillRect(0, y, this.getWidth(), rectHeight);
 			
 			g2.setColor(Color.white);
@@ -102,15 +101,15 @@ public class LogComponent extends JComponent
 			
 			y += TOP_MARGIN + fontMetrics.getAscent();
 			
-			for (int i = 0; i < lines.size(); ++i)
+			for (int j = 0; j < lines.size(); ++j)
 			{
 				
-				if(i > 0)
+				if(j > 0)
 				{
 					y += fontMetrics.getHeight();
 				}
 				
-				g2.drawString(lines.get(i), LEFT_MARGIN, y);
+				g2.drawString(lines.get(j), LEFT_MARGIN, y);
 			}
 			
 			y += fontMetrics.getDescent() + BOTTOM_MARGIN;

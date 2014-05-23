@@ -1,5 +1,8 @@
 package client.communication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.base.Controller;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
@@ -16,6 +19,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		
 		super(view);
 		this.proxy = proxy;
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 	
 	@Override
@@ -42,6 +46,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 	@Override
 	public void update() {
+		System.out.println("hist update");
 		initFromModel();	
 	}
 	
