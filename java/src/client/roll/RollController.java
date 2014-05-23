@@ -73,8 +73,9 @@ public class RollController extends Controller implements IRollController, ICata
 	@Override
 	public void update() {
 		try {
+			IFacade facade = proxy.getFacade();
 //			System.out.println(this.proxy.getFacade().getTurnTracker().toString() + ", my index: " + this.proxy.getFacade().getCurrentUserIndex());
-			if(this.proxy.getFacade().isMyTurn() && this.proxy.getFacade().getCurrentState().equals("Rolling")){
+			if(facade.isMyTurn() && facade.getCurrentState().equals("Rolling")){
 				if(!getRollView().isModalShowing() && !getResultView().isModalShowing())
 					getRollView().showModal();
 			}

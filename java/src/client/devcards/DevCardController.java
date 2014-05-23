@@ -80,8 +80,10 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void startPlayCard() {
 		try {
-			Map<IDevelopmentCard, Integer> map = this.proxy.getFacade().getDevCardsForPlayerIndex(this.proxy.getFacade().getCurrentUser().getPlayerInfo().getPlayerIndex());
+			Map<IDevelopmentCard, Integer> map = this.proxy.getFacade().getDevCardsForPlayerIndex(this.proxy.getFacade().getCurrentUserIndex());
+			System.out.println(map.toString());
 			for(Map.Entry<IDevelopmentCard, Integer> entry : map.entrySet()){
+				System.out.println(entry.toString());
 				getPlayCardView().setCardEnabled(entry.getKey().getType(), (entry.getValue().intValue() > 0));
 				getPlayCardView().setCardAmount(entry.getKey().getType(), entry.getValue());
 			}
@@ -125,13 +127,13 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playRoadBuildCard() {
-		getPlayCardView().closeModal();
+//		getPlayCardView().closeModal();
 		roadAction.execute();
 	}
 
 	@Override
 	public void playSoldierCard() {
-		getPlayCardView().closeModal();
+//		getPlayCardView().closeModal();
 		soldierAction.execute();
 	}
 

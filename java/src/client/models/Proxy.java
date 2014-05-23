@@ -250,7 +250,8 @@ public class Proxy implements IProxy {
 		gameId = gameId.substring(11);
 		//System.out.println(gameId);//0
 		try {
-			this.saveGameModel(this.movesSendChat(new ServerChat("sendChat", this.getFacade().getCurrentUserIndex(), this.getFacade().getCurrentUser().getPlayerInfo().getName() + " has joined the game. Chat now!")).getJson());
+			if(getFacade().isGameModelInitialized())
+				this.saveGameModel(this.movesSendChat(new ServerChat("sendChat", this.getFacade().getCurrentUserIndex(), this.getFacade().getCurrentUser().getPlayerInfo().getName() + " has joined the game. Chat now!")).getJson());
 		} catch (CantFindGameModelException e) {
 			e.printStackTrace();
 		} catch (CantFindPlayerException e) {

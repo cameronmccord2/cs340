@@ -99,7 +99,7 @@ public class OverlayView extends PanelView implements IOverlayView
 	 */
 	public void closeModal()
 	{
-		
+		new Exception().printStackTrace();
 		System.out.println("hidden2");
 		assert overlayStack.size() > 0;
 		assert window.getGlassPane() == overlayStack.peek().getOverlayPanel();

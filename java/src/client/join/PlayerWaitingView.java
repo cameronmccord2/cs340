@@ -107,6 +107,23 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 //			}
 //		}	
 //	};
+	
+	private void initialize()
+	{
+		this.setOpaque(true);
+		this.setLayout(new BorderLayout());
+		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
+		
+		//set the heading at the top of the pane
+		label = new JLabel("Player Waiting View");
+		FontUtils.setFont(label, LABEL_TEXT_SIZE);
+		this.add(label, BorderLayout.NORTH);
+		
+		//create the center panel that displays player info
+		center = new JPanel();
+		center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
+		this.add(center, BorderLayout.CENTER);	
+	}
 
 	@Override
 	public IPlayerWaitingController getController() {
@@ -115,6 +132,8 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 
 	@Override
 	public void setPlayers(PlayerInfo[] players) {
+		this.removeAll();
+		this.initialize();
 		//set header label indicating how many players are still needed
 		String labelText = "";
 		if(players.length == NUMBER_OF_PLAYERS){
@@ -149,6 +168,8 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 			Dimension maxSize = new Dimension(Short.MAX_VALUE, 10);
 			center.add(new Box.Filler(minSize, prefSize, maxSize));			
 		}
+		
+		this.repaint();
 	}
 
 	@Override
