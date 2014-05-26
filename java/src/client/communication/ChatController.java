@@ -3,6 +3,7 @@ package client.communication;
 import client.base.Controller;
 import client.models.ICatanModelObserver;
 import client.models.IProxy;
+import client.models.exceptions.CantFindGameModelException;
 import client.server.ServerChat;
 
 
@@ -27,10 +28,16 @@ public class ChatController extends Controller implements IChatController, ICata
 
 	@Override
 	public void sendMessage(String message) {
-		ServerChat chat = new ServerChat("sendChat",0,message);
-		if(proxy.movesSendChat(chat).getResponseCode() != 200){
-			System.out.println("error sending chat");
+		ServerChat chat;
+		try {
+			chat = new ServerChat("sendChat",proxy.getFacade().getCurrentUserIndex(),message);
+			if(proxy.movesSendChat(chat).getResponseCode() != 200){
+				System.out.println("error sending chat");
+			}
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
