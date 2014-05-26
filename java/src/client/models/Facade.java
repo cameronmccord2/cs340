@@ -39,7 +39,7 @@ public class Facade implements IFacade {
             gameId = 0;
 		else
             gameId = Integer.parseInt(this.proxy.getGameId());
-
+        
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){
 				return g;
@@ -57,10 +57,13 @@ public class Facade implements IFacade {
 	@Override
 	public IPlayer getCurrentUser() throws CantFindPlayerException, CantFindGameModelException{
 		IGame g = this.getGameModel();
-		for (IPlayer p : g.getPlayers()) {
-			if(p.getPlayerInfo().getName().equals(this.playerName))
-				return p;
+		if(g.getPlayers() != null){
+			for (IPlayer p : g.getPlayers()) {
+				if(p.getPlayerInfo().getName().equals(this.playerName))
+					return p;
+			}
 		}
+		
 		throw new CantFindPlayerException("sorry");
 	}
 
