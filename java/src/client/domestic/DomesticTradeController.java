@@ -112,7 +112,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if(this.recieveTypes.indexOf(resource) != -1){
 				this.recieveCounts.decreaseResourceAmount(resource);
 				currentTradeCount = this.recieveCounts.getResourceCount(resource);
-				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, (currentTradeCount > 0));
 			}
 			else if(this.sendTypes.indexOf(resource) != -1){
 				this.sendCounts.decreaseResourceAmount(resource);
@@ -135,8 +135,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			if(this.recieveTypes.indexOf(resource) != -1){
 				this.recieveCounts.increaseResourceAmount(resource);
 				int currentTradeCount = this.recieveCounts.getResourceCount(resource);
-				hasOfResource = this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
-				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (hasOfResource > currentTradeCount), (currentTradeCount > 0));
+//				hasOfResource = this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource));
+				this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, (currentTradeCount > 0));
 			}
 			else if(this.sendTypes.indexOf(resource) != -1){
 				hasOfResource = this.proxy.getFacade().getPlayerResourceCount(ResourceCard.getCardForType(resource));
@@ -150,7 +150,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 			this.decideTradeState();
 		}catch (CantFindGameModelException e) {
-		} catch (CantFindPlayerException e) {
 		}
 	}
 
@@ -177,11 +176,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.playerToTradeWith = playerIndex;
 
 		// restrict all counters to the max possible values if higher, add restrictions
-		this.restrictTotalCountForResourceType(ResourceType.BRICK);
-		this.restrictTotalCountForResourceType(ResourceType.ORE);
-		this.restrictTotalCountForResourceType(ResourceType.SHEEP);
-		this.restrictTotalCountForResourceType(ResourceType.WOOD);
-		this.restrictTotalCountForResourceType(ResourceType.WHEAT);
+//		this.restrictTotalCountForResourceType(ResourceType.BRICK);
+//		this.restrictTotalCountForResourceType(ResourceType.ORE);
+//		this.restrictTotalCountForResourceType(ResourceType.SHEEP);
+//		this.restrictTotalCountForResourceType(ResourceType.WOOD);
+//		this.restrictTotalCountForResourceType(ResourceType.WHEAT);
 
 		this.decideTradeState();
 	}
@@ -220,14 +219,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.recieveTypes.add(resource);
 		this.recieveCounts.setResourceToZero(resource);
 
-		try {
-			if(this.playerToTradeWith != -1){
-				this.tradeOverlay.setResourceAmountChangeEnabled(resource, (this.proxy.getFacade().getPlayerWithPlayerIndex(this.playerToTradeWith).getResourceCards().get(ResourceCard.getCardForType(resource)) > 0), false);
-			}
-		} catch (CantFindPlayerException | CantFindGameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			if(this.playerToTradeWith != -1){
+		this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, false);
+//			}
+//		} catch (CantFindPlayerException | CantFindGameModelException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		this.decideTradeState();
 	}
