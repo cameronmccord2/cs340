@@ -490,11 +490,12 @@ public class MapComponent extends JComponent {
 						assert false;
 						break;
 					}
+
+                    initDrop();
+
+                    repaint();
 				}
 
-				initDrop();
-
-				repaint();
 			}
 		}
 
