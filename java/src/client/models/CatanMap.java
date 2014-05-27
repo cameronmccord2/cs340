@@ -3,6 +3,7 @@ package client.models;
 import java.util.*;
 
 import client.data.PlayerInfo;
+import client.models.exceptions.CantFindGameModelException;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.locations.*;
@@ -178,43 +179,56 @@ public class CatanMap implements ICatanMap
 	{
 		if(catanMap.get(segment.getLocation()) != null)
 			return false;
-
-		VertexLocation start = segment.getStartLocation();
-		VertexLocation end = segment.getEndLocation();
-
-		for(IPiece piece : catanMap.values())
+		
+		IFacade facade = proxy.getFacade();
+		try
 		{
-			PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
-			PlayerInfo segmentOwner = segment.getPlayer().getPlayerInfo();
-
-//			System.out.println("pieceOwner:   " + pieceOwner);
-//			System.out.println("segmentOwner: " + segmentOwner);
-
-			if(pieceOwner.equals(segmentOwner))
-			{
-				switch(piece.getPieceType())
-				{
-					case SETTLEMENT:
-					case CITY:
-						VertexLocation corner = (VertexLocation)piece.getLocation();
-						if(corner.equals(start)||corner.equals(end))
-							return true;
-						break;
-					case ROAD:
-						// THIS NEEDS TO BE UPDATED TO TAKE INTO ACCOUNT
-						// THE OCEAN HEXES! Currently, it allows you to
-						// build roads on ocean hex sides.
-						IRoadSegment roadSegment = (IRoadSegment)piece;
-						if(start.equals(roadSegment.getStartLocation()) ||
-						   start.equals(roadSegment.getEndLocation())   ||
-						   end.equals(roadSegment.getStartLocation())   ||
-						   end.equals(roadSegment.getEndLocation()))
-							return true;
-						break;
-					default:
-						break;
-				}
-			}
+			boolean canPlace = true;
+			String state = facade.getCurrentState();
+    		VertexLocation start = segment.getStartLocation();
+    		VertexLocation end = segment.getEndLocation();
+    
+    		for(IPiece piece : catanMap.values())
+    		{
+    			PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
+    			PlayerInfo segmentOwner = segment.getPlayer().getPlayerInfo();
+    
+    //			System.out.println("pieceOwner:   " + pieceOwner);
+    //			System.out.println("segmentOwner: " + segmentOwner);
+    
+    			if(pieceOwner.equals(segmentOwner))
+    			{
+    				switch(piece.getPieceType())
+    				{
+    					case SETTLEMENT:
+    					case CITY:
+    						VertexLocation corner = (VertexLocation)piece.getLocation();
+    						if(corner.equals(start)||corner.equals(end))
+    							return true;
+    						break;
+    					case ROAD:
+    						// THIS NEEDS TO BE UPDATED TO TAKE INTO ACCOUNT
+    						// THE OCEAN HEXES! Currently, it allows you to
+    						// build roads on ocean hex sides.
+    						IRoadSegment roadSegment = (IRoadSegment)piece;
+    						if(start.equals(roadSegment.getStartLocation()) ||
+    						   start.equals(roadSegment.getEndLocation())   ||
+    						   end.equals(roadSegment.getStartLocation())   ||
+    						   end.equals(roadSegment.getEndLocation()))
+    							return true;
+    						break;
+    					default:
+    						break;
+    				}
+    			}
+    		}
+    		
+			if(state.equals("FirstRound") || state.equals("SecondRound"))
+				return canPlace;
+		}
+		catch(CantFindGameModelException e)
+		{
+			
 		}
 		return false;
 	}
@@ -230,27 +244,44 @@ public class CatanMap implements ICatanMap
 	{
 		if(catanMap.get(settlement.getLocation()) != null)
 			return false;
-		HexLocation hex = settlement.getLocation().getHexLocation();
-		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
-			return false;
-		if(distanceRule(settlement) != null)
-			return false;
-
-		for(IPiece piece : catanMap.values())
+		
+		IFacade facade = proxy.getFacade();
+		
+		try
 		{
-			if(piece.getPlayer().equals(settlement.getPlayer()))
-			{
-				if(piece.getPieceType() == PieceType.ROAD)
-				{
-					IRoadSegment roadSegment = (IRoadSegment)piece;
-					VertexLocation start = roadSegment.getStartLocation();
-					VertexLocation end = roadSegment.getEndLocation();
-					VertexLocation corner = (VertexLocation)settlement.getLocation();
-					if(corner.equals(start) || corner.equals(end))
-						return true;
-				}
-			}
+			boolean canPlace = true;
+			String state = facade.getCurrentState();
+			
+			HexLocation hex = settlement.getLocation().getHexLocation();
+    		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
+    			return false;
+    		if(distanceRule(settlement) != null)
+    			return false;
+    
+    		for(IPiece piece : catanMap.values())
+    		{
+    			if(piece.getPlayer().equals(settlement.getPlayer()))
+    			{
+    				if(piece.getPieceType() == PieceType.ROAD)
+    				{
+    					IRoadSegment roadSegment = (IRoadSegment)piece;
+    					VertexLocation start = roadSegment.getStartLocation();
+    					VertexLocation end = roadSegment.getEndLocation();
+    					VertexLocation corner = (VertexLocation)settlement.getLocation();
+    					if(corner.equals(start) || corner.equals(end))
+    						return true;
+    				}
+    			}
+    		}
+    		
+    		if(state.equals("FirstRound") || state.equals("SecondRound"))
+				return canPlace;
 		}
+		catch(CantFindGameModelException e)
+		{
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
