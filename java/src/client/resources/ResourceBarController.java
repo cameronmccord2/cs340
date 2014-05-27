@@ -95,7 +95,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					canBuild = false;
 			}
 
-//			System.out.println(facade.getCurrentUser());
+            if( ! this.proxy.getFacade().isMyTurn())
+                canBuild = false;
 
 			if(facade.getCurrentUser().getCities().size() >= MAX_CITIES)
 				canBuild = false;
@@ -122,7 +123,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					canBuild = false;
 			}
 
-//			System.out.println(facade.getCurrentUser());
+            if( ! this.proxy.getFacade().isMyTurn())
+                canBuild = false;
 
 			if(facade.getCurrentUser().getSettlements().size() >= MAX_SETTLEMENTS)
 				canBuild = false;
@@ -148,7 +150,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					canBuild = false;
 			}
 
-//			System.out.println(facade.getCurrentUser());
+            if( ! this.proxy.getFacade().isMyTurn())
+                canBuild = false;
 
 			if(facade.getCurrentUser().getRoads().size() >= MAX_ROADS)
 				canBuild = false;
