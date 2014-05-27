@@ -188,16 +188,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game)
 	{
+
+        selectedGame = game;
+
+        if(getJoinGameView().isModalShowing())
+            getJoinGameView().closeModal();
+
 		for(PlayerInfo p : game.getPlayers())
 		{
 			if(p.getId() != self.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);
+            else {
+                joinGame(p.getColor());
+                return;
+            }
 		}
 
-		selectedGame = game;
-
-		if(getJoinGameView().isModalShowing())
-			getJoinGameView().closeModal();
 		if(!getSelectColorView().isModalShowing())
 			getSelectColorView().showModal();
 	}
