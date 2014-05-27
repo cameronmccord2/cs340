@@ -37,11 +37,18 @@ public class CatanMap implements ICatanMap
 
 	public CatanMap()
 	{
+		this(null);
+	}
+	
+	public CatanMap(IProxy proxy)
+	{
 		this.hexMap = new HashMap<>();
 		this.catanMap = new HashMap<>();
 		this.portMap = new HashMap<>();
 		this.robber = null;
 		this.radius = 3;
+		
+		this.proxy = proxy;
 
 		this.initializeOceanHexes();
 	}
@@ -166,9 +173,16 @@ public class CatanMap implements ICatanMap
     	return hex.getHexType() == HexType.WATER;
     }
 
+    @Override
 	public void setProxy(IProxy proxy)
 	{
 		this.proxy = proxy;
+	}
+	
+    @Override
+	public IProxy getProxy()
+	{
+		return this.proxy;
 	}
 
 	/**
