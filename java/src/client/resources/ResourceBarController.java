@@ -128,6 +128,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 			if(facade.getCurrentUser().getSettlements().size() >= MAX_SETTLEMENTS)
 				canBuild = false;
+			
+			String state = facade.getCurrentState();
+			if(state.equals("FirstRound") || state.equals("SecondRound"))
+				canBuild = true;
 
 			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuild);
 
@@ -155,6 +159,10 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 			if(facade.getCurrentUser().getRoads().size() >= MAX_ROADS)
 				canBuild = false;
+			
+			String state = facade.getCurrentState();
+			if(state.equals("FirstRound") || state.equals("SecondRound"))
+				canBuild = true;
 
 			getView().setElementEnabled(ResourceBarElement.ROAD, canBuild);
 

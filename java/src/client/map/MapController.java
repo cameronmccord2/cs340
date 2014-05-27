@@ -227,17 +227,20 @@ public class MapController extends Controller implements IMapController,
 		IRoadSegment segment = new RoadSegment();
 		IFacade facade = this.proxy.getFacade();
 		ICatanMap map = null;
+		String state = "";
 		try
 		{
 			segment.setLocation(edgeLoc);
 			segment.setPlayer(facade.getCurrentUser());
 			map = facade.getCatanMap();
+			state = facade.getCurrentState();
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
 		{
 			e.printStackTrace();
 		}
-
+		
+//		if(state.equals("First))
 		if(map != null)
 			return map.canPlaceRoad(segment);
 		else

@@ -136,7 +136,7 @@ public class Facade implements IFacade {
 	public boolean isMyTurn() throws CantFindGameModelException {
 		try {
 			IPlayer currentUser = this.getCurrentUser();
-			return (this.getGameModel().getTurnTracker().currentTurn == currentUser.getPlayerInfo().getPlayerIndex());
+			return (this.getTurnTracker().currentTurn == this.getCurrentUserIndex());
 		} catch (CantFindPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
