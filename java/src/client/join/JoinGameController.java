@@ -223,7 +223,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color)
 	{
-
 		if(getSelectColorView().isModalShowing())
 			getSelectColorView().closeModal();
 		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());

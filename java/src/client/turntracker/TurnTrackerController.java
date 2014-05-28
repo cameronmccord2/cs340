@@ -15,11 +15,13 @@ import client.server.FinishedTurn;
 public class TurnTrackerController extends Controller implements ITurnTrackerController, ICatanModelObserver {
 
 	private IProxy proxy;
+	private boolean[] initialized;
 
 	public TurnTrackerController(ITurnTrackerView view, IProxy proxy)
 	{
 		super(view);
 		this.proxy = proxy;
+		this.initialized = new boolean[]{false, false, false, false};
 		this.proxy.getFacade().registerAsObserver(this);
 	}
 	
@@ -39,14 +41,20 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		}
 	}
 
+	// This method needs to be updated.
 	@Override
 	public void update() {
 		try {
 			IPlayer[] players = this.proxy.getFacade().getPlayers();
 			if(players.length > 0){
-				for(IPlayer p : players){
-					System.out.println("initializing player: " + p.getPlayerInfo().getName() + ", " + p.getPlayerInfo().getColor().toString());
-						this.getView().initializePlayer(p.getPlayerInfo().getPlayerIndex(), p.getPlayerInfo().getName(), p.getPlayerInfo().getColor());
+				for(int i = 0; i < 4; i++){
+					IPlayer p = players[i];
+					if(!initialized[i])
+					{
+    					System.out.println("initializing player: " + p.getPlayerInfo().getName() + ", " + p.getPlayerInfo().getColor().toString());
+    					this.getView().initializePlayer(p.getPlayerInfo().getPlayerIndex(), p.getPlayerInfo().getName(), p.getPlayerInfo().getColor());
+    					initialized[i] = true;
+					}
 									
 					this.getView().updatePlayer(p.getPlayerInfo().getPlayerIndex()
 							, p.getVictoryPoints()

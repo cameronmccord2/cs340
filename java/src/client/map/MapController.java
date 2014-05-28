@@ -26,6 +26,7 @@ import client.models.RoadSegment;
 import client.models.Settlement;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.FinishedTurn;
 import client.server.RoadBuilding;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
@@ -97,6 +98,10 @@ public class MapController extends Controller implements IMapController,
 		{
 			IFacade facade = proxy.getFacade();
 			ICatanMap map = facade.getCatanMap();
+			
+			if(map.getProxy() == null)
+				map.setProxy(proxy);
+			
 			for(IHex hex : map.getHexes())
 			{
 				this.getView().addHex(hex.getLocation(), hex.getHexType());
@@ -227,17 +232,20 @@ public class MapController extends Controller implements IMapController,
 		IRoadSegment segment = new RoadSegment();
 		IFacade facade = this.proxy.getFacade();
 		ICatanMap map = null;
+		String state = "";
 		try
 		{
 			segment.setLocation(edgeLoc);
 			segment.setPlayer(facade.getCurrentUser());
 			map = facade.getCatanMap();
+			state = facade.getCurrentState();
 		}
 		catch(CantFindGameModelException | CantFindPlayerException e)
 		{
 			e.printStackTrace();
 		}
-
+		
+//		if(state.equals("FirstRound"));
 		if(map != null)
 			return map.canPlaceRoad(segment);
 		else
@@ -256,7 +264,10 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public boolean canPlaceSettlement(VertexLocation vertLoc)
 	{
+		IFacade facade = this.proxy.getFacade();
+		ICatanMap map = null;
 		IPlayer currentPlayer = null;
+		
 		try {
 			currentPlayer = this.proxy.getFacade().getCurrentUser();
 		} catch (CantFindGameModelException | CantFindPlayerException e) {
@@ -264,8 +275,6 @@ public class MapController extends Controller implements IMapController,
 		}
 		ISettlement settlement = new Settlement(vertLoc, currentPlayer);
 
-		IFacade facade = this.proxy.getFacade();
-		ICatanMap map = null;
 		try
 		{
 			map = facade.getCatanMap();
@@ -352,27 +361,28 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void placeRoad(EdgeLocation edgeLoc)
 	{
-		if(canPlaceRoad(edgeLoc))
-		{
+//		if(canPlaceRoad(edgeLoc))
+//		{
     		try
     		{
     			IFacade facade = this.proxy.getFacade();
     			IPlayer player = facade.getCurrentUser();
     			ICatanMap map = facade.getCatanMap();
     			PlayerInfo info = player.getPlayerInfo();
+    			String state = facade.getCurrentState();
+    			boolean isFree = true;
+    			
+    			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
+    				isFree = false;
     
-    			getView().placeRoad(edgeLoc, info.getColor());
+    			if(canPlaceRoad(edgeLoc))
+    				getView().placeRoad(edgeLoc, info.getColor());
     
         		IRoadSegment segment = new RoadSegment();
         		segment.setLocation(edgeLoc);
         		segment.setPlayer(player);
     
     			map.placeRoadSegment(segment);
-    			String state = facade.getCurrentState();
-    
-    			boolean isFree = true;
-    			if(!state.equals("FirstRound") && !state.equals("SecondRound"))
-    				isFree = false;
     			
     			if(this.playingRoadBuildCard){
     				this.remainingRoadBuildCardSegments--;
@@ -400,6 +410,15 @@ public class MapController extends Controller implements IMapController,
     		{
     			e.printStackTrace();
     		}
+//		}
+	}
+	
+	private void endTurn()
+	{
+		try {
+			this.proxy.movesFinishTurn(new FinishedTurn("finishTurn", this.proxy.getFacade().getCurrentUserIndex()));
+		} catch (CantFindGameModelException e) {
+
 		}
 	}
 
@@ -412,29 +431,33 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void placeSettlement(VertexLocation vertLoc)
 	{
-		if(canPlaceSettlement(vertLoc))
-		{
+//		if(canPlaceSettlement(vertLoc))
+//		{
     		try
     		{
     			IFacade facade = this.proxy.getFacade();
     			IPlayer player = facade.getCurrentUser();
     			ICatanMap map = facade.getCatanMap();
     			PlayerInfo info = player.getPlayerInfo();
+    			boolean isFree = false;
     
-    			getView().placeSettlement(vertLoc, info.getColor());
+    			if(canPlaceSettlement(vertLoc))
+    				getView().placeSettlement(vertLoc, info.getColor());
     
     			ISettlement settlement = new Settlement(vertLoc, player);
     
     			map.placeSettlement(settlement);
     
-    			if(!facade.getCurrentState().equals("FirstRound") && !facade.getCurrentState().equals("SecondRound"))
-    				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, false));
+    			if(facade.getCurrentState().equals("FirstRound") || facade.getCurrentState().equals("SecondRound"))
+    				isFree = true;
+    			
+				proxy.movesBuildSettlement(new ServerBuildSettlement("buildSettlement", info.getPlayerIndex(), vertLoc, isFree));
     		}
     		catch(InvalidLocationException | CantFindGameModelException | CantFindPlayerException e)
     		{
     			e.printStackTrace();
     		}
-		}
+//		}
 	}
 
 	/**" + i
