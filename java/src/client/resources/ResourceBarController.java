@@ -6,6 +6,7 @@ import client.base.*;
 import client.models.*;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.FinishedTurn;
 import shared.definitions.ResourceType;
 
 
@@ -19,13 +20,19 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     private static final int MAX_SETTLEMENTS = 5;
     private static final int MAX_CITIES = 4;
     private IProxy proxy;
+//    private boolean firstSettlement;
+//    private boolean secondSettlement;
 
 	public ResourceBarController(IResourceBarView view, IProxy proxy) {
 
 		super(view);
+		
         this.proxy = proxy;
-
-		elementActions = new HashMap<>();
+        
+//        this.firstSettlement = false;
+//        this.secondSettlement = false;
+		this.elementActions = new HashMap<>();
+		
         this.proxy.getFacade().registerAsObserver(this);
 	}
 
@@ -130,8 +137,16 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 				canBuild = false;
 			
 			String state = facade.getCurrentState();
-			if(state.equals("FirstRound") || state.equals("SecondRound"))
+			if(state.equals("FirstRound"))
+			{
+				
 				canBuild = true;
+			}
+				
+			if(state.equals("SecondRound"))
+			{
+				canBuild = true;
+			}
 
 			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuild);
 
@@ -160,9 +175,9 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			if(facade.getCurrentUser().getRoads().size() >= MAX_ROADS)
 				canBuild = false;
 			
-			String state = facade.getCurrentState();
-			if(state.equals("FirstRound") || state.equals("SecondRound"))
-				canBuild = true;
+//			String state = facade.getCurrentState();
+//			if(state.equals("FirstRound") || state.equals("SecondRound"))
+//				canBuild = true;
 
 			getView().setElementEnabled(ResourceBarElement.ROAD, canBuild);
 

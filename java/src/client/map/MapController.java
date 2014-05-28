@@ -26,6 +26,7 @@ import client.models.RoadSegment;
 import client.models.Settlement;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.server.FinishedTurn;
 import client.server.RoadBuilding;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
@@ -410,6 +411,15 @@ public class MapController extends Controller implements IMapController,
     			e.printStackTrace();
     		}
 //		}
+	}
+	
+	private void endTurn()
+	{
+		try {
+			this.proxy.movesFinishTurn(new FinishedTurn("finishTurn", this.proxy.getFacade().getCurrentUserIndex()));
+		} catch (CantFindGameModelException e) {
+
+		}
 	}
 
 	/**

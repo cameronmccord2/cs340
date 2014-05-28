@@ -27,6 +27,8 @@ import shared.locations.*;
 public class CatanMap implements ICatanMap
 {
 	private Map<HexLocation, IHex> hexMap;
+	private Map<HexLocation, IHex> oceanMap;
+	private Map<HexLocation, IHex> hexes;
 	private Map<ILocation, IPiece> catanMap;
 	private Map<ILocation, IPort> portMap;
 	private IRobber robber;
@@ -43,6 +45,8 @@ public class CatanMap implements ICatanMap
 	public CatanMap(IProxy proxy)
 	{
 		this.hexMap = new HashMap<>();
+		this.oceanMap = new HashMap<>();
+		this.hexes = new HashMap<>();
 		this.catanMap = new HashMap<>();
 		this.portMap = new HashMap<>();
 		this.robber = null;
@@ -111,30 +115,32 @@ public class CatanMap implements ICatanMap
 
 	private void initializeOceanHexes()
 	{
-		hexMap.put(new HexLocation(-3,3), new Hex(new HexLocation(-3,3)));
-		hexMap.put(new HexLocation(-3,2), new Hex(new HexLocation(-3,2)));
-		hexMap.put(new HexLocation(-3,1), new Hex(new HexLocation(-3,1)));
-		hexMap.put(new HexLocation(-3,0), new Hex(new HexLocation(-3,0)));
+		oceanMap.put(new HexLocation(-3,3), new Hex(new HexLocation(-3,3)));
+		oceanMap.put(new HexLocation(-3,2), new Hex(new HexLocation(-3,2)));
+		oceanMap.put(new HexLocation(-3,1), new Hex(new HexLocation(-3,1)));
+		oceanMap.put(new HexLocation(-3,0), new Hex(new HexLocation(-3,0)));
 
-		hexMap.put(new HexLocation(-2,3), new Hex(new HexLocation(-2,3)));
-		hexMap.put(new HexLocation(-2,-1), new Hex(new HexLocation(-2,-1)));
+		oceanMap.put(new HexLocation(-2,3), new Hex(new HexLocation(-2,3)));
+		oceanMap.put(new HexLocation(-2,-1), new Hex(new HexLocation(-2,-1)));
 
-		hexMap.put(new HexLocation(-1,3), new Hex(new HexLocation(-1,3)));
-		hexMap.put(new HexLocation(-1,-2), new Hex(new HexLocation(-1,-2)));
+		oceanMap.put(new HexLocation(-1,3), new Hex(new HexLocation(-1,3)));
+		oceanMap.put(new HexLocation(-1,-2), new Hex(new HexLocation(-1,-2)));
 
-		hexMap.put(new HexLocation(0,3), new Hex(new HexLocation(0,3)));
-		hexMap.put(new HexLocation(0,-3), new Hex(new HexLocation(0,-3)));
+		oceanMap.put(new HexLocation(0,3), new Hex(new HexLocation(0,3)));
+		oceanMap.put(new HexLocation(0,-3), new Hex(new HexLocation(0,-3)));
 
-		hexMap.put(new HexLocation(1,2), new Hex(new HexLocation(1,2)));
-		hexMap.put(new HexLocation(1,-3), new Hex(new HexLocation(1,-3)));
+		oceanMap.put(new HexLocation(1,2), new Hex(new HexLocation(1,2)));
+		oceanMap.put(new HexLocation(1,-3), new Hex(new HexLocation(1,-3)));
 
-		hexMap.put(new HexLocation(2,1), new Hex(new HexLocation(2,1)));
-		hexMap.put(new HexLocation(2,-3), new Hex(new HexLocation(2,-3)));
+		oceanMap.put(new HexLocation(2,1), new Hex(new HexLocation(2,1)));
+		oceanMap.put(new HexLocation(2,-3), new Hex(new HexLocation(2,-3)));
 
-		hexMap.put(new HexLocation(3,0), new Hex(new HexLocation(3,0)));
-		hexMap.put(new HexLocation(3,-1), new Hex(new HexLocation(3,-1)));
-		hexMap.put(new HexLocation(3,-2), new Hex(new HexLocation(3,-2)));
-		hexMap.put(new HexLocation(3,-3), new Hex(new HexLocation(3,-3)));
+		oceanMap.put(new HexLocation(3,0), new Hex(new HexLocation(3,0)));
+		oceanMap.put(new HexLocation(3,-1), new Hex(new HexLocation(3,-1)));
+		oceanMap.put(new HexLocation(3,-2), new Hex(new HexLocation(3,-2)));
+		oceanMap.put(new HexLocation(3,-3), new Hex(new HexLocation(3,-3)));
+		
+		hexes.putAll(oceanMap);
 	}
 
     // Very ugly method.
@@ -169,8 +175,7 @@ public class CatanMap implements ICatanMap
 //            return true;
 //        }
 //        return false;
-    	IHex hex = hexMap.get(location);
-    	return hex.getHexType() == HexType.WATER;
+    	return oceanMap.get(location) != null;
     }
 
     @Override
@@ -417,14 +422,14 @@ public class CatanMap implements ICatanMap
 	@Override
 	public Collection<IHex> getHexes()
 	{
-		Collection<IHex> hexes = hexMap.values();
-		return hexes;
+		return hexes.values();
 	}
 
 	@Override
 	public void addHex(IHex hex)
 	{
 		hexMap.put(hex.getLocation(), hex);
+		hexes.put(hex.getLocation(), hex);
 	}
 
 	@Override
