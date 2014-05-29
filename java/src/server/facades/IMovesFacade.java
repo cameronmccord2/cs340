@@ -3,8 +3,8 @@ package server.facades;
 import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
-public interface IMovesFacade extends IServerModelFacade {
-
+public interface IMovesFacade extends IServerModelFacade
+{
 	public String buyDevCard(ICommandParams params, UserAttributes ua);
 	
 	public String yearOfPlenty(ICommandParams params, UserAttributes ua);
@@ -22,5 +22,4 @@ public interface IMovesFacade extends IServerModelFacade {
 	public String maritimeTrade(ICommandParams params, UserAttributes ua);
 	
 	public String discardCards(ICommandParams params, UserAttributes ua);
-	
 }

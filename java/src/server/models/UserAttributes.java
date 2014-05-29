@@ -11,7 +11,7 @@ public class UserAttributes {
 	}
 	
 	public UserAttributes(){
-		
+		this(null, null);
 	}
 
 	public Integer getUserId() {

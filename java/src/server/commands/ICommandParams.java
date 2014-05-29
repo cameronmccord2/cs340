@@ -1,5 +1,6 @@
 package server.commands;
 
-public interface ICommandParams {
-
+public interface ICommandParams
+{
+	
 }
