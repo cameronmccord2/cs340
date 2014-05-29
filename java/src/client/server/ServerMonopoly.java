@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class ServerMonopoly {
+public class ServerMonopoly  extends CommandParams{
 	private String type;
 	private String resource;
 	private int playerIndex;

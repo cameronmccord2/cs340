@@ -7,7 +7,7 @@ import client.models.translator.TRResourceList;
  * @author scottdaly
  *
  */
-public class OfferTrade {
+public class OfferTrade  extends CommandParams{
 	private String type;
 	private Integer playerIndex;
 	private TRResourceList offer;

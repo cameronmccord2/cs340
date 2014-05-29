@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class GameLoad {
+public class GameLoad  extends CommandParams{
 	private String name;
 
 	public GameLoad(String name) {

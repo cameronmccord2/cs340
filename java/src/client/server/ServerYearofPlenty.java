@@ -5,7 +5,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class ServerYearofPlenty {
+public class ServerYearofPlenty  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	private String resource1;

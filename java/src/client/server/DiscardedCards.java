@@ -11,7 +11,7 @@ import client.models.translator.TRResourceList;
  * @author scottdaly
  *
  */
-public class DiscardedCards
+public class DiscardedCards extends CommandParams
 {
 	private String type;
 	private Integer playerIndex;

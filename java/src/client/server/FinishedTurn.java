@@ -5,7 +5,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class FinishedTurn {
+public class FinishedTurn  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	public FinishedTurn(String type, int playerIndex) {

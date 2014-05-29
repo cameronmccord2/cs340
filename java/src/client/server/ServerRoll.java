@@ -5,7 +5,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class ServerRoll {
+public class ServerRoll  extends CommandParams{
 
 	private String type;
 	private int playerIndex;

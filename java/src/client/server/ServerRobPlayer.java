@@ -7,7 +7,7 @@ import shared.locations.HexLocation;
  * @author scottdaly
  *
  */
-public class ServerRobPlayer {
+public class ServerRobPlayer  extends CommandParams{
 
 	private String type;
 	private int playerIndex;

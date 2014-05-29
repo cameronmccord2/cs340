@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class ServerMonument {
+public class ServerMonument  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	public ServerMonument(String type, int playerIndex) {

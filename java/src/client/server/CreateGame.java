@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class CreateGame {
+public class CreateGame  extends CommandParams{
 	
 	private boolean randomTiles, randomNumbers, randomPorts;
 	private String name;

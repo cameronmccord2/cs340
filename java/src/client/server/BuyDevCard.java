@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class BuyDevCard {
+public class BuyDevCard  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	public BuyDevCard(String type, int playerIndex) {

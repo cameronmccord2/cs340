@@ -10,7 +10,7 @@ import shared.locations.HexLocation;
  * @author scottdaly
  *
  */
-public class ServerSoldier {
+public class ServerSoldier  extends CommandParams{
 
 	private String type;
 	private int playerIndex;

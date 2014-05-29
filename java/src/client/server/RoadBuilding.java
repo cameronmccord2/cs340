@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class RoadBuilding {
+public class RoadBuilding  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	private Spot spot1;

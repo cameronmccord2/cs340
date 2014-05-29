@@ -6,7 +6,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class PlayerServer {
+public class PlayerServer  extends CommandParams{
 	
 	private String color;
 	private String name;

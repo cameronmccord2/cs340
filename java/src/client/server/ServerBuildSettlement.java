@@ -11,7 +11,7 @@ import shared.locations.VertexLocation;
  * @author scottdaly
  *
  */
-public class ServerBuildSettlement {
+public class ServerBuildSettlement  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	private SimplifiedVertexLocation vertexLocation;

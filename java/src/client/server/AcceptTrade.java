@@ -10,7 +10,7 @@ import client.models.translator.TRTradeOffer;
  * @author scottdaly
  *
  */
-public class AcceptTrade {
+public class AcceptTrade extends CommandParams{
 	private String type;
 	private int playerIndex;
 	private boolean willAccept;

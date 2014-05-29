@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class MaritimeTradeOff {
+public class MaritimeTradeOff  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	private int ratio;

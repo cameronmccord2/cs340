@@ -9,7 +9,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class SaveGame {
+public class SaveGame  extends CommandParams{
 	
 	private int id;
 	private String name;

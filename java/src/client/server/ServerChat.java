@@ -6,7 +6,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class ServerChat {
+public class ServerChat  extends CommandParams{
 	private String type;
 	private int playerIndex;
 	private String content;

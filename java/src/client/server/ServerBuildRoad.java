@@ -9,7 +9,7 @@ import shared.locations.SimplifiedEdgeLocation;
  * @author scottdaly
  *
  */
-public class ServerBuildRoad {
+public class ServerBuildRoad  extends CommandParams{
 
 	private String type;
 	private int playerIndex;

@@ -8,7 +8,7 @@ package client.server;
  * @author scottdaly
  *
  */
-public class ServerJoinGame {
+public class ServerJoinGame  extends CommandParams{
 	
 	private int id;
 	private String color;
