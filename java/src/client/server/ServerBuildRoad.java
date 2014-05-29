@@ -1,6 +1,7 @@
 
 package client.server;
 
+import server.commands.ICommandParams;
 import shared.locations.EdgeLocation;
 import shared.locations.SimplifiedEdgeLocation;
 
@@ -9,7 +10,7 @@ import shared.locations.SimplifiedEdgeLocation;
  * @author scottdaly
  *
  */
-public class ServerBuildRoad  extends CommandParams{
+public class ServerBuildRoad implements ICommandParams{
 
 	private String type;
 	private int playerIndex;

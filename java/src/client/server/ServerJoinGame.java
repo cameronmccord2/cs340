@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Stores the info needed to join a game on the server
  * @author scottdaly
  *
  */
-public class ServerJoinGame  extends CommandParams{
+public class ServerJoinGame implements ICommandParams{
 	
 	private int id;
 	private String color;

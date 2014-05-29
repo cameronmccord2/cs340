@@ -1,12 +1,14 @@
 package client.server;
 
+import server.commands.ICommandParams;
+
 
 /**
  * This stores the players returned from the get games call
  * @author scottdaly
  *
  */
-public class PlayerServer  extends CommandParams{
+public class PlayerServer implements ICommandParams{
 	
 	private String color;
 	private String name;

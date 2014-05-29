@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * This class holds the needed attributes to be sent off to the server to create a new game
  * @author scottdaly
  *
  */
-public class CreateGame  extends CommandParams{
+public class CreateGame  implements ICommandParams{
 	
 	private boolean randomTiles, randomNumbers, randomPorts;
 	private String name;

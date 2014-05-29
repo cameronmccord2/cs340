@@ -3,13 +3,15 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * 
  * Holds the game id and name to save
  * @author scottdaly
  *
  */
-public class SaveGame  extends CommandParams{
+public class SaveGame implements ICommandParams{
 	
 	private int id;
 	private String name;

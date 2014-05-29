@@ -1,11 +1,13 @@
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info to play a Year of Plenty card on the server
  * @author scottdaly
  *
  */
-public class ServerYearofPlenty  extends CommandParams{
+public class ServerYearofPlenty implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	private String resource1;

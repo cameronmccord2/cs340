@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info needed to buy a dev card on the server
  * @author scottdaly
  *
  */
-public class BuyDevCard  extends CommandParams{
+public class BuyDevCard  implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	public BuyDevCard(String type, int playerIndex) {

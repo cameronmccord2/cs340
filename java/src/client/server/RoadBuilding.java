@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info to play a Road Building card
  * @author scottdaly
  *
  */
-public class RoadBuilding  extends CommandParams{
+public class RoadBuilding implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	private Spot spot1;

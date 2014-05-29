@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info needed to player a Monopoly card on the serevr
  * @author scottdaly
  *
  */
-public class ServerMonopoly  extends CommandParams{
+public class ServerMonopoly implements ICommandParams{
 	private String type;
 	private String resource;
 	private int playerIndex;

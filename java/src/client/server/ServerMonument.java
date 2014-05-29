@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info to play a Monument card on the server
  * @author scottdaly
  *
  */
-public class ServerMonument  extends CommandParams{
+public class ServerMonument implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	public ServerMonument(String type, int playerIndex) {

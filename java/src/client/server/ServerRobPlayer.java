@@ -1,5 +1,6 @@
 package client.server;
 
+import server.commands.ICommandParams;
 import shared.locations.HexLocation;
 
 /**
@@ -7,7 +8,7 @@ import shared.locations.HexLocation;
  * @author scottdaly
  *
  */
-public class ServerRobPlayer  extends CommandParams{
+public class ServerRobPlayer implements ICommandParams{
 
 	private String type;
 	private int playerIndex;

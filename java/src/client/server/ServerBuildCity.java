@@ -3,6 +3,7 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
 import shared.locations.SimplifiedVertexLocation;
 import shared.locations.VertexLocation;
 
@@ -11,7 +12,7 @@ import shared.locations.VertexLocation;
  * @author scottdaly
  *
  */
-public class ServerBuildCity  extends CommandParams{
+public class ServerBuildCity implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	private SimplifiedVertexLocation vertexLocation;

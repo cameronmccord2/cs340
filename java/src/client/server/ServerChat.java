@@ -1,12 +1,14 @@
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * 
  * This holds the content needed to post the chat message to the server
  * @author scottdaly
  *
  */
-public class ServerChat  extends CommandParams{
+public class ServerChat implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	private String content;

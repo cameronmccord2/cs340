@@ -1,11 +1,13 @@
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Class to hold info for sending a rolled dice to the server
  * @author scottdaly
  *
  */
-public class ServerRoll  extends CommandParams{
+public class ServerRoll implements ICommandParams{
 
 	private String type;
 	private int playerIndex;

@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info to perform a maritime trade
  * @author scottdaly
  *
  */
-public class MaritimeTradeOff  extends CommandParams{
+public class MaritimeTradeOff implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	private int ratio;

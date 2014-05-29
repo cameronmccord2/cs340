@@ -1,11 +1,13 @@
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * Holds info needed to finish a turn on the server
  * @author scottdaly
  *
  */
-public class FinishedTurn  extends CommandParams{
+public class FinishedTurn  implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	public FinishedTurn(String type, int playerIndex) {

@@ -3,12 +3,14 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+
 /**
  * This is the object returned when you get games list
  * @author scottdaly
  *
  */
-public class GameServer  extends CommandParams{
+public class GameServer  implements ICommandParams{
 	
 	private String title;
 	private int id;

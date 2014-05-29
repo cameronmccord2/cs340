@@ -3,6 +3,7 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
 import client.models.translator.TRResourceList;
 
 /**
@@ -11,7 +12,7 @@ import client.models.translator.TRResourceList;
  * @author scottdaly
  *
  */
-public class DiscardedCards extends CommandParams
+public class DiscardedCards implements ICommandParams
 {
 	private String type;
 	private Integer playerIndex;

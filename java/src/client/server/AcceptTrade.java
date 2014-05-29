@@ -3,6 +3,7 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
 import client.models.translator.TRTradeOffer;
 
 /**
@@ -10,7 +11,7 @@ import client.models.translator.TRTradeOffer;
  * @author scottdaly
  *
  */
-public class AcceptTrade extends CommandParams{
+public class AcceptTrade implements ICommandParams{
 	private String type;
 	private int playerIndex;
 	private boolean willAccept;

@@ -3,6 +3,7 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
 import shared.locations.HexLocation;
 
 /**
@@ -10,7 +11,7 @@ import shared.locations.HexLocation;
  * @author scottdaly
  *
  */
-public class ServerSoldier  extends CommandParams{
+public class ServerSoldier implements ICommandParams{
 
 	private String type;
 	private int playerIndex;

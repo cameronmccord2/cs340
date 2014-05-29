@@ -1,5 +1,6 @@
 package client.server;
 
+import server.commands.ICommandParams;
 import client.models.translator.TRResourceList;
 
 /**
@@ -7,7 +8,7 @@ import client.models.translator.TRResourceList;
  * @author scottdaly
  *
  */
-public class OfferTrade  extends CommandParams{
+public class OfferTrade  implements ICommandParams{
 	private String type;
 	private Integer playerIndex;
 	private TRResourceList offer;
