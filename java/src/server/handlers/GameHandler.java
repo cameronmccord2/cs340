@@ -9,8 +9,8 @@ import server.facades.IServerModelFacade;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+//import com.thoughtworks.xstream.XStream;
+//import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * Handles all request sent to the endpoint that starts with /game
@@ -27,8 +27,9 @@ public class GameHandler implements HttpHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		InputStream is = exchange.getRequestBody();
 		
-		//read the input stream
-		XStream xstream = new XStream(new DomDriver());
+//		read the input stream
+//		Gson not XStream.
+//		XStream xstream = new XStream(new DomDriver());
 		
 		//ValidateUserParams params = (ValidateUserParams)xstream.fromXML(exchange.getRequestBody());
 		

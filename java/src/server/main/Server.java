@@ -20,8 +20,6 @@ import server.models.UserAttributes;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * Holds an instance of HttpServer and receives HttpExchange objects from endpoints.
@@ -96,9 +94,9 @@ public class Server {
 		public void handle(HttpExchange exchange) throws IOException {
 			InputStream is = exchange.getRequestBody();
 			
-			//read the input stream
-			XStream xstream = new XStream(new DomDriver());
-			
+//			read the input stream
+//			We're not going to use XStream here.  We will use Gson instead.
+//			XStream xstream = new XStream(new DomDriver());
 			//ValidateUserParams params = (ValidateUserParams)xstream.fromXML(exchange.getRequestBody());
 			
 			
