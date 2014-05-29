@@ -20,8 +20,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
     private static final int MAX_SETTLEMENTS = 5;
     private static final int MAX_CITIES = 4;
     private IProxy proxy;
-//    private boolean firstSettlement;
-//    private boolean secondSettlement;
+    private boolean firstSettlement;
+    private boolean secondSettlement;
 
 	public ResourceBarController(IResourceBarView view, IProxy proxy) {
 
@@ -29,8 +29,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		
         this.proxy = proxy;
         
-//        this.firstSettlement = false;
-//        this.secondSettlement = false;
+        this.firstSettlement = false;
+        this.secondSettlement = false;
 		this.elementActions = new HashMap<>();
 		
         this.proxy.getFacade().registerAsObserver(this);
@@ -139,13 +139,14 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			String state = facade.getCurrentState();
 			if(state.equals("FirstRound"))
 			{
-				
-				canBuild = true;
+				if(!firstSettlement)
+					canBuild = true;
 			}
 				
 			if(state.equals("SecondRound"))
 			{
-				canBuild = true;
+				if(!secondSettlement)
+					canBuild = true;
 			}
 
 			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuild);
@@ -222,9 +223,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
     private void updateQuantities()  {
 
-        try {
-
-
+        try
+        {
             getView().setElementAmount(ResourceBarElement.WOOD, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD));
             getView().setElementAmount(ResourceBarElement.BRICK, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK));
             getView().setElementAmount(ResourceBarElement.WHEAT, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT));

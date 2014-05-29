@@ -579,7 +579,7 @@ public class MapController extends Controller implements IMapController,
 	 */
 	public void playSoldierCard()
 	{
-		System.out.println("Playing Soldier CArd");
+		System.out.println("Playing Soldier Card");
 		IFacade facade = this.proxy.getFacade();
 		
 		int numSoldierCards = 0;
