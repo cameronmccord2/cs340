@@ -22,8 +22,12 @@ public abstract class Command implements ICommand, ITestCommand {
 	
 	public String execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
-		method.invoke(this.commandParams, this.userAttributes);
-		return this.facade.getJsonGameModelString();
+		String response = (String)method.invoke(this.commandParams, this.userAttributes);
+		
+		if(response.equals("Success"))
+			return this.facade.getJsonGameModelString();
+		else
+			return response;
 	}
 	
 	public String getMethodName() {
