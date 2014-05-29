@@ -11,4 +11,8 @@ public interface IGamesFacade extends IServerModelFacade {
 	
 	public String joinGame(ICommandParams params, UserAttributes ua);
 	
+	public String loadGame(ICommandParams params, UserAttributes ua);
+	
+	public String saveGame(ICommandParams params, UserAttributes ua);
+	
 }

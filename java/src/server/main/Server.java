@@ -9,6 +9,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 
+import server.commands.ICommandParams;
+import server.facades.IServerModelFacade;
+import server.handlers.GameHandler;
+import server.handlers.GamesHandler;
+import server.handlers.MovesHandler;
+import server.handlers.UserHandler;
+import server.models.UserAttributes;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -26,6 +34,7 @@ public class Server {
 	private static final int MAX_WAITING_CONNECTIONS = 10;
 	
 	private HttpServer server;
+	
 	
 	private Server() {
 		SERVER_PORT_NUMBER = 8081;
@@ -61,8 +70,22 @@ public class Server {
 		// use the default executor
 		server.setExecutor(null); 
 		
+		// Facade
+		IServerModelFacade facade = null;
+		
 		//handlers
-		server.createContext("/user/login", validateUserHandler);
+		GamesHandler gamesHandler = new GamesHandler(facade);
+		GameHandler gameHandler = new GameHandler(facade);
+		MovesHandler movesHandler = new MovesHandler(facade);
+		UserHandler userHandler = new UserHandler(facade);
+		
+		
+		// contexts
+		server.createContext("/user/login", userHandler);
+		
+		server.createContext("/game/commands", gameHandler);
+		server.createContext("/game/reset", gameHandler);
+		server.createContext("/game/model", gameHandler);
 		
 		server.start();
 	}
@@ -75,7 +98,18 @@ public class Server {
 			
 			//read the input stream
 			XStream xstream = new XStream(new DomDriver());
+			
 			//ValidateUserParams params = (ValidateUserParams)xstream.fromXML(exchange.getRequestBody());
+			
+			
+			
+			String[] pathPieces = exchange.getRequestURI().getPath().split("/");
+			String finalPiece = pathPieces[pathPieces.length - 1];
+			switch(finalPiece){
+			
+				
+			}
+			
 			is.close();
 			
 			//prepare responseBody
