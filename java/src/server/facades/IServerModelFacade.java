@@ -1,9 +1,9 @@
 package server.facades;
 
-import client.server.AcceptTrade;
 import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is implemented by each server facade.
  *
@@ -19,44 +19,184 @@ public interface IServerModelFacade {
 	 */
 	String getJsonGameModelString(UserAttributes userAttributes);
 	
+	/**
+	 * Accept trade command from a user whether or not they will accept a given trade.
+	 *
+	 * @param params the params that get cast to an AccepTrade object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String acceptTrade(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Buy dev card command
+	 *
+	 * @param params the params that get cast to a BuyDevCard object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String buyDevCard(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Creates the game.
+	 *
+	 * @param params the params that get cast to a CreateGame object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String createGame(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Discard cards.
+	 *
+	 * @param params the params that get cast to a DiscardCards object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String discardCards(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Finished turn.
+	 *
+	 * @param params the params that get cast to a FinishedTurn object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String finishedTurn(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Game load.
+	 *
+	 * @param params the params that get cast to a GameLoad object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String gameLoad(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Maritime trade off.
+	 *
+	 * @param params the params that get cast to a MaritimeTradeOff object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String maritimeTradeOff(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Offer trade.
+	 *
+	 * @param params the params that get cast to a OfferTrade object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String offerTrade(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Road building.
+	 *
+	 * @param params the params that get cast to a RoadBuilding object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String roadBuilding(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Builds the city.
+	 *
+	 * @param params the params that get cast to a ServerBuildCity object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String buildCity(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Builds the road.
+	 *
+	 * @param params the params that get cast to a ServerBuildRoad object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String buildRoad(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Builds the settlement.
+	 *
+	 * @param params the params that get cast to a ServerBuildSettlement object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String buildSettlement(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Send chat.
+	 *
+	 * @param params the params that get cast to a ServerChat object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String sendChat(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Join game.
+	 *
+	 * @param params the params that get cast to a ServerJoinGame object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String joinGame(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Monopoly.
+	 *
+	 * @param params the params that get cast to a ServerMonopoly object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String monopoly(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Monument.
+	 *
+	 * @param params the params that get cast to a ServerMonument object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String monument(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Rob player.
+	 *
+	 * @param params the params that get cast to a ServerRobPlayer object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String robPlayer(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Roll.
+	 *
+	 * @param params the params that get cast to a ServerRoll object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String roll(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Soldier.
+	 *
+	 * @param params the params that get cast to a ServerSoldier object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String soldier(ICommandParams params, UserAttributes userAttributes);
 	
+	/**
+	 * Year of plenty.
+	 *
+	 * @param params the params that get cast to a ServerYearOfPlenty object
+	 * @param userAttributes the user attributes
+	 * @return the string indicating success or failure
+	 */
 	String yearOfPlenty(ICommandParams params, UserAttributes userAttributes);
 	
 }
