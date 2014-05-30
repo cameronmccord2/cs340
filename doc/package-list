@@ -28,6 +28,7 @@ server.commands
 server.facades
 server.handlers
 server.main
+server.modelFacade
 server.models
 shared.definitions
 shared.locations
