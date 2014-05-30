@@ -8,7 +8,7 @@ import server.models.UserAttributes;
  * @author scottdaly
  *
  */
-public interface IMovesFacade extends IServerModelFacade
+public interface IMovesFacade extends ICommandCreationFacade
 {
 	/**
 	 * Creates a buyDevCard command to change the models appropriately.

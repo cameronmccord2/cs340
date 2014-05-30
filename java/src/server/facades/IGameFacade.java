@@ -6,7 +6,7 @@ import server.models.UserAttributes;
 /**
  * The Interface IGameFacade.
  */
-public interface IGameFacade extends IServerModelFacade {
+public interface IGameFacade extends ICommandCreationFacade {
 	
 	/**
 	 * Gets the list of commands that have been execuded for the specified game.
