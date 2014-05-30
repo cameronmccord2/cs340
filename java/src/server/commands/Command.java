@@ -30,7 +30,7 @@ public abstract class Command implements ICommand, ITestCommand {
 		String response = (String)method.invoke(this.commandParams, this.userAttributes);
 		
 		if(response.equals("Success"))
-			return this.facade.getJsonGameModelString();
+			return this.facade.getJsonGameModelString(this.userAttributes);
 		else
 			return response;
 	}
