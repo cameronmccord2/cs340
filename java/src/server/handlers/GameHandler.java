@@ -21,6 +21,7 @@ import com.sun.net.httpserver.HttpHandler;
 /**
  * Handles all request sent to the endpoint that starts with /game
  * Converts HttpExchange objects to JSON strings which are then passed to the appropriate facade.
+ * Extracts necessary cookies needed to pass on to the facade.
  * @author scottdaly
  *
  */

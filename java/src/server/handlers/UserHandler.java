@@ -13,6 +13,7 @@ import com.sun.net.httpserver.HttpHandler;
 /**
  * Handles a request to any endpoint that starts with /user.
  * Converts HttpExchange objects to JSON strings which are then passed to the appropriate facade.
+ * 
  * @author scottdaly
  *
  */
