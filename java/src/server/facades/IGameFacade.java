@@ -9,7 +9,7 @@ import server.models.UserAttributes;
 public interface IGameFacade extends ICommandCreationFacade {
 	
 	/**
-	 * Gets the list of commands that have been execuded for the specified game.
+	 * Gets the list of commands that have been executed for the specified game.
 	 *
 	 * @param json the json indicating which game to get the commands for
 	 * @param ua the user attributes from the requesting user

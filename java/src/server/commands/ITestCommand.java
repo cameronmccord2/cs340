@@ -6,7 +6,7 @@ package server.commands;
 public interface ITestCommand {
 	
 	/**
-	 * Runs the appropriate commands to see that the command was sucessful
+	 * Runs the appropriate commands to see that the command was successful
 	 *
 	 * @return true, if successful
 	 */
