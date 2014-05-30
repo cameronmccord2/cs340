@@ -6,6 +6,6 @@ package server.facades;
  * @author scottdaly
  *
  */
-public class MovesFacade {
+public class DummyMovesFacade {
 
 }
