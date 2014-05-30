@@ -37,7 +37,7 @@ public interface IServerModelFacade {
 	String buyDevCard(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Creates the game.
+	 * Create Game command
 	 *
 	 * @param params the params that get cast to a CreateGame object
 	 * @param userAttributes the user attributes
@@ -46,7 +46,7 @@ public interface IServerModelFacade {
 	String createGame(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Discard cards.
+	 * Discard cards command
 	 *
 	 * @param params the params that get cast to a DiscardCards object
 	 * @param userAttributes the user attributes
@@ -55,7 +55,7 @@ public interface IServerModelFacade {
 	String discardCards(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Finished turn.
+	 * Finished turn command
 	 *
 	 * @param params the params that get cast to a FinishedTurn object
 	 * @param userAttributes the user attributes
@@ -64,7 +64,7 @@ public interface IServerModelFacade {
 	String finishedTurn(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Game load.
+	 * Game load command
 	 *
 	 * @param params the params that get cast to a GameLoad object
 	 * @param userAttributes the user attributes
@@ -73,7 +73,7 @@ public interface IServerModelFacade {
 	String gameLoad(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Maritime trade off.
+	 * Maritime trade off command
 	 *
 	 * @param params the params that get cast to a MaritimeTradeOff object
 	 * @param userAttributes the user attributes
@@ -82,7 +82,7 @@ public interface IServerModelFacade {
 	String maritimeTradeOff(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Offer trade.
+	 * Offer trade command
 	 *
 	 * @param params the params that get cast to a OfferTrade object
 	 * @param userAttributes the user attributes
@@ -91,7 +91,7 @@ public interface IServerModelFacade {
 	String offerTrade(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Road building.
+	 * Road building dev card command
 	 *
 	 * @param params the params that get cast to a RoadBuilding object
 	 * @param userAttributes the user attributes
@@ -100,7 +100,7 @@ public interface IServerModelFacade {
 	String roadBuilding(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Builds the city.
+	 * Build city command
 	 *
 	 * @param params the params that get cast to a ServerBuildCity object
 	 * @param userAttributes the user attributes
@@ -109,7 +109,7 @@ public interface IServerModelFacade {
 	String buildCity(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Builds the road.
+	 * Build road command
 	 *
 	 * @param params the params that get cast to a ServerBuildRoad object
 	 * @param userAttributes the user attributes
@@ -118,7 +118,7 @@ public interface IServerModelFacade {
 	String buildRoad(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Builds the settlement.
+	 * Build settlement command
 	 *
 	 * @param params the params that get cast to a ServerBuildSettlement object
 	 * @param userAttributes the user attributes
@@ -127,7 +127,7 @@ public interface IServerModelFacade {
 	String buildSettlement(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Send chat.
+	 * Send chat command
 	 *
 	 * @param params the params that get cast to a ServerChat object
 	 * @param userAttributes the user attributes
@@ -136,7 +136,7 @@ public interface IServerModelFacade {
 	String sendChat(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Join game.
+	 * Join game command
 	 *
 	 * @param params the params that get cast to a ServerJoinGame object
 	 * @param userAttributes the user attributes
@@ -145,7 +145,7 @@ public interface IServerModelFacade {
 	String joinGame(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Monopoly.
+	 * Monopoly dev card command
 	 *
 	 * @param params the params that get cast to a ServerMonopoly object
 	 * @param userAttributes the user attributes
@@ -154,7 +154,7 @@ public interface IServerModelFacade {
 	String monopoly(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Monument.
+	 * Monument dev card command
 	 *
 	 * @param params the params that get cast to a ServerMonument object
 	 * @param userAttributes the user attributes
@@ -163,7 +163,7 @@ public interface IServerModelFacade {
 	String monument(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Rob player.
+	 * Rob player command
 	 *
 	 * @param params the params that get cast to a ServerRobPlayer object
 	 * @param userAttributes the user attributes
@@ -172,7 +172,7 @@ public interface IServerModelFacade {
 	String robPlayer(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Roll.
+	 * Roll command
 	 *
 	 * @param params the params that get cast to a ServerRoll object
 	 * @param userAttributes the user attributes
@@ -181,7 +181,7 @@ public interface IServerModelFacade {
 	String roll(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Soldier.
+	 * Soldier dev card command
 	 *
 	 * @param params the params that get cast to a ServerSoldier object
 	 * @param userAttributes the user attributes
@@ -190,7 +190,7 @@ public interface IServerModelFacade {
 	String soldier(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
-	 * Year of plenty.
+	 * Year of plenty dev card command
 	 *
 	 * @param params the params that get cast to a ServerYearOfPlenty object
 	 * @param userAttributes the user attributes
