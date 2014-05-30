@@ -3,9 +3,8 @@ package server.facades;
 import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
-// TODO: Auto-generated Javadoc
 /**
- * This is implemented by each server facade.
+ * This is extended by each server facade.
  *
  * @author scottdaly
  */

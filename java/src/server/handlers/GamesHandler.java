@@ -9,6 +9,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handles all request sent to the endpoint that starts with /games
+ * Converts HttpExchange objects to JSON strings which are then passed to the appropriate facade.
  * @author scottdaly
  *
  */

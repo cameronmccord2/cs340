@@ -22,7 +22,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * Holds an instance of HttpServer and receives HttpExchange objects from endpoints.
+ * Holds an instance of HttpServer and sends/receives HttpExchange objects to & from endpoints.
  * @author scottdaly
  *
  */

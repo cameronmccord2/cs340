@@ -17,7 +17,7 @@ public interface IGameFacade extends IServerModelFacade {
 	public String getCommands(String json, UserAttributes ua);
 	
 	/**
-	 * Run commands that are in the format that the getCommands endponit returns. Allows replaying of events.
+	 * Run commands that are in the format that the getCommands endpoint returns. Allows replaying of events.
 	 *
 	 * @param json a json array of commands to execute
 	 * @param ua the user attributes from the requesting user

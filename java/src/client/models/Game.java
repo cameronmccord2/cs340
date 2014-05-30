@@ -24,6 +24,7 @@ public class Game implements IGame{
 	private Integer winner;
 	private TRTradeOffer currentTrade;
 	
+	private int version;
 	
 	public Game() {
 		
@@ -34,18 +35,6 @@ public class Game implements IGame{
 		this.map = map;
 		this.players = players;
 		this.modelVersion = 0;
-	}
-	
-	@Override
-	public void startGame() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateGameState(Object ob) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -174,5 +163,22 @@ public class Game implements IGame{
 	public void setCurrentTrade(TRTradeOffer currentTrade) {
 		this.currentTrade = currentTrade;
 	}
+
+	/**
+	 * Needed for our server implementation
+	 * @return the version
+	 */
+	public int getVersion() {
+		return version;
+	}
+
+	/**
+	 * Needed for our server implementation
+	 * @param version the version to set
+	 */
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	
 }

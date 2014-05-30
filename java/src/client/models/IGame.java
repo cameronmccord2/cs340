@@ -9,16 +9,6 @@ import client.models.translator.TRTradeOffer;
  *
  */
 public interface IGame {
-	
-	/**
-	 * First pull game state and set the models.
-	 */
-	void startGame();
-	
-	/**
-	 * Pulls in objects that will be sent to appropriate models to update 
-	 */
-	void updateGameState(Object ob);
 
 	void setBank(IBank bank);
 
