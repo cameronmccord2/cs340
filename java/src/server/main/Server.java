@@ -10,11 +10,12 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 
 import server.commands.ICommandParams;
-import server.facades.IServerModelFacade;
+import server.facades.ICommandCreationFacade;
 import server.handlers.GameHandler;
 import server.handlers.GamesHandler;
 import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
+import server.modelFacade.IServerModelFacade;
 import server.models.UserAttributes;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -69,13 +70,14 @@ public class Server {
 		server.setExecutor(null); 
 		
 		// Facade
-		IServerModelFacade facade = null;
+		IServerModelFacade modelFacade = null;
+		ICommandCreationFacade commandFacade = null;// send modelFacade into this constructor
 		
 		//handlers
-		GamesHandler gamesHandler = new GamesHandler(facade);
-		GameHandler gameHandler = new GameHandler(facade);
-		MovesHandler movesHandler = new MovesHandler(facade);
-		UserHandler userHandler = new UserHandler(facade);
+		GamesHandler gamesHandler = new GamesHandler(commandFacade);
+		GameHandler gameHandler = new GameHandler(commandFacade);
+		MovesHandler movesHandler = new MovesHandler(commandFacade);
+		UserHandler userHandler = new UserHandler(commandFacade);
 		
 		
 		// contexts
@@ -84,6 +86,10 @@ public class Server {
 		server.createContext("/game/commands", gameHandler);
 		server.createContext("/game/reset", gameHandler);
 		server.createContext("/game/model", gameHandler);
+		
+		server.createContext("/games/list", gamesHandler);
+		
+		server.createContext("/moves/buildRoad", movesHandler);
 		
 		server.start();
 	}

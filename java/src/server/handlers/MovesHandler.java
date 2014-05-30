@@ -2,8 +2,7 @@ package server.handlers;
 
 import java.io.IOException;
 
-import server.facades.IServerModelFacade;
-
+import server.facades.ICommandCreationFacade;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -16,7 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class MovesHandler implements HttpHandler {
 
-	public MovesHandler(IServerModelFacade facade) {
+	public MovesHandler(ICommandCreationFacade facade) {
 		
 	}
 

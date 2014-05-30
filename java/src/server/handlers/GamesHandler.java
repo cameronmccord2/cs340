@@ -2,8 +2,7 @@ package server.handlers;
 
 import java.io.IOException;
 
-import server.facades.IServerModelFacade;
-
+import server.facades.ICommandCreationFacade;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -16,7 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class GamesHandler implements HttpHandler {
 
-	public GamesHandler(IServerModelFacade facade) {
+	public GamesHandler(ICommandCreationFacade facade) {
 		// TODO Auto-generated constructor stub
 	}
 
