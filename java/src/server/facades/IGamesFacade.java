@@ -6,7 +6,7 @@ import server.models.UserAttributes;
 /**
  * The Interface IGamesFacade.
  */
-public interface IGamesFacade extends IServerModelFacade {
+public interface IGamesFacade extends ICommandCreationFacade {
 
 	/**
 	 * Lists the games that are currently in the server
