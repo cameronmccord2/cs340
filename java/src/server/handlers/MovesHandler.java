@@ -10,6 +10,7 @@ import com.sun.net.httpserver.HttpHandler;
 /**
  * Handles all requests sent to the endpoint that starts with /moves. 
  * Converts HttpExchange objects to JSON strings which are then passed to the appropriate facade.
+ * Extracts necessary cookies needed to pass on to the facade.
  * @author scottdaly
  *
  */
