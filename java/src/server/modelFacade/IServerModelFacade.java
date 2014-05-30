@@ -1,4 +1,4 @@
-package server.facades;
+package server.modelFacade;
 
 import server.commands.ICommandParams;
 import server.models.UserAttributes;

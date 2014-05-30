@@ -3,7 +3,7 @@ package server.commands;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import server.facades.IServerModelFacade;
+import server.modelFacade.IServerModelFacade;
 import server.models.UserAttributes;
 
 /**

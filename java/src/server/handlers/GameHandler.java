@@ -9,8 +9,9 @@ import java.util.Scanner;
 
 import server.commands.CommandResponse;
 import server.commands.ICommand;
+import server.facades.ICommandCreationFacade;
 import server.facades.IGameFacade;
-import server.facades.IServerModelFacade;
+import server.modelFacade.IServerModelFacade;
 import server.models.UserAttributes;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -27,10 +28,10 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class GameHandler implements HttpHandler {
 
-	private IGameFacade facade;
+	private IGameFacade commandFacade;
 
-	public GameHandler(IServerModelFacade facade) {
-		this.facade = (IGameFacade)facade;
+	public GameHandler(ICommandCreationFacade commandFacade) {
+		this.commandFacade = (IGameFacade)commandFacade;
 	}
 
 	@Override
@@ -58,21 +59,21 @@ public class GameHandler implements HttpHandler {
 		switch(finalPiece){
 		case "commands":
 			if(requestMethod.equals("GET")){
-				response = this.facade.getCommands(json, ua);
+				response = this.commandFacade.getCommands(json, ua);
 			}else if(requestMethod.equals("POST")){
-				response = this.facade.runCommands(json, ua);
+				response = this.commandFacade.runCommands(json, ua);
 			}
 			break;
 			
 		case "reset":
 			if(requestMethod.equals("POST")){
-				response = this.facade.reset(json, ua);
+				response = this.commandFacade.reset(json, ua);
 			}
 			break;
 			
 		case "model":
 			if(requestMethod.equals("GET")){
-				response = this.facade.getGameModel(json, ua);
+				response = this.commandFacade.getGameModel(json, ua);
 			}
 			break;
 		}
