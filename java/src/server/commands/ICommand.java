@@ -5,8 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 public interface ICommand
 {
 	/**
-	 * 
-	 * @return
+	 * Executes from the facade and manipulates the appropriate model classes.
+	 * @return string to indicate the change in the model was successful
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException

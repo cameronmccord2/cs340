@@ -18,12 +18,11 @@ import com.sun.net.httpserver.HttpHandler;
 public class UserHandler implements HttpHandler {
 
 	public UserHandler(IServerModelFacade facade) {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public void handle(HttpExchange arg0) throws IOException {
-		// TODO Auto-generated method stub
 		
 	}
 

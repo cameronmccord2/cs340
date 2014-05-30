@@ -1,18 +1,17 @@
 package server.facades;
 
-import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
 public interface IGamesFacade extends IServerModelFacade {
 
-	public String listGames(ICommandParams params, UserAttributes ua);
+	public String listGames(String json, UserAttributes ua);
 	
-	public String createGame(ICommandParams params, UserAttributes ua);
+	public String createGame(String json, UserAttributes ua);
 	
-	public String joinGame(ICommandParams params, UserAttributes ua);
+	public String joinGame(String json, UserAttributes ua);
 	
-	public String loadGame(ICommandParams params, UserAttributes ua);
+	public String loadGame(String json, UserAttributes ua);
 	
-	public String saveGame(ICommandParams params, UserAttributes ua);
+	public String saveGame(String json, UserAttributes ua);
 	
 }

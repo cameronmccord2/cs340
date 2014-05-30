@@ -1,25 +1,24 @@
 package server.facades;
 
-import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
 public interface IMovesFacade extends IServerModelFacade
 {
-	public String buyDevCard(ICommandParams params, UserAttributes ua);
+	public String buyDevCard(String json, UserAttributes ua);
 	
-	public String yearOfPlenty(ICommandParams params, UserAttributes ua);
+	public String yearOfPlenty(String json, UserAttributes ua);
 	
-	public String soldier(ICommandParams params, UserAttributes ua);
+	public String soldier(String json, UserAttributes ua);
 	
-	public String monopoly(ICommandParams params, UserAttributes ua);
+	public String monopoly(String json, UserAttributes ua);
 	
-	public String monument(ICommandParams params, UserAttributes ua);
+	public String monument(String json, UserAttributes ua);
 	
-	public String offerTrade(ICommandParams params, UserAttributes ua);
+	public String offerTrade(String json, UserAttributes ua);
 	
-	public String acceptTrade(ICommandParams params, UserAttributes ua);
+	public String acceptTrade(String json, UserAttributes ua);
 	
-	public String maritimeTrade(ICommandParams params, UserAttributes ua);
+	public String maritimeTrade(String json, UserAttributes ua);
 	
-	public String discardCards(ICommandParams params, UserAttributes ua);
+	public String discardCards(String json, UserAttributes ua);
 }

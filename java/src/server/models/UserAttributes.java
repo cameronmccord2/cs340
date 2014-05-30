@@ -1,5 +1,10 @@
 package server.models;
 
+/**
+ * Holds the user's gameId and userId for proper manipulation of the model
+ * @author scottdaly
+ *
+ */
 public class UserAttributes {
 	
 	protected Integer userId;

@@ -6,6 +6,11 @@ import java.lang.reflect.Method;
 import server.facades.IServerModelFacade;
 import server.models.UserAttributes;
 
+/**
+ * Command object for the Command Design pattern. Takes in the method name to be executed and the appropriate params
+ * @author scottdaly
+ *
+ */
 public abstract class Command implements ICommand, ITestCommand {
 	
 	protected String methodName;
