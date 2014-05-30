@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.Set;
 
+import server.commands.ICommandParams;
+import server.models.UserAttributes;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
@@ -296,22 +298,26 @@ public class Facade implements IFacade {
     }
 
 	@Override
-	public boolean isGameModelInitialized()
-	{
-		boolean initialized = true;
-		
-		try
-		{
-			if(this.getGameModel() == null)
-				initialized = false;
-		}
-		catch(CantFindGameModelException e)
-		{
-			initialized = false;
-		}
-		
-		return initialized;
+	public String postChat(ICommandParams commandParams,
+			UserAttributes userAttributes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public String rollNumber(ICommandParams commandParams,
+			UserAttributes userAttributes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String finishTurn(ICommandParams commandParams,
+			UserAttributes userAttributes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 
