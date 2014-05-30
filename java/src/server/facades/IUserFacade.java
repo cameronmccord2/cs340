@@ -1,5 +1,6 @@
 package server.facades;
 
+import server.commands.CommandResponse;
 import server.models.UserAttributes;
 
 /**
@@ -14,7 +15,7 @@ public interface IUserFacade extends IServerModelFacade {
 	 * @param ua the user attributes, null here
 	 * @return the string "Success"
 	 */
-	public String login(String json, UserAttributes ua);
+	public CommandResponse login(String json, UserAttributes ua);
 	
 	/**
 	 * Registers the requesting user as a game participant
@@ -23,6 +24,6 @@ public interface IUserFacade extends IServerModelFacade {
 	 * @param ua the user attributes, null here
 	 * @return the string "Success"
 	 */
-	public String register(String json, UserAttributes ua);
+	public CommandResponse register(String json, UserAttributes ua);
 	
 }

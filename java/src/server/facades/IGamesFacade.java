@@ -1,5 +1,6 @@
 package server.facades;
 
+import server.commands.CommandResponse;
 import server.models.UserAttributes;
 
 /**
@@ -14,7 +15,7 @@ public interface IGamesFacade extends IServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the games in the server
 	 */
-	public String listGames(String json, UserAttributes ua);
+	public CommandResponse listGames(String json, UserAttributes ua);
 	
 	/**
 	 * Creates the game based on the flags in the json
@@ -23,7 +24,7 @@ public interface IGamesFacade extends IServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the game model
 	 */
-	public String createGame(String json, UserAttributes ua);
+	public CommandResponse createGame(String json, UserAttributes ua);
 	
 	/**
 	 * Join game that already exists
@@ -32,7 +33,7 @@ public interface IGamesFacade extends IServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the game model
 	 */
-	public String joinGame(String json, UserAttributes ua);
+	public CommandResponse joinGame(String json, UserAttributes ua);
 	
 	/**
 	 * Load game from a file indicated in the json
@@ -41,7 +42,7 @@ public interface IGamesFacade extends IServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the string saying "Success"
 	 */
-	public String loadGame(String json, UserAttributes ua);
+	public CommandResponse loadGame(String json, UserAttributes ua);
 	
 	/**
 	 * Saves the game to the specified filename
@@ -50,6 +51,6 @@ public interface IGamesFacade extends IServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the string "Success"
 	 */
-	public String saveGame(String json, UserAttributes ua);
+	public CommandResponse saveGame(String json, UserAttributes ua);
 	
 }
