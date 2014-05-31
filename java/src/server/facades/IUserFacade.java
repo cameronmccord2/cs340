@@ -6,7 +6,7 @@ import server.models.UserAttributes;
 /**
  * The Interface IUserFacade.
  */
-public interface IUserFacade extends ICommandCreationFacade {
+public interface IUserFacade {
 
 	/**
 	 * Logs in the requesting user

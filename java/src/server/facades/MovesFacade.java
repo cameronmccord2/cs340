@@ -84,4 +84,34 @@ public class MovesFacade implements IMovesFacade{
 		return null;
 	}
 
+	@Override
+	public CommandResponse robPlayer(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse roadBuilding(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse buildRoad(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse buildSettlement(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse buildCity(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

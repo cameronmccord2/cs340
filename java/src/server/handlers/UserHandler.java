@@ -4,8 +4,16 @@
 package server.handlers;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
+import java.util.Scanner;
 
-import server.facades.ICommandCreationFacade;
+import server.commands.CommandResponse;
+import server.facades.IUserFacade;
+import server.models.UserAttributes;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -17,14 +25,55 @@ import com.sun.net.httpserver.HttpHandler;
  *
  */
 public class UserHandler implements HttpHandler {
-
-	public UserHandler(ICommandCreationFacade facade) {
-		
+	
+	private IUserFacade commandFacade;
+	
+	public UserHandler(IUserFacade commandFacade) {
+		this.commandFacade = commandFacade;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
-	public void handle(HttpExchange arg0) throws IOException {
+	public void handle(HttpExchange exchange) throws IOException {
+		//read the input stream
+		InputStream is = exchange.getRequestBody();		
+		String requestMethod = exchange.getRequestMethod();
+		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
+		String finalPiece = pathPieces[pathPieces.length - 1];
 		
+		Scanner s = new Scanner(is).useDelimiter("\\A");
+	    String json = s.hasNext() ? s.next() : "";
+	    s.close();
+	    is.close();
+	    
+	    UserAttributes ua = new UserAttributes(exchange);
+	    CommandResponse response = null;
+	    
+	    switch(finalPiece){
+			case "login":
+				if(requestMethod.equals("POST")){
+					response = this.commandFacade.login(json, ua);
+				}
+				break;
+			case "register":
+				if(requestMethod.equals("POST")){
+					response = this.commandFacade.register(json, ua);
+				}
+				break;
+			default:
+				System.out.println("Error in UserHandler. Incorrect end point.");
+	    }
+		//prepare responseBody
+	    if(response.getResponseCode().equals("200")){
+	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+	    	//add cookie here?
+	    	
+	    }
+	    else
+	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, 0);
+		OutputStream responseBody = exchange.getResponseBody(); 
+		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
+		responseBody.close();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 
 import server.commands.CommandResponse;
@@ -28,15 +29,14 @@ public class GameHandler implements HttpHandler {
 
 	private IGameFacade commandFacade;
 
-	public GameHandler(ICommandCreationFacade commandFacade) {
-		this.commandFacade = (IGameFacade)commandFacade;
+	public GameHandler(IGameFacade commandFacade) {
+		this.commandFacade = commandFacade;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		InputStream is = exchange.getRequestBody();
-		
-		CommandResponse response = null;
+		InputStream is = exchange.getRequestBody();		
 		String requestMethod = exchange.getRequestMethod();
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 		String finalPiece = pathPieces[pathPieces.length - 1];
@@ -47,34 +47,34 @@ public class GameHandler implements HttpHandler {
 	    is.close();
 	    
 	    UserAttributes ua = new UserAttributes(exchange);
+	    CommandResponse response = null;
 	    
-		switch(finalPiece){
-		case "commands":
-			if(requestMethod.equals("GET")){
-				response = this.commandFacade.getCommands(json, ua);
-			}else if(requestMethod.equals("POST")){
-				response = this.commandFacade.runCommands(json, ua);
-			}
-			break;
-			
-		case "reset":
-			if(requestMethod.equals("POST")){
-				response = this.commandFacade.reset(json, ua);
-			}
-			break;
-			
-		case "model":
-			if(requestMethod.equals("GET")){
-				response = this.commandFacade.getGameModel(json, ua);
-			}
-			break;
-		}
-		
+	    switch(finalPiece){
+	    	case "model":
+				if(requestMethod.equals("GET")){
+					response = this.commandFacade.getGameModel(json, ua);
+				}
+				break;
+			case "reset":
+				if(requestMethod.equals("POST")){
+					response = this.commandFacade.reset(json, ua);
+				}
+				break;
+			case "commands":
+				if(requestMethod.equals("GET")){
+					response = this.commandFacade.getCommands(json, ua);
+				}else if(requestMethod.equals("POST")){
+					response = this.commandFacade.runCommands(json, ua);
+				}
+				break;
+			default:
+				System.out.println("Error in GameHandler. Incorrect end point.");
+	    }
 		
 		//prepare responseBody
 		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 		OutputStream responseBody = exchange.getResponseBody(); 
-		//xstream.toXML(results,responseBody);
+		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();
 	}
 }

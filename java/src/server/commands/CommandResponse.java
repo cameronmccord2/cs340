@@ -11,6 +11,10 @@ public class CommandResponse {
 	protected String response;
 	protected String responseCode;
 	
+	public CommandResponse(String response, String responseCode) {
+		this.response = response;
+		this.responseCode = responseCode;
+	}
 	public String getResponse() {
 		return response;
 	}
@@ -23,4 +27,13 @@ public class CommandResponse {
 	public void setResponseCode(String responseCode) {
 		this.responseCode = responseCode;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CommandResponse [response=" + response + ", responseCode="
+				+ responseCode + "]";
+	}
+	
 }

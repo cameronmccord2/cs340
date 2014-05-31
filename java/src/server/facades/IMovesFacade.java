@@ -8,8 +8,7 @@ import server.models.UserAttributes;
  * @author scottdaly
  *
  */
-public interface IMovesFacade extends ICommandCreationFacade
-{
+public interface IMovesFacade {
 	/**
 	 * Creates a buyDevCard command to change the models appropriately.
 	 * @param json
@@ -105,4 +104,44 @@ public interface IMovesFacade extends ICommandCreationFacade
 	 * @return a string holding the currentgame model
 	 */
 	public CommandResponse finishTurn(String json, UserAttributes ua);
+	
+	/**
+	 * Creates a robPlayer command to change the models appropriately.
+	 * @param json
+	 * @param ua
+	 * @return a string holding the currentgame model
+	 */
+	public CommandResponse robPlayer(String json, UserAttributes ua);
+
+	/**
+	 * Creates a roadBuilding command to change the models appropriately.
+	 * @param json
+	 * @param ua
+	 * @return a string holding the currentgame model
+	 */
+	public CommandResponse roadBuilding(String json, UserAttributes ua);
+	
+	/**
+	 * Creates a buildRoad command to change the models appropriately.
+	 * @param json
+	 * @param ua
+	 * @return a string holding the currentgame model
+	 */
+	public CommandResponse buildRoad(String json, UserAttributes ua);
+	
+	/**
+	 * Creates a buildSettlement command to change the models appropriately.
+	 * @param json
+	 * @param ua
+	 * @return a string holding the currentgame model
+	 */
+	public CommandResponse buildSettlement(String json, UserAttributes ua);
+	
+	/**
+	 * Creates a buildCity command to change the models appropriately.
+	 * @param json
+	 * @param ua
+	 * @return a string holding the currentgame model
+	 */
+	public CommandResponse buildCity(String json, UserAttributes ua);
 }

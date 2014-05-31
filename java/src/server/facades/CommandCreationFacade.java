@@ -1,18 +1,14 @@
-
 package server.facades;
 
 import server.commands.CommandResponse;
 import server.modelFacade.IServerModelFacade;
 import server.models.UserAttributes;
 
-/**
- * This is used for dependency injection for the MovesFacade for testing.
- * @author scottdaly
- *
- */
-public class DummyMovesFacade implements IMovesFacade{
+public class CommandCreationFacade implements ICommandCreationFacade, IUserFacade, IGamesFacade, IGameFacade, IMovesFacade {
 
-	public DummyMovesFacade() {
+	
+	
+	public CommandCreationFacade(IServerModelFacade modelFacade) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -84,6 +80,72 @@ public class DummyMovesFacade implements IMovesFacade{
 
 	@Override
 	public CommandResponse finishTurn(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse getCommands(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse runCommands(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse reset(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse getGameModel(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse listGames(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse createGame(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse joinGame(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse loadGame(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse saveGame(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse login(String json, UserAttributes ua) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CommandResponse register(String json, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
