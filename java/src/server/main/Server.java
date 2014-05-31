@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 
 import server.commands.ICommandParams;
+import server.facades.GameFacade;
 import server.facades.ICommandCreationFacade;
 import server.handlers.GameHandler;
 import server.handlers.GamesHandler;
@@ -42,9 +43,6 @@ public class Server {
 		SERVER_PORT_NUMBER = Integer.parseInt(port);
 	}
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		//check if port number is specified
 		if(args.length == 0){
@@ -71,7 +69,13 @@ public class Server {
 		
 		// Facade
 		IServerModelFacade modelFacade = null;
-		ICommandCreationFacade commandFacade = null;// send modelFacade into this constructor
+		
+		//do we need multiple ICommandCreationFacade???? 
+		ICommandCreationFacade commandFacade = new GameFacade(modelFacade);// send modelFacade into this constructor
+//		ICommandCreationFacade commandFacade = new GameFacade(modelFacade);// send modelFacade into this constructor
+//		ICommandCreationFacade commandFacade = new GameFacade(modelFacade);// send modelFacade into this constructor
+//		ICommandCreationFacade commandFacade = new GameFacade(modelFacade);// send modelFacade into this constructor
+		
 		
 		//handlers
 		GamesHandler gamesHandler = new GamesHandler(commandFacade);
