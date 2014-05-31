@@ -97,7 +97,7 @@ public class Server {
 //			read the input stream
 //			We're not going to use XStream here.  We will use Gson instead.
 //			XStream xstream = new XStream(new DomDriver());
-			//ValidateUserParams params = (ValidateUserParams)xstream.fromXML(exchange.getRequestBody());
+//			ValidateUserParams params = (ValidateUserParams)xstream.fromXML(exchange.getRequestBody());
 			
 			
 			
