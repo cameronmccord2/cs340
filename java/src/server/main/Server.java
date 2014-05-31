@@ -100,6 +100,16 @@ public class Server {
 		public void handle(HttpExchange exchange) throws IOException {
 			InputStream is = exchange.getRequestBody();
 			
+<<<<<<< HEAD
+//			read the input stream
+//			We're not going to use XStream here.  We will use Gson instead.
+//			XStream xstream = new XStream(new DomDriver());
+//			ValidateUserParams params = (ValidateUserParams)xstream.fromXML(exchange.getRequestBody());
+			
+			
+			
+=======
+>>>>>>> e807ecdc2b170f7a515b117d866d3c9ed96fb7ff
 			String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 			String finalPiece = pathPieces[pathPieces.length - 1];
 			switch(finalPiece){
