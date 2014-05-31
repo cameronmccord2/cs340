@@ -1,5 +1,12 @@
 package server.models;
 
+import com.sun.net.httpserver.HttpExchange;
+
+/**
+ * Holds the user's gameId and userId for proper manipulation of the model
+ * @author scottdaly
+ *
+ */
 public class UserAttributes {
 	
 	protected Integer userId;
@@ -12,6 +19,10 @@ public class UserAttributes {
 	
 	public UserAttributes(){
 		this(null, null);
+	}
+
+	public UserAttributes(HttpExchange exchange) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getUserId() {

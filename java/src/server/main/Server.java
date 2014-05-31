@@ -10,11 +10,12 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 
 import server.commands.ICommandParams;
-import server.facades.IServerModelFacade;
+import server.facades.ICommandCreationFacade;
 import server.handlers.GameHandler;
 import server.handlers.GamesHandler;
 import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
+import server.modelFacade.IServerModelFacade;
 import server.models.UserAttributes;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -22,7 +23,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * Holds an instance of HttpServer and receives HttpExchange objects from endpoints.
+ * Holds an instance of HttpServer and sends/receives HttpExchange objects to & from endpoints.
  * @author scottdaly
  *
  */
@@ -69,13 +70,14 @@ public class Server {
 		server.setExecutor(null); 
 		
 		// Facade
-		IServerModelFacade facade = null;
+		IServerModelFacade modelFacade = null;
+		ICommandCreationFacade commandFacade = null;// send modelFacade into this constructor
 		
 		//handlers
-		GamesHandler gamesHandler = new GamesHandler(facade);
-		GameHandler gameHandler = new GameHandler(facade);
-		MovesHandler movesHandler = new MovesHandler(facade);
-		UserHandler userHandler = new UserHandler(facade);
+		GamesHandler gamesHandler = new GamesHandler(commandFacade);
+		GameHandler gameHandler = new GameHandler(commandFacade);
+		MovesHandler movesHandler = new MovesHandler(commandFacade);
+		UserHandler userHandler = new UserHandler(commandFacade);
 		
 		
 		// contexts
@@ -84,6 +86,10 @@ public class Server {
 		server.createContext("/game/commands", gameHandler);
 		server.createContext("/game/reset", gameHandler);
 		server.createContext("/game/model", gameHandler);
+		
+		server.createContext("/games/list", gamesHandler);
+		
+		server.createContext("/moves/buildRoad", movesHandler);
 		
 		server.start();
 	}
@@ -94,6 +100,7 @@ public class Server {
 		public void handle(HttpExchange exchange) throws IOException {
 			InputStream is = exchange.getRequestBody();
 			
+<<<<<<< HEAD
 //			read the input stream
 //			We're not going to use XStream here.  We will use Gson instead.
 //			XStream xstream = new XStream(new DomDriver());
@@ -101,6 +108,8 @@ public class Server {
 			
 			
 			
+=======
+>>>>>>> e807ecdc2b170f7a515b117d866d3c9ed96fb7ff
 			String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 			String finalPiece = pathPieces[pathPieces.length - 1];
 			switch(finalPiece){

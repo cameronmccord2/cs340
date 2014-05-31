@@ -1,6 +1,7 @@
 client.base
 client.catan
 client.communication
+client.custom.cwt
 client.data
 client.devcards
 client.discard
@@ -14,6 +15,7 @@ client.maritime
 client.misc
 client.models
 client.models.exceptions
+client.models.observer
 client.models.translator
 client.points
 client.resources
@@ -22,5 +24,11 @@ client.server
 client.tests
 client.turntracker
 client.utils
+server.commands
+server.facades
+server.handlers
+server.main
+server.modelFacade
+server.models
 shared.definitions
 shared.locations

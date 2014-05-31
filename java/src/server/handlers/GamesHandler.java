@@ -2,19 +2,20 @@ package server.handlers;
 
 import java.io.IOException;
 
-import server.facades.IServerModelFacade;
-
+import server.facades.ICommandCreationFacade;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handles all request sent to the endpoint that starts with /games
+ * Converts HttpExchange objects to JSON strings which are then passed to the appropriate facade.
+ * Extracts necessary cookies needed to pass on to the facade.
  * @author scottdaly
  *
  */
 public class GamesHandler implements HttpHandler {
 
-	public GamesHandler(IServerModelFacade facade) {
+	public GamesHandler(ICommandCreationFacade facade) {
 		// TODO Auto-generated constructor stub
 	}
 
