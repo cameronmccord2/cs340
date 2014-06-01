@@ -95,89 +95,38 @@ public class Server {
 		
 		
 		// contexts
-		server.createContext("/user/login", HttpUserHandler);
-		server.createContext("/user/register", HttpUserHandler);
+		server.createContext("/user/login", userHandler);
+		server.createContext("/user/register", userHandler);
 		
-		server.createContext("/games/list", HttpGamesHandler);
-		server.createContext("/games/creat", HttpGamesHandler);
-		server.createContext("/games/join", HttpGamesHandler);
-		server.createContext("/games/save", HttpGamesHandler);
-		server.createContext("/games/load", HttpGamesHandler);
+		server.createContext("/games/list", gamesHandler);
+		server.createContext("/games/creat", gamesHandler);
+		server.createContext("/games/join", gamesHandler);
+		server.createContext("/games/save", gamesHandler);
+		server.createContext("/games/load", gamesHandler);
 		
-		server.createContext("/game/model", HttpGameHandler);
-		server.createContext("/game/reset", HttpGameHandler);
-		server.createContext("/game/commands", HttpGameHandler);
+		server.createContext("/game/model", gameHandler);
+		server.createContext("/game/reset", gameHandler);
+		server.createContext("/game/commands", gameHandler);
 		
-		server.createContext("/moves/sendChat", HttpMovesHandler);
-		server.createContext("/moves/rollNumber", HttpMovesHandler);
-		server.createContext("/moves/robPlayer", HttpMovesHandler);
-		server.createContext("/moves/finishTurn", HttpMovesHandler);
-		server.createContext("/moves/buyDevCard", HttpMovesHandler);
-		server.createContext("/moves/Year_of_Plenty", HttpMovesHandler);
-		server.createContext("/moves/Road_Building", HttpMovesHandler);
-		server.createContext("/moves/Soldier", HttpMovesHandler);
-		server.createContext("/moves/Monopoly", HttpMovesHandler);
-		server.createContext("/moves/Monument", HttpMovesHandler);
-		server.createContext("/moves/buildRoad", HttpMovesHandler);
-		server.createContext("/moves/buildSettlement", HttpMovesHandler);
-		server.createContext("/moves/buildCity", HttpMovesHandler);
-		server.createContext("/moves/offerTrade", HttpMovesHandler);
-		server.createContext("/moves/acceptTrade", HttpMovesHandler);
-		server.createContext("/moves/maritimeTrade", HttpMovesHandler);
-		server.createContext("/moves/discardCards", HttpMovesHandler);
+		server.createContext("/moves/sendChat", movesHandler);
+		server.createContext("/moves/rollNumber", movesHandler);
+		server.createContext("/moves/robPlayer", movesHandler);
+		server.createContext("/moves/finishTurn", movesHandler);
+		server.createContext("/moves/buyDevCard", movesHandler);
+		server.createContext("/moves/Year_of_Plenty", movesHandler);
+		server.createContext("/moves/Road_Building", movesHandler);
+		server.createContext("/moves/Soldier", movesHandler);
+		server.createContext("/moves/Monopoly", movesHandler);
+		server.createContext("/moves/Monument", movesHandler);
+		server.createContext("/moves/buildRoad", movesHandler);
+		server.createContext("/moves/buildSettlement", movesHandler);
+		server.createContext("/moves/buildCity", movesHandler);
+		server.createContext("/moves/offerTrade", movesHandler);
+		server.createContext("/moves/acceptTrade", movesHandler);
+		server.createContext("/moves/maritimeTrade", movesHandler);
+		server.createContext("/moves/discardCards", movesHandler);
 		
 		System.out.println("server started");
 		server.start();
 	}
-	
-	private HttpHandler HttpUserHandler = new HttpHandler() {
-
-		@Override
-		public void handle(HttpExchange exchange) throws IOException {
-			System.out.println("user handler started");
-			userHandler.handle(exchange);
-		};
-	};
-	private HttpHandler HttpGamesHandler = new HttpHandler() {
-
-		@Override
-		public void handle(HttpExchange exchange) throws IOException {
-			System.out.println("games handler started");
-			gamesHandler.handle(exchange);
-		};
-	};
-	private HttpHandler HttpGameHandler = new HttpHandler() {
-
-		@Override
-		public void handle(HttpExchange exchange) throws IOException {
-			System.out.println("game handler started");
-			//read the input stream
-			InputStream is = exchange.getRequestBody();
-			is.close();			
-			
-			//prepare responseBody
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			OutputStream responseBody = exchange.getResponseBody(); 
-			String test = "Success";
-			responseBody.write(test.getBytes(Charset.forName("UTF-8")));
-			responseBody.close();
-		};
-	};
-	private HttpHandler HttpMovesHandler = new HttpHandler() {
-
-		@Override
-		public void handle(HttpExchange exchange) throws IOException {
-			System.out.println("moves handler started");
-			//read the input stream
-			InputStream is = exchange.getRequestBody();
-			is.close();			
-			
-			//prepare responseBody
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			OutputStream responseBody = exchange.getResponseBody(); 
-			String test = "Success";
-			responseBody.write(test.getBytes(Charset.forName("UTF-8")));
-			responseBody.close();
-		};
-	};
 }
