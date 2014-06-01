@@ -33,16 +33,17 @@ public class UserHandler implements HttpHandler {
 		this.commandFacade = commandFacade;
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		//read the input stream
+		System.out.println("User Handler started");
 		InputStream is = exchange.getRequestBody();		
 		String requestMethod = exchange.getRequestMethod();
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 		String finalPiece = pathPieces[pathPieces.length - 1];
 		
-		Scanner s = new Scanner(is).useDelimiter("\\A");
+		Scanner s = new Scanner(is);
+		s.useDelimiter("\\A");
 	    String json = s.hasNext() ? s.next() : "";
 	    s.close();
 	    is.close();
@@ -52,18 +53,17 @@ public class UserHandler implements HttpHandler {
 	    
 	    switch(finalPiece){
 			case "login":
-				if(requestMethod.equals("POST")){
+				if(requestMethod.equals("POST"))
 					response = this.commandFacade.login(json, ua);
-				}
 				break;
 			case "register":
-				if(requestMethod.equals("POST")){
+				if(requestMethod.equals("POST"))
 					response = this.commandFacade.register(json, ua);
-				}
 				break;
 			default:
-				System.out.println("Error in UserHandler. Incorrect end point.");
+				response = new CommandResponse("Invaid endpoing requested", "403");
 	    }
+	    
 		//prepare responseBody
 	    if(response.getResponseCode().equals("200")){
 	    	Headers headers = exchange.getResponseHeaders();
@@ -71,7 +71,8 @@ public class UserHandler implements HttpHandler {
 	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 	    }
 	    else
-	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, 0);
+	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+	    
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();

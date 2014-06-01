@@ -33,15 +33,16 @@ public class GameHandler implements HttpHandler {
 		this.commandFacade = commandFacade;
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
+		System.out.println("Game Handler started");
 		InputStream is = exchange.getRequestBody();		
 		String requestMethod = exchange.getRequestMethod();
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 		String finalPiece = pathPieces[pathPieces.length - 1];
 		
-		Scanner s = new Scanner(is).useDelimiter("\\A");
+		Scanner s = new Scanner(is);
+		s.useDelimiter("\\A");
 	    String json = s.hasNext() ? s.next() : "";
 	    s.close();
 	    is.close();
@@ -68,11 +69,18 @@ public class GameHandler implements HttpHandler {
 				}
 				break;
 			default:
-				System.out.println("Error in GameHandler. Incorrect end point.");
+				response = new CommandResponse("Invaid endpoing requested", "403");
 	    }
 		
-		//prepare responseBody
-		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		///prepare responseBody
+	    if(response.getResponseCode().equals("200")){
+	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+	    	//add cookie here?
+	    	
+	    }
+	    else
+	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+	    
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();

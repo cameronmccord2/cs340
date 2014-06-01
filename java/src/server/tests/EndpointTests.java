@@ -73,55 +73,6 @@ public class EndpointTests {
 		
 		//TEST GET GAME MODEL ENDPOINT
 		assertEquals(200,proxy.getGameModelTesting().getResponseCode());
-		//don't really need all these below for testing the model, but it's fun
-		IGame g = proxy.getGameModel();
-		assert(g.getMap().getCities().size() == 0);
-		assert(g.getMap().getSettlements().size() == 8);
-		assert(g.getPlayers().length == 4);
-		
-		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.BRICK) == 0);
-		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.WOOD) == 1);
-		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.SHEEP) == 1);
-		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.WHEAT) == 1);
-		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.ORE) == 0);
-		
-		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.MONOPOLY) == 0);
-		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.MONUMENT) == 0);
-		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.ROAD_BUILD) == 0);
-		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.SOLDIER) == 0);
-		assert(g.getPlayers()[0].getDevelopmentCards().get(DevelopmentCard.YEAR_OF_PLENTY) == 0);
-		
-		assert(g.getPlayers()[0].getCities().size() == 4);
-		assert(g.getPlayers()[0].getSettlements().size() == 3);
-		assert(g.getPlayers()[0].getMonuments() == 0);
-		assert(g.getPlayers()[0].getSoldiers() == 0);
-		assert(g.getPlayers()[0].getRoads().size() == 13);
-		assert(g.getPlayers()[0].getVictoryPoints() == 2);
-		
-		assert(g.getBank().getResourceCards().get(ResourceCard.BRICK) == 23);
-		assert(g.getBank().getResourceCards().get(ResourceCard.WOOD) == 21);
-		assert(g.getBank().getResourceCards().get(ResourceCard.SHEEP) == 20);
-		assert(g.getBank().getResourceCards().get(ResourceCard.WHEAT) == 22);
-		assert(g.getBank().getResourceCards().get(ResourceCard.ORE) == 22);
-
-		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.MONOPOLY) == 2);
-		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.MONUMENT) == 5);
-		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.ROAD_BUILD) == 2);
-		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.SOLDIER) == 14);
-		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.YEAR_OF_PLENTY) == 2);
-		
-		assert(g.getChat().getLines().size() == 0);
-		assert(g.getLog().getLines().size() == 24);
-		assert(g.getLog().getLines().get(0).getMessage().equals("Sam built a road"));
-		assert(g.getLog().getLines().get(0).getSource().equals("Sam"));
-		
-		assert(g.getTurnTracker().getCurrentTurn() == 0);
-		assert(g.getTurnTracker().getLongestRoad() == -1);
-		assert(g.getTurnTracker().getLargestArmy() == -1);
-		assert(g.getTurnTracker().getStatus().equals("Rolling"));
-		
-		assert(g.getWinner() == -1);
-		assert(g.getModelVersion() == 0);
 		
 		//TEST RESET GAME ENDPOINT
 		assertEquals(200,proxy.postGameReset().getResponseCode());
@@ -132,6 +83,7 @@ public class EndpointTests {
 		
 		//TEST SEND CHAT ENDPOINT
 		ServerChat serverChat = new ServerChat("sendChat",0,"Hi everyone!");
+		System.out.println(proxy.movesSendChat(serverChat).getResponseCode());
 		assertEquals(200,proxy.movesSendChat(serverChat).getResponseCode());
 		
 		//TEST ROLL NUMBER ENDPOINT

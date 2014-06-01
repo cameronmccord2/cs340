@@ -30,16 +30,17 @@ public class GamesHandler implements HttpHandler {
 		this.commandFacade = commandFacade;
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		//read the input stream
+		System.out.println("Games Handler started");
 		InputStream is = exchange.getRequestBody();		
 		String requestMethod = exchange.getRequestMethod();
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 		String finalPiece = pathPieces[pathPieces.length - 1];
 		
-		Scanner s = new Scanner(is).useDelimiter("\\A");
+		Scanner s = new Scanner(is);
+		s.useDelimiter("\\A");
 	    String json = s.hasNext() ? s.next() : "";
 	    s.close();
 	    is.close();
@@ -62,7 +63,7 @@ public class GamesHandler implements HttpHandler {
 				if(requestMethod.equals("POST")){
 					response = this.commandFacade.joinGame(json, ua);
 					Headers headers = exchange.getResponseHeaders();
-			    	headers.add("Set-cookie", "catan.game=3;Path=/;");
+			    	headers.add("Set-cookie", "catan.game=0;Path=/;");
 				}
 				break;
 			case "save":
@@ -76,14 +77,18 @@ public class GamesHandler implements HttpHandler {
 				}
 				break;
 			default:
-				System.out.println("Error in GamesHandler. Incorrect end point.");
+				response = new CommandResponse("Invaid endpoing requested", "403");
 	    }
 		
-		//prepare responseBody
-	    if(response.getResponseCode().equals("200"))
+		///prepare responseBody
+	    if(response.getResponseCode().equals("200")){
 	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+	    	//add cookie here?
+	    	
+	    }
 	    else
-	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, 0);
+	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+	    
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();

@@ -11,18 +11,20 @@ import server.models.UserAttributes;
  * @author scottdaly
  *
  */
-public abstract class Command implements ICommand, ITestCommand {
+public class Command implements ICommand, ITestCommand {
 	
 	protected String methodName;
 	protected ICommandParams commandParams;
 	protected UserAttributes userAttributes;
 	protected IServerModelFacade facade;
+	protected boolean keepInHistory;
 
-	public Command(String methodName, ICommandParams commandParams, UserAttributes userAttributes, IServerModelFacade facade){
+	public Command(String methodName, ICommandParams commandParams, UserAttributes userAttributes, IServerModelFacade facade, boolean keepInHistory){
 		this.methodName = methodName;
 		this.commandParams = commandParams;
 		this.userAttributes = userAttributes;
 		this.facade = facade;
+		this.keepInHistory = keepInHistory;
 	}
 	
 	public String execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -110,6 +112,28 @@ public abstract class Command implements ICommand, ITestCommand {
 		} else if (!userAttributes.equals(other.userAttributes))
 			return false;
 		return true;
+	}
+
+	public IServerModelFacade getFacade() {
+		return facade;
+	}
+
+	public void setFacade(IServerModelFacade facade) {
+		this.facade = facade;
+	}
+
+	public boolean isKeepInHistory() {
+		return keepInHistory;
+	}
+
+	public void setKeepInHistory(boolean keepInHistory) {
+		this.keepInHistory = keepInHistory;
+	}
+
+	@Override
+	public boolean wasCommandSuccessful() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
