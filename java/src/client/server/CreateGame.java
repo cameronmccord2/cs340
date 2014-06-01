@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * This class holds the needed attributes to be sent off to the server to create a new game
@@ -46,14 +47,28 @@ public class CreateGame  implements ICommandParams{
 	public void setName(String name) {
 		this.name = name;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.name == null || this.name.length() == 0)
+			throw new CommandParamNotValidException("Name musnt be null or of length zero: " + this.toString());
+	}
+	@Override
+	public String getType() {
+		return "createGame";
+	}
 	@Override
 	public String toString() {
-		return "CreateGame [randomTiles=" + randomTiles + ", randomNumbers="
-				+ randomNumbers + ", randomPorts=" + randomPorts + ", name="
-				+ name + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CreateGame [randomTiles=");
+		builder.append(randomTiles);
+		builder.append(", randomNumbers=");
+		builder.append(randomNumbers);
+		builder.append(", randomPorts=");
+		builder.append(randomPorts);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

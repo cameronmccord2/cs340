@@ -10,4 +10,6 @@ import server.commands.exceptions.CommandParamNotValidException;
 public interface ICommandParams{
 	
 	public void isValid() throws CommandParamNotValidException;
+	
+	public String getType();
 }

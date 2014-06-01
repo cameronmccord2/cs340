@@ -3,16 +3,17 @@ package server.models;
 import server.commands.ICommandParams;
 import server.commands.exceptions.CommandParamNotValidException;
 
-public class GetCommands implements ICommandParams {
+public class ResetCommand implements ICommandParams {
 
 	@Override
 	public void isValid() throws CommandParamNotValidException {
-		return;// nothing to check
+		return;// always valid
 	}
 
 	@Override
 	public String getType() {
-		return "getCommands";
+		return "reset";
 	}
+
 	
 }

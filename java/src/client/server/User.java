@@ -3,12 +3,15 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
+
 /**
  * Simply holds the name and password of the user trying to log in
  * @author scottdaly
  *
  */
-public class User {
+public class User implements ICommandParams{
 	
 	private String username;
 	private String password;
@@ -16,6 +19,10 @@ public class User {
 	public User(String user, String password) {
 		this.username = user;
 		this.password = password;
+	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -44,6 +51,17 @@ public class User {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.username == null || this.username.length() == 0 || this.password == null || this.password.length() == 0)
+			throw new CommandParamNotValidException("Username and password musnt be null or of length zero: " + this.toString());
+	}
+
+	@Override
+	public String getType() {
+		return "user";
 	}
 	
 	

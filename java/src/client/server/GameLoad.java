@@ -37,6 +37,11 @@ public class GameLoad  implements ICommandParams{
 		if(this.name == null || this.name.length() == 0)
 			throw new CommandParamNotValidException("name cant be null or length zero");
 	}
+
+	@Override
+	public String getType() {
+		return "loadGame";
+	}
 	
 	
 }

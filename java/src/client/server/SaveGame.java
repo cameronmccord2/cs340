@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * 
@@ -19,6 +20,10 @@ public class SaveGame implements ICommandParams{
 	public SaveGame(int id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+	
+	public SaveGame(){
+		
 	}
 
 	/**
@@ -47,6 +52,28 @@ public class SaveGame implements ICommandParams{
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.name == null || this.name.length() == 0)
+			throw new CommandParamNotValidException("name must not be null or of length zero: " + this.toString());
+	}
+
+	@Override
+	public String getType() {
+		return "saveGame";
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SaveGame [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	
