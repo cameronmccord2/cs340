@@ -1,93 +1,43 @@
 package server.facades;
 
+import java.lang.reflect.InvocationTargetException;
+
+import server.commands.Command;
 import server.commands.CommandResponse;
+import server.commands.ICommand;
+import server.commands.exceptions.CommandParamNotValidException;
 import server.modelFacade.IServerModelFacade;
+import server.models.GetCommands;
 import server.models.UserAttributes;
 
-public class CommandCreationFacade implements ICommandCreationFacade, IUserFacade, IGamesFacade, IGameFacade, IMovesFacade {
+public class CommandCreationFacade implements IUserFacade, IGamesFacade, IGameFacade {
 
+	protected IServerModelFacade facade;
 	
 	
 	public CommandCreationFacade(IServerModelFacade modelFacade) {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public CommandResponse buyDevCard(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse yearOfPlenty(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse soldier(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse monopoly(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse monument(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse offerTrade(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse acceptTrade(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse maritimeTrade(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse discardCards(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse rollNumber(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse sendChat(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse finishTurn(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		this.facade = modelFacade;
 	}
 
 	@Override
 	public CommandResponse getCommands(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			GetCommands gc = new GetCommands();
+			gc.isValid();
+			ICommand c = new Command("getCommands", gc, ua, this.facade, false);
+			String response = c.execute();
+			return new CommandResponse(response, "200");
+			
+		} catch (CommandParamNotValidException e) {
+			e.printStackTrace();
+			return new CommandResponse("Request was syntatically incorrect, error: " + e.getLocalizedMessage(), "400");
+			
+		} catch(NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			e.printStackTrace();
+			return new CommandResponse("This error is our problem boys, the reflection failed somehow: " + e.getLocalizedMessage(), "500");
+		}
+		
 	}
 
 	@Override
@@ -150,34 +100,6 @@ public class CommandCreationFacade implements ICommandCreationFacade, IUserFacad
 		return null;
 	}
 
-	@Override
-	public CommandResponse robPlayer(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse roadBuilding(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse buildRoad(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse buildSettlement(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommandResponse buildCity(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
