@@ -32,7 +32,6 @@ public class MovesHandler implements HttpHandler {
 		this.commandFacade = commandFacade;
 	}
 
-	@SuppressWarnings("resource")
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		InputStream is = exchange.getRequestBody();		
@@ -40,7 +39,8 @@ public class MovesHandler implements HttpHandler {
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
 		String finalPiece = pathPieces[pathPieces.length - 1];
 		
-		Scanner s = new Scanner(is).useDelimiter("\\A");
+		Scanner s = new Scanner(is);
+		s.useDelimiter("\\A");
 	    String json = s.hasNext() ? s.next() : "";
 	    s.close();
 	    is.close();
