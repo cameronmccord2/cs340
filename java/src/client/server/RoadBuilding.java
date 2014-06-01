@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * Holds info to play a Road Building card
@@ -69,6 +70,15 @@ public class RoadBuilding implements ICommandParams{
 	 */
 	public void setSpot2(Spot spot2) {
 		this.spot2 = spot2;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.spot1 == null || this.spot2 == null)
+			throw new CommandParamNotValidException("the spots musnt be null: " + this.toString());
+		this.spot1.isValid();
+		this.spot2.isValid();
 	}
 	
 	

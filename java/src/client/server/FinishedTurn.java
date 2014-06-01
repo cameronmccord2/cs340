@@ -1,6 +1,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * Holds info needed to finish a turn on the server
@@ -37,6 +38,21 @@ public class FinishedTurn  implements ICommandParams{
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0)
+			throw new CommandParamNotValidException("type musnt be null or of length zero and player index must be greater than zero: " + this.toString());
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("FinishedTurn [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

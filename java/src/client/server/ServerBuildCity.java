@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 import shared.locations.SimplifiedVertexLocation;
 import shared.locations.VertexLocation;
 
@@ -57,6 +58,12 @@ public class ServerBuildCity implements ICommandParams{
 	 */
 	public void setVertexLocation(VertexLocation vertexLocation) {
 		this.vertexLocation = new SimplifiedVertexLocation(vertexLocation);
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		this.vertexLocation.isValid();
 	}
 	
 }

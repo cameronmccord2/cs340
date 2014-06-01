@@ -3,12 +3,15 @@
  */
 package client.server;
 
+import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
+
 /**
  * Stores the x,y location and direction to play a Road Building card
  * @author scottdaly
  *
  */
-public class Spot {
+public class Spot implements ICommandParams {
 	private int x;
 	private int y;
 	private String direction;
@@ -52,6 +55,27 @@ public class Spot {
 	 */
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.direction == null || this.direction.length() == 0)
+			throw new CommandParamNotValidException("direction cant be null or of length zero: " + this.toString());
+	}
+	@Override
+	public String getType() {
+		return "spot";// will never get used
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Spot [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append(", direction=");
+		builder.append(direction);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

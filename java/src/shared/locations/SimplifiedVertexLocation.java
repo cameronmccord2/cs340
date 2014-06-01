@@ -1,15 +1,18 @@
 package shared.locations;
 
+import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
+
 /**
  * SimplifiedVertexLocation contains a subset of the data contained in a complete VertexLocation.
  * The subset is determined by the information required by the Catan Server, as this class will
  * be serialized as JSON and the output will be just what the server needs.
  */
-public class SimplifiedVertexLocation {
+public class SimplifiedVertexLocation implements ICommandParams {
 
-    int x;
-    int y;
-    String direction;
+    private int x;
+    private int y;
+    private String direction;
 
     public SimplifiedVertexLocation() {
         x = 0;
@@ -34,4 +37,25 @@ public class SimplifiedVertexLocation {
                 direction = "SW"; break;
         }
     }
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.direction == null || this.direction.length() == 0)
+			throw new CommandParamNotValidException("direction cant be null or of length zero: " + this.toString());
+	}
+	@Override
+	public String getType() {
+		return "none";//will never be used
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SimplifiedVertexLocation [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append(", direction=");
+		builder.append(direction);
+		builder.append("]");
+		return builder.toString();
+	}
 }

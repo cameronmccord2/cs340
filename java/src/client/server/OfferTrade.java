@@ -1,6 +1,8 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
+import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.TRResourceList;
 
 /**
@@ -56,5 +58,18 @@ public class OfferTrade  implements ICommandParams{
 	}
 	public void setReceiver(Integer receiver) {
 		this.receiver = receiver;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.receiver < 0 || this.offer == null)
+			throw new CommandParamNotValidException("Reciever must be a valid player index and the offer mussnt be null: " + this.toString());
+		try {
+			this.offer.isValid();
+		} catch (InvalidTranslatorModelException e) {
+			e.printStackTrace();
+			throw new CommandParamNotValidException("The offer isnt valid, message: " + e.getLocalizedMessage() + ", toString: " + this.toString());
+		}
 	}
 }
