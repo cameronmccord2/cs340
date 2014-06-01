@@ -51,18 +51,17 @@ public class UserHandler implements HttpHandler {
 	    
 	    switch(finalPiece){
 			case "login":
-				if(requestMethod.equals("POST")){
+				if(requestMethod.equals("POST"))
 					response = this.commandFacade.login(json, ua);
-				}
 				break;
 			case "register":
-				if(requestMethod.equals("POST")){
+				if(requestMethod.equals("POST"))
 					response = this.commandFacade.register(json, ua);
-				}
 				break;
 			default:
-				System.out.println("Error in UserHandler. Incorrect end point.");
+				response = new CommandResponse("Invaid endpoing requested", "403");
 	    }
+	    
 		//prepare responseBody
 	    if(response.getResponseCode().equals("200")){
 	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -70,7 +69,8 @@ public class UserHandler implements HttpHandler {
 	    	
 	    }
 	    else
-	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_FORBIDDEN, 0);
+	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+	    
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();
