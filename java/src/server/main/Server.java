@@ -1,12 +1,7 @@
 package server.main;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
-
 import server.facades.GameFacade;
 import server.facades.GamesFacade;
 import server.facades.IGameFacade;
@@ -21,8 +16,6 @@ import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
 import server.modelFacade.IServerModelFacade;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 
