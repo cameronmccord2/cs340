@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 import client.models.translator.TRTradeOffer;
 
 /**
@@ -72,6 +73,12 @@ public class AcceptTrade implements ICommandParams{
 		builder.append(willAccept);
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0)
+			throw new CommandParamNotValidException("type musnt be null or of length zero and player index must be greater than zero: " + this.toString());
 	}
 	
 	
