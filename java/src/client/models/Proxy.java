@@ -57,7 +57,7 @@ import com.google.gson.reflect.TypeToken;
 public class Proxy implements IProxy {
 
 	private static final String DEFAULT_HOST = "localhost";
-	private static final int DEFAULT_PORT = 8081;
+	private static final int DEFAULT_PORT = 8080;
 	
 	private HttpURLConnection connection;
 	
@@ -249,14 +249,13 @@ public class Proxy implements IProxy {
 //		System.out.println(gameId);//catan.game=0
 		gameId = gameId.substring(11);
 		//System.out.println(gameId);//0
-		try {
-//			if(getFacade().isGameModelInitialized())
-				this.saveGameModel(this.movesSendChat(new ServerChat("sendChat", this.getFacade().getCurrentUserIndex(), this.getFacade().getCurrentUser().getPlayerInfo().getName() + " has joined the game. Chat now!")).getJson());
-		} catch (CantFindGameModelException e) {
-			e.printStackTrace();
-		} catch (CantFindPlayerException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			this.saveGameModel(this.movesSendChat(new ServerChat("sendChat", this.getFacade().getCurrentUserIndex(), this.getFacade().getCurrentUser().getPlayerInfo().getName() + " has joined the game. Chat now!")).getJson());
+//		} catch (CantFindGameModelException e) {
+//			e.printStackTrace();
+//		} catch (CantFindPlayerException e) {
+//			e.printStackTrace();
+//		}
 		return sr;
 	}
 
@@ -278,6 +277,11 @@ public class Proxy implements IProxy {
 		ServerResponse sr = this.actuallyGetGameModelFromServer(requestUrl);
 //		ServerResponse sr = this.doGet(requestUrl, true, true);
 		return this.saveGameModel(sr.getJson());
+	}
+	
+	public ServerResponse getGameModelTesting(){
+		ServerResponse sr = this.doGet("/game/model", false, false);
+		return sr;
 	}
 
 	private ServerResponse actuallyGetGameModelFromServer(String url){
@@ -305,6 +309,16 @@ public class Proxy implements IProxy {
 	public ServerResponse postGameReset(){
 		ServerResponse sr = doPost("/game/reset","", true, true);
 		//saveGameModel(sr.getJson());
+		return sr;
+	}
+	
+	public ServerResponse postGamesSave(){
+		ServerResponse sr = doPost("/games/save/","",false,false);
+		return sr;
+	}
+	
+	public ServerResponse postGamesLoad(){
+		ServerResponse sr = doPost("/games/load/","",false,false);
 		return sr;
 	}
 
@@ -388,7 +402,6 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesBuildSettlement(ServerBuildSettlement bs){
 		ServerResponse sr = doPost("/moves/buildSettlement", gson.toJson(bs), true, true);
-        System.out.println("BUILD SETTLEMENT: " + gson.toJson(bs));
 		saveGameModel(sr.getJson());
 		return sr;
 	}

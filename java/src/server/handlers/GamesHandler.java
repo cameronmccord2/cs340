@@ -11,6 +11,7 @@ import server.commands.CommandResponse;
 import server.facades.IGamesFacade;
 import server.models.UserAttributes;
 
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -60,6 +61,8 @@ public class GamesHandler implements HttpHandler {
 			case "join":
 				if(requestMethod.equals("POST")){
 					response = this.commandFacade.joinGame(json, ua);
+					Headers headers = exchange.getResponseHeaders();
+			    	headers.add("Set-cookie", "catan.game=3;Path=/;");
 				}
 				break;
 			case "save":

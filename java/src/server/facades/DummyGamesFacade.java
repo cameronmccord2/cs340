@@ -15,7 +15,7 @@ import server.models.UserAttributes;
 public class DummyGamesFacade implements IGamesFacade{
 
 	public DummyGamesFacade() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
@@ -43,26 +43,22 @@ public class DummyGamesFacade implements IGamesFacade{
 
 	@Override
 	public CommandResponse createGame(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CommandResponse("{'title':'MINE','id': 3,'players': [{},{},{},{}]}","200");
 	}
 
 	@Override
 	public CommandResponse joinGame(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CommandResponse("Success","200");
 	}
 
 	@Override
 	public CommandResponse loadGame(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CommandResponse("Success","200");
 	}
 
 	@Override
 	public CommandResponse saveGame(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CommandResponse("Success","200");
 	}
 
 }

@@ -7,14 +7,14 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 
-import server.facades.GameFacade;
-import server.facades.GamesFacade;
+import server.facades.DummyGameFacade;
+import server.facades.DummyGamesFacade;
+import server.facades.DummyMovesFacade;
+import server.facades.DummyUserFacade;
 import server.facades.IGameFacade;
 import server.facades.IGamesFacade;
 import server.facades.IMovesFacade;
 import server.facades.IUserFacade;
-import server.facades.MovesFacade;
-import server.facades.UserFacade;
 import server.handlers.GameHandler;
 import server.handlers.GamesHandler;
 import server.handlers.MovesHandler;
@@ -38,7 +38,7 @@ public class Server {
 	private UserHandler userHandler;
 	
 	private Server() {
-		SERVER_PORT_NUMBER = 8081;
+		SERVER_PORT_NUMBER = 8080;
 	}
 	private Server(String port) {
 		SERVER_PORT_NUMBER = Integer.parseInt(port);
@@ -76,16 +76,16 @@ public class Server {
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 		
 		//comment the following 4 lines if you want to use the dummyfacades
-		IUserFacade userFacade = new UserFacade(modelFacade);
-		IGamesFacade gamesFacade = new GamesFacade(modelFacade);
-		IGameFacade gameFacade = new GameFacade(modelFacade);
-		IMovesFacade movesFacade = new MovesFacade(modelFacade);
+//		IUserFacade userFacade = new UserFacade(modelFacade);
+//		IGamesFacade gamesFacade = new GamesFacade(modelFacade);
+//		IGameFacade gameFacade = new GameFacade(modelFacade);
+//		IMovesFacade movesFacade = new MovesFacade(modelFacade);
 		
 		//un-comment the following lines if you want to use the dummyfacades
-//		IUserFacade userFacade = new DummyUserFacade();
-//		IGamesFacade gamesFacade = new DummyGamesFacade();
-//		IGameFacade gameFacade = new DummyGameFacade();
-//		IMovesFacade movesFacade = new DummyMovesFacade();
+		IUserFacade userFacade = new DummyUserFacade();
+		IGamesFacade gamesFacade = new DummyGamesFacade();
+		IGameFacade gameFacade = new DummyGameFacade();
+		IMovesFacade movesFacade = new DummyMovesFacade();
 		
 		//handlers
 		movesHandler = new MovesHandler(movesFacade);
