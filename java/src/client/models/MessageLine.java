@@ -10,6 +10,12 @@ public class MessageLine{
 		this.message = line.getMessage();
 		this.source = line.getSource();
 	}
+	
+	public MessageLine(String name, String content) {
+		this.message = content;
+		this.source = name;
+	}
+
 	public String getMessage() {
 		return message;
 	}

@@ -6,12 +6,15 @@ import java.util.List;
 import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
+import client.models.MessageLine;
+import client.server.ServerChat;
 import client.server.ServerRoll;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
 import server.models.UserAttributes;
 import server.models.UserList;
+import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
 
 public class ServerModelFacade implements IServerModelFacade {
@@ -157,8 +160,15 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String sendChat(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+		ServerChat sc = (ServerChat)params;
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			game.getChat().addLine(new MessageLine(game.getPlayerForPlayerIndex(sc.getPlayerIndex()).getPlayerInfo().getName(), sc.getContent()));
+			
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
