@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import shared.definitions.ResourceType;
+import shared.definitions.HexType;
 
 /**
  * The Class Participant.
@@ -98,6 +98,24 @@ public abstract class Participant implements IParticipant {
     public void setResourceCards(Map<IResourceCard, Integer> resourceCards) {
         this.resourceCards = resourceCards;
     }
+    
+    @Override
+	public void incrementResourceByCount(HexType hexType, int count) {
+    	ResourceCard rc = HexType.getResourceCardForHexType(hexType);
+    	this.getResourceCards().put(rc, this.getResourceCards().get(rc) + count);
+	}
+
+	@Override
+	public boolean hasEnoughResources(HexType hexType, int countRequired) {
+		ResourceCard rc = HexType.getResourceCardForHexType(hexType);
+		return (this.getResourceCards().get(rc) < countRequired);
+	}
+
+	@Override
+	public void decrementResourceByCount(HexType hexType, int count) {
+		ResourceCard rc = HexType.getResourceCardForHexType(hexType);
+    	this.getResourceCards().put(rc, this.getResourceCards().get(rc) - count);
+	}
 
 	@Override
 	public String toString() {

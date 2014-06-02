@@ -2,6 +2,8 @@ package client.models;
 
 import java.util.Map;
 
+import shared.definitions.HexType;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Interface IParticipant.
@@ -50,5 +52,11 @@ public interface IParticipant {
 	 * @return number of resource cards
 	 */
 	int getNumResourceCards();
+	
+	boolean hasEnoughResources(HexType hexType, int countRequired);
+	
+	void decrementResourceByCount(HexType hexType, int countRequired);
+
+	void incrementResourceByCount(HexType hexType, int count);
 
 }
