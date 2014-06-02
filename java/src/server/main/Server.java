@@ -37,7 +37,7 @@ public class Server {
 	private UserHandler userHandler;
 	
 	private Server() {
-		SERVER_PORT_NUMBER = 8080;
+		SERVER_PORT_NUMBER = 8081;
 	}
 	private Server(String port) {
 		SERVER_PORT_NUMBER = Integer.parseInt(port);

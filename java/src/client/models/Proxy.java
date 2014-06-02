@@ -57,7 +57,7 @@ import com.google.gson.reflect.TypeToken;
 public class Proxy implements IProxy {
 
 	private static final String DEFAULT_HOST = "localhost";
-	private static final int DEFAULT_PORT = 8080;
+	private static final int DEFAULT_PORT = 8081;
 	
 	private HttpURLConnection connection;
 	
@@ -161,6 +161,7 @@ public class Proxy implements IProxy {
 
 	@Override
 	public ServerResponse postUserLogin(User user){
+		System.out.println(user.toString());
 		ServerResponse sr =  doPost("/user/login", gson.toJson(user), false, false);
 		if(sr.getResponseCode() == 200){
 			Map<String, List<String>> map = connection.getHeaderFields();

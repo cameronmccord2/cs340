@@ -24,6 +24,7 @@ public class UserFacade extends CommandCreationFacade implements IUserFacade{
 	@Override
 	public CommandResponse register(String json, UserAttributes ua) {
 		Gson gson = new Gson();
+		
 		Register params = gson.fromJson(json, Register.class);
 		return this.genericCommandCreate(params, ua, false);
 	}

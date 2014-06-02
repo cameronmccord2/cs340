@@ -1,8 +1,13 @@
 package server.modelFacade;
 
 import java.util.Collection;
-import java.util.List;
 
+import server.commands.ICommandParams;
+import server.models.FinishTurn;
+import server.models.GameList;
+import server.models.UserAttributes;
+import server.models.exceptions.GameModelException;
+import server.models.exceptions.InvalidUserAttributesException;
 import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
@@ -13,13 +18,6 @@ import client.server.OfferTrade;
 import client.server.ServerChat;
 import client.server.ServerRoll;
 import client.server.User;
-import server.commands.ICommandParams;
-import server.models.FinishTurn;
-import server.models.GameList;
-import server.models.UserAttributes;
-import server.models.UserList;
-import server.models.exceptions.GameModelException;
-import server.models.exceptions.InvalidUserAttributesException;
 
 public class ServerModelFacade implements IServerModelFacade {
 
@@ -251,8 +249,11 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String register(ICommandParams params, UserAttributes ua) {
+		System.out.println("register in server model facade");
 		User newUser = (User)params;
-		return userManager.register(newUser);
+		String temp = userManager.register(newUser);
+		System.out.println("success?: " + temp);
+		return temp;
 	}
 
 	public GameList getGameList() {

@@ -82,12 +82,6 @@ public class ServerRoll implements ICommandParams{
 		builder.append("]");
 		return builder.toString();
 	}
-
-	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 	

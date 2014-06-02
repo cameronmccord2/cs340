@@ -29,12 +29,20 @@ public class Command implements ICommand, ITestCommand {
 	
 	public String execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
-		String response = (String)method.invoke(this.commandParams, this.userAttributes);
+		try{
+			String response = (String) method.invoke(this.facade, this.commandParams, this.userAttributes);
+			System.out.println("response in command: " + response);
+			if(response.equals("Success"))
+				return this.facade.getJsonGameModelString(this.userAttributes);
+			else
+				return response;
+		}catch(InvocationTargetException e){
+			System.out.println("error with reflection");
+			//e.getCause();
+		}
 		
-		if(response.equals("Success"))
-			return this.facade.getJsonGameModelString(this.userAttributes);
-		else
-			return response;
+		
+		return null;
 	}
 	
 	public String getMethodName() {

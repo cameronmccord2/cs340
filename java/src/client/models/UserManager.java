@@ -25,6 +25,7 @@ public class UserManager {
 	}
 
 	public String register(User simpleUser) {
+		System.out.println("registering");
 		client.models.User newUser = new client.models.User(simpleUser.getUser(),simpleUser.getPassword(),users.size());
 		users.add(newUser);
 		return "Success";
