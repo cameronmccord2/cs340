@@ -39,7 +39,7 @@ public interface IMovesServerModelFacade {
 	 * @param userAttributes the user attributes
 	 * @return the string indicating success or failure
 	 */
-	public String finishedTurn(ICommandParams params, UserAttributes userAttributes);
+	public String finishTurn(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
 	 * Maritime trade off command
