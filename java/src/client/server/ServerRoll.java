@@ -1,6 +1,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * Class to hold info for sending a rolled dice to the server
@@ -61,13 +62,25 @@ public class ServerRoll implements ICommandParams{
 		this.number = number;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0)
+			throw new CommandParamNotValidException("type musnt be null or of length zero and player index must be greater than zero: " + this.toString());
+		if(this.number < 2 || this.number > 12)
+			throw new CommandParamNotValidException("the rolled number must be 2 <= number <= 12");
+	}
+
 	@Override
 	public String toString() {
-		return "ServerRoll [type=" + type + ", playerIndex=" + playerIndex
-				+ ", number=" + number + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerRoll [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", number=");
+		builder.append(number);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	
