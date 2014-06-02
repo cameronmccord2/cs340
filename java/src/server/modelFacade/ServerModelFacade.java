@@ -2,21 +2,27 @@ package server.modelFacade;
 
 import java.util.Collection;
 
-
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
-
+import client.data.PlayerInfo;
 import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
+import client.models.IPlayer;
+import client.models.IRoadSegment;
+import client.models.InvalidLocationException;
 import client.models.MessageLine;
+import client.models.RoadSegment;
 import client.models.UserManager;
+import client.models.translator.TREdgeLocation;
+import client.models.translator.TRRoad;
 import client.models.translator.TRTradeOffer;
 import client.server.OfferTrade;
+import client.server.ServerBuildRoad;
 import client.server.ServerChat;
 import client.server.ServerRoll;
 import client.server.User;
@@ -148,8 +154,34 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String roadBuilding(ICommandParams params,
 			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ServerBuildRoad roadData = (ServerBuildRoad) params;
+		
+		try {
+			
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(roadData.getPlayerIndex());
+			
+			TREdgeLocation loc = new TREdgeLocation();
+			loc.setDirection(roadData.getRoadLocation().getDirection());
+			loc.setX(roadData.getRoadLocation().getX());
+			loc.setY(roadData.getRoadLocation().getY());
+			
+			TRRoad road = new TRRoad();
+			road.setLocation(loc);
+			road.setOwner(player.getPlayerInfo().getPlayerIndex());
+			
+			IRoadSegment segment = new RoadSegment(road, player);
+			
+			if(game.getMap().canPlaceRoad(segment))
+				game.getMap().placeRoadSegment(segment);
+			else
+				throw new InvalidLocationException();
+			
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
