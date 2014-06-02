@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 import shared.locations.SimplifiedVertexLocation;
 import shared.locations.VertexLocation;
 
@@ -71,6 +72,11 @@ public class ServerBuildSettlement implements ICommandParams{
 	 */
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

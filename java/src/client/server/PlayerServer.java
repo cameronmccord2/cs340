@@ -1,6 +1,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 
 /**
@@ -42,6 +43,18 @@ public class PlayerServer implements ICommandParams{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

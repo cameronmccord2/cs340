@@ -1,6 +1,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * Holds info to play a Year of Plenty card on the server
@@ -66,6 +67,11 @@ public class ServerYearofPlenty implements ICommandParams{
 	 */
 	public void setResource2(String resource2) {
 		this.resource2 = resource2;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

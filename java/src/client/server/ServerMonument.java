@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * Holds info to play a Monument card on the server
@@ -40,6 +41,11 @@ public class ServerMonument implements ICommandParams{
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

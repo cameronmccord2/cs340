@@ -2,6 +2,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 import shared.locations.EdgeLocation;
 import shared.locations.SimplifiedEdgeLocation;
 
@@ -70,6 +71,11 @@ public class ServerBuildRoad implements ICommandParams{
 	 */
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

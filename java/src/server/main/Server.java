@@ -74,16 +74,16 @@ public class Server {
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 		
 		//comment the following 4 lines if you want to use the dummyfacades
-//		IUserFacade userFacade = new UserFacade(modelFacade);
-//		IGamesFacade gamesFacade = new GamesFacade(modelFacade);
-//		IGameFacade gameFacade = new GameFacade(modelFacade);
-//		IMovesFacade movesFacade = new MovesFacade(modelFacade);
+		IUserFacade userFacade = new UserFacade(modelFacade);
+		IGamesFacade gamesFacade = new GamesFacade(modelFacade);
+		IGameFacade gameFacade = new GameFacade(modelFacade);
+		IMovesFacade movesFacade = new MovesFacade(modelFacade);
 		
 		//un-comment the following lines if you want to use the dummyfacades
-		IUserFacade userFacade = new DummyUserFacade();
-		IGamesFacade gamesFacade = new DummyGamesFacade();
-		IGameFacade gameFacade = new DummyGameFacade();
-		IMovesFacade movesFacade = new DummyMovesFacade();
+//		IUserFacade userFacade = new DummyUserFacade();
+//		IGamesFacade gamesFacade = new DummyGamesFacade();
+//		IGameFacade gameFacade = new DummyGameFacade();
+//		IMovesFacade movesFacade = new DummyMovesFacade();
 		
 		//handlers
 		movesHandler = new MovesHandler(movesFacade);
@@ -97,7 +97,7 @@ public class Server {
 		server.createContext("/user/register", userHandler);
 		
 		server.createContext("/games/list", gamesHandler);
-		server.createContext("/games/creat", gamesHandler);
+		server.createContext("/games/create", gamesHandler);
 		server.createContext("/games/join", gamesHandler);
 		server.createContext("/games/save", gamesHandler);
 		server.createContext("/games/load", gamesHandler);

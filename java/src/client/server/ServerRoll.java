@@ -1,6 +1,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * Class to hold info for sending a rolled dice to the server
@@ -68,6 +69,12 @@ public class ServerRoll implements ICommandParams{
 	public String toString() {
 		return "ServerRoll [type=" + type + ", playerIndex=" + playerIndex
 				+ ", number=" + number + "]";
+	}
+
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

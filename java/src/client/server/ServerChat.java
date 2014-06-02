@@ -1,6 +1,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 
 /**
  * 
@@ -59,6 +60,12 @@ public class ServerChat implements ICommandParams{
 	 */
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

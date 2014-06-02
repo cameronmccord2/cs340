@@ -4,6 +4,7 @@
 package client.server;
 
 import server.commands.ICommandParams;
+import server.commands.exceptions.CommandParamNotValidException;
 import shared.locations.HexLocation;
 
 /**
@@ -71,6 +72,11 @@ public class ServerSoldier implements ICommandParams{
 	 */
 	public void setLocation(HexLocation location) {
 		this.location = location;
+	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
