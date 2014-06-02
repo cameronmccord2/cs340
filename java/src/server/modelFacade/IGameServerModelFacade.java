@@ -1,5 +1,7 @@
 package server.modelFacade;
 
+import javax.naming.OperationNotSupportedException;
+
 import server.models.UserAttributes;
 
 public interface IGameServerModelFacade {
@@ -38,4 +40,8 @@ public interface IGameServerModelFacade {
 	 * @return the string "Successful"
 	 */
 	public String reset(String json, UserAttributes ua);
+	
+	public String listAI(String json, UserAttributes ua) throws OperationNotSupportedException;
+	
+	public String addAI(String json, UserAttributes ua) throws OperationNotSupportedException;
 }

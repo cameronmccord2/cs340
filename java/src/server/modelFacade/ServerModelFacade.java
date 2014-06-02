@@ -2,6 +2,7 @@ package server.modelFacade;
 
 import java.util.Collection;
 
+import javax.naming.OperationNotSupportedException;
 
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
@@ -9,7 +10,6 @@ import server.models.GameList;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
-
 import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
@@ -278,6 +278,18 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
+	}
+
+	@Override
+	public String listAI(String json, UserAttributes ua) throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException();
+	}
+
+	@Override
+	public String addAI(String json, UserAttributes ua) throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException();
 	}
 
 	
