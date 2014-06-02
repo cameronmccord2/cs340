@@ -1,8 +1,6 @@
 package server.modelFacade;
 
 import java.util.Collection;
-import java.util.List;
-
 import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
@@ -217,9 +215,15 @@ public class ServerModelFacade implements IServerModelFacade {
 				return "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString();
 			
 			Collection<IPiece> cities = game.getMap().getSettlementsAroundHex(hex.getLocation());
-			for (IPiece c : cities) {
-				c.getPlayer().rolledResource(hex.getHexType());
+			
+			int countRequired = cities.size();
+			if(game.getBank().hasEnoughResources(hex.getHexType(), countRequired)){
+				game.getBank().decrementResourceByCount(hex.getHexType(), countRequired);
+				for (IPiece c : cities) {
+					c.getPlayer().decrementResourceByCount(hex.getHexType(), 1);
+				}
 			}
+			
 			
 		} catch (InvalidUserAttributesException e) {
 			return e.getLocalizedMessage();

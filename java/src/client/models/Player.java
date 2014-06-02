@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import shared.definitions.HexType;
 import client.data.PlayerInfo;
 
 /**
@@ -256,30 +255,5 @@ public class Player extends Participant implements IPlayer {
 	public boolean canBuildRoad(IRoadSegment segment)
 	{
 		return this.hasResources(RoadSegment.getResourceCost());
-	}
-
-	@Override
-	public void rolledResource(HexType hexType) {
-		switch(hexType){
-		case BRICK:
-			this.getResourceCards().put(ResourceCard.BRICK, this.getResourceCards().get(ResourceCard.BRICK) + ROLL_COUNT);
-			break;
-		case ORE:
-			this.getResourceCards().put(ResourceCard.ORE, this.getResourceCards().get(ResourceCard.ORE) + ROLL_COUNT);
-			break;
-		case SHEEP:
-			this.getResourceCards().put(ResourceCard.SHEEP, this.getResourceCards().get(ResourceCard.SHEEP) + ROLL_COUNT);
-			break;
-		case WHEAT:
-			this.getResourceCards().put(ResourceCard.WHEAT, this.getResourceCards().get(ResourceCard.WHEAT) + ROLL_COUNT);
-			break;
-		case WOOD:
-			this.getResourceCards().put(ResourceCard.WOOD, this.getResourceCards().get(ResourceCard.WOOD) + ROLL_COUNT);
-			break;
-		case WATER:
-		case DESERT:
-		default:
-			break;
-		}
 	}
 }

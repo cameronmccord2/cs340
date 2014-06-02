@@ -17,8 +17,6 @@ import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.exceptions.InvalidGameModelException;
-import client.models.exceptions.CantFindGameModelException;
-import client.models.exceptions.CantFindPlayerException;
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.models.translator.ClientModel;
 import client.server.AcceptTrade;

@@ -103,6 +103,4 @@ public interface IPlayer extends IParticipant {
 
 	boolean canBuildRoad(IRoadSegment segment);
 
-	void rolledResource(HexType hexType);
-
 }
