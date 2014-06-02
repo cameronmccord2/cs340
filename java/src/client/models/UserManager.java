@@ -24,7 +24,7 @@ public class UserManager {
 		return "Failed";
 	}
 
-	public Object register(User simpleUser) {
+	public String register(User simpleUser) {
 		client.models.User newUser = new client.models.User(simpleUser.getUser(),simpleUser.getPassword(),users.size());
 		users.add(newUser);
 		return "Success";

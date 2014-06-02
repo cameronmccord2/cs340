@@ -4,40 +4,28 @@ import com.google.gson.Gson;
 
 import server.commands.CommandResponse;
 import server.modelFacade.IServerModelFacade;
+import server.models.Login;
+import server.models.Register;
 import server.models.UserAttributes;
-import client.models.UserManager;
-import client.server.User;
 
-public class UserFacade implements IUserFacade{
-	
-	private IServerModelFacade modelFacade;
-	private UserManager manager = new UserManager();
-	private Gson gson = new Gson();
-
+public class UserFacade extends CommandCreationFacade implements IUserFacade{
 
 	public UserFacade(IServerModelFacade modelFacade) {
-		this.modelFacade = modelFacade;	
+		super(modelFacade);
 	}
 
 	@Override
 	public CommandResponse login(String json, UserAttributes ua) {
-		User simpleUser = gson.fromJson(json, User.class);
-		if(manager.login(simpleUser).equals("Success")){
-			return new CommandResponse("Success","200");
-		}
-		else
-			return new CommandResponse("Failed","400");
-		
+		Gson gson = new Gson();
+		Login params = gson.fromJson(json, Login.class);
+		return this.genericCommandCreate(params, ua, false);
 	}
 
 	@Override
 	public CommandResponse register(String json, UserAttributes ua) {
-		User simpleUser = gson.fromJson(json, User.class);
-		if(manager.register(simpleUser).equals("Success")){
-			return new CommandResponse("Success","200");
-		}
-		else
-			return new CommandResponse("Failed","400");
+		Gson gson = new Gson();
+		Register params = gson.fromJson(json, Register.class);
+		return this.genericCommandCreate(params, ua, false);
 	}
 
 }

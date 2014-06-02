@@ -14,5 +14,12 @@ public class GetCommands implements ICommandParams {
 	public String getType() {
 		return "getCommands";
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GetCommands []");
+		return builder.toString();
+	}
 	
 }

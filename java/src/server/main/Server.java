@@ -20,6 +20,7 @@ import server.handlers.GamesHandler;
 import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
 import server.modelFacade.IServerModelFacade;
+import server.modelFacade.ServerModelFacade;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -69,7 +70,7 @@ public class Server {
 		
 		
 		// Facade
-		IServerModelFacade modelFacade = null;
+		IServerModelFacade modelFacade = new ServerModelFacade();
 		
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 		

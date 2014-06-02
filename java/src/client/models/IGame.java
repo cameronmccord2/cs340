@@ -1,5 +1,6 @@
 package client.models;
 
+import server.models.exceptions.GameModelException;
 import client.data.GameInfo;
 import client.models.translator.TRTradeOffer;
 
@@ -53,4 +54,6 @@ public interface IGame {
 	TRTradeOffer getCurrentTrade();
 
 	void setCurrentTrade(TRTradeOffer currentTrade);
+
+	IPlayer getPlayerForPlayerIndex(Integer playerIndex) throws GameModelException;
 }

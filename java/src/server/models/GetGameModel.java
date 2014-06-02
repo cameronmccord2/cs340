@@ -18,7 +18,7 @@ public class GetGameModel implements ICommandParams {
 
 	@Override
 	public String getType() {
-		return "getGameModel";
+		return "getJsonGameModelString";
 	}
 
 }

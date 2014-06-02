@@ -1,15 +1,16 @@
 package server.facades;
 
+import com.google.gson.Gson;
+
 import server.commands.CommandResponse;
 import server.modelFacade.IServerModelFacade;
+import server.models.FinishTurn;
 import server.models.UserAttributes;
 
-public class MovesFacade implements IMovesFacade{
+public class MovesFacade extends CommandCreationFacade implements IMovesFacade{
 	
-	private IServerModelFacade modelFacade;
-
 	public MovesFacade(IServerModelFacade modelFacade) {
-		this.modelFacade = modelFacade;
+		super(modelFacade);
 	}
 
 	@Override
@@ -80,8 +81,9 @@ public class MovesFacade implements IMovesFacade{
 
 	@Override
 	public CommandResponse finishTurn(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+		Gson gson = new Gson();
+		FinishTurn params = gson.fromJson(json, FinishTurn.class);
+		return this.genericCommandCreate(params, ua, false);
 	}
 
 	@Override

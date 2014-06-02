@@ -2,6 +2,7 @@ package client.models;
 
 import java.util.List;
 
+import shared.definitions.HexType;
 import client.data.PlayerInfo;
 
 /**
@@ -101,5 +102,7 @@ public interface IPlayer extends IParticipant {
 	boolean canBuildCity(ICity city);
 
 	boolean canBuildRoad(IRoadSegment segment);
+
+	void rolledResource(HexType hexType);
 
 }

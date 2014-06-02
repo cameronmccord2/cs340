@@ -1,11 +1,22 @@
 package client.models.translator;
 
 import client.models.exceptions.InvalidTranslatorModelException;
+import client.server.OfferTrade;
 
 public class TRTradeOffer implements IModelValid {
 	protected Integer sender;
 	protected Integer receiver;
 	protected TRResourceList offer;
+	public TRTradeOffer(){
+		
+	}
+	
+	public TRTradeOffer(OfferTrade ot) {
+		this.sender = ot.getPlayerIndex();
+		this.receiver = ot.getReceiver();
+		this.offer = ot.getOffer();
+	}
+
 	public Integer getSender() {
 		return sender;
 	}

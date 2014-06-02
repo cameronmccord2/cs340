@@ -3,6 +3,7 @@
  */
 package client.models;
 
+import server.models.exceptions.GameModelException;
 import client.data.GameInfo;
 import client.models.translator.TRTradeOffer;
 
@@ -178,6 +179,15 @@ public class Game implements IGame{
 	 */
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	@Override
+	public IPlayer getPlayerForPlayerIndex(Integer playerIndex) throws GameModelException {
+		for (IPlayer p : this.players) {
+			if(p.getPlayerInfo().getPlayerIndex() == playerIndex)
+				return p;
+		}
+		throw new GameModelException("Cant find player by index in this game: " + playerIndex);
 	}
 	
 	
