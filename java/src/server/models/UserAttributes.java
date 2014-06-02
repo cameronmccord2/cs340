@@ -25,18 +25,40 @@ public class UserAttributes {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * This returns an Integer object (which can be null) representing the
+	 * unique id for the user.
+	 * 
+	 * @return	The unique user id (not the relative turn in a game) for
+	 * 			this user or null if there is no cookie.
+	 */
 	public Integer getUserId() {
 		return userId;
 	}
 
+	/**
+	 * 
+	 * @param userId	The unique id for the user or null if there is no cookie.
+	 */
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
+	/**
+	 * This returns an Integer object (which can be null) representing the
+	 * unique id for the game.
+	 * 
+	 * @return	The unique game id for the game the user is connecting to
+	 * 			or null if there is no cookie.
+	 */
 	public Integer getGameId() {
 		return gameId;
 	}
 
+	/**
+	 * 
+	 * @param gameId	The unique id for the game that the user is joining.
+	 */
 	public void setGameId(Integer gameId) {
 		this.gameId = gameId;
 	}
