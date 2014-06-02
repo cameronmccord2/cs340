@@ -7,6 +7,8 @@ import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
 import client.models.MessageLine;
+import client.models.translator.TRTradeOffer;
+import client.server.OfferTrade;
 import client.server.ServerChat;
 import client.server.ServerRoll;
 import server.commands.ICommandParams;
@@ -126,10 +128,19 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String offerTrade(ICommandParams params,
-			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+	public String offerTrade(ICommandParams params, UserAttributes userAttributes) {
+		OfferTrade ot = (OfferTrade)params;
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			if(game.getCurrentTrade() != null)
+				return "There is already a trade in progress, this mussn't be allowed to happen: " + game.getCurrentTrade().toString();
+			
+			game.setCurrentTrade(new TRTradeOffer(ot));
+			
+		} catch (InvalidUserAttributesException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
