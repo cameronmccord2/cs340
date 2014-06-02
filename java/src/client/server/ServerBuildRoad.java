@@ -24,6 +24,13 @@ public class ServerBuildRoad implements ICommandParams{
 		this.roadLocation = new SimplifiedEdgeLocation(roadLocation);
 		this.free = free;
 	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.roadLocation == null)
+			throw new CommandParamNotValidException("Road location cant be null: " + this.toString());
+	}
 	/**
 	 * @return the type
 	 */
@@ -73,9 +80,18 @@ public class ServerBuildRoad implements ICommandParams{
 		this.free = free;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerBuildRoad [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", roadLocation=");
+		builder.append(roadLocation);
+		builder.append(", free=");
+		builder.append(free);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

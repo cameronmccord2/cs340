@@ -47,8 +47,8 @@ public class PlayerServer implements ICommandParams{
 
 	@Override
 	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
+		if(this.name == null || this.name.length() == 0 || this.color == null || this.color.length() == 0 || id < 0)
+			throw new CommandParamNotValidException("name, color musnt be null or of length zero, id cant be zero: " + this.toString());
 	}
 
 	@Override
@@ -56,7 +56,17 @@ public class PlayerServer implements ICommandParams{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PlayerServer [color=");
+		builder.append(color);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append("]");
+		return builder.toString();
+	}
 }

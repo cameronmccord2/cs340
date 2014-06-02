@@ -24,6 +24,13 @@ public class ServerRobPlayer implements ICommandParams{
 		this.location = location;
 	}
 
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.victimIndex < 0 || this.location == null)
+			throw new CommandParamNotValidException("victim index cant be less than zero and location cant be null: " + this.toString());
+	}
 	/**
 	 * @return the type
 	 */
@@ -81,10 +88,20 @@ public class ServerRobPlayer implements ICommandParams{
 	}
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerRobPlayer [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", victimIndex=");
+		builder.append(victimIndex);
+		builder.append(", location=");
+		builder.append(location);
+		builder.append("]");
+		return builder.toString();
 	}
+
 	
 	
 }
