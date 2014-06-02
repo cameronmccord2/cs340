@@ -1,6 +1,11 @@
 package server.modelFacade;
 
+import java.util.Collection;
+import java.util.List;
+
 import client.models.IGame;
+import client.models.IHex;
+import client.models.IPiece;
 import client.server.ServerRoll;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
@@ -177,7 +182,28 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String roll(ICommandParams params, UserAttributes userAttributes) {
 		ServerRoll sr = (ServerRoll)params;
-		
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			Collection<IHex> hexes = game.getMap().getHexes();
+			IHex hex = null;
+			for (IHex h : hexes) {
+				if(h.getHexNumber() == sr.getNumber()){
+					hex = h;
+					break;
+				}
+			}
+			if(hex == null)
+				return "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString();
+			
+			Collection<IPiece> cities = game.getMap().getSettlementsAroundHex(hex.getLocation());
+			for (IPiece c : cities) {
+				c.getPlayer().rolledResource(hex.getHexType());
+			}
+			
+		} catch (InvalidUserAttributesException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
