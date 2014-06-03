@@ -39,14 +39,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * JoinGameController constructor
 	 *
 	 * @param view
-	 *            Join game view
+	 *			Join game view
 	 * @param newGameView
-	 *            New game view
+	 *			New game view
 	 * @param selectColorView
-	 *            Select color view
+	 *			Select color view
 	 * @param messageView
-	 *            Message view (used to display error messages that occur while
-	 *            the user is joining a game)
+	 *			Message view (used to display error messages that occur while
+	 *			the user is joining a game)
 	 */
 	public JoinGameController(IJoinGameView view, INewGameView newGameView,
 									  ISelectColorView selectColorView,
@@ -80,7 +80,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * Sets the action to be executed when the user joins a game
 	 *
 	 * @param value
-	 *            The action to be executed when the user joins a game
+	 *			The action to be executed when the user joins a game
 	 */
 	public void setJoinAction(IAction value)
 	{
@@ -189,19 +189,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game)
 	{
 
-        selectedGame = game;
+		selectedGame = game;
 
-        if(getJoinGameView().isModalShowing())
-            getJoinGameView().closeModal();
+		if(getJoinGameView().isModalShowing())
+			getJoinGameView().closeModal();
 
 		for(PlayerInfo p : game.getPlayers())
 		{
 			if(p.getId() != self.getId())
 				getSelectColorView().setColorEnabled(p.getColor(), false);
-            else {
-                joinGame(p.getColor());
-                return;
-            }
+			else {
+				joinGame(p.getColor());
+				return;
+			}
 		}
 
 		if(!getSelectColorView().isModalShowing())

@@ -39,7 +39,7 @@ public class DiscardedCards implements ICommandParams
 
 	/**
 	 * @param type
-	 *           the type to set
+	 *		   the type to set
 	 */
 	public void setType(String type)
 	{
@@ -56,7 +56,7 @@ public class DiscardedCards implements ICommandParams
 
 	/**
 	 * @param playerIndex
-	 *           the playerIndex to set
+	 *		   the playerIndex to set
 	 */
 	public void setPlayerIndex(Integer playerIndex)
 	{
@@ -73,7 +73,7 @@ public class DiscardedCards implements ICommandParams
 
 	/**
 	 * @param discardedCards
-	 *           the discardedCards to set
+	 *		   the discardedCards to set
 	 */
 	public void setDiscardedCards(TRResourceList discardedCards)
 	{

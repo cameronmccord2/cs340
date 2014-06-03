@@ -37,14 +37,14 @@ public class Poller{
 		t = new Timer();
 
 		t.schedule(
-		    new TimerTask(){
-		    	@Override
-		        public void run(){
-		            proxy.getGameModel();
-		        }
-		    },
-		    10,      // run first occurrence immediately
-		    2000); // run every two seconds
+			new TimerTask(){
+				@Override
+				public void run(){
+					proxy.getGameModel();
+				}
+			},
+			10,	  // run first occurrence immediately
+			2000); // run every two seconds
 		
 	}
 	/**

@@ -16,24 +16,24 @@ import shared.definitions.ResourceType;
 public class ResourceBarController extends Controller implements IResourceBarController, ICatanModelObserver {
 
 	private Map<ResourceBarElement, IAction> elementActions;
-    private static final int MAX_ROADS = 15;
-    private static final int MAX_SETTLEMENTS = 5;
-    private static final int MAX_CITIES = 4;
-    private IProxy proxy;
-    private boolean firstSettlement;
-    private boolean secondSettlement;
+	private static final int MAX_ROADS = 15;
+	private static final int MAX_SETTLEMENTS = 5;
+	private static final int MAX_CITIES = 4;
+	private IProxy proxy;
+	private boolean firstSettlement;
+	private boolean secondSettlement;
 
 	public ResourceBarController(IResourceBarView view, IProxy proxy) {
 
 		super(view);
 		
-        this.proxy = proxy;
-        
-        this.firstSettlement = false;
-        this.secondSettlement = false;
+		this.proxy = proxy;
+
+		this.firstSettlement = false;
+		this.secondSettlement = false;
 		this.elementActions = new HashMap<>();
 		
-        this.proxy.getFacade().registerAsObserver(this);
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 
 	@Override
@@ -102,8 +102,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					canBuild = false;
 			}
 
-            if( ! this.proxy.getFacade().isMyTurn())
-                canBuild = false;
+			if( ! this.proxy.getFacade().isMyTurn())
+				canBuild = false;
 
 			if(facade.getCurrentUser().getCities().size() >= MAX_CITIES)
 				canBuild = false;
@@ -130,8 +130,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					canBuild = false;
 			}
 
-            if( ! this.proxy.getFacade().isMyTurn())
-                canBuild = false;
+			if( ! this.proxy.getFacade().isMyTurn())
+				canBuild = false;
 
 			if(facade.getCurrentUser().getSettlements().size() >= MAX_SETTLEMENTS)
 				canBuild = false;
@@ -170,8 +170,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 					canBuild = false;
 			}
 
-            if( ! this.proxy.getFacade().isMyTurn())
-                canBuild = false;
+			if( ! this.proxy.getFacade().isMyTurn())
+				canBuild = false;
 
 			if(facade.getCurrentUser().getRoads().size() >= MAX_ROADS)
 				canBuild = false;
@@ -213,47 +213,47 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		}
 	}
 
-    private void setPlayDevCardButtonState() {
-        try {
-            getView().setElementEnabled(ResourceBarElement.PLAY_CARD, this.proxy.getFacade().isMyTurn());
-        } catch (CantFindGameModelException e) {
-            e.printStackTrace();
-        }
-    }
+	private void setPlayDevCardButtonState() {
+		try {
+			getView().setElementEnabled(ResourceBarElement.PLAY_CARD, this.proxy.getFacade().isMyTurn());
+		} catch (CantFindGameModelException e) {
+			e.printStackTrace();
+		}
+	}
 
-    private void updateQuantities()  {
+	private void updateQuantities()  {
 
-        try
-        {
-            getView().setElementAmount(ResourceBarElement.WOOD, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD));
-            getView().setElementAmount(ResourceBarElement.BRICK, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK));
-            getView().setElementAmount(ResourceBarElement.WHEAT, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT));
-            getView().setElementAmount(ResourceBarElement.SHEEP, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP));
-            getView().setElementAmount(ResourceBarElement.ORE, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE));
+		try
+		{
+			getView().setElementAmount(ResourceBarElement.WOOD, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WOOD));
+			getView().setElementAmount(ResourceBarElement.BRICK, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.BRICK));
+			getView().setElementAmount(ResourceBarElement.WHEAT, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.WHEAT));
+			getView().setElementAmount(ResourceBarElement.SHEEP, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.SHEEP));
+			getView().setElementAmount(ResourceBarElement.ORE, this.proxy.getFacade().getPlayerResourceCount(ResourceCard.ORE));
 
-            getView().setElementAmount(ResourceBarElement.SOLDIERS, this.proxy.getFacade().getCurrentUser().getSoldiers());
-            getView().setElementAmount(ResourceBarElement.CITY, MAX_CITIES - this.proxy.getFacade().getCurrentUser().getCities().size());
-            getView().setElementAmount(ResourceBarElement.SETTLEMENT, MAX_SETTLEMENTS - this.proxy.getFacade().getCurrentUser().getSettlements().size());
-            getView().setElementAmount(ResourceBarElement.ROAD, MAX_ROADS - this.proxy.getFacade().getCurrentUser().getRoads().size());
+			getView().setElementAmount(ResourceBarElement.SOLDIERS, this.proxy.getFacade().getCurrentUser().getSoldiers());
+			getView().setElementAmount(ResourceBarElement.CITY, MAX_CITIES - this.proxy.getFacade().getCurrentUser().getCities().size());
+			getView().setElementAmount(ResourceBarElement.SETTLEMENT, MAX_SETTLEMENTS - this.proxy.getFacade().getCurrentUser().getSettlements().size());
+			getView().setElementAmount(ResourceBarElement.ROAD, MAX_ROADS - this.proxy.getFacade().getCurrentUser().getRoads().size());
 
-        }
-        catch (CantFindPlayerException | CantFindGameModelException e) {
-                e.getStackTrace();
-        }
-    }
+		}
+		catch (CantFindPlayerException | CantFindGameModelException e) {
+				e.getStackTrace();
+		}
+	}
 
-    @Override
-    public void update() {
+	@Override
+	public void update() {
 
-        updateQuantities();
+		updateQuantities();
 
-        setCityButtonState();
-        setSettlementButtonState();
-        setRoadButtonState();
-        setBuyDevCardButtonState();
+		setCityButtonState();
+		setSettlementButtonState();
+		setRoadButtonState();
+		setBuyDevCardButtonState();
 
-        setPlayDevCardButtonState();
+		setPlayDevCardButtonState();
 
-    }
+	}
 }
 

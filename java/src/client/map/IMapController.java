@@ -18,7 +18,7 @@ public interface IMapController extends IController
 	 * specified location.
 	 * 
 	 * @param edgeLoc
-	 *            The proposed road location
+	 *			The proposed road location
 	 * @return true if the road can be placed at edgeLoc, false otherwise
 	 */
 	boolean canPlaceRoad(EdgeLocation edgeLoc);
@@ -30,7 +30,7 @@ public interface IMapController extends IController
 	 * be placed at the specified location.
 	 * 
 	 * @param vertLoc
-	 *            The proposed settlement location
+	 *			The proposed settlement location
 	 * @return true if the settlement can be placed at vertLoc, false otherwise
 	 */
 	boolean canPlaceSettlement(VertexLocation vertLoc);
@@ -42,7 +42,7 @@ public interface IMapController extends IController
 	 * specified location.
 	 * 
 	 * @param vertLoc
-	 *            The proposed city location
+	 *			The proposed city location
 	 * @return true if the city can be placed at vertLoc, false otherwise
 	 */
 	boolean canPlaceCity(VertexLocation vertLoc);
@@ -54,7 +54,7 @@ public interface IMapController extends IController
 	 * placed at the specified location.
 	 * 
 	 * @param hexLoc
-	 *            The proposed robber location
+	 *			The proposed robber location
 	 * @return true if the robber can be placed at hexLoc, false otherwise
 	 */
 	boolean canPlaceRobber(HexLocation hexLoc);
@@ -63,7 +63,7 @@ public interface IMapController extends IController
 	 * This method is called when the user clicks the mouse to place a road.
 	 * 
 	 * @param edgeLoc
-	 *            The road location
+	 *			The road location
 	 */
 	void placeRoad(EdgeLocation edgeLoc);
 	
@@ -72,7 +72,7 @@ public interface IMapController extends IController
 	 * settlement.
 	 * 
 	 * @param vertLoc
-	 *            The settlement location
+	 *			The settlement location
 	 */
 	void placeSettlement(VertexLocation vertLoc);
 	
@@ -80,7 +80,7 @@ public interface IMapController extends IController
 	 * This method is called when the user clicks the mouse to place a city.
 	 * 
 	 * @param vertLoc
-	 *            The city location
+	 *			The city location
 	 */
 	void placeCity(VertexLocation vertLoc);
 	
@@ -88,7 +88,7 @@ public interface IMapController extends IController
 	 * This method is called when the user clicks the mouse to place the robber.
 	 * 
 	 * @param hexLoc
-	 *            The robber location
+	 *			The robber location
 	 */
 	void placeRobber(HexLocation hexLoc);
 	
@@ -97,14 +97,14 @@ public interface IMapController extends IController
 	 * (road, city, or settlement)
 	 * 
 	 * @param pieceType
-	 *            The type of piece to be placed
+	 *			The type of piece to be placed
 	 * @param isFree
-	 *            true if the piece should not cost the player resources, false
-	 *            otherwise. Set to true during initial setup and when a road
-	 *            building card is played.
+	 *			true if the piece should not cost the player resources, false
+	 *			otherwise. Set to true during initial setup and when a road
+	 *			building card is played.
 	 * @param allowDisconnected
-	 *            true if the piece can be disconnected, false otherwise. Set to
-	 *            true only during initial setup.
+	 *			true if the piece can be disconnected, false otherwise. Set to
+	 *			true only during initial setup.
 	 */
 	void startMove(PieceType pieceType, boolean isFree,
 				   boolean allowDisconnected);
@@ -133,7 +133,7 @@ public interface IMapController extends IController
 	 * via a button click.
 	 * 
 	 * @param victim
-	 *            The player to be robbed
+	 *			The player to be robbed
 	 */
 	void robPlayer(RobPlayerInfo victim);
 

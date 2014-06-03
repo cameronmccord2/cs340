@@ -13,7 +13,7 @@ public interface IMaritimeTradeView extends IView
 	 * Enables or disables the maritime trade button.
 	 * 
 	 * @param value
-	 *            Whether or not the maritime trade button is enabled
+	 *			Whether or not the maritime trade button is enabled
 	 */
 	void enableMaritimeTrade(boolean value);
 	

@@ -21,6 +21,11 @@ public class VertexLocation implements ILocation {
 		this.direction = VertexDirection.getDirectionFromServerString(location.getDirection());
 	}
 
+	public VertexLocation(SimplifiedVertexLocation location) {
+		this.hexLocation = new HexLocation(location.getX(), location.getY());
+		this.direction = VertexDirection.getDirectionFromServerString(location.getDirection());
+	}
+
 	public HexLocation getHexLocation() {
 		return hexLocation;
 	}

@@ -12,7 +12,7 @@ public interface IRollResultView extends IOverlayView
 	 * Sets the value rolled by the user
 	 * 
 	 * @param value
-	 *            The value rolled by the user
+	 *			The value rolled by the user
 	 */
 	void setRollValue(int value);
 	

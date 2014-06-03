@@ -36,7 +36,7 @@ public interface IJoinGameController extends IController
 	 * button. Displays the select color view.
 	 * 
 	 * @param game
-	 *            The game that the user is joining
+	 *			The game that the user is joining
 	 */
 	void startJoinGame(GameInfo game);
 	
@@ -50,7 +50,7 @@ public interface IJoinGameController extends IController
 	 * button
 	 * 
 	 * @param catanColor
-	 *            The color selected by the user
+	 *			The color selected by the user
 	 */
 	void joinGame(CatanColor catanColor);
 	

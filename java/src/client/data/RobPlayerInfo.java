@@ -21,12 +21,12 @@ public class RobPlayerInfo extends PlayerInfo {
 		super();
 	}
 
-    public RobPlayerInfo(PlayerInfo info) {
-        this.setColor(info.getColor());
-        this.setId(info.getId());
-        this.setName(info.getName());
-        this.setPlayerIndex(info.getPlayerIndex());
-    }
+	public RobPlayerInfo(PlayerInfo info) {
+		this.setColor(info.getColor());
+		this.setId(info.getId());
+		this.setName(info.getName());
+		this.setPlayerIndex(info.getPlayerIndex());
+	}
 
 	public int getNumCards() {
 		return numCards;

@@ -6,42 +6,42 @@ public class TRPlayer implements IModelValid
 {
 	// ALL OF THESE SHOULD HAVE VISIBILITY MODIFIERS
 	TRResourceList resources;
-    TRDevCardList oldDevCards;
-    TRDevCardList newDevCards;
-    int roads;
-    int cities;
-    int settlements;
-    int soldiers;
-    int victoryPoints;
-    int monuments;
-    boolean playedDevCard;
-    boolean discarded;
-    int playerID;
-    int playerIndex;
-    String name;
-    protected String color;
+	TRDevCardList oldDevCards;
+	TRDevCardList newDevCards;
+	int roads;
+	int cities;
+	int settlements;
+	int soldiers;
+	int victoryPoints;
+	int monuments;
+	boolean playedDevCard;
+	boolean discarded;
+	int playerID;
+	int playerIndex;
+	String name;
+	protected String color;
 	  
-    @Override
-    public void isValid() throws InvalidTranslatorModelException{
-    	if(resources == null || this.oldDevCards == null || this.newDevCards == null)
-    		throw new InvalidTranslatorModelException(this.toString());
-    	this.resources.isValid();
-    	this.oldDevCards.isValid();
-    	this.newDevCards.isValid();
-    	
-    	if(this.color == null ||
-    	   this.color.length() == 0 || 
-    	   this.roads < 0 || 
-    	   this.cities < 0 || 
-    	   this.settlements < 0 || 
-    	   this.soldiers < 0 || 
-    	   this.victoryPoints < 0 || 
-    	   this.monuments < 0 || 
-//    	   this.playerID < 0 || 
-    	   this.name == null || 
-    	   this.name.length() == 0)
-    			throw new InvalidTranslatorModelException(this.toString());
-    }
+	@Override
+	public void isValid() throws InvalidTranslatorModelException{
+		if(resources == null || this.oldDevCards == null || this.newDevCards == null)
+			throw new InvalidTranslatorModelException(this.toString());
+		this.resources.isValid();
+		this.oldDevCards.isValid();
+		this.newDevCards.isValid();
+
+		if(this.color == null ||
+		   this.color.length() == 0 ||
+		   this.roads < 0 ||
+		   this.cities < 0 ||
+		   this.settlements < 0 ||
+		   this.soldiers < 0 ||
+		   this.victoryPoints < 0 ||
+		   this.monuments < 0 ||
+//		   this.playerID < 0 ||
+		   this.name == null ||
+		   this.name.length() == 0)
+				throw new InvalidTranslatorModelException(this.toString());
+	}
 	  
 	public TRResourceList getResources() {
 		return resources;

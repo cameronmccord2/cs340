@@ -41,7 +41,7 @@ public abstract class Participant implements IParticipant {
 	 */
 	@Override
 	public Map<IDevelopmentCard, Integer> getDevelopmentCards() {
-        return developmentCards;
+		return developmentCards;
 	}
 
 	/* (non-Javadoc)
@@ -49,9 +49,9 @@ public abstract class Participant implements IParticipant {
 	 */
 
 	public void setDevelopmentCards(List<IDevelopmentCard> developmentCards) {
-        for (IDevelopmentCard card : developmentCards) {
-            this.developmentCards.put(card,this.developmentCards.get(card)+1);
-        }
+		for (IDevelopmentCard card : developmentCards) {
+			this.developmentCards.put(card,this.developmentCards.get(card)+1);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +59,7 @@ public abstract class Participant implements IParticipant {
 	 */
 	@Override
 	public void setDevelopmentCards(Map<IDevelopmentCard, Integer> developmentCards) {
-        this.developmentCards = developmentCards;
+		this.developmentCards = developmentCards;
 	}
 
 	/* (non-Javadoc)
@@ -81,28 +81,28 @@ public abstract class Participant implements IParticipant {
 
 	}
 
-    /* (non-Javadoc)
-     * @see client.models.IParticipant#setResourceCards(java.util.List)
-     */
+	/* (non-Javadoc)
+	 * @see client.models.IParticipant#setResourceCards(java.util.List)
+	 */
 
-    public void setResourceCards(List<IResourceCard> resourceCards) {
-        for (IResourceCard card : resourceCards) {
-            this.resourceCards.put(card,this.resourceCards.get(card)+1);
-        }
-    }
+	public void setResourceCards(List<IResourceCard> resourceCards) {
+		for (IResourceCard card : resourceCards) {
+			this.resourceCards.put(card,this.resourceCards.get(card)+1);
+		}
+	}
 
-    /* (non-Javadoc)
-     * @see client.models.IParticipant#setResourceCards(java.util.List)
-     */
-    @Override
-    public void setResourceCards(Map<IResourceCard, Integer> resourceCards) {
-        this.resourceCards = resourceCards;
-    }
-    
-    @Override
+	/* (non-Javadoc)
+	 * @see client.models.IParticipant#setResourceCards(java.util.List)
+	 */
+	@Override
+	public void setResourceCards(Map<IResourceCard, Integer> resourceCards) {
+		this.resourceCards = resourceCards;
+	}
+
+	@Override
 	public void incrementResourceByCount(HexType hexType, int count) {
-    	ResourceCard rc = HexType.getResourceCardForHexType(hexType);
-    	this.getResourceCards().put(rc, this.getResourceCards().get(rc) + count);
+		ResourceCard rc = HexType.getResourceCardForHexType(hexType);
+		this.getResourceCards().put(rc, this.getResourceCards().get(rc) + count);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public abstract class Participant implements IParticipant {
 	@Override
 	public void decrementResourceByCount(HexType hexType, int count) {
 		ResourceCard rc = HexType.getResourceCardForHexType(hexType);
-    	this.getResourceCards().put(rc, this.getResourceCards().get(rc) - count);
+		this.getResourceCards().put(rc, this.getResourceCards().get(rc) - count);
 	}
 
 	@Override

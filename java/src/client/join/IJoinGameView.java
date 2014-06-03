@@ -15,9 +15,9 @@ public interface IJoinGameView extends IOverlayView
 	 * Sets the list of available games to be displayed
 	 * 
 	 * @param games
-	 *            Array of games to be displayed
+	 *			Array of games to be displayed
 	 * @param localPlayer
-	 *            Information about the local player
+	 *			Information about the local player
 	 */
 	void setGames(List<GameInfo> games, PlayerInfo localPlayer);
 	

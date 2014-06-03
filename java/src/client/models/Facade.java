@@ -33,15 +33,15 @@ public class Facade implements IFacade {
 	}
 
 	private IGame getGameModel() throws CantFindGameModelException{
-        // Must have a default Integer for parseInt. getGameId() returns null
-        // before a game is chosen.
-        Integer gameId;
+		// Must have a default Integer for parseInt. getGameId() returns null
+		// before a game is chosen.
+		Integer gameId;
 
-        if(this.proxy.getGameId() == null)
-            gameId = 0;
+		if(this.proxy.getGameId() == null)
+			gameId = 0;
 		else
-            gameId = Integer.parseInt(this.proxy.getGameId());
-        
+			gameId = Integer.parseInt(this.proxy.getGameId());
+
 		for (IGame g : this.proxy.getGames()) {
 			if(g.getGameInfo().getId() == gameId){
 				return g;
@@ -292,10 +292,10 @@ public class Facade implements IFacade {
 		return tradeRatio;
 	}
 
-    @Override
-    public HexLocation getRobberLocation() throws CantFindGameModelException {
-        return this.getCatanMap().getRobber().getLocation().getHexLocation();
-    }
+	@Override
+	public HexLocation getRobberLocation() throws CantFindGameModelException {
+		return this.getCatanMap().getRobber().getLocation().getHexLocation();
+	}
 
 	@Override
 	public String postChat(ICommandParams commandParams,

@@ -97,21 +97,21 @@ public class CatanMap implements ICatanMap
 //		}
 //	}
 
-    @Override
-    public Collection<IPiece> getSettlementsAroundHex(HexLocation hex) {
+	@Override
+	public Collection<IPiece> getSettlementsAroundHex(HexLocation hex) {
 
-       Collection<IPiece> pieces = new HashSet<>();
+	   Collection<IPiece> pieces = new HashSet<>();
 
-       for(VertexDirection dir: VertexDirection.values()) {
-      	 VertexLocation loc = new VertexLocation(hex, dir).getNormalizedLocation();
+	   for(VertexDirection dir: VertexDirection.values()) {
+	  	 VertexLocation loc = new VertexLocation(hex, dir).getNormalizedLocation();
 
-      	 IPiece piece = catanMap.get(loc);
-      	 if (piece != null)
-      		 pieces.add(piece);
-        }
+	  	 IPiece piece = catanMap.get(loc);
+	  	 if (piece != null)
+	  		 pieces.add(piece);
+		}
 
-        return pieces;
-    }
+		return pieces;
+	}
 
 	private void initializeOceanHexes()
 	{
@@ -143,48 +143,48 @@ public class CatanMap implements ICatanMap
 		hexes.putAll(oceanMap);
 	}
 
-    // Very ugly method.
+	// Very ugly method.
 	// 	-Not any more.
-    @Override
-    public boolean isOceanHex(HexLocation location) {
-//        if( hex.equals(new HexLocation(-3,3)) ||
-//            hex.equals(new HexLocation(-3,2)) ||
-//            hex.equals(new HexLocation(-3,1)) ||
-//            hex.equals(new HexLocation(-3,0)) ||
+	@Override
+	public boolean isOceanHex(HexLocation location) {
+//		if( hex.equals(new HexLocation(-3,3)) ||
+//			hex.equals(new HexLocation(-3,2)) ||
+//			hex.equals(new HexLocation(-3,1)) ||
+//			hex.equals(new HexLocation(-3,0)) ||
 //
-//            hex.equals(new HexLocation(-2,3)) ||
-//            hex.equals(new HexLocation(-2,-1)) ||
+//			hex.equals(new HexLocation(-2,3)) ||
+//			hex.equals(new HexLocation(-2,-1)) ||
 //
-//            hex.equals(new HexLocation(-1,3)) ||
-//            hex.equals(new HexLocation(-1,-2)) ||
+//			hex.equals(new HexLocation(-1,3)) ||
+//			hex.equals(new HexLocation(-1,-2)) ||
 //
-//            hex.equals(new HexLocation(0,3)) ||
-//            hex.equals(new HexLocation(0,-3)) ||
+//			hex.equals(new HexLocation(0,3)) ||
+//			hex.equals(new HexLocation(0,-3)) ||
 //
-//            hex.equals(new HexLocation(1,2)) ||
-//            hex.equals(new HexLocation(1,-3)) ||
+//			hex.equals(new HexLocation(1,2)) ||
+//			hex.equals(new HexLocation(1,-3)) ||
 //
-//            hex.equals(new HexLocation(2,1)) ||
-//            hex.equals(new HexLocation(2,-3)) ||
+//			hex.equals(new HexLocation(2,1)) ||
+//			hex.equals(new HexLocation(2,-3)) ||
 //
-//            hex.equals(new HexLocation(3,0)) ||
-//            hex.equals(new HexLocation(3,-1)) ||
-//            hex.equals(new HexLocation(3,-2)) ||
-//            hex.equals(new HexLocation(3,-3)))
-//        {
-//            return true;
-//        }
-//        return false;
-    	return oceanMap.get(location) != null;
-    }
+//			hex.equals(new HexLocation(3,0)) ||
+//			hex.equals(new HexLocation(3,-1)) ||
+//			hex.equals(new HexLocation(3,-2)) ||
+//			hex.equals(new HexLocation(3,-3)))
+//		{
+//			return true;
+//		}
+//		return false;
+		return oceanMap.get(location) != null;
+	}
 
-    @Override
+	@Override
 	public void setProxy(IProxy proxy)
 	{
 		this.proxy = proxy;
 	}
 	
-    @Override
+	@Override
 	public IProxy getProxy()
 	{
 		return this.proxy;
@@ -204,44 +204,44 @@ public class CatanMap implements ICatanMap
 		{
 			boolean canPlace = true;
 			String state = facade.getCurrentState();
-    		VertexLocation start = segment.getStartLocation();
-    		VertexLocation end = segment.getEndLocation();
-    
-    		for(IPiece piece : catanMap.values())
-    		{
-    			PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
-    			PlayerInfo segmentOwner = segment.getPlayer().getPlayerInfo();
-    
-    //			System.out.println("pieceOwner:   " + pieceOwner);
-    //			System.out.println("segmentOwner: " + segmentOwner);
-    
-    			if(pieceOwner.equals(segmentOwner))
-    			{
-    				switch(piece.getPieceType())
-    				{
-    					case SETTLEMENT:
-    					case CITY:
-    						VertexLocation corner = (VertexLocation)piece.getLocation();
-    						if(corner.equals(start)||corner.equals(end))
-    							return true;
-    						break;
-    					case ROAD:
-    						// THIS NEEDS TO BE UPDATED TO TAKE INTO ACCOUNT
-    						// THE OCEAN HEXES! Currently, it allows you to
-    						// build roads on ocean hex sides.
-    						IRoadSegment roadSegment = (IRoadSegment)piece;
-    						if(start.equals(roadSegment.getStartLocation()) ||
-    						   start.equals(roadSegment.getEndLocation())   ||
-    						   end.equals(roadSegment.getStartLocation())   ||
-    						   end.equals(roadSegment.getEndLocation()))
-    							return true;
-    						break;
-    					default:
-    						break;
-    				}
-    			}
-    		}
-    		
+			VertexLocation start = segment.getStartLocation();
+			VertexLocation end = segment.getEndLocation();
+
+			for(IPiece piece : catanMap.values())
+			{
+				PlayerInfo pieceOwner = piece.getPlayer().getPlayerInfo();
+				PlayerInfo segmentOwner = segment.getPlayer().getPlayerInfo();
+
+	//			System.out.println("pieceOwner:   " + pieceOwner);
+	//			System.out.println("segmentOwner: " + segmentOwner);
+
+				if(pieceOwner.equals(segmentOwner))
+				{
+					switch(piece.getPieceType())
+					{
+						case SETTLEMENT:
+						case CITY:
+							VertexLocation corner = (VertexLocation)piece.getLocation();
+							if(corner.equals(start)||corner.equals(end))
+								return true;
+							break;
+						case ROAD:
+							// THIS NEEDS TO BE UPDATED TO TAKE INTO ACCOUNT
+							// THE OCEAN HEXES! Currently, it allows you to
+							// build roads on ocean hex sides.
+							IRoadSegment roadSegment = (IRoadSegment)piece;
+							if(start.equals(roadSegment.getStartLocation()) ||
+							   start.equals(roadSegment.getEndLocation())   ||
+							   end.equals(roadSegment.getStartLocation())   ||
+							   end.equals(roadSegment.getEndLocation()))
+								return true;
+							break;
+						default:
+							break;
+					}
+				}
+			}
+
 			if(state.equals("FirstRound") || state.equals("SecondRound"))
 				return canPlace;
 		}
@@ -272,28 +272,28 @@ public class CatanMap implements ICatanMap
 			String state = facade.getCurrentState();
 			
 			HexLocation hex = settlement.getLocation().getHexLocation();
-    		if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
-    			return false;
-    		if(distanceRule(settlement) != null)
-    			return false;
-    
-    		for(IPiece piece : catanMap.values())
-    		{
-    			if(piece.getPlayer().equals(settlement.getPlayer()))
-    			{
-    				if(piece.getPieceType() == PieceType.ROAD)
-    				{
-    					IRoadSegment roadSegment = (IRoadSegment)piece;
-    					VertexLocation start = roadSegment.getStartLocation();
-    					VertexLocation end = roadSegment.getEndLocation();
-    					VertexLocation corner = (VertexLocation)settlement.getLocation();
-    					if(corner.equals(start) || corner.equals(end))
-    						return true;
-    				}
-    			}
-    		}
-    		
-    		if(state.equals("FirstRound") || state.equals("SecondRound"))
+			if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
+				return false;
+			if(distanceRule(settlement) != null)
+				return false;
+
+			for(IPiece piece : catanMap.values())
+			{
+				if(piece.getPlayer().equals(settlement.getPlayer()))
+				{
+					if(piece.getPieceType() == PieceType.ROAD)
+					{
+						IRoadSegment roadSegment = (IRoadSegment)piece;
+						VertexLocation start = roadSegment.getStartLocation();
+						VertexLocation end = roadSegment.getEndLocation();
+						VertexLocation corner = (VertexLocation)settlement.getLocation();
+						if(corner.equals(start) || corner.equals(end))
+							return true;
+					}
+				}
+			}
+
+			if(state.equals("FirstRound") || state.equals("SecondRound"))
 				return canPlace;
 		}
 		catch(CantFindGameModelException e)

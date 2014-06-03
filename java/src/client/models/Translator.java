@@ -155,7 +155,7 @@ public class Translator {
 		for (TRVertexObject settl : cm.getMap().getSettlements()) {
 			IPlayer player = this.getPlayerWithId(settl.getOwner(), g.getPlayers());
 			map.placeInitialSettlement(new Settlement(new VertexLocation(settl.getLocation()),
-			                                          player));
+													  player));
 		}
 		for (TRVertexObject city : cm.getMap().getCities()) {
 			map.placeInitialCity(new City(new VertexLocation(city.getLocation()),

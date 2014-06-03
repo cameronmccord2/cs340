@@ -18,9 +18,9 @@ public interface IPlayDevCardView extends IOverlayView
 	 * Sets the enable/disable state for the specified card type.
 	 * 
 	 * @param cardType
-	 *            The card type being enabled or disabled
+	 *			The card type being enabled or disabled
 	 * @param enabled
-	 *            Whether or not to enable the card type
+	 *			Whether or not to enable the card type
 	 */
 	void setCardEnabled(DevCardType cardType, boolean enabled);
 	
@@ -28,9 +28,9 @@ public interface IPlayDevCardView extends IOverlayView
 	 * Sets the amount for the specified card type.
 	 * 
 	 * @param cardType
-	 *            The card type the amount is being set for
+	 *			The card type the amount is being set for
 	 * @param amount
-	 *            The new card amount
+	 *			The new card amount
 	 */
 	void setCardAmount(DevCardType cardType, int amount);
 }

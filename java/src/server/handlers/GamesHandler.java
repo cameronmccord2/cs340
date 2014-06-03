@@ -41,14 +41,14 @@ public class GamesHandler implements HttpHandler {
 		
 		Scanner s = new Scanner(is);
 		s.useDelimiter("\\A");
-	    String json = s.hasNext() ? s.next() : "";
-	    s.close();
-	    is.close();
-	    
-	    UserAttributes ua = new UserAttributes(exchange);
-	    CommandResponse response = null;
-	    
-	    switch(finalPiece){
+		String json = s.hasNext() ? s.next() : "";
+		s.close();
+		is.close();
+
+		UserAttributes ua = new UserAttributes(exchange);
+		CommandResponse response = null;
+
+		switch(finalPiece){
 			case "list":
 				if(requestMethod.equals("GET")){
 					response = this.commandFacade.listGames(json, ua);
@@ -63,7 +63,7 @@ public class GamesHandler implements HttpHandler {
 				if(requestMethod.equals("POST")){
 					response = this.commandFacade.joinGame(json, ua);
 					Headers headers = exchange.getResponseHeaders();
-			    	headers.add("Set-cookie", "catan.game=0;Path=/;");
+					headers.add("Set-cookie", "catan.game=0;Path=/;");
 				}
 				break;
 			case "save":
@@ -78,17 +78,17 @@ public class GamesHandler implements HttpHandler {
 				break;
 			default:
 				response = new CommandResponse("Invaid endpoing requested", "403");
-	    }
+		}
 		
 		///prepare responseBody
-	    if(response.getResponseCode().equals("200")){
-	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-	    	//add cookie here?
-	    	
-	    }
-	    else
-	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
-	    
+		if(response.getResponseCode().equals("200")){
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			//add cookie here?
+
+		}
+		else
+			exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();

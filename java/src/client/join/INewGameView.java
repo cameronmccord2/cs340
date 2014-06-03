@@ -13,7 +13,7 @@ public interface INewGameView extends IOverlayView
 	 * Sets the value of the title field
 	 * 
 	 * @param value
-	 *            New value
+	 *			New value
 	 */
 	void setTitle(String value);
 	
@@ -28,7 +28,7 @@ public interface INewGameView extends IOverlayView
 	 * Sets the value of the randomly place numbers check box
 	 * 
 	 * @param value
-	 *            New value
+	 *			New value
 	 */
 	void setRandomlyPlaceNumbers(boolean value);
 	
@@ -43,7 +43,7 @@ public interface INewGameView extends IOverlayView
 	 * Sets the value of the randomly place hexes check box
 	 * 
 	 * @param value
-	 *            New value
+	 *			New value
 	 */
 	void setRandomlyPlaceHexes(boolean value);
 	
@@ -58,7 +58,7 @@ public interface INewGameView extends IOverlayView
 	 * Sets the value of the use random ports check box
 	 * 
 	 * @param value
-	 *            New value
+	 *			New value
 	 */
 	void setUseRandomPorts(boolean value);
 	

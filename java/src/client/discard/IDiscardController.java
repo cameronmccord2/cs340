@@ -13,7 +13,7 @@ public interface IDiscardController extends IController
 	 * resource.
 	 * 
 	 * @param resource
-	 *            The resource that was increased
+	 *			The resource that was increased
 	 */
 	void increaseAmount(ResourceType resource);
 	
@@ -22,7 +22,7 @@ public interface IDiscardController extends IController
 	 * resource.
 	 * 
 	 * @param resource
-	 *            The resource that was decreased
+	 *			The resource that was decreased
 	 */
 	void decreaseAmount(ResourceType resource);
 	

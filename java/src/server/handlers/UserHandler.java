@@ -44,14 +44,14 @@ public class UserHandler implements HttpHandler {
 		
 		Scanner s = new Scanner(is);
 		s.useDelimiter("\\A");
-	    String json = s.hasNext() ? s.next() : "";
-	    s.close();
-	    is.close();
-	    
-	    UserAttributes ua = new UserAttributes(exchange);
-	    CommandResponse response = null;
-	    
-	    switch(finalPiece){
+		String json = s.hasNext() ? s.next() : "";
+		s.close();
+		is.close();
+
+		UserAttributes ua = new UserAttributes(exchange);
+		CommandResponse response = null;
+
+		switch(finalPiece){
 			case "login":
 				if(requestMethod.equals("POST"))
 					response = this.commandFacade.login(json, ua);
@@ -62,17 +62,17 @@ public class UserHandler implements HttpHandler {
 				break;
 			default:
 				response = new CommandResponse("Invaid endpoing requested", "403");
-	    }
-	    
+		}
+
 		//prepare responseBody
-	    if(response.getResponseCode().equals("200")){
-	    	Headers headers = exchange.getResponseHeaders();
-	    	headers.add("Set-cookie", "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;");
-	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-	    }
-	    else
-	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
-	    
+		if(response.getResponseCode().equals("200")){
+			Headers headers = exchange.getResponseHeaders();
+			headers.add("Set-cookie", "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;");
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		}
+		else
+			exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();

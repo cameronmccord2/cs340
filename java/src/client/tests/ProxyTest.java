@@ -87,38 +87,38 @@ public class ProxyTest {
 		assert(g.getPlayers().length == 4);
 		/*
 		 * "resources": {
-        "brick": 0,
-        "wood": 1,
-        "sheep": 1,
-        "wheat": 1,
-        "ore": 0
-      },
-      "oldDevCards": {
-        "yearOfPlenty": 0,
-        "monopoly": 0,
-        "soldier": 0,
-        "roadBuilding": 0,
-        "monument": 0
-      },
-      "newDevCards": {
-        "yearOfPlenty": 0,
-        "monopoly": 0,
-        "soldier": 0,
-        "roadBuilding": 0,
-        "monument": 0
-      },
-      "roads": 13,
-      "cities": 4,
-      "settlements": 3,
-      "soldiers": 0,
-      "victoryPoints": 2,
-      "monuments": 0,
-      "playedDevCard": false,
-      "discarded": false,
-      "playerID": 0,
-      "playerIndex": 0,
-      "name": "Sam",
-      "color": "orange"
+		"brick": 0,
+		"wood": 1,
+		"sheep": 1,
+		"wheat": 1,
+		"ore": 0
+	  },
+	  "oldDevCards": {
+		"yearOfPlenty": 0,
+		"monopoly": 0,
+		"soldier": 0,
+		"roadBuilding": 0,
+		"monument": 0
+	  },
+	  "newDevCards": {
+		"yearOfPlenty": 0,
+		"monopoly": 0,
+		"soldier": 0,
+		"roadBuilding": 0,
+		"monument": 0
+	  },
+	  "roads": 13,
+	  "cities": 4,
+	  "settlements": 3,
+	  "soldiers": 0,
+	  "victoryPoints": 2,
+	  "monuments": 0,
+	  "playedDevCard": false,
+	  "discarded": false,
+	  "playerID": 0,
+	  "playerIndex": 0,
+	  "name": "Sam",
+	  "color": "orange"
 		 */
 		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.BRICK) == 0);
 		assert(g.getPlayers()[0].getResourceCards().get(ResourceCard.WOOD) == 1);
@@ -141,11 +141,11 @@ public class ProxyTest {
 		
 		/*
 		 * "bank": {
-    "brick": 23,
-    "wood": 21,
-    "sheep": 20,
-    "wheat": 22,
-    "ore": 22
+	"brick": 23,
+	"wood": 21,
+	"sheep": 20,
+	"wheat": 22,
+	"ore": 22
   },
 		 */
 		
@@ -156,11 +156,11 @@ public class ProxyTest {
 		assert(g.getBank().getResourceCards().get(ResourceCard.ORE) == 22);
 /*
  * "deck": {
-    "yearOfPlenty": 2,
-    "monopoly": 2,
-    "soldier": 14,
-    "roadBuilding": 2,
-    "monument": 5
+	"yearOfPlenty": 2,
+	"monopoly": 2,
+	"soldier": 14,
+	"roadBuilding": 2,
+	"monument": 5
   },
  */
 		assert(g.getBank().getDevelopmentCards().get(DevelopmentCard.MONOPOLY) == 2);
@@ -176,10 +176,10 @@ public class ProxyTest {
 		
 		/*
 		 * "turnTracker": {
-    "status": "Rolling",
-    "currentTurn": 0,
-    "longestRoad": -1,
-    "largestArmy": -1
+	"status": "Rolling",
+	"currentTurn": 0,
+	"longestRoad": -1,
+	"largestArmy": -1
   },
 		 */
 		assert(g.getTurnTracker().getCurrentTurn() == 0);
@@ -471,8 +471,8 @@ public class ProxyTest {
 //	//TEST GET MODEL (Cameron???)
 //	//assertEquals(200,proxy.getGameModel().getResponseCode());
 //
-//    //TEST RESET GAME
-//    assertEquals(200,proxy.postGameReset().getResponseCode());
+//	//TEST RESET GAME
+//	assertEquals(200,proxy.postGameReset().getResponseCode());
 //}
 //
 //@Test

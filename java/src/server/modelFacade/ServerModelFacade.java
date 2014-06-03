@@ -1,39 +1,24 @@
 package server.modelFacade;
 
 import java.util.Collection;
+import java.util.Map;
 
-<<<<<<< HEAD
-=======
 import javax.naming.OperationNotSupportedException;
 
->>>>>>> 87abe21ebbd2a9d32e66ac19f4e152a435b9a725
+import client.models.*;
+import client.server.*;
+import client.server.User;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
-<<<<<<< HEAD
-import client.data.PlayerInfo;
-=======
->>>>>>> 87abe21ebbd2a9d32e66ac19f4e152a435b9a725
-import client.models.IGame;
-import client.models.IHex;
-import client.models.IPiece;
-import client.models.IPlayer;
-import client.models.IRoadSegment;
-import client.models.InvalidLocationException;
-import client.models.MessageLine;
-import client.models.RoadSegment;
-import client.models.UserManager;
+
 import client.models.translator.TREdgeLocation;
 import client.models.translator.TRRoad;
 import client.models.translator.TRTradeOffer;
-import client.server.OfferTrade;
-import client.server.ServerBuildRoad;
-import client.server.ServerChat;
-import client.server.ServerRoll;
-import client.server.User;
+import shared.locations.VertexLocation;
 
 public class ServerModelFacade implements IServerModelFacade {
 
@@ -162,30 +147,26 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String roadBuilding(ICommandParams params,
 			UserAttributes userAttributes) {
-		
-		ServerBuildRoad roadData = (ServerBuildRoad) params;
-		
+		return null;
+	}
+
+	@Override
+	public String buildCity(ICommandParams params, UserAttributes userAttributes) {
+		ServerBuildCity cityData = (ServerBuildCity) params;
+
 		try {
-			
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
-			IPlayer player = game.getPlayerForPlayerIndex(roadData.getPlayerIndex());
-			
-			TREdgeLocation loc = new TREdgeLocation();
-			loc.setDirection(roadData.getRoadLocation().getDirection());
-			loc.setX(roadData.getRoadLocation().getX());
-			loc.setY(roadData.getRoadLocation().getY());
-			
-			TRRoad road = new TRRoad();
-			road.setLocation(loc);
-			road.setOwner(player.getPlayerInfo().getPlayerIndex());
-			
-			IRoadSegment segment = new RoadSegment(road, player);
-			
-			if(game.getMap().canPlaceRoad(segment))
-				game.getMap().placeRoadSegment(segment);
+			IPlayer player = game.getPlayerForPlayerIndex(cityData.getPlayerIndex());
+
+			cityData.getVertexLocation();
+
+			City city = new City(new VertexLocation(cityData.getVertexLocation()), player);
+
+			if(game.getMap().canPlaceCity(city))
+				game.getMap().placeCity(city);
 			else
 				throw new InvalidLocationException();
-			
+
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return e.getLocalizedMessage();
 		}
@@ -193,22 +174,60 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String buildCity(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String buildRoad(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerBuildRoad roadData = (ServerBuildRoad) params;
+
+		try {
+
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(roadData.getPlayerIndex());
+
+			TREdgeLocation loc = new TREdgeLocation();
+			loc.setDirection(roadData.getRoadLocation().getDirection());
+			loc.setX(roadData.getRoadLocation().getX());
+			loc.setY(roadData.getRoadLocation().getY());
+
+			TRRoad road = new TRRoad();
+			road.setLocation(loc);
+			road.setOwner(player.getPlayerInfo().getPlayerIndex());
+
+			IRoadSegment segment = new RoadSegment(road, player);
+
+			if(game.getMap().canPlaceRoad(segment))
+				game.getMap().placeRoadSegment(segment);
+			else
+				throw new InvalidLocationException();
+
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
 	public String buildSettlement(ICommandParams params,
 			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerBuildSettlement settlementData = (ServerBuildSettlement) params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(settlementData.getPlayerIndex());
+
+			settlementData.getVertexLocation();
+
+			Settlement settlement = new Settlement(new VertexLocation(settlementData.getVertexLocation()), player);
+
+			if(game.getMap().canPlaceSettlement(settlement))
+				game.getMap().placeSettlement(settlement);
+			else
+				throw new InvalidLocationException();
+
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
@@ -226,14 +245,59 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String monopoly(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerMonopoly monopoly = (ServerMonopoly)params;
+
+		try {
+
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(monopoly.getPlayerIndex());
+
+			int lootCount = 0;
+
+			ResourceCard resource = ResourceCard.valueOf(monopoly.getResource());
+
+			for(IPlayer opponent : game.getPlayers()) {
+				Map<IResourceCard, Integer> cards = opponent.getResourceCards();
+				lootCount += cards.get(resource);
+
+				// Clear chosen resource from opponent's resource card stack
+				cards.put(resource, 0);
+				opponent.setResourceCards(cards);
+			}
+
+			Map<IResourceCard, Integer> playerCards = player.getResourceCards();
+			playerCards.put( resource, playerCards.get(resource) + lootCount );
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
 	public String monument(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerMonument monument = (ServerMonument)params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(monument.getPlayerIndex());
+
+			player.setVictoryPoints( player.getVictoryPoints() + 1 );
+
+			Map<IDevelopmentCard,Integer> developmentCards = player.getDevelopmentCards();
+
+			if(developmentCards.get(DevelopmentCard.MONUMENT) <= 0)
+				throw new GameModelException();
+			else
+				developmentCards.put( DevelopmentCard.MONUMENT, developmentCards.get(DevelopmentCard.MONUMENT) - 1);
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
+		return "Success";
 	}
 
 	@Override

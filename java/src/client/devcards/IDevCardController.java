@@ -40,7 +40,7 @@ public interface IDevCardController extends IController
 	 * This method is called when the user plays a monopoly development card.
 	 * 
 	 * @param resource
-	 *            The resource to take from other players
+	 *			The resource to take from other players
 	 */
 	void playMonopolyCard(ResourceType resource);
 	
@@ -64,9 +64,9 @@ public interface IDevCardController extends IController
 	 * card.
 	 * 
 	 * @param resource1
-	 *            The first resource to gain
+	 *			The first resource to gain
 	 * @param resource2
-	 *            The second resource to gain
+	 *			The second resource to gain
 	 */
 	void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2);
 }

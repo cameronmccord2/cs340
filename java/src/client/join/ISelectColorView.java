@@ -15,9 +15,9 @@ public interface ISelectColorView extends IOverlayView
 	 * other users should be disabled. Available colors should be enabled.
 	 * 
 	 * @param color
-	 *            The color being enabled or disabled
+	 *			The color being enabled or disabled
 	 * @param enable
-	 *            Whether or not the color should be enabled
+	 *			Whether or not the color should be enabled
 	 */
 	void setColorEnabled(CatanColor color, boolean enable);
 	

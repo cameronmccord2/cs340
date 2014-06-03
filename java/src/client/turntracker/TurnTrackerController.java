@@ -51,9 +51,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					IPlayer p = players[i];
 					if(!initialized[i])
 					{
-    					System.out.println("initializing player: " + p.getPlayerInfo().getName() + ", " + p.getPlayerInfo().getColor().toString());
-    					this.getView().initializePlayer(p.getPlayerInfo().getPlayerIndex(), p.getPlayerInfo().getName(), p.getPlayerInfo().getColor());
-    					initialized[i] = true;
+						System.out.println("initializing player: " + p.getPlayerInfo().getName() + ", " + p.getPlayerInfo().getColor().toString());
+						this.getView().initializePlayer(p.getPlayerInfo().getPlayerIndex(), p.getPlayerInfo().getName(), p.getPlayerInfo().getColor());
+						initialized[i] = true;
 					}
 									
 					this.getView().updatePlayer(p.getPlayerInfo().getPlayerIndex()

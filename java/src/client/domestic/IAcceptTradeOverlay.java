@@ -14,9 +14,9 @@ public interface IAcceptTradeOverlay extends IOverlayView
 	 * Adds a resource that the player will receive to the view.
 	 * 
 	 * @param resource
-	 *            The resource being received
+	 *			The resource being received
 	 * @param amount
-	 *            The amount of the resource being received
+	 *			The amount of the resource being received
 	 */
 	void addGetResource(ResourceType resource, int amount);
 	
@@ -24,9 +24,9 @@ public interface IAcceptTradeOverlay extends IOverlayView
 	 * Adds a resource that the player will give to the view.
 	 * 
 	 * @param resource
-	 *            The resource being given
+	 *			The resource being given
 	 * @param amount
-	 *            The amount of the resource being given
+	 *			The amount of the resource being given
 	 */
 	void addGiveResource(ResourceType resource, int amount);
 	
@@ -34,7 +34,7 @@ public interface IAcceptTradeOverlay extends IOverlayView
 	 * Enables or disables the accept button
 	 * 
 	 * @param enable
-	 *            Whether or not the accept button is enabled
+	 *			Whether or not the accept button is enabled
 	 */
 	void setAcceptEnabled(boolean enable);
 	
@@ -42,7 +42,7 @@ public interface IAcceptTradeOverlay extends IOverlayView
 	 * Sets the name of the player offering the trade.
 	 * 
 	 * @param name
-	 *            The offering player's name
+	 *			The offering player's name
 	 */
 	void setPlayerName(String name);
 	

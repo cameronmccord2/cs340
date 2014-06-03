@@ -13,7 +13,7 @@ public interface IDomesticTradeView extends IView
 	 * Enables or disables the domestic trade button.
 	 * 
 	 * @param value
-	 *            Whether or not the domestic trade button is enabled
+	 *			Whether or not the domestic trade button is enabled
 	 */
 	void enableDomesticTrade(boolean value);
 }

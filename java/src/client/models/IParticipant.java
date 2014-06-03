@@ -17,12 +17,12 @@ public interface IParticipant {
 	 */
 	Map<IDevelopmentCard, Integer> getDevelopmentCards();
 
-    /**
-     * Sets the resource cards for this participant.
-     *
-     * @param resourceCards the new resource cards
-     */
-    void setResourceCards(Map<IResourceCard, Integer> resourceCards);
+	/**
+	 * Sets the resource cards for this participant.
+	 *
+	 * @param resourceCards the new resource cards
+	 */
+	void setResourceCards(Map<IResourceCard, Integer> resourceCards);
 
 	/**
 	 * Gets the resource cards for this participant.

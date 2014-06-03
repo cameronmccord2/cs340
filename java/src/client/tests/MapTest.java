@@ -18,18 +18,18 @@ public class MapTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-//        System.out.println("Testing Map");
-        map = new CatanMap();
+//		System.out.println("Testing Map");
+		map = new CatanMap();
 	}
 
-    @Test
-    public void testMap() {
-        PlayerInfo info = new PlayerInfo();
-        Player player = new Player(info);
-        boolean robber = map.canMoveRobber(player);
-        assertFalse( "Robber shouldn't be able to move.", robber );
+	@Test
+	public void testMap() {
+		PlayerInfo info = new PlayerInfo();
+		Player player = new Player(info);
+		boolean robber = map.canMoveRobber(player);
+		assertFalse( "Robber shouldn't be able to move.", robber );
 
-    }
+	}
 	
 	@After
 	public void tearDown() {
