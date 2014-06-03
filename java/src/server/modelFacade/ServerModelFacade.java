@@ -93,9 +93,23 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String buyDevCard(ICommandParams params,
-			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
+	public String buyDevCard(ICommandParams params, UserAttributes userAttributes) {
+			BuyDevCard devCard = (BuyDevCard) params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(devCard.getPlayerIndex());
+
+			DevelopmentCard draw = game.getBank().drawRandomDevCard();
+
+			Map<IDevelopmentCard, Integer> developmentCards = player.getDevelopmentCards();
+			developmentCards.put( draw, developmentCards.get(draw) + 1);
+			player.setDevelopmentCards(developmentCards);
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
 		return null;
 	}
 
@@ -147,6 +161,7 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String roadBuilding(ICommandParams params,
 			UserAttributes userAttributes) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

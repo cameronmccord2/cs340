@@ -11,4 +11,13 @@ public interface IBank extends IParticipant {
 	 */
 	void setUpNewBank();
 
+	/**
+	 * Draws a random dev card from the available cards in the bank
+	 * This method removes the returned card from the bank when called.
+	 *
+	 * @return DevelopmentCard random card from the bank
+	 */
+	DevelopmentCard drawRandomDevCard();
+
+
 }
