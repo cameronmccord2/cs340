@@ -1,28 +1,32 @@
 package server.models;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
- * Holds the user's gameId and userId for proper manipulation of the model
+ * Holds the user's gameId and username for proper manipulation of the model
  * @author scottdaly
  *
  */
 public class UserAttributes {
 	
-	protected Integer userId;
+	protected Integer username;
+	protected String password;
 	protected Integer gameId;
 	
-	public UserAttributes(Integer userId, Integer gameId){
-		this.userId = userId;
+	public UserAttributes(Integer username, String password, Integer gameId){
+		this.username = username;
 		this.gameId = gameId;
+		this.password = password;
 	}
 	
 	public UserAttributes(){
-		this(null, null);
+		this(null, null, null);
 	}
 
-	public UserAttributes(HttpExchange exchange) {
-		// TODO Auto-generated constructor stub
+	public UserAttributes(String json) {
+		Gson gson = new Gson();
+		Login cookies = gson.fromJson(json, Login.class);
 	}
 
 	/**
@@ -32,16 +36,16 @@ public class UserAttributes {
 	 * @return	The unique user id (not the relative turn in a game) for
 	 * 			this user or null if there is no cookie.
 	 */
-	public Integer getUserId() {
-		return userId;
+	public Integer getusername() {
+		return username;
 	}
 
 	/**
 	 * 
-	 * @param userId	The unique id for the user or null if there is no cookie.
+	 * @param username	The unique id for the user or null if there is no cookie.
 	 */
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setusername(Integer username) {
+		this.username = username;
 	}
 
 	/**
@@ -68,7 +72,7 @@ public class UserAttributes {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -86,10 +90,10 @@ public class UserAttributes {
 				return false;
 		} else if (!gameId.equals(other.gameId))
 			return false;
-		if (userId == null) {
-			if (other.userId != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!userId.equals(other.userId))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
@@ -97,8 +101,8 @@ public class UserAttributes {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UserAttributes [userId=");
-		builder.append(userId);
+		builder.append("UserAttributes [username=");
+		builder.append(username);
 		builder.append(", gameId=");
 		builder.append(gameId);
 		builder.append("]");

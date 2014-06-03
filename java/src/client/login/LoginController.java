@@ -66,7 +66,7 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		
 		User user = new User(((ILoginView) super.getView()).getLoginUsername(), ((ILoginView) super.getView()).getLoginPassword());
-		if(proxy.postUserLogin(user).getJson().equals("Success")){
+		if(!proxy.postUserLogin(user).getJson().equals("-1")){
 			// If log in succeeded
 			if(getLoginView().isModalShowing())
 				getLoginView().closeModal();
@@ -85,10 +85,9 @@ public class LoginController extends Controller implements ILoginController {
 		User user = new User(((ILoginView) super.getView()).getRegisterUsername(), ((ILoginView) super.getView()).getRegisterPassword());
 		if(proxy.postUserRegister(user).getJson().equals("Success")){
 			// If register succeeded, log them in
-			if(proxy.postUserLogin(user).getJson().equals("Success")){
-				getLoginView().closeModal();
-				loginAction.execute();
-			}
+			proxy.postUserLogin(user);
+			getLoginView().closeModal();
+			loginAction.execute();
 		}
 	}
 }

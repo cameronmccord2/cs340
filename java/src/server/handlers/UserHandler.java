@@ -7,13 +7,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Scanner;
 
 import server.commands.CommandResponse;
 import server.facades.IUserFacade;
+import server.models.Login;
 import server.models.UserAttributes;
+import client.models.User;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -48,13 +53,27 @@ public class UserHandler implements HttpHandler {
 		s.close();
 		is.close();
 
-		UserAttributes ua = new UserAttributes(exchange);
+		//UserAttributes aren't needed for the UserHandler
+		UserAttributes ua = new UserAttributes();
+
 		CommandResponse response = null;
 
 		switch(finalPiece){
 			case "login":
-				if(requestMethod.equals("POST"))
+				if(requestMethod.equals("POST")){
 					response = this.commandFacade.login(json, ua);
+					
+					Gson gson = new Gson();
+					Login tempUser = gson.fromJson(json, Login.class); //convert json to Login object
+					User cookieUser = new User(tempUser.getUser(),tempUser.getPassword(),Integer.parseInt(response.getResponse())); //convert Login object with playerID to User object
+					String cookieJson = gson.toJson(cookieUser); //convert User object ot json
+					//begin encoding cookie
+					Headers headers = exchange.getResponseHeaders();
+					String encodedCookie = URLEncoder.encode(cookieJson, "UTF-8");
+					encodedCookie = "catan.user=" + encodedCookie + ";Path=/;";
+					headers.add("Set-cookie", encodedCookie);
+					//headers.add("Set-cookie", "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;");
+				}
 				break;
 			case "register":
 				if(requestMethod.equals("POST"))
@@ -66,8 +85,6 @@ public class UserHandler implements HttpHandler {
 
 		//prepare responseBody
 		if(response.getResponseCode().equals("200")){
-			Headers headers = exchange.getResponseHeaders();
-			headers.add("Set-cookie", "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;");
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 		}
 		else

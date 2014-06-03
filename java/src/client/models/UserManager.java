@@ -20,8 +20,8 @@ public class UserManager {
 
 	public String login(Login loggingInUser) {
 		for(User u : users){
-			if(u.getUsername().equals(loggingInUser.getUser())){
-				return "Login Success";
+			if(u.getname().equals(loggingInUser.getUser())){
+				return "Login " + u.getPlayerID();
 			}
 		}
 		return "Failed";

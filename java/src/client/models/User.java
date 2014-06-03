@@ -2,28 +2,28 @@ package client.models;
 
 public class User {
 
-	private String username;
+	private String name;
 	private String password;
 	private int playerID;
 	
-	public User(String username, String password, int playerID) {
-		this.username = username;
+	public User(String name, String password, int playerID) {
+		this.name = name;
 		this.password = password;
 		this.playerID = playerID;
 	}
 
 	/**
-	 * @return the username
+	 * @return the name
 	 */
-	public String getUsername() {
-		return username;
+	public String getname() {
+		return name;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param name the name to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setname(String name) {
+		this.name = name;
 	}
 
 	/**

@@ -45,7 +45,7 @@ public class GamesHandler implements HttpHandler {
 		s.close();
 		is.close();
 
-		UserAttributes ua = new UserAttributes(exchange);
+		UserAttributes ua = new UserAttributes();
 		CommandResponse response = null;
 
 		switch(finalPiece){

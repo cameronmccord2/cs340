@@ -34,8 +34,8 @@ public class Command implements ICommand, ITestCommand {
 			return this.facade.getJsonGameModelString(this.userAttributes);
 		else if(response.equals("Register Success"))
 			return "Success";
-		else if(response.equals("Login Success"))
-			return "Success";
+		else if(response.substring(0,5).equals("Login"))
+			return response.substring(6);
 		else
 			return response;
 		
