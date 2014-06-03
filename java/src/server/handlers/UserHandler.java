@@ -36,7 +36,7 @@ public class UserHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		//read the input stream
-		System.out.println("User Handler started");
+		System.out.println("User Handler being used");
 		InputStream is = exchange.getRequestBody();		
 		String requestMethod = exchange.getRequestMethod();
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
@@ -61,7 +61,7 @@ public class UserHandler implements HttpHandler {
 					response = this.commandFacade.register(json, ua);
 				break;
 			default:
-				response = new CommandResponse("Invaid endpoing requested", "403");
+				response = new CommandResponse("Invaid endpoint requested", "403");
 	    }
 	    
 		//prepare responseBody

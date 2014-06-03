@@ -159,7 +159,6 @@ public class Proxy implements IProxy {
 
 	@Override
 	public ServerResponse postUserLogin(User user){
-		System.out.println(user.toString());
 		ServerResponse sr =  doPost("/user/login", gson.toJson(user), false, false);
 		if(sr.getResponseCode() == 200){
 			Map<String, List<String>> map = connection.getHeaderFields();
@@ -185,7 +184,21 @@ public class Proxy implements IProxy {
 
 	@Override
 	public ServerResponse postUserRegister(User user){
-		ServerResponse sr = doPost("/user/register", gson.toJson(user), false, false);
+		ServerResponse sr =  doPost("/user/register", gson.toJson(user), false, false);
+		if(sr.getResponseCode() == 200){
+			Map<String, List<String>> map = connection.getHeaderFields();
+			List<String> setCookie = map.get("Set-cookie");
+			cookie = setCookie.get(0);
+			cookie = cookie.substring(0, cookie.length() - 8);
+			String temp = cookie.substring(11, cookie.length());
+			try {
+				rUser = gson.fromJson(URLDecoder.decode(temp, "UTF-8"), ReturnedUser.class);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+		}
+		this.facade.setCurrentUser(user.getUser());
 		return sr;
 	}
 

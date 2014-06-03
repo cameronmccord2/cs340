@@ -63,6 +63,14 @@ public class User implements ICommandParams{
 	public String getType() {
 		return "user";
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + "]";
+	}
 	
 	
 	
