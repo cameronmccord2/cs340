@@ -348,8 +348,42 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String yearOfPlenty(ICommandParams params,
 			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerYearofPlenty yop = (ServerYearofPlenty)params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(yop.getPlayerIndex());
+
+			IBank bank = game.getBank();
+
+			ResourceCard resource1 = ResourceCard.valueOf(yop.getResource1());
+			ResourceCard resource2 = ResourceCard.valueOf(yop.getResource2());
+
+			// Remove the two resources from the Bank and pass them to player, if possible
+			Map<IResourceCard, Integer> resourceCards = bank.getResourceCards();
+			if(resourceCards.get(resource1) > 0 && resourceCards.get(resource2) > 0) {
+
+				resourceCards.put( resource1, resourceCards.get(resource1) - 1 );
+				resourceCards.put( resource2, resourceCards.get(resource2) - 1 );
+
+				bank.setResourceCards(resourceCards);
+
+				Map<IResourceCard, Integer> playerCards = player.getResourceCards();
+				playerCards.put( resource1, playerCards.get(resource1) + 1 );
+				playerCards.put( resource2, playerCards.get(resource2) + 1 );
+
+				player.setResourceCards(playerCards);
+			}
+			else
+				throw new GameModelException();
+
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
+		return "Success";
 	}
 
 	@Override
