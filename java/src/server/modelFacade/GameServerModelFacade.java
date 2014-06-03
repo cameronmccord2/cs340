@@ -24,8 +24,8 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	@Override
 	public String getJsonGameModelString(UserAttributes ua)
 	{
-		String jsonModel = "";
-		return jsonModel;
+		String jsonResult = "";
+		return jsonResult;
 	}
 	
 	/**
@@ -42,8 +42,8 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	@Override
 	public String getCommands(String json, UserAttributes ua)
 	{
-		String jsonModel = "";
-		return jsonModel;
+		String jsonResult = "";
+		return jsonResult;
 	}
 	
 	/**
@@ -60,7 +60,8 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	@Override
 	public String runCommands(String json, UserAttributes ua)
 	{
-		return null;
+		String jsonResult = "";
+		return jsonResult;
 	}
 	
 	/**
@@ -76,7 +77,8 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	@Override
 	public String reset(String json, UserAttributes ua)
 	{
-		return null;
+		String jsonResult = "Successful";
+		return jsonResult;
 	}
 
 	@Override
