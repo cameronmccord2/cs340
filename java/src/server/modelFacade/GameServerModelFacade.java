@@ -16,13 +16,13 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	/**
 	 * Gets the JSON game model string for the requested game.
 	 *
-	 * @param userAttributes
-	 * 			the user attributes indicating which game to get.
+	 * @param	ua
+	 * 				the user attributes indicating which game to get.
 	 * 
 	 * @return	The JSON game model string of the requested model
 	 */
 	@Override
-	public String getJsonGameModelString(UserAttributes userAttributes)
+	public String getJsonGameModelString(UserAttributes ua)
 	{
 		String jsonModel = "";
 		return jsonModel;
@@ -31,16 +31,16 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	/**
 	 * Gets the list of commands that have been executed for the specified game.
 	 *
-	 * @param json
-	 * 			The JSON indicating which game to get the commands for
-	 * @param userAttributes
-	 * 			The user attributes from the requesting user
+	 * @param	json
+	 * 				The JSON indicating which game to get the commands for
+	 * @param	ua
+	 * 				The user attributes from the requesting user
 	 * 
 	 * @return	The commands executed in this game as a properly formatted
 	 * 			JSON string.
 	 */
 	@Override
-	public String getCommands(String json, UserAttributes userAttributes)
+	public String getCommands(String json, UserAttributes ua)
 	{
 		String jsonModel = "";
 		return jsonModel;
@@ -50,15 +50,15 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	 * Run commands that are in the format that the getCommands endpoint returns.
 	 * Allows replaying of events.
 	 *
-	 * @param json
-	 * 			The JSON array of commands to execute
-	 * @param userAttributes
-	 * 			The user attributes from the requesting user
+	 * @param	json
+	 * 				The JSON array of commands to execute
+	 * @param	ua
+	 * 				The user attributes from the requesting user
 	 * 
 	 * @return	The string "Successful" or an error
 	 */
 	@Override
-	public String runCommands(String json, UserAttributes userAttributes)
+	public String runCommands(String json, UserAttributes ua)
 	{
 		return null;
 	}
@@ -66,15 +66,15 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	/**
 	 * Resets the game model to the create game state.
 	 *
-	 * @param json
-	 * 			The JSON indicating which game id
-	 * @param userAttributes
-	 * 			The user attributes from the requesting user
+	 * @param	json
+	 * 				The JSON indicating which game id
+	 * @param	ua
+	 * 				The user attributes from the requesting user
 	 * 
 	 * @return	The string "Successful" 
 	 */
 	@Override
-	public String reset(String json, UserAttributes userAttributes)
+	public String reset(String json, UserAttributes ua)
 	{
 		return null;
 	}
