@@ -198,9 +198,9 @@ public class DiscardView extends OverlayView implements IDiscardView
 		
 		if(TESTING)
 		{
-    		testButton = new RoundedButton("Enable");
-    		testButton.addActionListener(actionListener);
-    		discardButtonPanel.add(testButton);
+			testButton = new RoundedButton("Enable");
+			testButton.addActionListener(actionListener);
+			discardButtonPanel.add(testButton);
 		}
 		
 		this.add(discardButtonPanel, BorderLayout.SOUTH);
@@ -224,7 +224,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 	 * Used to enable or disable the discard button.
 	 * 
 	 * @param enabled
-	 *            Whether or not the discard button should be enabled
+	 *			Whether or not the discard button should be enabled
 	 */
 	@Override
 	public void setDiscardButtonEnabled(boolean enabled)
@@ -237,9 +237,9 @@ public class DiscardView extends OverlayView implements IDiscardView
 	 * Sets the discard amount displayed for the specified resource.
 	 * 
 	 * @param resource
-	 *            The resource for which the discard amount is being set
+	 *			The resource for which the discard amount is being set
 	 * @param amount
-	 *            The new discard amount
+	 *			The new discard amount
 	 */
 	@Override
 	public void setResourceDiscardAmount(ResourceType resource, int amount)
@@ -252,9 +252,9 @@ public class DiscardView extends OverlayView implements IDiscardView
 	 * Sets the maximum amount displayed for the specified resource.
 	 * 
 	 * @param resource
-	 *            The resource for which the maximum amount is being set
+	 *			The resource for which the maximum amount is being set
 	 * @param maxAmount
-	 *            The new maximum amount
+	 *			The new maximum amount
 	 */
 	@Override
 	public void setResourceMaxAmount(ResourceType resource, int maxAmount)
@@ -271,14 +271,14 @@ public class DiscardView extends OverlayView implements IDiscardView
 	 * operations are allowed.)
 	 * 
 	 * @param resource
-	 *            The resource for which amount changes are being enabled or
-	 *            disabled
+	 *			The resource for which amount changes are being enabled or
+	 *			disabled
 	 * @param increase
-	 *            Whether or not the amount for the specified resource can be
-	 *            increased
+	 *			Whether or not the amount for the specified resource can be
+	 *			increased
 	 * @param decrease
-	 *            Whether or not the amount for the specified resource can be
-	 *            decreased
+	 *			Whether or not the amount for the specified resource can be
+	 *			decreased
 	 */
 	@Override
 	public void setResourceAmountChangeEnabled(ResourceType resource,
@@ -295,7 +295,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 	 * to discard, and how many remain to set.
 	 * 
 	 * @param message
-	 *            The new state message (e.g., "0/6")
+	 *			The new state message (e.g., "0/6")
 	 */
 	@Override
 	public void setStateMessage(String message)
@@ -376,10 +376,10 @@ public class DiscardView extends OverlayView implements IDiscardView
 		}
 		
 		public Resource(ResourceType type,
-		                int maxAmount,
-		                int discardAmount,
-		                boolean canIncrease,
-		                boolean canDecrease)
+						int maxAmount,
+						int discardAmount,
+						boolean canIncrease,
+						boolean canDecrease)
 		{
 			this._type = type;
 			this._maxAmount = maxAmount;
@@ -484,8 +484,8 @@ public class DiscardView extends OverlayView implements IDiscardView
 			float[] offsetFactors = {R_OFFSET, G_OFFSET, B_OFFSET, A_OFFSET};
 			
 			this._blankUpImage = new RescaleOp(scaleFactors,
-			                                   offsetFactors,
-			                                   null).filter(image, null);
+											   offsetFactors,
+											   null).filter(image, null);
 			this._upImage = image;
 		}
 		
@@ -506,8 +506,8 @@ public class DiscardView extends OverlayView implements IDiscardView
 			float[] offsetFactors = {R_OFFSET, G_OFFSET, B_OFFSET, A_OFFSET};
 			
 			this._blankDownImage = new RescaleOp(scaleFactors,
-			                                     offsetFactors,
-			                                     null).filter(image, null);
+												 offsetFactors,
+												 null).filter(image, null);
 			this._downImage = image;
 		}
 		
@@ -600,7 +600,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 			
 			_discardResourcePanel = new JPanel();
 			_discardResourcePanel.setLayout(new BoxLayout(_discardResourcePanel,
-			                                              BoxLayout.Y_AXIS));
+														  BoxLayout.Y_AXIS));
 			_discardResourcePanel.add(resourcePanel);
 			
 			return _discardResourcePanel;
@@ -614,13 +614,13 @@ public class DiscardView extends OverlayView implements IDiscardView
 				{
 					case "UP":
 //						System.out.printf("Increase amount of %s\n",
-//						                  Resource.this.getType());
+//										  Resource.this.getType());
 						DiscardView.this.getController()
 										.increaseAmount(Resource.this.getType());
 						break;
 					case "DOWN":
 //						System.out.printf("Decrease amount of %s\n",
-//						                  Resource.this.getType());
+//										  Resource.this.getType());
 						DiscardView.this.getController()
 										.decreaseAmount(Resource.this.getType());
 						break;

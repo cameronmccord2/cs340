@@ -15,160 +15,160 @@ import javax.swing.border.Border;
 public class NewGameView extends OverlayView implements INewGameView
 {
 
-    private final int LABEL_TEXT_SIZE = 40;
-    private final int BUTTON_TEXT_SIZE = 28;
-    private final int BORDER_WIDTH = 10;
+	private final int LABEL_TEXT_SIZE = 40;
+	private final int BUTTON_TEXT_SIZE = 28;
+	private final int BORDER_WIDTH = 10;
 
-    private JLabel lblNewGameSettings = null;
-    private JButton createButton = null;
-    private JButton cancelButton = null;
-    private JPanel buttonPanel = null;
-    
-    private JTextField txtTitle = null;
-    private JCheckBox chkRandNumbers = null;
-    private JCheckBox chkRandHexes = null;
-    private JCheckBox chkRandPorts = null;
+	private JLabel lblNewGameSettings = null;
+	private JButton createButton = null;
+	private JButton cancelButton = null;
+	private JPanel buttonPanel = null;
 
-    public NewGameView()
-    {
+	private JTextField txtTitle = null;
+	private JCheckBox chkRandNumbers = null;
+	private JCheckBox chkRandHexes = null;
+	private JCheckBox chkRandPorts = null;
 
-        this.setOpaque(true);
-        this.setLayout(new BorderLayout());
-        this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
+	public NewGameView()
+	{
 
-        lblNewGameSettings = new JLabel("New Game Settings");
-        Font labelFont = lblNewGameSettings.getFont();
-        labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
-        lblNewGameSettings.setFont(labelFont);
-        this.add(lblNewGameSettings, BorderLayout.PAGE_START);
+		this.setOpaque(true);
+		this.setLayout(new BorderLayout());
+		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
 
-        this.add(initInternalComponents(), BorderLayout.CENTER);
-        
-        cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(actionListener);
-        Font buttonFont = cancelButton.getFont();
-        buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
-        cancelButton.setFont(buttonFont);
+		lblNewGameSettings = new JLabel("New Game Settings");
+		Font labelFont = lblNewGameSettings.getFont();
+		labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
+		lblNewGameSettings.setFont(labelFont);
+		this.add(lblNewGameSettings, BorderLayout.PAGE_START);
 
-        createButton = new JButton("Create Game");
-        createButton.addActionListener(actionListener);
-        createButton.setFont(buttonFont);
+		this.add(initInternalComponents(), BorderLayout.CENTER);
 
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(createButton);
-        buttonPanel.add(cancelButton);        
-        this.add(buttonPanel, BorderLayout.SOUTH);                
-    }
-    
-    private JComponent initInternalComponents()
-    {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-        
-        JLabel lblTitle = new JLabel("Title:");
-        txtTitle = new JTextField();
-        chkRandNumbers = new JCheckBox("Randomly place Numbers");
-        chkRandHexes = new JCheckBox("Randomly place Hexes");
-        chkRandPorts = new JCheckBox("Use Random ports");
-        
-        
-        mainPanel.add(lblTitle);
-        mainPanel.add(txtTitle);
-        mainPanel.add(chkRandNumbers);
-        mainPanel.add(chkRandHexes);
-        mainPanel.add(chkRandPorts);   
-        
-        mainPanel.setBorder(createBufferBorder());
-        
-        return mainPanel;        
-    }
-    
-    private Border createBufferBorder()
-    {
-        final int BUFFER_SPACE = 7;
-        Border innerBuffer = BorderFactory.createEmptyBorder(BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE);
-        Border outerBuffer = BorderFactory.createEmptyBorder(BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE);
-        Border etching = BorderFactory.createEtchedBorder();
+		cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(actionListener);
+		Font buttonFont = cancelButton.getFont();
+		buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
+		cancelButton.setFont(buttonFont);
 
-        Border outerCompound = BorderFactory.createCompoundBorder(outerBuffer, etching);
-        Border wholeCompound = BorderFactory.createCompoundBorder(outerCompound, innerBuffer);
+		createButton = new JButton("Create Game");
+		createButton.addActionListener(actionListener);
+		createButton.setFont(buttonFont);
 
-        return wholeCompound;
-    }
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(createButton);
+		buttonPanel.add(cancelButton);
+		this.add(buttonPanel, BorderLayout.SOUTH);
+	}
 
-    private ActionListener actionListener = new ActionListener()
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
+	private JComponent initInternalComponents()
+	{
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
-            if (e.getSource() == createButton)
-            {
+		JLabel lblTitle = new JLabel("Title:");
+		txtTitle = new JTextField();
+		chkRandNumbers = new JCheckBox("Randomly place Numbers");
+		chkRandHexes = new JCheckBox("Randomly place Hexes");
+		chkRandPorts = new JCheckBox("Use Random ports");
 
-                getController().createNewGame();
-            }
-            else if (e.getSource() == cancelButton)
-            {
 
-                getController().cancelCreateNewGame();
-            }
-        }
-    };
+		mainPanel.add(lblTitle);
+		mainPanel.add(txtTitle);
+		mainPanel.add(chkRandNumbers);
+		mainPanel.add(chkRandHexes);
+		mainPanel.add(chkRandPorts);
 
-    @Override
-    public IJoinGameController getController()
-    {
+		mainPanel.setBorder(createBufferBorder());
 
-        return (IJoinGameController) super.getController();
-    }
+		return mainPanel;
+	}
 
-    @Override
-    public void setTitle(String value)
-    {
-        this.txtTitle.setText(value);
-    }
+	private Border createBufferBorder()
+	{
+		final int BUFFER_SPACE = 7;
+		Border innerBuffer = BorderFactory.createEmptyBorder(BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE);
+		Border outerBuffer = BorderFactory.createEmptyBorder(BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE, BUFFER_SPACE);
+		Border etching = BorderFactory.createEtchedBorder();
 
-    @Override
-    public String getTitle()
-    {
-        return txtTitle.getText();
-    }
+		Border outerCompound = BorderFactory.createCompoundBorder(outerBuffer, etching);
+		Border wholeCompound = BorderFactory.createCompoundBorder(outerCompound, innerBuffer);
 
-    @Override
-    public void setRandomlyPlaceNumbers(boolean value)
-    {
-        chkRandNumbers.setSelected(value);
-    }
+		return wholeCompound;
+	}
 
-    @Override
-    public boolean getRandomlyPlaceNumbers()
-    {
-        return chkRandNumbers.isSelected();
-    }
+	private ActionListener actionListener = new ActionListener()
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
 
-    @Override
-    public void setRandomlyPlaceHexes(boolean value)
-    {
-        chkRandHexes.setSelected(value);
-    }
+			if (e.getSource() == createButton)
+			{
 
-    @Override
-    public boolean getRandomlyPlaceHexes()
-    {
-        return chkRandHexes.isSelected();
-    }
+				getController().createNewGame();
+			}
+			else if (e.getSource() == cancelButton)
+			{
 
-    @Override
-    public void setUseRandomPorts(boolean value)
-    {
-        chkRandPorts.setSelected(value);
-    }
+				getController().cancelCreateNewGame();
+			}
+		}
+	};
 
-    @Override
-    public boolean getUseRandomPorts()
-    {
-        return chkRandPorts.isSelected();
-    }
+	@Override
+	public IJoinGameController getController()
+	{
+
+		return (IJoinGameController) super.getController();
+	}
+
+	@Override
+	public void setTitle(String value)
+	{
+		this.txtTitle.setText(value);
+	}
+
+	@Override
+	public String getTitle()
+	{
+		return txtTitle.getText();
+	}
+
+	@Override
+	public void setRandomlyPlaceNumbers(boolean value)
+	{
+		chkRandNumbers.setSelected(value);
+	}
+
+	@Override
+	public boolean getRandomlyPlaceNumbers()
+	{
+		return chkRandNumbers.isSelected();
+	}
+
+	@Override
+	public void setRandomlyPlaceHexes(boolean value)
+	{
+		chkRandHexes.setSelected(value);
+	}
+
+	@Override
+	public boolean getRandomlyPlaceHexes()
+	{
+		return chkRandHexes.isSelected();
+	}
+
+	@Override
+	public void setUseRandomPorts(boolean value)
+	{
+		chkRandPorts.setSelected(value);
+	}
+
+	@Override
+	public boolean getUseRandomPorts()
+	{
+		return chkRandPorts.isSelected();
+	}
 
 }

@@ -13,9 +13,9 @@ public interface IGameFinishedView extends IOverlayView
 	 * Sets the information about the winner displayed in the view
 	 * 
 	 * @param name
-	 *            The winner's name
+	 *			The winner's name
 	 * @param isLocalPlayer
-	 *            Indicates whether or not the winner is the local player
+	 *			Indicates whether or not the winner is the local player
 	 */
 	void setWinner(String name, boolean isLocalPlayer);
 	

@@ -33,10 +33,10 @@ public class Hex implements IHex
 		// instead of using a switch statement.
 		try
 		{
-    		if(hex.getResource() != null)
-    			this.type = HexType.valueOf(hex.getResource().toUpperCase());
-    		else
-    			this.type = HexType.DESERT;
+			if(hex.getResource() != null)
+				this.type = HexType.valueOf(hex.getResource().toUpperCase());
+			else
+				this.type = HexType.DESERT;
 		}
 		catch(IllegalArgumentException e)
 		{

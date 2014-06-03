@@ -1,7 +1,13 @@
 package server.modelFacade;
 
 import java.util.Collection;
+import java.util.Map;
 
+import javax.naming.OperationNotSupportedException;
+
+import client.models.*;
+import client.server.*;
+import client.server.User;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
@@ -19,6 +25,10 @@ import client.models.translator.TRTradeOffer;
 import client.server.OfferTrade;
 import client.server.ServerChat;
 import client.server.ServerRoll;
+import client.models.translator.TREdgeLocation;
+import client.models.translator.TRRoad;
+import client.models.translator.TRTradeOffer;
+import shared.locations.VertexLocation;
 
 public class ServerModelFacade implements IServerModelFacade {
 
@@ -93,9 +103,23 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String buyDevCard(ICommandParams params,
-			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
+	public String buyDevCard(ICommandParams params, UserAttributes userAttributes) {
+			BuyDevCard devCard = (BuyDevCard) params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(devCard.getPlayerIndex());
+
+			DevelopmentCard draw = game.getBank().drawRandomDevCard();
+
+			Map<IDevelopmentCard, Integer> developmentCards = player.getDevelopmentCards();
+			developmentCards.put( draw, developmentCards.get(draw) + 1);
+			player.setDevelopmentCards(developmentCards);
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
 		return null;
 	}
 
@@ -153,21 +177,82 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String buildCity(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+		ServerBuildCity cityData = (ServerBuildCity) params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(cityData.getPlayerIndex());
+
+			cityData.getVertexLocation();
+
+			City city = new City(new VertexLocation(cityData.getVertexLocation()), player);
+
+			if(game.getMap().canPlaceCity(city))
+				game.getMap().placeCity(city);
+			else
+				throw new InvalidLocationException();
+
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
 	public String buildRoad(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerBuildRoad roadData = (ServerBuildRoad) params;
+
+		try {
+
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(roadData.getPlayerIndex());
+
+			TREdgeLocation loc = new TREdgeLocation();
+			loc.setDirection(roadData.getRoadLocation().getDirection());
+			loc.setX(roadData.getRoadLocation().getX());
+			loc.setY(roadData.getRoadLocation().getY());
+
+			TRRoad road = new TRRoad();
+			road.setLocation(loc);
+			road.setOwner(player.getPlayerInfo().getPlayerIndex());
+
+			IRoadSegment segment = new RoadSegment(road, player);
+
+			if(game.getMap().canPlaceRoad(segment))
+				game.getMap().placeRoadSegment(segment);
+			else
+				throw new InvalidLocationException();
+
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
 	public String buildSettlement(ICommandParams params,
 			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerBuildSettlement settlementData = (ServerBuildSettlement) params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(settlementData.getPlayerIndex());
+
+			settlementData.getVertexLocation();
+
+			Settlement settlement = new Settlement(new VertexLocation(settlementData.getVertexLocation()), player);
+
+			if(game.getMap().canPlaceSettlement(settlement))
+				game.getMap().placeSettlement(settlement);
+			else
+				throw new InvalidLocationException();
+
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
@@ -185,14 +270,59 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String monopoly(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerMonopoly monopoly = (ServerMonopoly)params;
+
+		try {
+
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(monopoly.getPlayerIndex());
+
+			int lootCount = 0;
+
+			ResourceCard resource = ResourceCard.valueOf(monopoly.getResource());
+
+			for(IPlayer opponent : game.getPlayers()) {
+				Map<IResourceCard, Integer> cards = opponent.getResourceCards();
+				lootCount += cards.get(resource);
+
+				// Clear chosen resource from opponent's resource card stack
+				cards.put(resource, 0);
+				opponent.setResourceCards(cards);
+			}
+
+			Map<IResourceCard, Integer> playerCards = player.getResourceCards();
+			playerCards.put( resource, playerCards.get(resource) + lootCount );
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
 	public String monument(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerMonument monument = (ServerMonument)params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(monument.getPlayerIndex());
+
+			player.setVictoryPoints( player.getVictoryPoints() + 1 );
+
+			Map<IDevelopmentCard,Integer> developmentCards = player.getDevelopmentCards();
+
+			if(developmentCards.get(DevelopmentCard.MONUMENT) <= 0)
+				throw new GameModelException();
+			else
+				developmentCards.put( DevelopmentCard.MONUMENT, developmentCards.get(DevelopmentCard.MONUMENT) - 1);
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
+		return "Success";
 	}
 
 	@Override
@@ -243,8 +373,42 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String yearOfPlenty(ICommandParams params,
 			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerYearofPlenty yop = (ServerYearofPlenty)params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(yop.getPlayerIndex());
+
+			IBank bank = game.getBank();
+
+			ResourceCard resource1 = ResourceCard.valueOf(yop.getResource1());
+			ResourceCard resource2 = ResourceCard.valueOf(yop.getResource2());
+
+			// Remove the two resources from the Bank and pass them to player, if possible
+			Map<IResourceCard, Integer> resourceCards = bank.getResourceCards();
+			if(resourceCards.get(resource1) > 0 && resourceCards.get(resource2) > 0) {
+
+				resourceCards.put( resource1, resourceCards.get(resource1) - 1 );
+				resourceCards.put( resource2, resourceCards.get(resource2) - 1 );
+
+				bank.setResourceCards(resourceCards);
+
+				Map<IResourceCard, Integer> playerCards = player.getResourceCards();
+				playerCards.put( resource1, playerCards.get(resource1) + 1 );
+				playerCards.put( resource2, playerCards.get(resource2) + 1 );
+
+				player.setResourceCards(playerCards);
+			}
+			else
+				throw new GameModelException();
+
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
+		return "Success";
 	}
 
 	@Override
@@ -273,6 +437,18 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
+	}
+
+	@Override
+	public String listAI(String json, UserAttributes ua) throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException();
+	}
+
+	@Override
+	public String addAI(String json, UserAttributes ua) throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException();
 	}
 
 	

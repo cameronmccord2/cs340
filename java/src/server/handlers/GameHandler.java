@@ -43,15 +43,15 @@ public class GameHandler implements HttpHandler {
 		
 		Scanner s = new Scanner(is);
 		s.useDelimiter("\\A");
-	    String json = s.hasNext() ? s.next() : "";
-	    s.close();
-	    is.close();
-	    
-	    UserAttributes ua = new UserAttributes(exchange);
-	    CommandResponse response = null;
-	    
-	    switch(finalPiece){
-	    	case "model":
+		String json = s.hasNext() ? s.next() : "";
+		s.close();
+		is.close();
+
+		UserAttributes ua = new UserAttributes(exchange);
+		CommandResponse response = null;
+
+		switch(finalPiece){
+			case "model":
 				if(requestMethod.equals("GET")){
 					response = this.commandFacade.getGameModel(json, ua);
 				}
@@ -70,17 +70,17 @@ public class GameHandler implements HttpHandler {
 				break;
 			default:
 				response = new CommandResponse("Invaid endpoing requested", "403");
-	    }
+		}
 		
 		///prepare responseBody
-	    if(response.getResponseCode().equals("200")){
-	    	exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-	    	//add cookie here?
-	    	
-	    }
-	    else
-	    	exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
-	    
+		if(response.getResponseCode().equals("200")){
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			//add cookie here?
+
+		}
+		else
+			exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);
+
 		OutputStream responseBody = exchange.getResponseBody(); 
 		responseBody.write(response.getResponse().getBytes(Charset.forName("UTF-8")));
 		responseBody.close();

@@ -29,7 +29,7 @@ public interface IMaritimeTradeController extends IController
 	 * Called when the user selects the resource to get.
 	 * 
 	 * @param resource
-	 *            The selected "get" resource
+	 *			The selected "get" resource
 	 */
 	void setGetResource(ResourceType resource);
 	
@@ -37,7 +37,7 @@ public interface IMaritimeTradeController extends IController
 	 * Called when the user selects the resource to give.
 	 * 
 	 * @param resource
-	 *            The selected "give" resource
+	 *			The selected "give" resource
 	 */
 	void setGiveResource(ResourceType resource);
 	

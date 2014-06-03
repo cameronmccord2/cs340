@@ -7,70 +7,70 @@ import shared.definitions.ResourceType;
  */
 public enum ResourceCard implements IResourceCard {
 
-    WOOD {
+	WOOD {
 
-        @Override
-        public String getName() {
-            return "Wood";
-        }
+		@Override
+		public String getName() {
+			return "Wood";
+		}
 
-        @Override
-        public ResourceType getType() {
-            return ResourceType.WOOD;
-        }
-    },
+		@Override
+		public ResourceType getType() {
+			return ResourceType.WOOD;
+		}
+	},
 
-    BRICK {
+	BRICK {
 
-        @Override
-        public String getName() {
-            return "Brick";
-        }
+		@Override
+		public String getName() {
+			return "Brick";
+		}
 
-        @Override
-        public ResourceType getType() {
-            return ResourceType.BRICK;
-        }
-    },
+		@Override
+		public ResourceType getType() {
+			return ResourceType.BRICK;
+		}
+	},
 
-    WHEAT {
+	WHEAT {
 
-        @Override
-        public String getName() {
-            return "Wheat";
-        }
+		@Override
+		public String getName() {
+			return "Wheat";
+		}
 
-        @Override
-        public ResourceType getType() {
-            return ResourceType.WHEAT ;
-        }
-    },
+		@Override
+		public ResourceType getType() {
+			return ResourceType.WHEAT ;
+		}
+	},
 
-    SHEEP {
+	SHEEP {
 
-        @Override
-        public String getName() {
-            return "Sheep";
-        }
+		@Override
+		public String getName() {
+			return "Sheep";
+		}
 
-        @Override
-        public ResourceType getType() {
-            return ResourceType.SHEEP;
-        }
-    },
+		@Override
+		public ResourceType getType() {
+			return ResourceType.SHEEP;
+		}
+	},
 
-    ORE {
+	ORE {
 
-        @Override
-        public String getName() {
-            return "Ore";
-        }
+		@Override
+		public String getName() {
+			return "Ore";
+		}
 
-        @Override
-        public ResourceType getType() {
-            return ResourceType.ORE;
-        }
-    };
+		@Override
+		public ResourceType getType() {
+			return ResourceType.ORE;
+		}
+	};
 
 	public static ResourceCard getCardForType(ResourceType resource) {
 		switch(resource){

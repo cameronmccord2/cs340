@@ -13,7 +13,7 @@ public interface IWaitView extends IOverlayView
 	 * Sets the message displayed by the wait view.
 	 * 
 	 * @param message
-	 *            The message to be displayed
+	 *			The message to be displayed
 	 */
 	void setMessage(String message);
 }

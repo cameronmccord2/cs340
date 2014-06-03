@@ -28,7 +28,7 @@ public class BuyDevCardView extends OverlayView implements IBuyDevCardView {
 	private JLabel label;
 	private JButton acceptButton;
 	private JButton rejectButton;
-    private JLabel imageLabel;
+	private JLabel imageLabel;
 	private JPanel buttonPanel;
 
 	public BuyDevCardView() {
@@ -43,14 +43,14 @@ public class BuyDevCardView extends OverlayView implements IBuyDevCardView {
 		label.setFont(labelFont);
 		this.add(label, BorderLayout.NORTH);
 
-        try {
-            BufferedImage devCardImg = ImageIO.read(new File("images/building/card.jpg"));
-            imageLabel = new JLabel(new ImageIcon(devCardImg));
-            this.setBackground(Color.WHITE);
-            this.add(imageLabel, BorderLayout.CENTER);
-        } catch (IOException ex) {
-            // Handle Exception Here
-        }
+		try {
+			BufferedImage devCardImg = ImageIO.read(new File("images/building/card.jpg"));
+			imageLabel = new JLabel(new ImageIcon(devCardImg));
+			this.setBackground(Color.WHITE);
+			this.add(imageLabel, BorderLayout.CENTER);
+		} catch (IOException ex) {
+			// Handle Exception Here
+		}
 
 		acceptButton = new JButton("Buy Card");
 		acceptButton.addActionListener(actionListener);

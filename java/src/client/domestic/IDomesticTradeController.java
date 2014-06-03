@@ -20,7 +20,7 @@ public interface IDomesticTradeController extends IController
 	 * of a resource.
 	 * 
 	 * @param resource
-	 *            The resource whose amount is being decreased
+	 *			The resource whose amount is being decreased
 	 */
 	void decreaseResourceAmount(ResourceType resource);
 	
@@ -29,7 +29,7 @@ public interface IDomesticTradeController extends IController
 	 * of a resource.
 	 * 
 	 * @param resource
-	 *            The resource whose amount is being increased
+	 *			The resource whose amount is being increased
 	 */
 	void increaseResourceAmount(ResourceType resource);
 	
@@ -44,8 +44,8 @@ public interface IDomesticTradeController extends IController
 	 * trade with.
 	 * 
 	 * @param playerIndex
-	 *            The index [0, 3] of the selected trading partner, or -1 if
-	 *            "None" was selected
+	 *			The index [0, 3] of the selected trading partner, or -1 if
+	 *			"None" was selected
 	 */
 	void setPlayerToTradeWith(int playerIndex);
 	
@@ -54,7 +54,7 @@ public interface IDomesticTradeController extends IController
 	 * be received.
 	 * 
 	 * @param resource
-	 *            The resource to be received
+	 *			The resource to be received
 	 */
 	void setResourceToReceive(ResourceType resource);
 	
@@ -63,7 +63,7 @@ public interface IDomesticTradeController extends IController
 	 * be sent.
 	 * 
 	 * @param resource
-	 *            The resource to be sent
+	 *			The resource to be sent
 	 */
 	void setResourceToSend(ResourceType resource);
 	
@@ -72,7 +72,7 @@ public interface IDomesticTradeController extends IController
 	 * resource.
 	 * 
 	 * @param resource
-	 *            The resource for which "none" was selected
+	 *			The resource for which "none" was selected
 	 */
 	void unsetResource(ResourceType resource);
 	
@@ -86,7 +86,7 @@ public interface IDomesticTradeController extends IController
 	 * rejects a trade.
 	 * 
 	 * @param willAccept
-	 *            Whether or not the user accepted the trade
+	 *			Whether or not the user accepted the trade
 	 */
 	void acceptTrade(boolean willAccept);
 }

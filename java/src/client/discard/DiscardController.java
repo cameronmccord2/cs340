@@ -107,8 +107,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	 * This method is called when the user increases the amount of the specified
 	 * resource.
 	 *
-	 * @param resource
-	 *            The resource that was increased
+	 * @param type
+	 *			The resource that was increased
 	 */
 	@Override
 	public void increaseAmount(ResourceType type)
@@ -123,8 +123,8 @@ public class DiscardController extends Controller implements IDiscardController,
 	 * This method is called when the user decreases the amount of the specified
 	 * resource.
 	 *
-	 * @param resource
-	 *            The resource that was decreased
+	 * @param type
+	 *			The resource that was decreased
 	 */
 	@Override
 	public void decreaseAmount(ResourceType type)
@@ -276,7 +276,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		for(Map.Entry<ResourceType, Integer> resource : resourceSelection.entrySet())
 		{
 			this.getDiscardView().setResourceDiscardAmount(resource.getKey(),
-			                                               resource.getValue());
+														   resource.getValue());
 		}
 	}
 
@@ -287,13 +287,13 @@ public class DiscardController extends Controller implements IDiscardController,
 		{
 			IFacade facade = proxy.getFacade();
 			String status = facade.getCurrentState();
-    		player = facade.getCurrentUser();
+			player = facade.getCurrentUser();
 
 			if(status.equals("Discarding"))
 			{
-//        		System.out.println(player);
+//				System.out.println(player);
 				finishedDiscarding = player.hasDiscarded();
-        		
+
 				int discardAmount = this.getAmountToDiscard();
 
 				if(discardAmount == 0)
@@ -301,10 +301,10 @@ public class DiscardController extends Controller implements IDiscardController,
 
 				if(!finishedDiscarding)
 				{
-    				if(!getDiscardView().isModalShowing())
-    					getDiscardView().showModal();
+					if(!getDiscardView().isModalShowing())
+						getDiscardView().showModal();
 
-        			updateView();
+					updateView();
 				}
 				else
 				{
@@ -334,7 +334,7 @@ public class DiscardController extends Controller implements IDiscardController,
  * Used to enable or disable the discard button.
  *
  * @param enabled
- *            Whether or not the discard button should be enabled
+ *			Whether or not the discard button should be enabled
  */
 //void setDiscardButtonEnabled(boolean enabled);
 
@@ -342,9 +342,9 @@ public class DiscardController extends Controller implements IDiscardController,
  * Sets the discard amount displayed for the specified resource.
  *
  * @param resource
- *            The resource for which the discard amount is being set
+ *			The resource for which the discard amount is being set
  * @param amount
- *            The new discard amount
+ *			The new discard amount
  */
 //void setResourceDiscardAmount(ResourceType resource, int amount);
 
@@ -352,9 +352,9 @@ public class DiscardController extends Controller implements IDiscardController,
  * Sets the maximum amount displayed for the specified resource.
  *
  * @param resource
- *            The resource for which the maximum amount is being set
+ *			The resource for which the maximum amount is being set
  * @param maxAmount
- *            The new maximum amount
+ *			The new maximum amount
  */
 //void setResourceMaxAmount(ResourceType resource, int maxAmount);
 
@@ -365,14 +365,14 @@ public class DiscardController extends Controller implements IDiscardController,
  * operations are allowed.)
  *
  * @param resource
- *            The resource for which amount changes are being enabled or
- *            disabled
+ *			The resource for which amount changes are being enabled or
+ *			disabled
  * @param increase
- *            Whether or not the amount for the specified resource can be
- *            increased
+ *			Whether or not the amount for the specified resource can be
+ *			increased
  * @param decrease
- *            Whether or not the amount for the specified resource can be
- *            decreased
+ *			Whether or not the amount for the specified resource can be
+ *			decreased
  */
 //void setResourceAmountChangeEnabled(ResourceType resource,
 //									boolean increase, boolean decrease);
@@ -382,7 +382,7 @@ public class DiscardController extends Controller implements IDiscardController,
  * to discard, and how many remain to set.
  *
  * @param message
- *            The new state message (e.g., "0/6")
+ *			The new state message (e.g., "0/6")
  */
 //void setStateMessage(String message);
 

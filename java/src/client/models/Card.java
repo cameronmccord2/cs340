@@ -5,8 +5,8 @@ package client.models;
  */
 public class Card implements ICard {
 
-    @Override
-    public String getName() {
-        return "Card";
-    }
+	@Override
+	public String getName() {
+		return "Card";
+	}
 }

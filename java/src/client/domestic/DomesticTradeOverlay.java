@@ -148,7 +148,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 		noneToggle.setActionCommand("None");
 		noneToggle.putClientProperty( "JButton.buttonType", "segmented" );
 		noneToggle.putClientProperty( "JButton.segmentPosition", "first" );
-        toggleButtonGroup.add(noneToggle);
+		toggleButtonGroup.add(noneToggle);
 
 		this.playerSelectionPanel = new JPanel();
 		this.playerSelectionPanel.setLayout(new BoxLayout(this.playerSelectionPanel, BoxLayout.X_AXIS));
@@ -183,8 +183,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 			JToggleButton sendToggle = new JToggleButton("send");
 			sendToggle.setActionCommand("send");
 			sendToggle.putClientProperty( "JButton.buttonType", "segmented" );
-	        sendToggle.putClientProperty( "JButton.segmentPosition", "first" );
-	        sendToggle.addActionListener(new ActionListener(){
+			sendToggle.putClientProperty( "JButton.segmentPosition", "first" );
+			sendToggle.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -192,17 +192,17 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 					resourceCounts.get(resourceType).setText("0");
 					getController().setResourceToSend(resourceType);
 				}
-	        	
-	        });
-	        toggleButtonGroup.add(sendToggle);
-	        
-	        
-	        JToggleButton noneToggle = new JToggleButton("none");
-	        noneToggle.setSelected(true);
-	        noneToggle.setActionCommand("none");
-	        noneToggle.putClientProperty( "JButton.buttonType", "segmented" );
-	        noneToggle.putClientProperty( "JButton.segmentPosition", "middle" );
-	        noneToggle.addActionListener(new ActionListener(){
+
+			});
+			toggleButtonGroup.add(sendToggle);
+
+
+			JToggleButton noneToggle = new JToggleButton("none");
+			noneToggle.setSelected(true);
+			noneToggle.setActionCommand("none");
+			noneToggle.putClientProperty( "JButton.buttonType", "segmented" );
+			noneToggle.putClientProperty( "JButton.segmentPosition", "middle" );
+			noneToggle.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -210,15 +210,15 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 					resourceCounts.get(resourceType).setText("0");
 					getController().unsetResource(resourceType);
 				}
-	        	
-	        });
-	        toggleButtonGroup.add(noneToggle);
-	        
-	        JToggleButton recieveToggle = new JToggleButton("recieve");
-	        recieveToggle.setActionCommand("recieve");
-	        recieveToggle.putClientProperty( "JButton.buttonType", "segmented" );
-	        recieveToggle.putClientProperty( "JButton.segmentPosition", "last" );
-	        recieveToggle.addActionListener(new ActionListener(){
+
+			});
+			toggleButtonGroup.add(noneToggle);
+
+			JToggleButton recieveToggle = new JToggleButton("recieve");
+			recieveToggle.setActionCommand("recieve");
+			recieveToggle.putClientProperty( "JButton.buttonType", "segmented" );
+			recieveToggle.putClientProperty( "JButton.segmentPosition", "last" );
+			recieveToggle.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -226,12 +226,12 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 					resourceCounts.get(resourceType).setText("0");
 					getController().setResourceToReceive(resourceType);
 				}
-	        	
-	        });
-	        toggleButtonGroup.add(recieveToggle);
+
+			});
+			toggleButtonGroup.add(recieveToggle);
 			
 
-	        
+
 			JPanel segmentedButtonPanel = new JPanel();
 			segmentedButtonPanel.setAlignmentX(CENTER_ALIGNMENT);
 			segmentedButtonPanel.setLayout(new BoxLayout(segmentedButtonPanel, BoxLayout.X_AXIS));
@@ -318,29 +318,29 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
 	/**
 	* Resizes an image using a Graphics2D object backed by a BufferedImage.
-	* @param srcImg - source image to scale
+	* @param src - source image to scale
 	* @param w - desired width
 	* @param h - desired height
 	* @return - the new resized image
 	*/
 	private BufferedImage getScaledImage(BufferedImage src, int w, int h){
-	    int finalw = w;
-	    int finalh = h;
-	    double factor = 1.0d;
-	    if(src.getWidth() > src.getHeight()){
-	        factor = ((double)src.getHeight()/(double)src.getWidth());
-	        finalh = (int)(finalw * factor);                
-	    }else{
-	        factor = ((double)src.getWidth()/(double)src.getHeight());
-	        finalw = (int)(finalh * factor);
-	    }   
+		int finalw = w;
+		int finalh = h;
+		double factor = 1.0d;
+		if(src.getWidth() > src.getHeight()){
+			factor = ((double)src.getHeight()/(double)src.getWidth());
+			finalh = (int)(finalw * factor);
+		}else{
+			factor = ((double)src.getWidth()/(double)src.getHeight());
+			finalw = (int)(finalh * factor);
+		}
 
-	    BufferedImage resizedImg = new BufferedImage(finalw, finalh, BufferedImage.TRANSLUCENT);
-	    Graphics2D g2 = resizedImg.createGraphics();
-	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g2.drawImage(src, 0, 0, finalw, finalh, null);
-	    g2.dispose();
-	    return resizedImg;
+		BufferedImage resizedImg = new BufferedImage(finalw, finalh, BufferedImage.TRANSLUCENT);
+		Graphics2D g2 = resizedImg.createGraphics();
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.drawImage(src, 0, 0, finalw, finalh, null);
+		g2.dispose();
+		return resizedImg;
 	}
 	
 	private ActionListener playerSelectActionListener = new ActionListener(){
@@ -381,9 +381,9 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 			else
 				toggle.putClientProperty( "JButton.segmentPosition", "middle" );
 			toggle.setForeground(value[i].getColor().getJavaColor());
-	        toggleButtonGroup.add(toggle);
-	        this.playerSelectionPanel.add(toggle);
-	        this.playerButtons.add(toggle);
+			toggleButtonGroup.add(toggle);
+			this.playerSelectionPanel.add(toggle);
+			this.playerButtons.add(toggle);
 		}
 		this.players = value;
 		for (JPanel panel : this.upDownPanels) {

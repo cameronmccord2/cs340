@@ -9,12 +9,12 @@ public interface ICatanMap
 	public boolean canPlaceSettlement(ISettlement settlement);
 	public boolean canPlaceCity(ICity city);
 
-    public boolean isOceanHex(HexLocation hex);
-    
-    public void setProxy(IProxy proxy);
-    public IProxy getProxy();
+	public boolean isOceanHex(HexLocation hex);
 
-    public boolean canPlaceRoad(IRoadSegment segment);
+	public void setProxy(IProxy proxy);
+	public IProxy getProxy();
+
+	public boolean canPlaceRoad(IRoadSegment segment);
 
 	public boolean canMoveRobber(IPlayer player);
 	public IPiece distanceRule(IPiece piece);

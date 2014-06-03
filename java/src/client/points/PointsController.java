@@ -16,7 +16,7 @@ public class PointsController extends Controller implements IPointsController,
 															ICatanModelObserver
 {
 	private IGameFinishedView finishedView;
-    private IProxy proxy;
+	private IProxy proxy;
 
 	/**
 	 * PointsController constructor
@@ -28,12 +28,12 @@ public class PointsController extends Controller implements IPointsController,
 	{
 
 		super(view);
-        this.proxy = proxy;
+		this.proxy = proxy;
 
 		setFinishedView(finishedView);
 
 		initFromModel();
-        this.proxy.getFacade().registerAsObserver(this);
+		this.proxy.getFacade().registerAsObserver(this);
 	}
 
 	public IPointsView getPointsView()
@@ -53,54 +53,54 @@ public class PointsController extends Controller implements IPointsController,
 
 	private void initFromModel() {
 
-        if(this.proxy.getGameId() != null) {
+		if(this.proxy.getGameId() != null) {
 
-            IFacade facade = this.proxy.getFacade();
+			IFacade facade = this.proxy.getFacade();
 
-            try {
+			try {
 
-                getPointsView().setPoints( facade.getCurrentUser().getVictoryPoints() );
+				getPointsView().setPoints( facade.getCurrentUser().getVictoryPoints() );
 
-                Integer winnerId = facade.getWinner();
+				Integer winnerId = facade.getWinner();
 
-                if( winnerId >= 0 ) {
-                    PlayerInfo winner = getPlayerById(winnerId);
-                    getFinishedView().setWinner(winner.getName(), isLocalPlayer(winnerId));
-                    getFinishedView().showModal();
-                }
+				if( winnerId >= 0 ) {
+					PlayerInfo winner = getPlayerById(winnerId);
+					getFinishedView().setWinner(winner.getName(), isLocalPlayer(winnerId));
+					getFinishedView().showModal();
+				}
 
-            } catch (CantFindGameModelException | CantFindPlayerException e) {
-                e.printStackTrace();
-            }
-        }
+			} catch (CantFindGameModelException | CantFindPlayerException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-    /*
-    private int calculateSettlementPoints() {
+	/*
+	private int calculateSettlementPoints() {
 
-        int points = 0;
-        IGame game = this.proxy.getGameModel();
-        Collection<ISettlement> settlements = game.getMap().getSettlements();
+		int points = 0;
+		IGame game = this.proxy.getGameModel();
+		Collection<ISettlement> settlements = game.getMap().getSettlements();
 
-        try {
-            for( ISettlement settlement: settlements) {
-                if(settlement.getPlayer() == this.proxy.getFacade().getCurrentUser())
-                    points += settlement.getPointValue();
-            }
-        } catch (CantFindGameModelException e) {
-           e.printStackTrace();
-        } catch (CantFindPlayerException e) {
-          e.printStackTrace();
-        }
+		try {
+			for( ISettlement settlement: settlements) {
+				if(settlement.getPlayer() == this.proxy.getFacade().getCurrentUser())
+					points += settlement.getPointValue();
+			}
+		} catch (CantFindGameModelException e) {
+		   e.printStackTrace();
+		} catch (CantFindPlayerException e) {
+		  e.printStackTrace();
+		}
 
-        return points;
-    }
+		return points;
+	}
 	*/
 
 
 	private boolean isLocalPlayer(Integer id) throws CantFindGameModelException, CantFindPlayerException {
-        return id == this.proxy.getFacade().getCurrentUser().getPlayerInfo().getId();
-    }
+		return id == this.proxy.getFacade().getCurrentUser().getPlayerInfo().getId();
+	}
 
 
 
@@ -108,11 +108,11 @@ public class PointsController extends Controller implements IPointsController,
 
 		try
 		{
-            PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
-            for(PlayerInfo player : players) {
-                if(player.getId() == id)
-                    return player;
-            }
+			PlayerInfo[] players = this.proxy.getFacade().getAllPlayerInfos();
+			for(PlayerInfo player : players) {
+				if(player.getId() == id)
+					return player;
+			}
 		}
 		catch(CantFindGameModelException e)
 		{
@@ -120,12 +120,12 @@ public class PointsController extends Controller implements IPointsController,
 		}
 
 
-        return null;
+		return null;
 	}
 
-    @Override
-    public void update() {
-       initFromModel();
-    }
+	@Override
+	public void update() {
+	   initFromModel();
+	}
 }
 

@@ -40,7 +40,7 @@ public class Player extends Participant implements IPlayer {
 		this.settlements = new ArrayList<>();
 		this.roads = new ArrayList<>();
 		this.cities = new ArrayList<>();
-        this.victoryPoints = 0;
+		this.victoryPoints = 0;
 	}
 
 	/**
@@ -53,17 +53,17 @@ public class Player extends Participant implements IPlayer {
 	 * @param roads the roads
 	 */
 	public Player(PlayerInfo playerInfo,
-	              Map<IDevelopmentCard, Integer> developmentCards,
-	              Map<IResourceCard, Integer> resourceCards,
-	              List<ISettlement> settlements,
-	              List<IRoadSegment> roads,
-	              List<ICity> cities) {
+				  Map<IDevelopmentCard, Integer> developmentCards,
+				  Map<IResourceCard, Integer> resourceCards,
+				  List<ISettlement> settlements,
+				  List<IRoadSegment> roads,
+				  List<ICity> cities) {
 		super(developmentCards, resourceCards);
 		this.playerInfo = playerInfo;
 		this.settlements = settlements;
 		this.roads = roads;
 		this.cities = cities;
-        this.victoryPoints = 0;
+		this.victoryPoints = 0;
 	}
 
 	/* (non-Javadoc)

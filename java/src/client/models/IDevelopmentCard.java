@@ -7,11 +7,11 @@ import shared.definitions.DevCardType;
  */
 public interface IDevelopmentCard extends ICard {
 
-    /**
-     * Gets the type of the card.
-     *
-     * @return the type
-     */
-    public DevCardType getType();
+	/**
+	 * Gets the type of the card.
+	 *
+	 * @return the type
+	 */
+	public DevCardType getType();
 
 }

@@ -491,9 +491,9 @@ public class MapComponent extends JComponent {
 						break;
 					}
 
-                    initDrop();
+					initDrop();
 
-                    repaint();
+					repaint();
 				}
 
 			}
@@ -600,10 +600,10 @@ public class MapComponent extends JComponent {
 
 	private void drawSettlements(Graphics2D g2) {
 
-	    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);     
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-	    for (Map.Entry<VertexLocation, CatanColor> entry : settlements.entrySet()) {
-		    VertexLocation vertLoc = entry.getKey();
+		for (Map.Entry<VertexLocation, CatanColor> entry : settlements.entrySet()) {
+			VertexLocation vertLoc = entry.getKey();
 			CatanColor color = entry.getValue();
 			drawSettlement(g2, vertLoc, color);
 		}
@@ -629,7 +629,7 @@ public class MapComponent extends JComponent {
 
 	private void drawCities(Graphics2D g2) {
 
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);     
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		for (Map.Entry<VertexLocation, CatanColor> entry : cities.entrySet()) {
 			VertexLocation vertLoc = entry.getKey();

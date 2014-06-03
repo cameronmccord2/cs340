@@ -25,6 +25,13 @@ public class ServerBuildSettlement implements ICommandParams{
 		this.vertexLocation = new SimplifiedVertexLocation(vertexLocation);
 		this.free = free;
 	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.vertexLocation == null)
+			throw new CommandParamNotValidException("Vertex location cant be null" + this.toString());
+	}
 	/**
 	 * @return the type
 	 */
@@ -74,9 +81,18 @@ public class ServerBuildSettlement implements ICommandParams{
 		this.free = free;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerBuildSettlement [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", vertexLocation=");
+		builder.append(vertexLocation);
+		builder.append(", free=");
+		builder.append(free);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

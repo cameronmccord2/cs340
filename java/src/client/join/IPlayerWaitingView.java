@@ -14,7 +14,7 @@ public interface IPlayerWaitingView extends IOverlayView
 	 * Sets the list of players who have already joined the game
 	 * 
 	 * @param value
-	 *            List of players who have already joined the game
+	 *			List of players who have already joined the game
 	 */
 	void setPlayers(PlayerInfo[] value);
 	
@@ -22,7 +22,7 @@ public interface IPlayerWaitingView extends IOverlayView
 	 * Sets the list of AI types from which the user may select
 	 * 
 	 * @param value
-	 *            List of AI types from which the user may select
+	 *			List of AI types from which the user may select
 	 */
 	void setAIChoices(String[] value);
 	

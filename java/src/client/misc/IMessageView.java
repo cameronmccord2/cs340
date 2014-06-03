@@ -12,7 +12,7 @@ public interface IMessageView extends IOverlayView
 	 * Sets the title to be displayed.
 	 * 
 	 * @param title
-	 *            The title
+	 *			The title
 	 */
 	void setTitle(String title);
 	
@@ -20,7 +20,7 @@ public interface IMessageView extends IOverlayView
 	 * Sets the message to be displayed.
 	 * 
 	 * @param message
-	 *            The message
+	 *			The message
 	 */
 	void setMessage(String message);
 }

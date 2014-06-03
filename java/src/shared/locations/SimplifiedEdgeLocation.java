@@ -6,33 +6,33 @@ package shared.locations;
  * be serialized as JSON and the output will be just what the server needs.
  */
 public class SimplifiedEdgeLocation {
-    int x;
-    int y;
-    String direction;
+	int x;
+	int y;
+	String direction;
 
-    public SimplifiedEdgeLocation() {
-        x = 0;
-        y = 0;
-        direction = "N";
-    }
-    public SimplifiedEdgeLocation(EdgeLocation edge) {
-        x = edge.getHexLocation().getX();
-        y = edge.getHexLocation().getY();
-        switch(edge.getDirection().toString().toUpperCase()){
-            case "NORTHWEST":
-                direction = "NW"; break;
-            case "NORTH":
-                direction = "N"; break;
-            case "NORTHEAST":
-                direction = "NE"; break;
-            case "SOUTHEAST":
-                direction = "SE"; break;
-            case "SOUTH":
-                direction = "S"; break;
-            case "SOUTHWEST":
-                direction = "SW"; break;
-        }
-    }
+	public SimplifiedEdgeLocation() {
+		x = 0;
+		y = 0;
+		direction = "N";
+	}
+	public SimplifiedEdgeLocation(EdgeLocation edge) {
+		x = edge.getHexLocation().getX();
+		y = edge.getHexLocation().getY();
+		switch(edge.getDirection().toString().toUpperCase()){
+			case "NORTHWEST":
+				direction = "NW"; break;
+			case "NORTH":
+				direction = "N"; break;
+			case "NORTHEAST":
+				direction = "NE"; break;
+			case "SOUTHEAST":
+				direction = "SE"; break;
+			case "SOUTH":
+				direction = "S"; break;
+			case "SOUTHWEST":
+				direction = "SW"; break;
+		}
+	}
 	public int getX() {
 		return x;
 	}

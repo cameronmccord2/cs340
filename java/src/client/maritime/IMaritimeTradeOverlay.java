@@ -32,10 +32,10 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * Displays the "get" undo components using the specified amount
 	 * 
 	 * @param selectedResource
-	 *            The "get" resource selected by the user
+	 *			The "get" resource selected by the user
 	 * @param amount
-	 *            The amount of the specified "get" resource the user will
-	 *            receive (e.g., 1)
+	 *			The amount of the specified "get" resource the user will
+	 *			receive (e.g., 1)
 	 */
 	void selectGetOption(ResourceType selectedResource, int amount);
 	
@@ -46,10 +46,10 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * Displays the "give" undo components using the specified amount
 	 * 
 	 * @param selectedResource
-	 *            The "give" resource selected by the user
+	 *			The "give" resource selected by the user
 	 * @param amount
-	 *            The amount of the specified "give" resource the user will give
-	 *            (e.g., 3)
+	 *			The amount of the specified "give" resource the user will give
+	 *			(e.g., 3)
 	 */
 	void selectGiveOption(ResourceType selectedResource, int amount);
 	
@@ -57,7 +57,7 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * Sets the message on the button indicating the state of the trade.
 	 * 
 	 * @param message
-	 *            The new state message
+	 *			The new state message
 	 */
 	void setStateMessage(String message);
 	
@@ -65,7 +65,7 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * Enables or disables the trade button.
 	 * 
 	 * @param enable
-	 *            Whether or not the user may currently execute the trade
+	 *			Whether or not the user may currently execute the trade
 	 */
 	void setTradeEnabled(boolean enable);
 	
@@ -73,7 +73,7 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * Enables or disables the cancel button.
 	 * 
 	 * @param enabled
-	 *            Whether or not the user may cancel the trade operation
+	 *			Whether or not the user may cancel the trade operation
 	 */
 	void setCancelEnabled(boolean enabled);
 	
@@ -82,7 +82,7 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * and disabling the ones he can't.
 	 * 
 	 * @param enabledResources
-	 *            Array of "get" resources that should be enabled.
+	 *			Array of "get" resources that should be enabled.
 	 */
 	void showGetOptions(ResourceType[] enabledResources);
 	
@@ -91,7 +91,7 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 * and disabling the ones he can't.
 	 * 
 	 * @param enabledResources
-	 *            Array of "give" resources that should be enabled.
+	 *			Array of "give" resources that should be enabled.
 	 */
 	void showGiveOptions(ResourceType[] enabledResources);
 	

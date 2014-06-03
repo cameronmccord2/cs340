@@ -21,7 +21,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * on initializing the controller, and only called once.
 	 * 
 	 * @param value
-	 *            Information about the players that can be traded with
+	 *			Information about the players that can be traded with
 	 */
 	void setPlayers(PlayerInfo[] value);
 	
@@ -29,7 +29,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Enables or disables the ability to select a player to trade with.
 	 * 
 	 * @param enable
-	 *            Whether or not player selection is currently allowed
+	 *			Whether or not player selection is currently allowed
 	 */
 	void setPlayerSelectionEnabled(boolean enable);
 	
@@ -37,10 +37,10 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Sets the amount displayed for a resource.
 	 * 
 	 * @param resource
-	 *            The resource for which the amount is being set
+	 *			The resource for which the amount is being set
 	 * @param amount
-	 *            The string to be displayed as the resource's amount (can be
-	 *            empty)
+	 *			The string to be displayed as the resource's amount (can be
+	 *			empty)
 	 */
 	void setResourceAmount(ResourceType resource, String amount);
 	
@@ -49,12 +49,12 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * amount.
 	 * 
 	 * @param resource
-	 *            The resource for which amount changing is being enabled or
-	 *            disabled
+	 *			The resource for which amount changing is being enabled or
+	 *			disabled
 	 * @param canIncrease
-	 *            Whether or not the resource's amount may be increased
+	 *			Whether or not the resource's amount may be increased
 	 * @param canDecrease
-	 *            Whether or not the resource's amount may be decreased
+	 *			Whether or not the resource's amount may be decreased
 	 */
 	void setResourceAmountChangeEnabled(ResourceType resource,
 										boolean canIncrease,
@@ -64,7 +64,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Enables or disables the ability to select resources to trade.
 	 * 
 	 * @param enable
-	 *            Whether or not the user can select resources to trade
+	 *			Whether or not the user can select resources to trade
 	 */
 	void setResourceSelectionEnabled(boolean enable);
 	
@@ -72,7 +72,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Sets the message on the button indicating the state of the trade.
 	 * 
 	 * @param message
-	 *            The new state message
+	 *			The new state message
 	 */
 	void setStateMessage(String message);
 	
@@ -80,7 +80,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Enables or disables the trade button.
 	 * 
 	 * @param enable
-	 *            Whether or not the user may currently execute the trade
+	 *			Whether or not the user may currently execute the trade
 	 */
 	void setTradeEnabled(boolean enable);
 	
@@ -88,7 +88,7 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Enables or disables the cancel button.
 	 * 
 	 * @param enabled
-	 *            Whether or not the user may cancel the trade operation
+	 *			Whether or not the user may cancel the trade operation
 	 */
 	void setCancelEnabled(boolean enabled);
 	

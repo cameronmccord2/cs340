@@ -10,33 +10,53 @@ import server.commands.exceptions.CommandParamNotValidException;
  */
 public class SimplifiedVertexLocation implements ICommandParams {
 
-    private int x;
-    private int y;
-    private String direction;
+	private int x;
+	private int y;
+	private String direction;
 
-    public SimplifiedVertexLocation() {
-        x = 0;
-        y = 0;
-        direction = "NW";
-    }
-    public SimplifiedVertexLocation(VertexLocation vertex) {
-        x = vertex.getHexLocation().getX();
-        y = vertex.getHexLocation().getY();
-        switch(vertex.getDirection().toString().toUpperCase()){
-            case "NORTHWEST":
-                direction = "NW"; break;
-            case "WEST":
-                direction = "W"; break;
-            case "NORTHEAST":
-                direction = "NE"; break;
-            case "SOUTHEAST":
-                direction = "SE"; break;
-            case "EAST":
-                direction = "E"; break;
-            case "SOUTHWEST":
-                direction = "SW"; break;
-        }
-    }
+	public SimplifiedVertexLocation() {
+		x = 0;
+		y = 0;
+		direction = "NW";
+	}
+	public SimplifiedVertexLocation(VertexLocation vertex) {
+		x = vertex.getHexLocation().getX();
+		y = vertex.getHexLocation().getY();
+		switch(vertex.getDirection().toString().toUpperCase()){
+			case "NORTHWEST":
+				direction = "NW"; break;
+			case "WEST":
+				direction = "W"; break;
+			case "NORTHEAST":
+				direction = "NE"; break;
+			case "SOUTHEAST":
+				direction = "SE"; break;
+			case "EAST":
+				direction = "E"; break;
+			case "SOUTHWEST":
+				direction = "SW"; break;
+		}
+	}
+
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public String getDirection() {
+		return direction;
+	}
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
 	@Override
 	public void isValid() throws CommandParamNotValidException {
 		if(this.direction == null || this.direction.length() == 0)

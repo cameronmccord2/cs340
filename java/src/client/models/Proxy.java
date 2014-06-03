@@ -507,7 +507,7 @@ public class Proxy implements IProxy {
 				 StringBuilder out = new StringBuilder();
 				 String line;
 				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
+					 out.append(line);
 				 }
 				 reader.close();
 				 responseBody.close();
@@ -522,15 +522,15 @@ public class Proxy implements IProxy {
 				 StringBuilder out = new StringBuilder();
 				 String line;
 				 while ((line = reader.readLine()) != null) {
-				     out.append(line);
+					 out.append(line);
 				 }
 				 reader.close();
 				 responseBody.close();
 				 return new ServerResponse(out.toString(), connection.getResponseCode());
 			 }
-	    }catch(Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
-	    }
+		}
 		return null;
 	}
 
@@ -555,7 +555,7 @@ public class Proxy implements IProxy {
 //				 StringBuilder out = new StringBuilder();
 //				 String line;
 //				 while ((line = reader.readLine()) != null) {
-//				     out.append(line);
+//					 out.append(line);
 //				 }
 //				 reader.close();
 //				 responseBody.close();
@@ -570,15 +570,15 @@ public class Proxy implements IProxy {
 //				 StringBuilder out = new StringBuilder();
 //				 String line;
 //				 while ((line = reader.readLine()) != null) {
-//				     out.append(line);
+//					 out.append(line);
 //				 }
 //				 reader.close();
 //				 responseBody.close();
 //				 return new ServerResponse(out.toString(), connection.getResponseCode());
 //			 }
-//	    }catch(Exception e){
+//		}catch(Exception e){
 //			e.printStackTrace();
-//	    }
+//		}
 //		return null;
 //	}
 //	private ServerResponse doJoinPost(String urlPath, String postData) {
@@ -606,7 +606,7 @@ public class Proxy implements IProxy {
 //				 StringBuilder out = new StringBuilder();
 //				 String line;
 //				 while ((line = reader.readLine()) != null) {
-//				     out.append(line);
+//					 out.append(line);
 //				 }
 //				 reader.close();
 //				 responseBody.close();
@@ -621,15 +621,15 @@ public class Proxy implements IProxy {
 //				 StringBuilder out = new StringBuilder();
 //				 String line;
 //				 while ((line = reader.readLine()) != null) {
-//				     out.append(line);
+//					 out.append(line);
 //				 }
 //				 reader.close();
 //				 responseBody.close();
 //				 return new ServerResponse(out.toString(), connection.getResponseCode());
 //			 }
-//	    }catch(Exception e){
+//		}catch(Exception e){
 //			e.printStackTrace();
-//	    }
+//		}
 //		return null;
 //	}
 //
@@ -658,7 +658,7 @@ public class Proxy implements IProxy {
 //				 StringBuilder out = new StringBuilder();
 //				 String line;
 //				 while ((line = reader.readLine()) != null) {
-//				     out.append(line);
+//					 out.append(line);
 //				 }
 //				 reader.close();
 //				 responseBody.close();
@@ -673,15 +673,15 @@ public class Proxy implements IProxy {
 //				 StringBuilder out = new StringBuilder();
 //				 String line;
 //				 while ((line = reader.readLine()) != null) {
-//				     out.append(line);
+//					 out.append(line);
 //				 }
 //				 reader.close();
 //				 responseBody.close();
 //				 return new ServerResponse(out.toString(), connection.getResponseCode());
 //			 }
-//	    }catch(Exception e){
+//		}catch(Exception e){
 //			e.printStackTrace();
-//	    }
+//		}
 //		return null;
 //	}
 

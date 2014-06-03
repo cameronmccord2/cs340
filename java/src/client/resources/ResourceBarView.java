@@ -244,9 +244,9 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 
 		if(TESTING)
 		{
-    		testButton = new JButton("Enable");
-    		testButton.addActionListener(actionListener);
-    		discardButtonPanel.add(testButton);
+			testButton = new JButton("Enable");
+			testButton.addActionListener(actionListener);
+			discardButtonPanel.add(testButton);
 		}
 		this.setBackground(Color.WHITE);
 		this.add(discardButtonPanel, BorderLayout.SOUTH);
@@ -403,43 +403,43 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       boolean clickable)
+							   boolean clickable)
 		{
 			this(type, clickable, 0);
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       int elementCount)
+							   int elementCount)
 		{
 			this(type, false, elementCount);
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       boolean clickable,
-		                       int elementCount)
+							   boolean clickable,
+							   int elementCount)
 		{
 			this(type, clickable, false, elementCount);
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       boolean clickable,
-		                       BufferedImage elementImage)
+							   boolean clickable,
+							   BufferedImage elementImage)
 		{
 			this(type, clickable, elementImage, 0);
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       boolean clickable,
-		                       BufferedImage elementImage,
-		                       int elementCount)
+							   boolean clickable,
+							   BufferedImage elementImage,
+							   int elementCount)
 		{
 			this(type, clickable, false, elementImage, elementCount);
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       boolean clickable,
-		                       boolean enabled,
-		                       int elementCount)
+							   boolean clickable,
+							   boolean enabled,
+							   int elementCount)
 		{
 			this.initialize();
 			this.setElementType(type);
@@ -450,10 +450,10 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 		}
 
 		public ResourceElement(ResourceBarElement type,
-		                       boolean clickable,
-		                       boolean enabled,
-		                       BufferedImage elementImage,
-		                       int elementCount)
+							   boolean clickable,
+							   boolean enabled,
+							   BufferedImage elementImage,
+							   int elementCount)
 		{
 			this.initialize();
 			this.setElementType(type);
@@ -467,7 +467,7 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 		{
 			_resourceElementPanel = new JPanel();
 			_resourceElementPanel.setLayout(new BoxLayout(_resourceElementPanel,
-			                                              BoxLayout.X_AXIS));
+														  BoxLayout.X_AXIS));
 			_elementImageButton = new JButton();
 			_elementCountLabel = new JLabel();
 			FontUtils.setFont(_elementCountLabel, LABEL_FONT_SIZE);
@@ -525,8 +525,8 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 			float[] offsetFactors = {R_OFFSET, G_OFFSET, B_OFFSET, A_OFFSET};
 
 			this._disabledImage = new RescaleOp(scaleFactors,
-			                                   offsetFactors,
-			                                   null).filter(image, null);
+											   offsetFactors,
+											   null).filter(image, null);
 			this.update();
 		}
 
@@ -596,13 +596,13 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 //			c.insets = new Insets(0, 0, 0, 0);
 
 			if(_elementCount >= 0) {
-    			_elementCountLabel = new JLabel(""+_elementCount, JLabel.LEFT);
-    			FontUtils.setFont(_elementCountLabel, LABEL_FONT_SIZE);
-    			elementPanel.add(_elementCountLabel, c);
+				_elementCountLabel = new JLabel(""+_elementCount, JLabel.LEFT);
+				FontUtils.setFont(_elementCountLabel, LABEL_FONT_SIZE);
+				elementPanel.add(_elementCountLabel, c);
 			} else {
 				JLabel label = new JLabel();
 				FontUtils.setFont(label, LABEL_FONT_SIZE);
-    			elementPanel.add(label, c);
+				elementPanel.add(label, c);
 			}
 
 			_resourceElementPanel.setBackground(Color.WHITE);
