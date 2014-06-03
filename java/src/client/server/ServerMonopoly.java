@@ -20,6 +20,13 @@ public class ServerMonopoly implements ICommandParams{
 		this.resource = resource;
 		this.playerIndex = playerIndex;
 	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.resource == null || this.resource.length() == 0)
+			throw new CommandParamNotValidException("resource cant be null or of length zero: " + this.toString());
+	}
 	/**
 	 * @return the type
 	 */
@@ -57,9 +64,16 @@ public class ServerMonopoly implements ICommandParams{
 		this.playerIndex = playerIndex;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerMonopoly [type=");
+		builder.append(type);
+		builder.append(", resource=");
+		builder.append(resource);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

@@ -20,6 +20,14 @@ public class ServerChat implements ICommandParams{
 		this.content = content;
 	}
 
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+		if(this.content == null || this.content.length() == 0)
+			throw new CommandParamNotValidException("Content cant be null or of length zero: " + this.toString());
+	}
+
 	/**
 	 * @return the type
 	 */
@@ -62,11 +70,6 @@ public class ServerChat implements ICommandParams{
 		this.content = content;
 	}
 
-	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 }

@@ -18,6 +18,11 @@ public class ServerMonument implements ICommandParams{
 		this.type = type;
 		this.playerIndex = playerIndex;
 	}
+	@Override
+	public void isValid() throws CommandParamNotValidException {
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
+	}
 	/**
 	 * @return the type
 	 */
@@ -41,11 +46,6 @@ public class ServerMonument implements ICommandParams{
 	 */
 	public void setPlayerIndex(int playerIndex) {
 		this.playerIndex = playerIndex;
-	}
-	@Override
-	public void isValid() throws CommandParamNotValidException {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	
