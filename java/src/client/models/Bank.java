@@ -1,5 +1,7 @@
 package client.models;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -177,5 +179,20 @@ public class Bank extends Participant implements IBank {
 		builder.append(resourceCards);
 		builder.append("]");
 		return builder.toString();
+	}
+
+
+	@Override
+	public void deductResources(Collection<Resource> cost) {
+		Iterator<Resource> it = cost.iterator();
+		Map<IResourceCard, Integer> cards = this.getResourceCards();
+
+		while(it.hasNext()) {
+			Resource type = it.next();
+			ResourceCard card = ResourceCard.valueOf(type.getResourceType().toString());
+			cards.put( card, cards.get(card) - type.getAmount() );
+		}
+
+		this.setResourceCards(cards);
 	}
 }

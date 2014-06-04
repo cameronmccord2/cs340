@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
+import client.models.*;
+import client.server.*;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
@@ -14,39 +16,15 @@ import server.models.Register;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
+import shared.definitions.HexType;
+import shared.locations.DefaultLocation;
+import shared.locations.HexLocation;
+import shared.locations.ILocation;
 import shared.locations.VertexLocation;
-import client.models.City;
-import client.models.DevelopmentCard;
-import client.models.IBank;
-import client.models.IDevelopmentCard;
-import client.models.IGame;
-import client.models.IHex;
-import client.models.IPiece;
-import client.models.IPlayer;
-import client.models.IResourceCard;
-import client.models.IRoadSegment;
-import client.models.InvalidLocationException;
-import client.models.MessageLine;
-import client.models.ResourceCard;
-import client.models.RoadSegment;
-import client.models.Settlement;
-import client.models.UserManager;
 import client.models.translator.TREdgeLocation;
 import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
 import client.models.translator.TRTradeOffer;
-import client.server.AcceptTrade;
-import client.server.BuyDevCard;
-import client.server.GameServer;
-import client.server.OfferTrade;
-import client.server.ServerBuildCity;
-import client.server.ServerBuildRoad;
-import client.server.ServerBuildSettlement;
-import client.server.ServerChat;
-import client.server.ServerMonopoly;
-import client.server.ServerMonument;
-import client.server.ServerRoll;
-import client.server.ServerYearofPlenty;
 
 import com.google.gson.Gson;
 
@@ -54,13 +32,13 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	private UserManager userManager;
 	private GameList gameList;
-	
+
 	public ServerModelFacade(){
 		super();
 		this.userManager = new UserManager();
 		this.gameList = new GameList();
 	}
-	
+
 	@Override
 	public String getJsonGameModelString(UserAttributes userAttributes) {
 		// TODO Auto-generated method stub
@@ -158,6 +136,7 @@ public class ServerModelFacade implements IServerModelFacade {
 			Map<IDevelopmentCard, Integer> developmentCards = player.getDevelopmentCards();
 			developmentCards.put( draw, developmentCards.get(draw) + 1);
 			player.setDevelopmentCards(developmentCards);
+			player.deductResources(DevelopmentCard.getResourceCost());
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return e.getLocalizedMessage();
@@ -202,9 +181,9 @@ public class ServerModelFacade implements IServerModelFacade {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			if(game.getCurrentTrade() != null)
 				return "There is already a trade in progress, this mussn't be allowed to happen: " + game.getCurrentTrade().toString();
-			
+
 			game.setCurrentTrade(new TRTradeOffer(ot));
-			
+
 		} catch (InvalidUserAttributesException e) {
 			return e.getLocalizedMessage();
 		}
@@ -230,10 +209,13 @@ public class ServerModelFacade implements IServerModelFacade {
 
 			City city = new City(new VertexLocation(cityData.getVertexLocation()), player);
 
-			if(game.getMap().canPlaceCity(city))
+			if(game.getMap().canPlaceCity(city)) {
 				game.getMap().placeCity(city);
-			else
+				player.deductResources(RoadSegment.getResourceCost());
+			}
+			else {
 				throw new InvalidLocationException();
+			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return e.getLocalizedMessage();
@@ -262,10 +244,13 @@ public class ServerModelFacade implements IServerModelFacade {
 
 			IRoadSegment segment = new RoadSegment(road, player);
 
-			if(game.getMap().canPlaceRoad(segment))
+			if(game.getMap().canPlaceRoad(segment)) {
 				game.getMap().placeRoadSegment(segment);
-			else
+				player.deductResources(RoadSegment.getResourceCost());
+			}
+			else {
 				throw new InvalidLocationException();
+			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return e.getLocalizedMessage();
@@ -287,10 +272,13 @@ public class ServerModelFacade implements IServerModelFacade {
 
 			Settlement settlement = new Settlement(new VertexLocation(settlementData.getVertexLocation()), player);
 
-			if(game.getMap().canPlaceSettlement(settlement))
+			if(game.getMap().canPlaceSettlement(settlement)) {
 				game.getMap().placeSettlement(settlement);
-			else
+				player.deductResources(Settlement.getResourceCost());
+			}
+			else {
 				throw new InvalidLocationException();
+			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return e.getLocalizedMessage();
@@ -304,7 +292,7 @@ public class ServerModelFacade implements IServerModelFacade {
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			game.getChat().addLine(new MessageLine(game.getPlayerForPlayerIndex(sc.getPlayerIndex()).getPlayerInfo().getName(), sc.getContent()));
-			
+
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return e.getLocalizedMessage();
 		}
@@ -326,6 +314,8 @@ public class ServerModelFacade implements IServerModelFacade {
 			ResourceCard resource = ResourceCard.valueOf(monopoly.getResource());
 
 			for(IPlayer opponent : game.getPlayers()) {
+
+				// Count number of matched resource
 				Map<IResourceCard, Integer> cards = opponent.getResourceCards();
 				lootCount += cards.get(resource);
 
@@ -334,6 +324,7 @@ public class ServerModelFacade implements IServerModelFacade {
 				opponent.setResourceCards(cards);
 			}
 
+			// Give all matche resources to player
 			Map<IResourceCard, Integer> playerCards = player.getResourceCards();
 			playerCards.put( resource, playerCards.get(resource) + lootCount );
 
@@ -352,14 +343,21 @@ public class ServerModelFacade implements IServerModelFacade {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			IPlayer player = game.getPlayerForPlayerIndex(monument.getPlayerIndex());
 
-			player.setVictoryPoints( player.getVictoryPoints() + 1 );
 
 			Map<IDevelopmentCard,Integer> developmentCards = player.getDevelopmentCards();
 
-			if(developmentCards.get(DevelopmentCard.MONUMENT) <= 0)
-				throw new GameModelException();
-			else
+			if(developmentCards.get(DevelopmentCard.MONUMENT) > 0)
+			{
+				// Remove the card from the player's hand
 				developmentCards.put( DevelopmentCard.MONUMENT, developmentCards.get(DevelopmentCard.MONUMENT) - 1);
+
+				// Give the player a point for a job well done
+				player.setVictoryPoints( player.getVictoryPoints() + 1 );
+			}
+			else
+			{
+				throw new GameModelException();
+			}
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return e.getLocalizedMessage();
@@ -370,7 +368,37 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String robPlayer(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
+
+		ServerRobPlayer rob = (ServerRobPlayer) params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(rob.getPlayerIndex());
+
+			// Move the Robber to the new location
+			int x = rob.getLocation().getX();
+			int y = rob.getLocation().getY();
+
+			ILocation location = new DefaultLocation();
+			location.setHexLocation(new HexLocation(x, y));
+
+			ICatanMap catanMap = game.getMap();
+			IRobber robber = catanMap.getRobber();
+			robber.setLocation(location);
+
+			// Rob the player
+			IPlayer victim = game.getPlayerForPlayerIndex(rob.getVictimIndex());
+			ResourceCard drawnCard = victim.drawRandomResourceCard();
+
+			// Add resource to player's hand
+			player.incrementResourceByCount(HexType.valueOf(drawnCard.getName()), 1);
+
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
+
 		return null;
 	}
 
@@ -389,9 +417,9 @@ public class ServerModelFacade implements IServerModelFacade {
 			}
 			if(hex == null)
 				return "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString();
-			
+
 			Collection<IPiece> cities = game.getMap().getSettlementsAroundHex(hex.getLocation());
-			
+
 			int countRequired = cities.size();
 			if(game.getBank().hasEnoughResources(hex.getHexType(), countRequired)){
 				game.getBank().decrementResourceByCount(hex.getHexType(), countRequired);
@@ -399,8 +427,8 @@ public class ServerModelFacade implements IServerModelFacade {
 					c.getPlayer().decrementResourceByCount(hex.getHexType(), 1);
 				}
 			}
-			
-			
+
+
 		} catch (InvalidUserAttributesException e) {
 			return e.getLocalizedMessage();
 		}
@@ -409,8 +437,42 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String soldier(ICommandParams params, UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ServerSoldier soldier = (ServerSoldier)params;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(soldier.getPlayerIndex());
+
+			// Move the Robber to the new location
+			int x = soldier.getLocation().getX();
+			int y = soldier.getLocation().getY();
+
+			ILocation location = new DefaultLocation();
+			location.setHexLocation(new HexLocation(x, y));
+
+			ICatanMap catanMap = game.getMap();
+			IRobber robber = catanMap.getRobber();
+			robber.setLocation(location);
+
+			// Rob the player
+			IPlayer victim = game.getPlayerForPlayerIndex(soldier.getVictimIndex());
+			ResourceCard drawnCard = victim.drawRandomResourceCard();
+
+			// Add resource to player's hand
+			player.incrementResourceByCount(HexType.valueOf(drawnCard.getName()), 1);
+
+			// Remove a soldier card from player's hand
+			int numSoldierCards = player.getDevelopmentCards().get(DevelopmentCard.SOLDIER);
+			player.getDevelopmentCards().put(DevelopmentCard.SOLDIER, numSoldierCards - 1);
+
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+
+		return "Success";
+
 	}
 
 	@Override
@@ -473,7 +535,7 @@ public class ServerModelFacade implements IServerModelFacade {
 	public void setGameList(GameList gameList) {
 		this.gameList = gameList;
 	}
- 
+
 	public UserManager getUserManager() {
 		return userManager;
 	}
@@ -494,5 +556,5 @@ public class ServerModelFacade implements IServerModelFacade {
 		throw new OperationNotSupportedException();
 	}
 
-	
+
 }

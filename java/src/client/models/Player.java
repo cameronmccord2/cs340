@@ -1,11 +1,9 @@
 package client.models;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import client.data.PlayerInfo;
+import shared.definitions.ResourceType;
 
 /**
  * The Class Player.
@@ -255,5 +253,56 @@ public class Player extends Participant implements IPlayer {
 	public boolean canBuildRoad(IRoadSegment segment)
 	{
 		return this.hasResources(RoadSegment.getResourceCost());
+	}
+
+	@Override
+	public void deductResources(Collection<Resource> cost) {
+		Iterator<Resource> it = cost.iterator();
+		Map<IResourceCard, Integer> cards = this.getResourceCards();
+
+		while(it.hasNext()) {
+			Resource type = it.next();
+			ResourceCard card = ResourceCard.valueOf(type.getResourceType().toString());
+			cards.put( card, cards.get(card) - type.getAmount() );
+		}
+
+		this.setResourceCards(cards);
+	}
+
+
+	/**
+	 * Counts the total number of Resource Cards available in the Player's hand
+	 * @return int number of cards in the player's hand
+	 */
+	public Integer countResourceCards() {
+		int totalCards = 0;
+		for (int i : resourceCards.values()) {
+			totalCards += i;
+		}
+		return totalCards;
+	}
+
+	public Integer countResourceCards(ResourceType type) {
+		return resourceCards.get(type);
+	}
+
+	public ResourceCard drawRandomResourceCard() {
+
+		Random r = new Random();
+		int cardIndex = r.nextInt(countResourceCards());
+		ResourceCard currentType = null;
+		int cardCount = 0;
+
+		for (IResourceCard card : resourceCards.keySet()) {
+			currentType = (ResourceCard) card;
+			cardCount += countResourceCards(currentType.getType());
+
+			if(cardCount >= cardIndex) {
+				resourceCards.put(currentType, resourceCards.get(currentType) -1 );
+				break;
+			}
+		}
+
+		return currentType;
 	}
 }

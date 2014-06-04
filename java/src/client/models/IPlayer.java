@@ -103,4 +103,6 @@ public interface IPlayer extends IParticipant {
 
 	boolean canBuildRoad(IRoadSegment segment);
 
+	ResourceCard drawRandomResourceCard();
+
 }
