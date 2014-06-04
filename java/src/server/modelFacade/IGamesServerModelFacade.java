@@ -1,5 +1,6 @@
 package server.modelFacade;
 
+import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
 public interface IGamesServerModelFacade {
@@ -11,7 +12,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the games in the server
 	 */
-	public String listGames(String json, UserAttributes ua);
+	public String listGames(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Creates the game based on the flags in the json

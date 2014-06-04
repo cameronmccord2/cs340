@@ -3,13 +3,14 @@
  */
 package server.modelFacade;
 
+import server.commands.ICommandParams;
 import server.models.UserAttributes;
 
 public class GamesServerModelFacade implements IGamesServerModelFacade {
 
 
 	@Override
-	public String listGames(String json, UserAttributes ua) {
+	public String listGames(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}

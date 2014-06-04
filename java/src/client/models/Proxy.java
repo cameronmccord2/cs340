@@ -195,30 +195,38 @@ public class Proxy implements IProxy {
 		List<IGame> list = new ArrayList<IGame>();
 		for (GameServer g : games) {
 			Game game = new Game();
-
-			if(g.getPlayers()[0].getColor() != null){
-				int count = 0; //determine how many players are actually in the array
-				for(int i = 0; i < g.getPlayers().length; i++){
-					if(g.getPlayers()[i].getColor() != null)
-						count++;
-				}
-				IPlayer[] players = new IPlayer[count];
-				int playerIndex = 0;
-				for (PlayerServer p : g.getPlayers()) {
-					if(p.getColor() != null){
-						PlayerInfo pi = new PlayerInfo();
-						pi.setColor(CatanColor.getColorForName(p.getColor()));
-						pi.setId(p.getId());
-						pi.setName(p.getName());
-						pi.setPlayerIndex(playerIndex);
-						IPlayer player = new Player(pi);
-						players[playerIndex] = player;
-						playerIndex++;
+			PlayerServer[] playerServers = g.getPlayers();
+			if(playerServers != null && playerServers.length > 0) {
+				if(playerServers[0].getColor() != null) {
+					int count = 0; //determine how many players are actually in the array
+					
+					for(int i = 0; i < g.getPlayers().length; i++) {
+						if(g.getPlayers()[i].getColor() != null)
+							count++;
 					}
+					
+					IPlayer[] players = new IPlayer[count];
+					int playerIndex = 0;
+					
+					for (PlayerServer p : g.getPlayers()) {
+						if(p.getColor() != null){
+							PlayerInfo pi = new PlayerInfo();
+							
+							pi.setColor(CatanColor.getColorForName(p.getColor()));
+							pi.setId(p.getId());
+							pi.setName(p.getName());
+							pi.setPlayerIndex(playerIndex);
+							
+							IPlayer player = new Player(pi);
+							players[playerIndex] = player;
+							playerIndex++;
+						}
+					}
+					
+					game.setPlayers(players);
 				}
-				game.setPlayers(players);
 			}
-
+			
 			GameInfo gi = new GameInfo();
 			gi.setId(g.getId());
 			gi.setTitle(g.getTitle());

@@ -33,7 +33,7 @@ public class GamesHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		//read the input stream
-		System.out.println("Games Handler started");
+		System.out.println("Games Handler in use");
 		InputStream is = exchange.getRequestBody();		
 		String requestMethod = exchange.getRequestMethod();
 		String[] pathPieces = exchange.getRequestURI().getPath().split("/");
@@ -51,6 +51,7 @@ public class GamesHandler implements HttpHandler {
 		switch(finalPiece){
 			case "list":
 				if(requestMethod.equals("GET")){
+					//ua is blank for getting games list
 					response = this.commandFacade.listGames(json, ua);
 				}
 				break;
@@ -83,8 +84,6 @@ public class GamesHandler implements HttpHandler {
 		///prepare responseBody
 		if(response.getResponseCode().equals("200")){
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			//add cookie here?
-
 		}
 		else
 			exchange.sendResponseHeaders(Integer.parseInt(response.getResponseCode()), 0);

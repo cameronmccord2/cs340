@@ -1,13 +1,11 @@
 package server.modelFacade;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
-import client.models.*;
-import client.server.*;
-import client.server.User;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
@@ -16,19 +14,39 @@ import server.models.Register;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
+import shared.locations.VertexLocation;
+import client.models.City;
+import client.models.DevelopmentCard;
+import client.models.IBank;
+import client.models.IDevelopmentCard;
 import client.models.IGame;
 import client.models.IHex;
 import client.models.IPiece;
+import client.models.IPlayer;
+import client.models.IResourceCard;
+import client.models.IRoadSegment;
+import client.models.InvalidLocationException;
 import client.models.MessageLine;
+import client.models.ResourceCard;
+import client.models.RoadSegment;
+import client.models.Settlement;
 import client.models.UserManager;
-import client.models.translator.TRTradeOffer;
-import client.server.OfferTrade;
-import client.server.ServerChat;
-import client.server.ServerRoll;
 import client.models.translator.TREdgeLocation;
 import client.models.translator.TRRoad;
 import client.models.translator.TRTradeOffer;
-import shared.locations.VertexLocation;
+import client.server.BuyDevCard;
+import client.server.GameServer;
+import client.server.OfferTrade;
+import client.server.ServerBuildCity;
+import client.server.ServerBuildRoad;
+import client.server.ServerBuildSettlement;
+import client.server.ServerChat;
+import client.server.ServerMonopoly;
+import client.server.ServerMonument;
+import client.server.ServerRoll;
+import client.server.ServerYearofPlenty;
+
+import com.google.gson.Gson;
 
 public class ServerModelFacade implements IServerModelFacade {
 
@@ -66,9 +84,10 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String listGames(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+	public String listGames(ICommandParams params, UserAttributes ua) {
+		ArrayList<GameServer> gInfos = gameList.getGameInfoList();
+		Gson gson = new Gson();
+		return "GetGames" + gson.toJson(gInfos);
 	}
 
 	@Override
