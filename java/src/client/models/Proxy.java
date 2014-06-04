@@ -131,7 +131,7 @@ public class Proxy implements IProxy {
 		Gson gson = new Gson();
 		ClientModel cm = gson.fromJson(model, ClientModel.class);
 		try {
-			cm.isValid();
+			cm.validate();
 		} catch (InvalidTranslatorModelException e) {
 			throw new RuntimeException(e.getMessage());
 		}

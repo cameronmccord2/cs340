@@ -32,7 +32,7 @@ public class TRTurnTracker implements IModelValid {
 		this.largestArmy = largestArmy;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 		if(this.currentTurn < 0 || this.status == null || this.status.length() < 0)
 			throw new InvalidTranslatorModelException(this.toString());
 		if(this.status.equals("Rolling") || this.status.equals("Robbing") || this.status.equals("Playing") || this.status.equals("Discarding")

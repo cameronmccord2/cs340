@@ -61,7 +61,7 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	@Override
 	public String runCommands(ICommandParams params, UserAttributes ua)
 	{
-		String jsonResult = "";
+		String jsonResult = "Success";
 		return jsonResult;
 	}
 	

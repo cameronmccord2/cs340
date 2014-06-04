@@ -18,7 +18,7 @@ public class TRMessageLine  implements IModelValid{
 		this.source = source;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 		if(this.message == null || this.message.length() == 0 || this.source == null || this.source.length() == 0)
 			throw new InvalidTranslatorModelException(this.toString());
 	}

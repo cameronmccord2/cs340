@@ -25,7 +25,7 @@ public class TREdgeLocation implements IModelValid {
 		this.direction = direction;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 		if(direction.equals("NW") || direction.equals("N") || direction.equals("NE") || direction.equals("SW") || direction.equals("S") || direction.equals("SE"))
 			if(x != null && y != null)
 				return;

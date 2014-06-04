@@ -19,5 +19,5 @@ public interface IBank extends IParticipant {
 	 */
 	DevelopmentCard drawRandomDevCard();
 
-
+	boolean hasEnoughResources(String outputResource, int countRequired);
 }

@@ -61,7 +61,7 @@ public class TRResourceList implements IModelValid
 	}
 
 	@Override
-	public void isValid() throws InvalidTranslatorModelException
+	public void validate() throws InvalidTranslatorModelException
 	{
 		// if(this.wood < 0 || this.brick < 0 || this.ore < 0 || this.sheep < 0 ||
 		// this.wheat < 0)

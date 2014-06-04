@@ -46,4 +46,6 @@ public interface ICatanMap
 	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException;
 	public void placeInitialCity(ICity city) throws InvalidLocationException;
 	public Collection<IPiece> getSettlementsAroundHex(HexLocation hex);
+	
+	public void setupNewMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts);
 }

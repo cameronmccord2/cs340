@@ -195,4 +195,50 @@ public class Bank extends Participant implements IBank {
 
 		this.setResourceCards(cards);
 	}
+
+	@Override
+	public boolean hasEnoughResources(String outputResource, int countRequired) {
+		switch(outputResource.toLowerCase()){
+		case "wood":
+			return (this.getResourceCards().get(ResourceCard.WOOD) >= countRequired);
+		case "brick":
+			return (this.getResourceCards().get(ResourceCard.BRICK) >= countRequired);
+		case "ore":
+			return (this.getResourceCards().get(ResourceCard.ORE) >= countRequired);
+		case "wheat":
+			return (this.getResourceCards().get(ResourceCard.WHEAT) >= countRequired);
+		case "sheep":
+			return (this.getResourceCards().get(ResourceCard.SHEEP) >= countRequired);
+		}
+		return false;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

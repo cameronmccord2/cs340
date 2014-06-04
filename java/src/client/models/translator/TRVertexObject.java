@@ -19,7 +19,7 @@ public class TRVertexObject implements IModelValid {
 		this.location = location;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 //		this.location.isValid();
 //		if(this.owner == null || this.owner < 0)
 //			throw new InvalidTranslatorModelException(this.toString());

@@ -66,7 +66,7 @@ public class OfferTrade  implements ICommandParams{
 		if(this.receiver < 0 || this.offer == null)
 			throw new CommandParamNotValidException("Reciever must be a valid player index and the offer mussnt be null: " + this.toString());
 		try {
-			this.offer.isValid();
+			this.offer.validate();
 		} catch (InvalidTranslatorModelException e) {
 			e.printStackTrace();
 			throw new CommandParamNotValidException("The offer isnt valid, message: " + e.getLocalizedMessage() + ", toString: " + this.toString());
