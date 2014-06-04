@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.models.exceptions.InvalidUserAttributesException;
+import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.Game;
@@ -20,8 +21,16 @@ public class GameList {
 		this.games = new ArrayList<>();
 		Game newGame = new Game();
 		GameInfo gInfo = new GameInfo();
-		gInfo.setId(100);
-		gInfo.setTitle("MINE");
+		gInfo.setId(42);
+		gInfo.setTitle("Star Trek");
+		PlayerInfo p1 = new PlayerInfo(0,0,"Kirk",CatanColor.YELLOW);
+		PlayerInfo p2 = new PlayerInfo(1,1,"Spock",CatanColor.BLUE);
+		PlayerInfo p3 = new PlayerInfo(2,2,"McCoy",CatanColor.ORANGE);
+		PlayerInfo p4 = new PlayerInfo(3,3,"Uhura",CatanColor.RED);
+		gInfo.addPlayer(p1);
+		gInfo.addPlayer(p2);
+		gInfo.addPlayer(p3);
+		gInfo.addPlayer(p4);
 		newGame.setGameInfo(gInfo);
 		games.add(newGame);
 	}
@@ -48,5 +57,14 @@ public class GameList {
 		}	
 		return gInfos;
 	}	
+	
+	public int addPlayer(int gameId){
+		for(Game g : games){
+			GameInfo gInfo = g.getGameInfo();
+			if(gInfo.getId() == gameId)
+				return gInfo.getId();
+		}
+		return -1;
+	}
 
 }

@@ -43,6 +43,7 @@ import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
 import client.server.ServerBuildSettlement;
 import client.server.ServerChat;
+import client.server.ServerJoinGame;
 import client.server.ServerMonopoly;
 import client.server.ServerMonument;
 import client.server.ServerRoll;
@@ -99,9 +100,9 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String joinGame(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
-		return null;
+	public String joinGame(ICommandParams params, UserAttributes ua) {
+		ServerJoinGame info = (ServerJoinGame)params;
+		return "JoinGame" + gameList.addPlayer(info.getId());
 	}
 
 	@Override

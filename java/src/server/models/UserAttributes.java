@@ -10,23 +10,20 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class UserAttributes {
 	
-	protected Integer username;
+	protected String username;
 	protected String password;
 	protected Integer gameId;
 	
-	public UserAttributes(Integer username, String password, Integer gameId){
-		this.username = username;
-		this.gameId = gameId;
-		this.password = password;
+	public UserAttributes(Login loggedInUser){
+		this.username = loggedInUser.getUser();
+		this.password = loggedInUser.getPassword();
+		this.gameId = null;
 	}
 	
 	public UserAttributes(){
-		this(null, null, null);
-	}
-
-	public UserAttributes(String json) {
-		Gson gson = new Gson();
-		Login cookies = gson.fromJson(json, Login.class);
+		this.username = null;
+		this.password = null;
+		this.gameId = null;
 	}
 
 	/**
@@ -36,7 +33,7 @@ public class UserAttributes {
 	 * @return	The unique user id (not the relative turn in a game) for
 	 * 			this user or null if there is no cookie.
 	 */
-	public Integer getusername() {
+	public String getusername() {
 		return username;
 	}
 
@@ -44,7 +41,7 @@ public class UserAttributes {
 	 * 
 	 * @param username	The unique id for the user or null if there is no cookie.
 	 */
-	public void setusername(Integer username) {
+	public void setusername(String username) {
 		this.username = username;
 	}
 

@@ -9,8 +9,10 @@ import java.util.Scanner;
 
 import server.commands.CommandResponse;
 import server.facades.IGamesFacade;
+import server.models.Login;
 import server.models.UserAttributes;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -45,35 +47,45 @@ public class GamesHandler implements HttpHandler {
 		s.close();
 		is.close();
 
-		UserAttributes ua = new UserAttributes();
 		CommandResponse response = null;
 
 		switch(finalPiece){
 			case "list":
 				if(requestMethod.equals("GET")){
 					//ua is blank for getting games list
+					UserAttributes ua = new UserAttributes();
 					response = this.commandFacade.listGames(json, ua);
 				}
 				break;
 			case "create":
 				if(requestMethod.equals("POST")){
+					UserAttributes ua = new UserAttributes();
 					response = this.commandFacade.createGame(json, ua);
 				}
 				break;
 			case "join":
 				if(requestMethod.equals("POST")){
+					Gson gson = new Gson();
+					Login loggedInUser = gson.fromJson(json, Login.class);
+					UserAttributes ua = new UserAttributes(loggedInUser);
 					response = this.commandFacade.joinGame(json, ua);
 					Headers headers = exchange.getResponseHeaders();
-					headers.add("Set-cookie", "catan.game=0;Path=/;");
+					headers.add("Set-cookie", "catan.game=" + response.getResponse() + ";Path=/;");
 				}
 				break;
 			case "save":
 				if(requestMethod.equals("POST")){
+					Gson gson = new Gson();
+					Login loggedInUser = gson.fromJson(json, Login.class);
+					UserAttributes ua = new UserAttributes(loggedInUser);
 					response = this.commandFacade.saveGame(json, ua);
 				}
 				break;
 			case "load":
 				if(requestMethod.equals("POST")){
+					Gson gson = new Gson();
+					Login loggedInUser = gson.fromJson(json, Login.class);
+					UserAttributes ua = new UserAttributes(loggedInUser);
 					response = this.commandFacade.loadGame(json, ua);
 				}
 				break;

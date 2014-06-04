@@ -38,6 +38,8 @@ public class Command implements ICommand, ITestCommand {
 			return response.substring(6);
 		else if(response.substring(0,8).equals("GetGames"))
 			return response.substring(8);
+		else if(response.substring(0,8).equals("JoinGame"))
+			return response.substring(8);
 		else
 			return response;
 		

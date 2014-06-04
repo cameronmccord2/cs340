@@ -24,7 +24,7 @@ public class GamesServerModelFacade implements IGamesServerModelFacade {
 
 
 	@Override
-	public String joinGame(String json, UserAttributes ua) {
+	public String joinGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}

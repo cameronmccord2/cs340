@@ -30,7 +30,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the game model
 	 */
-	public String joinGame(String json, UserAttributes ua);
+	public String joinGame(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Load game from a file indicated in the json
