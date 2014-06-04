@@ -125,7 +125,8 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	@Override
 	public String buyDevCard(ICommandParams params, UserAttributes userAttributes) {
-			BuyDevCard devCard = (BuyDevCard) params;
+
+		BuyDevCard devCard = (BuyDevCard) params;
 
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
@@ -142,14 +143,42 @@ public class ServerModelFacade implements IServerModelFacade {
 			return e.getLocalizedMessage();
 		}
 
-		return null;
+		return "Success";
 	}
 
 	@Override
-	public String discardCards(ICommandParams params,
-			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+	public String discardCards(ICommandParams params, UserAttributes userAttributes) {
+
+		DiscardedCards discard = (DiscardedCards)params;
+		int discardNum = 0;
+
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(discard.getPlayerIndex());
+
+			Map<IResourceCard, Integer> resourceCards = player.getResourceCards();
+
+			discardNum = discard.getDiscardedCards().getWood();
+			resourceCards.put(ResourceCard.WOOD, resourceCards.get(ResourceCard.WOOD) - discardNum);
+
+			discardNum = discard.getDiscardedCards().getWheat();
+			resourceCards.put(ResourceCard.WHEAT, resourceCards.get(ResourceCard.WHEAT) - discardNum);
+
+			discardNum = discard.getDiscardedCards().getSheep();
+			resourceCards.put(ResourceCard.SHEEP, resourceCards.get(ResourceCard.SHEEP) - discardNum);
+
+			discardNum = discard.getDiscardedCards().getOre();
+			resourceCards.put(ResourceCard.ORE, resourceCards.get(ResourceCard.ORE) - discardNum);
+
+			discardNum = discard.getDiscardedCards().getBrick();
+			resourceCards.put(ResourceCard.BRICK, resourceCards.get(ResourceCard.BRICK) - discardNum);
+
+			player.setResourceCards(resourceCards);
+
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
@@ -191,10 +220,53 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String roadBuilding(ICommandParams params,
-			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
-		return null;
+	public String roadBuilding(ICommandParams params, UserAttributes userAttributes) {
+
+		RoadBuilding roadData = (RoadBuilding) params;
+
+		try {
+
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(roadData.getPlayerIndex());
+			ICatanMap map = game.getMap();
+
+			// Setup Road 1
+			TREdgeLocation loc1 = new TREdgeLocation();
+			loc1.setDirection(roadData.getSpot1().getDirection());
+			loc1.setX(roadData.getSpot1().getX());
+			loc1.setY(roadData.getSpot1().getY());
+
+			TRRoad road1 = new TRRoad();
+			road1.setLocation(loc1);
+			road1.setOwner(player.getPlayerInfo().getPlayerIndex());
+
+			IRoadSegment segment1 = new RoadSegment(road1, player);
+
+
+			// Setup Road 2
+			TREdgeLocation loc2 = new TREdgeLocation();
+			loc2.setDirection(roadData.getSpot2().getDirection());
+			loc2.setX(roadData.getSpot2().getX());
+			loc2.setY(roadData.getSpot2().getY());
+
+			TRRoad road2 = new TRRoad();
+			road2.setLocation(loc2);
+			road2.setOwner(player.getPlayerInfo().getPlayerIndex());
+
+			IRoadSegment segment2 = new RoadSegment(road2, player);
+
+			if(map.canPlaceRoad(segment1) && map.canPlaceRoad(segment2)) {
+				map.placeRoadSegment(segment1);
+				map.placeRoadSegment(segment2);
+			}
+			else {
+				throw new InvalidLocationException();
+			}
+
+		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
