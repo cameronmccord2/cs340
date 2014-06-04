@@ -55,7 +55,7 @@ public class SaveGame implements ICommandParams{
 	}
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.name == null || this.name.length() == 0)
 			throw new CommandParamNotValidException("name must not be null or of length zero: " + this.toString());
 	}

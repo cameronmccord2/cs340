@@ -6,7 +6,7 @@ import server.commands.exceptions.CommandParamNotValidException;
 public class GetCommands implements ICommandParams {
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		return;// nothing to check
 	}
 

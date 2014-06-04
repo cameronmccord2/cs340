@@ -43,7 +43,7 @@ public class BuyDevCard  implements ICommandParams{
 		this.playerIndex = playerIndex;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.type == null || this.type.length() == 0 || !this.type.equals("buyDevCard") || this.playerIndex < 0)
 			throw new CommandParamNotValidException("type musnt be null or of length zero and must equal 'buyDevCard' and playerindex must be greater than zero: " + this.toString());
 	}

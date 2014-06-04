@@ -33,7 +33,7 @@ public class GameLoad  implements ICommandParams{
 	}
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.name == null || this.name.length() == 0)
 			throw new CommandParamNotValidException("name cant be null or length zero: " + this.toString());
 	}

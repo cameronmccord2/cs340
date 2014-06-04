@@ -57,7 +57,7 @@ public class Spot implements ICommandParams {
 		this.direction = direction;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.direction == null || this.direction.length() == 0)
 			throw new CommandParamNotValidException("direction cant be null or of length zero: " + this.toString());
 	}

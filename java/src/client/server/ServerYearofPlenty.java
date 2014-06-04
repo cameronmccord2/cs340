@@ -21,7 +21,7 @@ public class ServerYearofPlenty implements ICommandParams{
 		this.resource2 = resource2;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
 			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
 		if(this.resource1 == null || this.resource1.length() == 0 || this.resource2 == null || this.resource2.length() == 0)

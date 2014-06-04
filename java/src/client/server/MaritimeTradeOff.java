@@ -86,7 +86,7 @@ public class MaritimeTradeOff implements ICommandParams{
 		this.outputResource = outputResource;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
 			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
 		if(this.ratio < 2 || this.ratio > 4 || this.inputResource == null || this.inputResource.length() == 0 || this.outputResource == null || this.outputResource.length() == 0)
