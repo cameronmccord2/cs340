@@ -32,8 +32,10 @@ import client.models.RoadSegment;
 import client.models.Settlement;
 import client.models.UserManager;
 import client.models.translator.TREdgeLocation;
+import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
 import client.models.translator.TRTradeOffer;
+import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.GameServer;
 import client.server.OfferTrade;
@@ -115,9 +117,24 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String acceptTrade(ICommandParams params,
-			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
+	public String acceptTrade(ICommandParams params, UserAttributes userAttributes) {
+		AcceptTrade at = (AcceptTrade)params;
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			if(at.isWillAccept()){
+				TRResourceList offer = game.getCurrentTrade().getOffer();
+				IPlayer sender = game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender());
+				IPlayer receiver = game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver());
+			}else{
+				game.setCurrentTrade(null);
+			}
+		} catch (InvalidUserAttributesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GameModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
