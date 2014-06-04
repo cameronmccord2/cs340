@@ -223,6 +223,7 @@ public class ServerModelFacade implements IServerModelFacade {
 				game.getTurnTracker().setCurrentTurn(0);
 			else
 				game.getTurnTracker().setCurrentTurn(ft.getPlayerIndex() + 1);
+			game.getTurnTracker().setStatus("Rolling");
 		} catch (InvalidUserAttributesException e) {
 			return e.getLocalizedMessage();
 		}
@@ -576,7 +577,11 @@ public class ServerModelFacade implements IServerModelFacade {
 					c.getPlayer().decrementResourceByCount(hex.getHexType(), 1);
 				}
 			}
-
+			
+			if(sr.getNumber() == 7){
+				game.getTurnTracker().setStatus("Robbing");
+			}else
+				game.getTurnTracker().setStatus("Playing");
 
 		} catch (InvalidUserAttributesException e) {
 			return e.getLocalizedMessage();
