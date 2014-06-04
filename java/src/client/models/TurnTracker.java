@@ -13,6 +13,8 @@ public class TurnTracker {
 	protected Integer longestRoad;
 	protected Integer largestArmy;
 	
+	public TurnTracker(){}
+	
 	public TurnTracker(TRTurnTracker turnTracker) {
 		this.currentTurn = turnTracker.getCurrentTurn();
 		this.status = turnTracker.getStatus();

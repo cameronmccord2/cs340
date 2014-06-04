@@ -1,7 +1,6 @@
 package server.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import server.models.exceptions.InvalidUserAttributesException;
 import shared.definitions.CatanColor;
@@ -9,6 +8,11 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.Game;
 import client.models.IGame;
+import client.models.IPlayer;
+import client.models.MessageList;
+import client.models.Player;
+import client.models.TurnTracker;
+import client.models.translator.TRTradeOffer;
 import client.server.GameServer;
 import client.server.PlayerServer;
 
@@ -21,7 +25,11 @@ public class GameList {
 	public GameList(){
 		super();
 		this.games = new ArrayList<>();
+		
+		//create practice game
 		Game newGame = new Game();
+		
+		//add GameInfo
 		GameInfo gInfo = new GameInfo();
 		gInfo.setId(42);
 		gInfo.setTitle("Star Trek");
@@ -34,6 +42,39 @@ public class GameList {
 		gInfo.addPlayer(p3);
 		//gInfo.addPlayer(p4);
 		newGame.setGameInfo(gInfo);
+		
+		//init map
+		//newGame.setMap(map);
+		
+		//set players
+		Player player1 = new Player(p1);
+		Player player2 = new Player(p2);
+		Player player3 = new Player(p3);
+		ArrayList<IPlayer> players = new ArrayList<>();
+		players.add(player1);
+		players.add(player2);
+		players.add(player3);
+		newGame.setPlayers(players.toArray(new IPlayer[players.size()]));
+		
+		newGame.setVersion(0);
+		
+		//init the bank
+		//newGame.setBank(bank);
+		
+		newGame.setChat(new MessageList());
+		newGame.setLog(new MessageList());
+		
+		//set turn tracker
+		TurnTracker tt = new TurnTracker();
+		tt.setCurrentTurn(0);
+		tt.setStatus("FirstRound");
+		tt.setLongestRoad(-1);
+		tt.setLargestArmy(-1);
+		newGame.setTurnTracker(tt);
+		
+		newGame.setWinner(-1);
+		newGame.setCurrentTrade(new TRTradeOffer());
+		
 		games.add(newGame);
 	}
 
