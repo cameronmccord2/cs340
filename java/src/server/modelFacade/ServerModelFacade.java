@@ -48,19 +48,19 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String getCommands(String json, UserAttributes ua) {
+	public String getCommands(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String runCommands(String json, UserAttributes ua) {
+	public String runCommands(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String reset(String json, UserAttributes ua) {
+	public String reset(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -440,13 +440,13 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String listAI(String json, UserAttributes ua) throws OperationNotSupportedException
+	public String listAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException
 	{
 		throw new OperationNotSupportedException();
 	}
 
 	@Override
-	public String addAI(String json, UserAttributes ua) throws OperationNotSupportedException
+	public String addAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException
 	{
 		throw new OperationNotSupportedException();
 	}
