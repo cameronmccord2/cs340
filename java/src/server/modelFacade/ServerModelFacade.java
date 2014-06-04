@@ -199,7 +199,11 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String maritimeTradeOff(ICommandParams params,
 			UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
+
+		MaritimeTradeOff trade = (MaritimeTradeOff) params;
+
+
+		// TODO Finish the maritime trade
 		return null;
 	}
 
