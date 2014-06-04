@@ -123,19 +123,26 @@ public class ServerModelFacade implements IServerModelFacade {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			if(at.isWillAccept()){
 				TRResourceList offer = game.getCurrentTrade().getOffer();
-				IPlayer sender = game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender());
-				IPlayer receiver = game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver());
-			}else{
-				game.setCurrentTrade(null);
+				Map<IResourceCard, Integer> sender = game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).getResourceCards();
+				Map<IResourceCard, Integer> receiver = game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).getResourceCards();
+				sender.put(ResourceCard.BRICK, sender.get(ResourceCard.BRICK) + offer.getBrick());
+				receiver.put(ResourceCard.BRICK, receiver.get(ResourceCard.BRICK) + offer.getBrick());
+				sender.put(ResourceCard.ORE, sender.get(ResourceCard.ORE) + offer.getBrick());
+				receiver.put(ResourceCard.ORE, receiver.get(ResourceCard.ORE) + offer.getBrick());
+				sender.put(ResourceCard.WOOD, sender.get(ResourceCard.WOOD) + offer.getBrick());
+				receiver.put(ResourceCard.WOOD, receiver.get(ResourceCard.WOOD) + offer.getBrick());
+				sender.put(ResourceCard.SHEEP, sender.get(ResourceCard.SHEEP) + offer.getBrick());
+				receiver.put(ResourceCard.SHEEP, receiver.get(ResourceCard.SHEEP) + offer.getBrick());
+				sender.put(ResourceCard.WHEAT, sender.get(ResourceCard.WHEAT) + offer.getBrick());
+				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
 			}
+			game.setCurrentTrade(null);
 		} catch (InvalidUserAttributesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return e.getLocalizedMessage();
 		} catch (GameModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return e.getLocalizedMessage();
 		}
-		return null;
+		return "Success";
 	}
 
 	@Override
