@@ -77,6 +77,10 @@ public class Game implements IGame{
 	public void setPlayers(IPlayer[] players) {
 		this.players = players;
 	}
+	
+	public void addPlayer(Player player){
+		this.players[this.players.length] = player;
+	}
 
 	@Override
 	public IBank getBank() {

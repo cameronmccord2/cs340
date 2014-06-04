@@ -22,6 +22,7 @@ import shared.locations.ILocation;
 import shared.locations.VertexLocation;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.models.Bank;
 import client.models.City;
 import client.models.DevelopmentCard;
 import client.models.Game;
@@ -37,9 +38,11 @@ import client.models.IRoadSegment;
 import client.models.IRobber;
 import client.models.InvalidLocationException;
 import client.models.MessageLine;
+import client.models.MessageList;
 import client.models.ResourceCard;
 import client.models.RoadSegment;
 import client.models.Settlement;
+import client.models.TurnTracker;
 import client.models.UserManager;
 import client.models.translator.TREdgeLocation;
 import client.models.translator.TRResourceList;
@@ -114,6 +117,8 @@ public class ServerModelFacade implements IServerModelFacade {
 		//create a new default game
 		CreateGame cGame = (CreateGame)params;
 		
+		Game newGame = new Game();
+		
 		//set up GameInfo object on Game object
 		GameInfo gInfo = new GameInfo();
 		gInfo.setId(gameList.getGames().size());
@@ -121,13 +126,34 @@ public class ServerModelFacade implements IServerModelFacade {
 		gInfo.setRandomNumbers(cGame.isRandomNumbers());
 		gInfo.setRandomPorts(cGame.isRandomPorts());
 		gInfo.setRandomTiles(cGame.isRandomTiles());
-		
-		Game newGame = new Game();
 		newGame.setGameInfo(gInfo);
 		
+		//init map
 		
-		//gameList.createGame();
-		return null;
+		newGame.setPlayers(new IPlayer[4]);
+		newGame.setVersion(0);
+		
+		Bank newBank = new Bank();
+		newBank.setUpNewBank();
+		newGame.setBank(newBank);
+		
+		newGame.setChat(new MessageList());
+		newGame.setLog(new MessageList());
+		
+		//set turn tracker
+		TurnTracker tt = new TurnTracker();
+		tt.setCurrentTurn(0);
+		tt.setStatus("FirstRound");
+		tt.setLongestRoad(-1);
+		tt.setLargestArmy(-1);
+		newGame.setTurnTracker(tt);
+		
+		newGame.setWinner(-1);
+		newGame.setCurrentTrade(new TRTradeOffer());
+		
+		gameList.addGame(newGame);
+		System.out.println(newGame.toString());
+		return "CreateDone";
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import server.models.exceptions.InvalidUserAttributesException;
 import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.models.Bank;
 import client.models.Game;
 import client.models.IGame;
 import client.models.IPlayer;
@@ -20,6 +21,7 @@ public class GameList {
 	
 	private ArrayList<Game> games;
 	private int playerID;
+	private Game selectedGame;
 	private GameInfo gInfo;
 
 	public GameList(){
@@ -44,7 +46,7 @@ public class GameList {
 		newGame.setGameInfo(gInfo);
 		
 		//init map
-		//newGame.setMap(map);
+		
 		
 		//set players
 		Player player1 = new Player(p1);
@@ -59,7 +61,9 @@ public class GameList {
 		newGame.setVersion(0);
 		
 		//init the bank
-		//newGame.setBank(bank);
+		Bank newBank = new Bank();
+		newBank.setUpNewBank();
+		newGame.setBank(newBank);
 		
 		newGame.setChat(new MessageList());
 		newGame.setLog(new MessageList());
@@ -112,6 +116,7 @@ public class GameList {
 	public int checkForPlayer(int gameId){
 		for(Game g : games){
 			gInfo = g.getGameInfo();
+			selectedGame = g;
 			if(gInfo.getId() == gameId){
 				for(PlayerInfo p : gInfo.getPlayers()){
 					if(p.getId() == this.playerID){
@@ -127,7 +132,12 @@ public class GameList {
 
 	public int addPlayer(PlayerInfo player){
 		gInfo.addPlayer(player);
+		selectedGame.addPlayer(new Player(player));
 		return gInfo.getId();
+	}
+	
+	public void addGame(Game newGame){
+		games.add(newGame);
 	}
 	
 	public ArrayList<Game> getGames(){
