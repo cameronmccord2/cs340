@@ -30,8 +30,8 @@ public class TRTradeOffer implements IModelValid {
 		this.offer = offer;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
-		this.offer.isValid();
+	public void validate() throws InvalidTranslatorModelException {
+		this.offer.validate();
 		if(this.sender == null || this.sender < 0 || this.receiver == null || this.receiver < 0 || this.sender == this.receiver)
 			throw new InvalidTranslatorModelException(this.toString());
 	}

@@ -18,7 +18,7 @@ public class TRHexLocation  implements IModelValid{
 		this.y = y;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 		if(x == null || y == null)
 			throw new InvalidTranslatorModelException(this.toString());
 	}

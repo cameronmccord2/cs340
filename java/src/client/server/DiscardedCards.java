@@ -85,7 +85,7 @@ public class DiscardedCards implements ICommandParams
 		if(this.type == null || this.type.length() == 0 || !this.type.equals("discardedCards") || this.playerIndex < 0 || this.discardedCards == null)
 				throw new CommandParamNotValidException("type musnt be null or of length zero and must equal discardedCards, player index must be greater than zero and discarded cards mussnt be null: " + this.toString());
 		try {
-			this.discardedCards.isValid();
+			this.discardedCards.validate();
 		} catch (InvalidTranslatorModelException e) {
 			throw new CommandParamNotValidException("discarded cards claimed that it isnt valid: " + this.toString());
 		}

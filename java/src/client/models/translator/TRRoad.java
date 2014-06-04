@@ -19,8 +19,8 @@ public class TRRoad implements IModelValid {
 		this.location = location;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
-		this.location.isValid();
+	public void validate() throws InvalidTranslatorModelException {
+		this.location.validate();
 		if(this.owner == null || this.owner < 0)
 			throw new InvalidTranslatorModelException(this.toString());
 	}

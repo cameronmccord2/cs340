@@ -19,7 +19,11 @@ public class Command implements ICommand, ITestCommand {
 	protected IServerModelFacade facade;
 	protected boolean keepInHistory;
 
-	public Command(String methodName, ICommandParams commandParams, UserAttributes userAttributes, IServerModelFacade facade, boolean keepInHistory){
+	public Command(String methodName,
+	               ICommandParams commandParams,
+	               UserAttributes userAttributes,
+	               IServerModelFacade facade,
+	               boolean keepInHistory) {
 		this.methodName = methodName;
 		this.commandParams = commandParams;
 		this.userAttributes = userAttributes;
@@ -27,7 +31,11 @@ public class Command implements ICommand, ITestCommand {
 		this.keepInHistory = keepInHistory;
 	}
 	
-	public String execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public String execute() throws NoSuchMethodException,
+								   SecurityException,
+								   IllegalAccessException, 
+								   IllegalArgumentException,
+								   InvocationTargetException {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
 		String response = (String) method.invoke(this.facade, this.commandParams, this.userAttributes);
 		if(response.equals("Success"))

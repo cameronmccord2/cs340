@@ -32,8 +32,8 @@ public class TRPort implements IModelValid {
 		this.ratio = ratio;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
-		this.location.isValid();
+	public void validate() throws InvalidTranslatorModelException {
+		this.location.validate();
 		if(this.direction == null || this.direction.length() == 0 || this.ratio < 2 || this.ratio > 3)
 			throw new InvalidTranslatorModelException("first " + this.toString());
 		if((this.resource == null || this.resource.equals("wood") || this.resource.endsWith("brick") || this.resource.equals("sheep") || 

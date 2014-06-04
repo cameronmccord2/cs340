@@ -14,11 +14,11 @@ public class TRMessageList  implements IModelValid{
 	}
 
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 		if(lines == null)
 			throw new InvalidTranslatorModelException(this.toString());
 		for (TRMessageLine line : this.lines) {
-			line.isValid();
+			line.validate();
 		}
 	}
 

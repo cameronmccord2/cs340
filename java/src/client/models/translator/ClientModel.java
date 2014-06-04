@@ -66,20 +66,20 @@ public class ClientModel implements IModelValid{
 	}
 	@Override
 
-	public void isValid() throws InvalidTranslatorModelException {
-		map.isValid();
+	public void validate() throws InvalidTranslatorModelException {
+		map.validate();
 		for (TRPlayer p : this.players) {
 			if(p != null){
-				p.isValid();
+				p.validate();
 			}
 		}
-		this.log.isValid();
-		this.chat.isValid();
-		this.bank.isValid();
-		this.deck.isValid();
-		this.turnTracker.isValid();
+		this.log.validate();
+		this.chat.validate();
+		this.bank.validate();
+		this.deck.validate();
+		this.turnTracker.validate();
 		if(this.tradeOffer != null)
-			this.tradeOffer.isValid();
+			this.tradeOffer.validate();
 		if(this.version < 0)
 			throw new InvalidTranslatorModelException("Version is less than 0, toString: " + this.toString());
 	}

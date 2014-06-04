@@ -12,25 +12,25 @@ public class TRMap  implements IModelValid{
 	protected TRHexLocation robber;
 	
 	@Override
-	public void isValid() throws InvalidTranslatorModelException{
+	public void validate() throws InvalidTranslatorModelException{
 		if(this.hexes == null || this.ports == null || this.roads == null || this.settlements == null || this.cities == null)
 			throw new InvalidTranslatorModelException(this.toString());
 		for (TRHex hex : this.hexes) {
-			hex.isValid();
+			hex.validate();
 		}
 		for (TRPort port : this.ports) {
-			port.isValid();
+			port.validate();
 		}
 		for (TRRoad road : this.roads) {
-			road.isValid();
+			road.validate();
 		}
 		for (TRVertexObject sett : this.settlements) {
-			sett.isValid();
+			sett.validate();
 		}
 		for (TRVertexObject city : this.cities) {
-			city.isValid();
+			city.validate();
 		}
-		this.robber.isValid();
+		this.robber.validate();
 		if(radius < 0)
 			throw new InvalidTranslatorModelException(this.toString());
 	}

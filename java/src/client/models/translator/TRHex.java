@@ -26,8 +26,8 @@ public class TRHex implements IModelValid {
 		this.number = number;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
-		this.location.isValid();
+	public void validate() throws InvalidTranslatorModelException {
+		this.location.validate();
 		if(resource == null || (resource != null && (resource.equals("wood") || resource.equals("brick") || resource.equals("sheep") || resource.equals("wheat") || resource.equals("ore"))))
 			return;
 		throw new InvalidTranslatorModelException(this.toString());

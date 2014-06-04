@@ -22,12 +22,12 @@ public class TRPlayer implements IModelValid
 	protected String color;
 	  
 	@Override
-	public void isValid() throws InvalidTranslatorModelException{
+	public void validate() throws InvalidTranslatorModelException{
 		if(resources == null || this.oldDevCards == null || this.newDevCards == null)
 			throw new InvalidTranslatorModelException(this.toString());
-		this.resources.isValid();
-		this.oldDevCards.isValid();
-		this.newDevCards.isValid();
+		this.resources.validate();
+		this.oldDevCards.validate();
+		this.newDevCards.validate();
 
 		if(this.color == null ||
 		   this.color.length() == 0 ||

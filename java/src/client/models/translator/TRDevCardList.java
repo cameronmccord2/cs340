@@ -39,7 +39,7 @@ public class TRDevCardList  implements IModelValid {
 		this.yearOfPlenty = yearOfPlenty;
 	}
 	@Override
-	public void isValid() throws InvalidTranslatorModelException {
+	public void validate() throws InvalidTranslatorModelException {
 		if(monopoly < 0 || monument < 0 || roadBuilding < 0 || soldier < 0 || yearOfPlenty < 0)
 			throw new InvalidTranslatorModelException(this.toString());
 	}
