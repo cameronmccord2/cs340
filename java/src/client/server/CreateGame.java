@@ -48,7 +48,7 @@ public class CreateGame  implements ICommandParams{
 		this.name = name;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.name == null || this.name.length() == 0)
 			throw new CommandParamNotValidException("Name musnt be null or of length zero: " + this.toString());
 	}

@@ -54,7 +54,7 @@ public class User implements ICommandParams{
 	}
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.username == null || this.username.length() == 0 || this.password == null || this.password.length() == 0)
 			throw new CommandParamNotValidException("Username and password musnt be null or of length zero: " + this.toString());
 	}

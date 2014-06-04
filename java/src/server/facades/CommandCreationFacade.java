@@ -21,7 +21,7 @@ public class CommandCreationFacade {
 	
 	protected CommandResponse genericCommandCreate(ICommandParams params, UserAttributes ua, boolean keepInHistory) {
 		try {
-			params.isValid();
+			params.validate();
 			ICommand c = new Command(params.getType(), params, ua, this.facade, false);
 			String response = c.execute();
 			return new CommandResponse(response, "200");

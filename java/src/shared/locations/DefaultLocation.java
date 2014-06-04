@@ -2,9 +2,13 @@ package shared.locations;
 
 public class DefaultLocation implements ILocation
 {
-	
 	protected HexLocation hexLocation;
 	protected IDirection direction;
+
+	public DefaultLocation()
+	{
+		this(null, null);
+	}
 
 	public DefaultLocation(HexLocation hexLocation, VertexDirection direction) {
 		this.hexLocation = hexLocation;

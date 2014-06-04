@@ -72,13 +72,13 @@ public class RoadBuilding implements ICommandParams{
 		this.spot2 = spot2;
 	}
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
 			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
 		if(this.spot1 == null || this.spot2 == null)
 			throw new CommandParamNotValidException("the spots musnt be null: " + this.toString());
-		this.spot1.isValid();
-		this.spot2.isValid();
+		this.spot1.validate();
+		this.spot2.validate();
 	}
 	
 	

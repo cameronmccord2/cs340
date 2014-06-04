@@ -7,9 +7,11 @@ import server.commands.exceptions.CommandParamNotValidException;
  *
  * @author scottdaly
  */
-public interface ICommandParams{
+public interface ICommandParams
+{
+	public void validate() throws CommandParamNotValidException;
 	
-	public void isValid() throws CommandParamNotValidException;
+//	public default boolean isValid() { return true; }
 	
 	public String getType();
 }

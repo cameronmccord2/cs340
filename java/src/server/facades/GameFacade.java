@@ -33,7 +33,7 @@ public class GameFacade extends CommandCreationFacade implements IGameFacade{
 	public CommandResponse getCommands(String json, UserAttributes ua) {
 		try {
 			GetCommands gc = new GetCommands();
-			gc.isValid();
+			gc.validate();
 			ICommand c = new Command(gc.getType(), gc, ua, this.facade, false);
 			String response = c.execute();
 			return new CommandResponse(response, "200");
@@ -56,7 +56,7 @@ public class GameFacade extends CommandCreationFacade implements IGameFacade{
 			String finalGameModel = "";
 			List<ICommandParams> runCommands = new ArrayList<>();
 			for (ICommandParams iCommandParams : runCommands) {
-				iCommandParams.isValid();
+				iCommandParams.validate();
 				
 				Method method = this.getClass().getMethod(iCommandParams.getType(), new Class[] {ICommandParams.class, UserAttributes.class});
 				Object response = (String)method.invoke(iCommandParams, ua);

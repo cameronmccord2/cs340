@@ -1,5 +1,6 @@
 package client.models;
 
+import java.util.Collection;
 import java.util.Map;
 
 import shared.definitions.HexType;
@@ -58,5 +59,7 @@ public interface IParticipant {
 	void decrementResourceByCount(HexType hexType, int countRequired);
 
 	void incrementResourceByCount(HexType hexType, int count);
+
+	void deductResources(Collection<Resource> cost);
 
 }

@@ -6,7 +6,7 @@ import server.commands.exceptions.CommandParamNotValidException;
 public class ListGames implements ICommandParams {
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		return;// always valid
 	}
 

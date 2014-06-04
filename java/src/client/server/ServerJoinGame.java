@@ -50,7 +50,7 @@ public class ServerJoinGame implements ICommandParams{
 	}
 
 	@Override
-	public void isValid() throws CommandParamNotValidException {
+	public void validate() throws CommandParamNotValidException {
 		if(this.color == null || this.color.length() == 0)
 			throw new CommandParamNotValidException("Color must not be null or of length zero: " + this.toString());
 	}
