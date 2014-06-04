@@ -61,5 +61,9 @@ public interface IParticipant {
 	void incrementResourceByCount(HexType hexType, int count);
 
 	void deductResources(Collection<Resource> cost);
+	
+	void decrementResourceByCount(String outputResource, int countRequired);
+	
+	void incrementResourceByCount(String inputResource, int ratio);
 
 }

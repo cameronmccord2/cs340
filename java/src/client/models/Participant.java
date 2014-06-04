@@ -127,4 +127,16 @@ public abstract class Participant implements IParticipant {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	@Override
+	public void decrementResourceByCount(String resource, int count) {
+		Integer finalCount = this.getResourceCards().get(ResourceCard.valueOf(resource.toUpperCase())) - count;
+		this.getResourceCards().put((IResourceCard)ResourceCard.valueOf(resource.toUpperCase()), finalCount);
+	}
+
+	@Override
+	public void incrementResourceByCount(String resource, int count) {
+		Integer finalCount = count + this.getResourceCards().get(ResourceCard.valueOf(resource.toUpperCase()));
+		this.getResourceCards().put((IResourceCard)ResourceCard.valueOf(resource.toUpperCase()), finalCount);
+	}
 }

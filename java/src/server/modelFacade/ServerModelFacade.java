@@ -157,35 +157,6 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String acceptTrade(ICommandParams params, UserAttributes userAttributes) {
-		AcceptTrade at = (AcceptTrade)params;
-		try {
-			IGame game = this.gameList.getGameById(userAttributes.getGameId());
-			if(at.isWillAccept()){
-				TRResourceList offer = game.getCurrentTrade().getOffer();
-				Map<IResourceCard, Integer> sender = game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).getResourceCards();
-				Map<IResourceCard, Integer> receiver = game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).getResourceCards();
-				sender.put(ResourceCard.BRICK, sender.get(ResourceCard.BRICK) + offer.getBrick());
-				receiver.put(ResourceCard.BRICK, receiver.get(ResourceCard.BRICK) + offer.getBrick());
-				sender.put(ResourceCard.ORE, sender.get(ResourceCard.ORE) + offer.getBrick());
-				receiver.put(ResourceCard.ORE, receiver.get(ResourceCard.ORE) + offer.getBrick());
-				sender.put(ResourceCard.WOOD, sender.get(ResourceCard.WOOD) + offer.getBrick());
-				receiver.put(ResourceCard.WOOD, receiver.get(ResourceCard.WOOD) + offer.getBrick());
-				sender.put(ResourceCard.SHEEP, sender.get(ResourceCard.SHEEP) + offer.getBrick());
-				receiver.put(ResourceCard.SHEEP, receiver.get(ResourceCard.SHEEP) + offer.getBrick());
-				sender.put(ResourceCard.WHEAT, sender.get(ResourceCard.WHEAT) + offer.getBrick());
-				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
-			}
-			game.setCurrentTrade(null);
-		} catch (InvalidUserAttributesException e) {
-			return e.getLocalizedMessage();
-		} catch (GameModelException e) {
-			return e.getLocalizedMessage();
-		}
-		return "Success";
-	}
-
-	@Override
 	public String buyDevCard(ICommandParams params, UserAttributes userAttributes) {
 
 		BuyDevCard devCard = (BuyDevCard) params;
@@ -257,16 +228,56 @@ public class ServerModelFacade implements IServerModelFacade {
 		}
 		return "Success";
 	}
+	
+	@Override
+	public String acceptTrade(ICommandParams params, UserAttributes userAttributes) {
+		AcceptTrade at = (AcceptTrade)params;
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			if(at.isWillAccept()){
+				TRResourceList offer = game.getCurrentTrade().getOffer();
+				Map<IResourceCard, Integer> sender = game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).getResourceCards();
+				Map<IResourceCard, Integer> receiver = game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).getResourceCards();
+				sender.put(ResourceCard.BRICK, sender.get(ResourceCard.BRICK) + offer.getBrick());
+				receiver.put(ResourceCard.BRICK, receiver.get(ResourceCard.BRICK) + offer.getBrick());
+				sender.put(ResourceCard.ORE, sender.get(ResourceCard.ORE) + offer.getBrick());
+				receiver.put(ResourceCard.ORE, receiver.get(ResourceCard.ORE) + offer.getBrick());
+				sender.put(ResourceCard.WOOD, sender.get(ResourceCard.WOOD) + offer.getBrick());
+				receiver.put(ResourceCard.WOOD, receiver.get(ResourceCard.WOOD) + offer.getBrick());
+				sender.put(ResourceCard.SHEEP, sender.get(ResourceCard.SHEEP) + offer.getBrick());
+				receiver.put(ResourceCard.SHEEP, receiver.get(ResourceCard.SHEEP) + offer.getBrick());
+				sender.put(ResourceCard.WHEAT, sender.get(ResourceCard.WHEAT) + offer.getBrick());
+				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
+			}
+			game.setCurrentTrade(null);
+		} catch (InvalidUserAttributesException e) {
+			return e.getLocalizedMessage();
+		} catch (GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
+	}
 
 	@Override
-	public String maritimeTradeOff(ICommandParams params,
-			UserAttributes userAttributes) {
+	public String maritimeTradeOff(ICommandParams params, UserAttributes userAttributes) {
 
 		MaritimeTradeOff trade = (MaritimeTradeOff) params;
-
-
-		// TODO Finish the maritime trade
-		return null;
+		try {
+			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			if(game.getBank().hasEnoughResources(trade.getOutputResource(), 1)){
+				game.getBank().decrementResourceByCount(trade.getOutputResource(), 1);
+				game.getBank().incrementResourceByCount(trade.getInputResource(), trade.getRatio());
+				IPlayer player = game.getPlayerForPlayerIndex(trade.getPlayerIndex());
+				player.decrementResourceByCount(trade.getInputResource(), trade.getRatio());
+				player.incrementResourceByCount(trade.getOutputResource(), 1);
+			}
+			
+		} catch (InvalidUserAttributesException e) {
+			return e.getLocalizedMessage();
+		} catch (GameModelException e) {
+			return e.getLocalizedMessage();
+		}
+		return "Success";
 	}
 
 	@Override
