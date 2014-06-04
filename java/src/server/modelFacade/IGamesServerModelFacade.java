@@ -21,7 +21,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the game model
 	 */
-	public String createGame(String json, UserAttributes ua);
+	public String createGame(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Join game that already exists
@@ -39,7 +39,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the string saying "Success"
 	 */
-	public String loadGame(String json, UserAttributes ua);
+	public String loadGame(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Saves the game to the specified filename
@@ -48,6 +48,6 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the string "Success"
 	 */
-	public String saveGame(String json, UserAttributes ua);
+	public String saveGame(ICommandParams params, UserAttributes ua);
 	
 }

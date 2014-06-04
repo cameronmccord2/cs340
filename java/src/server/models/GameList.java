@@ -15,6 +15,8 @@ import client.server.PlayerServer;
 public class GameList {
 	
 	private ArrayList<Game> games;
+	private int playerID;
+	private GameInfo gInfo;
 
 	public GameList(){
 		super();
@@ -26,11 +28,11 @@ public class GameList {
 		PlayerInfo p1 = new PlayerInfo(0,0,"Kirk",CatanColor.YELLOW);
 		PlayerInfo p2 = new PlayerInfo(1,1,"Spock",CatanColor.BLUE);
 		PlayerInfo p3 = new PlayerInfo(2,2,"McCoy",CatanColor.ORANGE);
-		PlayerInfo p4 = new PlayerInfo(3,3,"Uhura",CatanColor.RED);
+		//PlayerInfo p4 = new PlayerInfo(3,3,"Uhura",CatanColor.RED);
 		gInfo.addPlayer(p1);
 		gInfo.addPlayer(p2);
 		gInfo.addPlayer(p3);
-		gInfo.addPlayer(p4);
+		//gInfo.addPlayer(p4);
 		newGame.setGameInfo(gInfo);
 		games.add(newGame);
 	}
@@ -58,13 +60,36 @@ public class GameList {
 		return gInfos;
 	}	
 	
-	public int addPlayer(int gameId){
+	public void setCurrentUserChecking(int playerID){
+		this.playerID = playerID;
+	}
+	
+	public GameInfo getGInfo(){
+		return gInfo;
+	}
+	
+	public int checkForPlayer(int gameId){
 		for(Game g : games){
-			GameInfo gInfo = g.getGameInfo();
-			if(gInfo.getId() == gameId)
-				return gInfo.getId();
+			gInfo = g.getGameInfo();
+			if(gInfo.getId() == gameId){
+				for(PlayerInfo p : gInfo.getPlayers()){
+					if(p.getId() == this.playerID){
+						return gInfo.getId();												
+					}
+				}
+				//a new player needs to be added to this game
+				return -10;
+			}
 		}
 		return -1;
 	}
 
+	public int addPlayer(PlayerInfo player){
+		gInfo.addPlayer(player);
+		return gInfo.getId();
+	}
+	
+	public ArrayList<Game> getGames(){
+		return games;
+	}
 }

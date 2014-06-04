@@ -1,5 +1,8 @@
 package server.models;
 
+import client.models.ReturnedUser;
+import client.models.User;
+
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -12,17 +15,20 @@ public class UserAttributes {
 	
 	protected String username;
 	protected String password;
+	protected int playerID;
 	protected Integer gameId;
 	
-	public UserAttributes(Login loggedInUser){
-		this.username = loggedInUser.getUser();
+	public UserAttributes(ReturnedUser loggedInUser){
+		this.username = loggedInUser.getName();
 		this.password = loggedInUser.getPassword();
+		this.playerID = loggedInUser.getPlayerID();
 		this.gameId = null;
 	}
 	
 	public UserAttributes(){
 		this.username = null;
 		this.password = null;
+		this.playerID = -1;
 		this.gameId = null;
 	}
 
@@ -43,6 +49,22 @@ public class UserAttributes {
 	 */
 	public void setusername(String username) {
 		this.username = username;
+	}
+	
+	
+
+	/**
+	 * @return the playerID
+	 */
+	public int getPlayerID() {
+		return playerID;
+	}
+
+	/**
+	 * @param playerID the playerID to set
+	 */
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
 	}
 
 	/**

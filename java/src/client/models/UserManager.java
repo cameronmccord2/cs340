@@ -41,6 +41,9 @@ public class UserManager {
 		return "Register Success";
 	}
 	
+	public ArrayList<User> getUsers(){
+		return users;
+	}
 	
 
 }

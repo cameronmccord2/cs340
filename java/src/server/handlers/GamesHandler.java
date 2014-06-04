@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import server.commands.CommandResponse;
 import server.facades.IGamesFacade;
-import server.models.Login;
 import server.models.UserAttributes;
+import client.models.ReturnedUser;
+import client.models.User;
+import client.server.ServerJoinGame;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
@@ -59,15 +64,23 @@ public class GamesHandler implements HttpHandler {
 				break;
 			case "create":
 				if(requestMethod.equals("POST")){
+					//ua is blank for creating games
 					UserAttributes ua = new UserAttributes();
 					response = this.commandFacade.createGame(json, ua);
 				}
 				break;
 			case "join":
 				if(requestMethod.equals("POST")){
+					
+					//get cookie header and decode
 					Gson gson = new Gson();
-					Login loggedInUser = gson.fromJson(json, Login.class);
-					UserAttributes ua = new UserAttributes(loggedInUser);
+					Map<String, List<String>> map = exchange.getRequestHeaders();
+					List<String> setCookie = map.get("Cookie");
+					String temp = setCookie.get(0);
+					temp = temp.substring(11, temp.length());
+					ReturnedUser rUser = gson.fromJson(URLDecoder.decode(temp, "UTF-8"), ReturnedUser.class);
+					UserAttributes ua = new UserAttributes(rUser); //set user
+					
 					response = this.commandFacade.joinGame(json, ua);
 					Headers headers = exchange.getResponseHeaders();
 					headers.add("Set-cookie", "catan.game=" + response.getResponse() + ";Path=/;");
@@ -75,17 +88,27 @@ public class GamesHandler implements HttpHandler {
 				break;
 			case "save":
 				if(requestMethod.equals("POST")){
+					//get cookie header and decode
 					Gson gson = new Gson();
-					Login loggedInUser = gson.fromJson(json, Login.class);
-					UserAttributes ua = new UserAttributes(loggedInUser);
+					Map<String, List<String>> map = exchange.getRequestHeaders();
+					List<String> setCookie = map.get("Cookie");
+					String temp = setCookie.get(0);
+					temp = temp.substring(11, temp.length());
+					ReturnedUser rUser = gson.fromJson(URLDecoder.decode(temp, "UTF-8"), ReturnedUser.class);
+					UserAttributes ua = new UserAttributes(rUser); //set user
 					response = this.commandFacade.saveGame(json, ua);
 				}
 				break;
 			case "load":
 				if(requestMethod.equals("POST")){
+					//get cookie header and decode
 					Gson gson = new Gson();
-					Login loggedInUser = gson.fromJson(json, Login.class);
-					UserAttributes ua = new UserAttributes(loggedInUser);
+					Map<String, List<String>> map = exchange.getRequestHeaders();
+					List<String> setCookie = map.get("Cookie");
+					String temp = setCookie.get(0);
+					temp = temp.substring(11, temp.length());
+					ReturnedUser rUser = gson.fromJson(URLDecoder.decode(temp, "UTF-8"), ReturnedUser.class);
+					UserAttributes ua = new UserAttributes(rUser); //set user
 					response = this.commandFacade.loadGame(json, ua);
 				}
 				break;

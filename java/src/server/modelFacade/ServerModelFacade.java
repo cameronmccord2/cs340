@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
-import client.models.*;
-import client.server.*;
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
 import server.models.GameList;
@@ -16,19 +14,45 @@ import server.models.Register;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
+import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
 import shared.locations.ILocation;
 import shared.locations.VertexLocation;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.models.City;
+import client.models.DevelopmentCard;
+import client.models.Game;
+import client.models.IBank;
+import client.models.ICatanMap;
+import client.models.IDevelopmentCard;
+import client.models.IGame;
+import client.models.IHex;
+import client.models.IPiece;
+import client.models.IPlayer;
+import client.models.IResourceCard;
+import client.models.IRoadSegment;
+import client.models.IRobber;
+import client.models.InvalidLocationException;
+import client.models.MessageLine;
+import client.models.ResourceCard;
+import client.models.RoadSegment;
+import client.models.Settlement;
+import client.models.UserManager;
 import client.models.translator.TREdgeLocation;
 import client.models.translator.TRResourceList;
 import client.models.translator.TRRoad;
 import client.models.translator.TRTradeOffer;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
+import client.server.CreateGame;
+import client.server.DiscardedCards;
 import client.server.GameServer;
+import client.server.MaritimeTradeOff;
 import client.server.OfferTrade;
+import client.server.RoadBuilding;
 import client.server.ServerBuildCity;
 import client.server.ServerBuildRoad;
 import client.server.ServerBuildSettlement;
@@ -36,8 +60,11 @@ import client.server.ServerChat;
 import client.server.ServerJoinGame;
 import client.server.ServerMonopoly;
 import client.server.ServerMonument;
+import client.server.ServerRobPlayer;
 import client.server.ServerRoll;
+import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
+
 import com.google.gson.Gson;
 
 public class ServerModelFacade implements IServerModelFacade {
@@ -83,25 +110,48 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String createGame(String json, UserAttributes ua) {
-		// TODO Auto-generated method stub
+	public String createGame(ICommandParams params, UserAttributes ua) {
+		//create a new default game
+		CreateGame cGame = (CreateGame)params;
+		
+		//set up GameInfo object on Game object
+		GameInfo gInfo = new GameInfo();
+		gInfo.setId(gameList.getGames().size());
+		gInfo.setTitle(cGame.getName());
+		gInfo.setRandomNumbers(cGame.isRandomNumbers());
+		gInfo.setRandomPorts(cGame.isRandomPorts());
+		gInfo.setRandomTiles(cGame.isRandomTiles());
+		
+		Game newGame = new Game();
+		newGame.setGameInfo(gInfo);
+		
+		
+		//gameList.createGame();
 		return null;
 	}
 
 	@Override
 	public String joinGame(ICommandParams params, UserAttributes ua) {
 		ServerJoinGame info = (ServerJoinGame)params;
-		return "JoinGame" + gameList.addPlayer(info.getId());
+		gameList.setCurrentUserChecking(ua.getPlayerID());
+		int temp = gameList.checkForPlayer(info.getId());
+		if(temp == -10){
+			//create a new player for the game
+			GameInfo gInfo = gameList.getGInfo();
+			PlayerInfo newPlayer = new PlayerInfo(ua.getPlayerID(),gInfo.getPlayers().size(),ua.getusername(), CatanColor.RED);
+			return "JoinGame" + gameList.addPlayer(newPlayer);
+		}else
+			return "JoinGame" + temp;
 	}
 
 	@Override
-	public String loadGame(String json, UserAttributes ua) {
+	public String loadGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String saveGame(String json, UserAttributes ua) {
+	public String saveGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}

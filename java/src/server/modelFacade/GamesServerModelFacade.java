@@ -17,7 +17,7 @@ public class GamesServerModelFacade implements IGamesServerModelFacade {
 
 
 	@Override
-	public String createGame(String json, UserAttributes ua) {
+	public String createGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -31,14 +31,14 @@ public class GamesServerModelFacade implements IGamesServerModelFacade {
 
 
 	@Override
-	public String loadGame(String json, UserAttributes ua) {
+	public String loadGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public String saveGame(String json, UserAttributes ua) {
+	public String saveGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
