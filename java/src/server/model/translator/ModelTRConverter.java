@@ -20,7 +20,7 @@ import client.models.translator.*;
  * @author Craig Call
  *
  */
-public class ModelJsonConverter
+public class ModelTRConverter
 {
 	/**
 	 * @param game
