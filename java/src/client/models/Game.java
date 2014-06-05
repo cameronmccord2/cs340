@@ -79,7 +79,12 @@ public class Game implements IGame{
 	}
 	
 	public void addPlayer(Player player){
-		this.players[this.players.length] = player;
+		int count = 0;
+		for(int i = 0; i < this.getPlayers().length; i++) {
+			if(this.getPlayers()[i] != null)
+				count++;
+		}
+		this.players[count] = player;
 	}
 
 	@Override

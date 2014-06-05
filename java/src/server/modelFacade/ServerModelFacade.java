@@ -23,6 +23,7 @@ import shared.locations.VertexLocation;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.Bank;
+import client.models.CatanMap;
 import client.models.City;
 import client.models.DevelopmentCard;
 import client.models.Game;
@@ -129,6 +130,9 @@ public class ServerModelFacade implements IServerModelFacade {
 		newGame.setGameInfo(gInfo);
 		
 		//init map
+		CatanMap newMap = new CatanMap();
+		newMap.setupNewMap(cGame.isRandomNumbers(), cGame.isRandomPorts(), cGame.isRandomTiles());
+		newGame.setMap(newMap);
 		
 		newGame.setPlayers(new IPlayer[4]);
 		newGame.setVersion(0);
@@ -152,7 +156,7 @@ public class ServerModelFacade implements IServerModelFacade {
 		newGame.setCurrentTrade(new TRTradeOffer());
 		
 		gameList.addGame(newGame);
-		System.out.println(newGame.toString());
+
 		return "CreateDone";
 	}
 

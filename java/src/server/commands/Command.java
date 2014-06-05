@@ -38,7 +38,6 @@ public class Command implements ICommand, ITestCommand {
 								   InvocationTargetException {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
 		String response = (String) method.invoke(this.facade, this.commandParams, this.userAttributes);
-		System.out.println("response: " + response);
 		
 		if(response.equals("Success"))
 			return this.facade.getJsonGameModelString(this.userAttributes);

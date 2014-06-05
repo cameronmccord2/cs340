@@ -7,6 +7,7 @@ import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.Bank;
+import client.models.CatanMap;
 import client.models.Game;
 import client.models.IGame;
 import client.models.IPlayer;
@@ -38,20 +39,23 @@ public class GameList {
 		PlayerInfo p1 = new PlayerInfo(0,0,"Kirk",CatanColor.YELLOW);
 		PlayerInfo p2 = new PlayerInfo(1,1,"Spock",CatanColor.BLUE);
 		PlayerInfo p3 = new PlayerInfo(2,2,"McCoy",CatanColor.ORANGE);
-		//PlayerInfo p4 = new PlayerInfo(3,3,"Uhura",CatanColor.RED);
+		PlayerInfo p4 = new PlayerInfo(3,3,"Uhura",CatanColor.RED);
 		gInfo.addPlayer(p1);
 		gInfo.addPlayer(p2);
 		gInfo.addPlayer(p3);
-		//gInfo.addPlayer(p4);
+		gInfo.addPlayer(p4);
 		newGame.setGameInfo(gInfo);
 		
 		//init map
-		
+		CatanMap newMap = new CatanMap();
+		newMap.setupNewMap(false, false, false);
+		newGame.setMap(newMap);
 		
 		//set players
 		Player player1 = new Player(p1);
 		Player player2 = new Player(p2);
 		Player player3 = new Player(p3);
+		Player player4 = new Player(p4);
 		ArrayList<IPlayer> players = new ArrayList<>();
 		players.add(player1);
 		players.add(player2);
