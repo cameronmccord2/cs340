@@ -89,7 +89,7 @@ public interface IPlayer extends IParticipant {
 
 	void setMonuments(int monuments);
 
-	boolean isPlayedDevCard();
+	boolean hasPlayedDevCard();
 
 	void setPlayedDevCard(boolean playedDevCard);
 

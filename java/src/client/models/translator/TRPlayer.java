@@ -97,13 +97,13 @@ public class TRPlayer implements IModelValid
 	public void setMonuments(int monuments) {
 		this.monuments = monuments;
 	}
-	public boolean isPlayedDevCard() {
+	public boolean hasPlayedDevCard() {
 		return playedDevCard;
 	}
 	public void setPlayedDevCard(boolean playedDevCard) {
 		this.playedDevCard = playedDevCard;
 	}
-	public boolean isDiscarded() {
+	public boolean hasDiscarded() {
 		return discarded;
 	}
 	public void setDiscarded(boolean discarded) {

@@ -1,6 +1,6 @@
 package client.models.translator;
 
-public class TRBank
+public class TRParticipant
 {
 	TRDevCardList devcards;
 	TRResourceList resources;

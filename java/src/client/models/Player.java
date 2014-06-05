@@ -181,7 +181,7 @@ public class Player extends Participant implements IPlayer {
 	}
 
 	@Override
-	public boolean isPlayedDevCard() {
+	public boolean hasPlayedDevCard() {
 		return playedDevCard;
 	}
 

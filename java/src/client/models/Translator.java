@@ -79,8 +79,8 @@ public class Translator {
 				newPlayer.setSoldiers(p.getSoldiers());
 				newPlayer.setVictoryPoints(p.getVictoryPoints());
 				newPlayer.setMonuments(p.getMonuments());
-				newPlayer.setPlayedDevCard(p.isPlayedDevCard());
-				newPlayer.setDiscarded(p.isDiscarded());
+				newPlayer.setPlayedDevCard(p.hasPlayedDevCard());
+				newPlayer.setDiscarded(p.hasDiscarded());
 
 				List<ISettlement> settlements = new ArrayList<>();
 				for (TRVertexObject s : cm.getMap().getSettlements()) {

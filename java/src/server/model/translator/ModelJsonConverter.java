@@ -1,6 +1,7 @@
 package server.model.translator;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import shared.definitions.DevCardType;
@@ -15,7 +16,7 @@ public class ModelJsonConverter
 	{
 		ClientModel model = new ClientModel();
 		model.setMap(toTRObject(game.getMap()));
-		TRBank bank = toTRObject(game.getBank());
+		TRParticipant bank = toTRObject(game.getBank());
 		model.setBank(bank.getResources());
 		model.setDeck(bank.getDevCards());
 		model.setChat(toTRObject(game.getChat()));
@@ -81,14 +82,14 @@ public class ModelJsonConverter
 		return hexLocation;
 	}
 
-	public static TRBank toTRObject(IBank bank)
+	public static TRParticipant toTRObject(IParticipant participant)
 	{
-		TRBank trBank = new TRBank();
-		ResourceList resourceList = new ResourceList(bank.getResourceCards());
-		DevCardList devCardList = new DevCardList(bank.getDevelopmentCards());
-		trBank.setDevCards(toTRObject(devCardList));
-		trBank.setResources(toTRObject(resourceList));
-		return trBank;
+		TRParticipant trParticipant = new TRParticipant();
+		ResourceList resourceList = new ResourceList(participant.getResourceCards());
+		DevCardList devCardList = new DevCardList(participant.getDevelopmentCards());
+		trParticipant.setDevCards(toTRObject(devCardList));
+		trParticipant.setResources(toTRObject(resourceList));
+		return trParticipant;
 	}
 
 	public static TRDevCardList toTRObject(DevCardList devCardList)
@@ -107,25 +108,41 @@ public class ModelJsonConverter
 	{
 		TRResourceList resources = new TRResourceList();
 		Map<IResourceCard, Integer> resourceMap = resourceList.getResources();
-//		resources.setBrick(resourceMap.get(Resour))
+		resources.setBrick(resourceMap.get(ResourceCard.BRICK));
+		resources.setOre(resourceMap.get(ResourceCard.ORE));
+		resources.setSheep(resourceMap.get(ResourceCard.SHEEP));
+		resources.setWheat(resourceMap.get(ResourceCard.WHEAT));
+		resources.setWood(resourceMap.get(ResourceCard.WOOD));
 		return resources;
 	}
 
 	public static TRTurnTracker toTRObject(TurnTracker turnTracker)
 	{
 		TRTurnTracker tracker = new TRTurnTracker();
+		tracker.setCurrentTurn(turnTracker.getCurrentTurn());
+		tracker.setLargestArmy(turnTracker.getLargestArmy());
+		tracker.setLongestRoad(turnTracker.getLongestRoad());
+		tracker.setStatus(turnTracker.getStatus());
 		return tracker;
 	}
 
 	public static TRMessageLine toTRObject(MessageLine messageLine)
 	{
 		TRMessageLine line = new TRMessageLine();
+		line.setMessage(messageLine.getMessage());
+		line.setSource(messageLine.getSource());
 		return line;
 	}
 
 	public static TRMessageList toTRObject(MessageList messageList)
 	{
 		TRMessageList messages = new TRMessageList();
+		List<MessageLine> linesList = messageList.getLines();
+		MessageLine[] mLines = linesList.toArray(new MessageLine[linesList.size()]);
+		TRMessageLine[] lines = new TRMessageLine[mLines.length];
+		for(int i = 0; i < mLines.length; i++)
+			lines[i] = toTRObject(mLines[i]);
+		messages.setLines(lines);
 		return messages;
 	}
 
@@ -140,6 +157,22 @@ public class ModelJsonConverter
 	public static TRPlayer toTRObject(IPlayer player)
 	{
 		TRPlayer trPlayer = new TRPlayer();
+		PlayerInfo info = player.getPlayerInfo();
+		trPlayer.setColor(info.getColor().toString().toLowerCase());
+		trPlayer.setDiscarded(player.hasDiscarded());
+		trPlayer.setName(info.getName());
+		trPlayer.setPlayerID(info.getId());
+		trPlayer.setPlayerIndex(info.getPlayerIndex());
+		trPlayer.setPlayedDevCard(player.hasPlayedDevCard());
+		trPlayer.setSettlements(player.getSettlements().size());
+		trPlayer.setCities(player.getCities().size());
+		trPlayer.setMonuments(player.getMonuments());
+		trPlayer.setSoldiers(player.getSoldiers());
+		trPlayer.setVictoryPoints(player.getVictoryPoints());
+		trPlayer.setRoads(player.getRoads().size());
+		TRParticipant particiant = toTRObject((IParticipant)player);
+		trPlayer.setResources(particiant.getResources());
+//		player.get
 		return trPlayer;
 	}
 
