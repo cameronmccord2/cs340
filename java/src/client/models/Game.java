@@ -16,7 +16,7 @@ public class Game implements IGame{
 	
 	private GameInfo gameInfo;
 	private ICatanMap map;
-	private IPlayer players[];
+	private IPlayer[] players;
 	private Integer modelVersion;
 	private IBank bank;
 	private MessageList log;
