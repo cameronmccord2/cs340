@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.naming.OperationNotSupportedException;
 
 import server.commands.ICommandParams;
+import server.model.translator.ModelJsonConverter;
 import server.models.FinishTurn;
 import server.models.GameList;
 import server.models.Login;
@@ -83,8 +84,13 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String getJsonGameModelString(UserAttributes userAttributes) {
-		// TODO Auto-generated method stub
+	public String getJsonGameModelString(UserAttributes ua) {
+		Gson gson = new Gson();
+		try {
+			return gson.toJson(ModelJsonConverter.toTRObject(gameList.getGameById(ua.getGameId())));
+		} catch (InvalidUserAttributesException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
