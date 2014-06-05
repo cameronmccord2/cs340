@@ -29,7 +29,6 @@ import client.models.interfaces.IProxy;
 import client.models.interfaces.IResourceCard;
 import client.models.interfaces.ISettlement;
 import client.models.translator.TRTradeOffer;
-import shared.locations.HexLocation;
 
 public class Facade implements IFacade {
 
