@@ -9,14 +9,14 @@ import client.base.IAction;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.misc.IMessageView;
-import client.models.ICatanModelObserver;
-import client.models.IGame;
-import client.models.IPlayer;
-import client.models.IProxy;
 import client.models.Poller;
 import client.models.ServerResponse;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IGame;
+import client.models.interfaces.IPlayer;
+import client.models.interfaces.IProxy;
 import client.server.CreateGame;
 import client.server.ServerJoinGame;
 

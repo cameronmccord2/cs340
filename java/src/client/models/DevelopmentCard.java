@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import client.models.interfaces.IDevelopmentCard;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 

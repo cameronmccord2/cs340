@@ -1,5 +1,6 @@
 package client.models;
 
+import client.models.interfaces.IResourceCard;
 import shared.definitions.ResourceType;
 
 /**

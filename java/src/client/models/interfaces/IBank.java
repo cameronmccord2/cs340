@@ -1,4 +1,6 @@
-package client.models;
+package client.models.interfaces;
+
+import client.models.DevelopmentCard;
 
 /**
  * The Interface IBank.

@@ -16,9 +16,9 @@ import client.login.LoginController;
 import client.login.LoginView;
 import client.misc.MessageView;
 import client.models.DummyProxy;
-import client.models.IProxy;
 import client.models.Poller;
 import client.models.Proxy;
+import client.models.interfaces.IProxy;
 
 /**
  * Main entry point for the Catan program

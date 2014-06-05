@@ -3,6 +3,8 @@ package client.models;
 import java.util.HashMap;
 import java.util.Map;
 
+import client.models.interfaces.IResourceCard;
+
 public class ResourceList
 {
 	private Map<IResourceCard, Integer> resources;

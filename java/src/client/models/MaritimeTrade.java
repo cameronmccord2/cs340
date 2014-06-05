@@ -3,6 +3,9 @@ package client.models;
 import java.util.Map;
 
 import client.exceptions.InvalidTradeException;
+import client.models.interfaces.IMaritimeTrade;
+import client.models.interfaces.IParticipant;
+import client.models.interfaces.IResourceCard;
 
 /**
  * The Class MaritimeTrade.

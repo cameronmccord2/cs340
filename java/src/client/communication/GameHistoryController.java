@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.base.Controller;
-import client.models.ICatanModelObserver;
-import client.models.IProxy;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IProxy;
 
 
 /**

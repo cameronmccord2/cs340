@@ -2,7 +2,7 @@ package client.catan;
 
 import javax.swing.*;
 
-import client.models.IProxy;
+import client.models.interfaces.IProxy;
 import shared.definitions.PieceType;
 import client.points.*;
 import client.resources.*;

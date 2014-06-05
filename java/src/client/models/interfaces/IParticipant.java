@@ -1,8 +1,9 @@
-package client.models;
+package client.models.interfaces;
 
 import java.util.Collection;
 import java.util.Map;
 
+import client.models.Resource;
 import shared.definitions.HexType;
 
 // TODO: Auto-generated Javadoc

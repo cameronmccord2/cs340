@@ -3,6 +3,7 @@ package client.models;
 import shared.definitions.PieceType;
 import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
+import client.models.interfaces.IRobber;
 import client.models.translator.TRHexLocation;
 
 /**

@@ -1,5 +1,6 @@
 package client.models;
 
+import client.models.interfaces.IHex;
 import client.models.translator.TRHex;
 import shared.locations.*;
 import shared.definitions.*;

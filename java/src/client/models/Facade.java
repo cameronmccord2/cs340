@@ -18,6 +18,16 @@ import client.communication.LogEntry;
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.interfaces.ICatanMap;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IDevelopmentCard;
+import client.models.interfaces.IFacade;
+import client.models.interfaces.IGame;
+import client.models.interfaces.IPlayer;
+import client.models.interfaces.IPort;
+import client.models.interfaces.IProxy;
+import client.models.interfaces.IResourceCard;
+import client.models.interfaces.ISettlement;
 import client.models.translator.TRTradeOffer;
 import shared.locations.HexLocation;
 

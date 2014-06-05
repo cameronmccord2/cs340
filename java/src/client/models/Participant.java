@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import client.models.interfaces.IDevelopmentCard;
+import client.models.interfaces.IParticipant;
+import client.models.interfaces.IResourceCard;
 import shared.definitions.HexType;
 
 /**

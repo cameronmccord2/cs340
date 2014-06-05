@@ -1,5 +1,6 @@
 package client.models;
 
+import client.models.interfaces.IPort;
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
 import shared.locations.EdgeDirection;

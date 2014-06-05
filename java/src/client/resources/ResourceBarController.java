@@ -6,6 +6,9 @@ import client.base.*;
 import client.models.*;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IFacade;
+import client.models.interfaces.IProxy;
 import client.server.FinishedTurn;
 import shared.definitions.ResourceType;
 

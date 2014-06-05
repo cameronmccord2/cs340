@@ -1,4 +1,4 @@
-package client.models;
+package client.models.interfaces;
 
 import shared.definitions.PieceType;
 import shared.locations.ILocation;

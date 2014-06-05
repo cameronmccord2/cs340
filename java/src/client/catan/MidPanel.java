@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import client.map.*;
-import client.models.IProxy;
+import client.models.interfaces.IProxy;
 
 @SuppressWarnings("serial")
 public class MidPanel extends JPanel

@@ -2,10 +2,10 @@ package client.join;
 
 import client.base.Controller;
 import client.data.PlayerInfo;
-import client.models.ICatanModelObserver;
-import client.models.IFacade;
-import client.models.IProxy;
 import client.models.exceptions.CantFindGameModelException;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IFacade;
+import client.models.interfaces.IProxy;
 
 
 /**
