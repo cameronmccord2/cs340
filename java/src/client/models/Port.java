@@ -14,6 +14,22 @@ public class Port implements IPort {
 	protected int exchangeRate;
 	protected PortType portType;
 
+	public Port()
+	{
+		hexLocation = null;
+		location = null;
+		exchangeRate = 0;
+		portType = null;
+	}
+
+	public Port(ILocation loc, PortType type)
+	{
+		hexLocation = loc.getHexLocation();
+		location = loc;
+		portType = type;
+		exchangeRate = (type == PortType.THREE)? 3 : 2;
+	}
+
 	public Port(TRPort port) {
 		this.hexLocation = new HexLocation(port.getLocation().getX(), port.getLocation().getY());
 		this.exchangeRate = port.getRatio();

@@ -48,7 +48,7 @@ public class GameList {
 		
 		//init map
 		CatanMap newMap = new CatanMap();
-		newMap.setupNewMap(false, false, false);
+		newMap.setupNewMap(gInfo.isRandomTiles(), gInfo.isRandomNumbers(), gInfo.isRandomPorts());
 		newGame.setMap(newMap);
 		
 		//set players

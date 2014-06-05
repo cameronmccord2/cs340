@@ -22,6 +22,11 @@ public class Hex implements IHex
 		this.setLocation(location);
 	}
 
+	public Hex(HexLocation loc, HexType type) {
+		this.setLocation(loc);
+		this.setHexType(type);
+	}
+
 	public Hex(TRHex hex) {
 		this.location = new HexLocation(hex.getLocation().getX(), hex.getLocation().getY());
 		if(hex.getNumber() != null)

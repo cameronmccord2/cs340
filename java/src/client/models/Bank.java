@@ -122,11 +122,6 @@ public class Bank extends Participant implements IBank {
 		return false;
 	}
 
-	public DevelopmentCard drawRandomCard() {
-		// TODO select random card and decrement its count
-		return null;
-	}
-
 	/**
 	 * Counts the total number of Dev Cards available in the Dev Card Deck
 	 * @return

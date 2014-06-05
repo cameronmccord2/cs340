@@ -2,11 +2,8 @@ package client.models;
 
 import java.util.*;
 
-import com.sun.xml.internal.bind.v2.runtime.Location;
-
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
-import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.locations.*;
 
@@ -584,120 +581,12 @@ public class CatanMap implements ICatanMap
 
 	@Override
 	public void setupNewMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
-		
-		setupDefaultHexes();
-	}
-	
-	private void setupDefaultHexes() {
-		
-		Set<Hex> hexes = new HashSet<>();
 
-		Hex hex = new Hex();
-		
-		
-		// Outer Ring of Default Tiles
-		hex.setLocation(new HexLocation(0,-2));
-		hex.setHexType(HexType.WOOD);
-		hex.setHexNumber(11);
-		hexes.add(hex);
+		MapBuilder builder = new MapBuilder();
 
-		hex.setLocation(new HexLocation(1,-2));
-		hex.setHexType(HexType.SHEEP);
-		hex.setHexNumber(12);
-		hexes.add(hex);
+		builder.setupLandHexes(this,randomNumbers,randomTiles);
+		builder.setupPorts(this, randomPorts);
 
-		hex.setLocation(new HexLocation(2,-2));
-		hex.setHexType(HexType.WHEAT);
-		hex.setHexNumber(9);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(2,-1));
-		hex.setHexType(HexType.SHEEP);
-		hex.setHexNumber(10);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(2,0));
-		hex.setHexType(HexType.WHEAT);
-		hex.setHexNumber(8);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(1,1));
-		hex.setHexType(HexType.ORE);
-		hex.setHexNumber(3);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(0,2));
-		hex.setHexType(HexType.WOOD);
-		hex.setHexNumber(6);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-1,2));
-		hex.setHexType(HexType.WHEAT);
-		hex.setHexNumber(2);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-2,2));
-		hex.setHexType(HexType.ORE);
-		hex.setHexNumber(5);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-2,1));
-		hex.setHexType(HexType.BRICK);
-		hex.setHexNumber(8);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-2,0));
-		hex.setHexType(HexType.DESERT);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-1,-1));
-		hex.setHexType(HexType.BRICK);
-		hex.setHexNumber(4);
-		hexes.add(hex);
-		
-		
-		// Inner Ring of Default Tiles
-		hex.setLocation(new HexLocation(0,-1));
-		hex.setHexType(HexType.ORE);
-		hex.setHexNumber(4);
-		hexes.add(hex);
-
-		hex.setLocation(new HexLocation(1,-1));
-		hex.setHexType(HexType.BRICK);
-		hex.setHexNumber(5);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(1,0));
-		hex.setHexType(HexType.WOOD);
-		hex.setHexNumber(4);
-		hexes.add(hex);
-
-		hex.setLocation(new HexLocation(0,1));
-		hex.setHexType(HexType.SHEEP);
-		hex.setHexNumber(9);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-1,1));
-		hex.setHexType(HexType.SHEEP);
-		hex.setHexNumber(10);
-		hexes.add(hex);
-		
-		hex.setLocation(new HexLocation(-1,0));
-		hex.setHexType(HexType.WOOD);
-		hex.setHexNumber(3);
-		hexes.add(hex);
-		
-		// Center Default Tile
-		hex.setLocation(new HexLocation(0,0));
-		hex.setHexType(HexType.WHEAT);
-		hex.setHexNumber(11);
-		hexes.add(hex);
-		
-		
-		Iterator<Hex> i = hexes.iterator();
-		while(i.hasNext()) {
-			this.addHex(i.next());
-		}
-		
+		initializeOceanHexes();
 	}
 }
