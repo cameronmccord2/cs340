@@ -587,7 +587,7 @@ public class ServerModelFacade implements IServerModelFacade {
 		}
 
 
-		return null;
+		return "Success";
 	}
 
 	@Override
