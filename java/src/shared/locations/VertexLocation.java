@@ -1,6 +1,6 @@
 package shared.locations;
 
-import client.models.translator.TREdgeLocation;
+import client.models.translator.TRVertexLocation;
 
 
 /**
@@ -16,7 +16,7 @@ public class VertexLocation implements ILocation {
 		setDirection(direction);
 	}
 
-	public VertexLocation(TREdgeLocation location) {
+	public VertexLocation(TRVertexLocation location) {
 		this.hexLocation = new HexLocation(location.getX(), location.getY());
 		this.direction = VertexDirection.getDirectionFromServerString(location.getDirection());
 	}

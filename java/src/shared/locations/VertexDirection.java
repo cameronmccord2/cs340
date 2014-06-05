@@ -4,6 +4,7 @@ public enum VertexDirection implements IDirection{
 	West, NorthWest, NorthEast, East, SouthEast, SouthWest;
 
 	private VertexDirection opposite;
+	private String serverString;
 
 	static {
 		West.opposite = East;
@@ -12,10 +13,22 @@ public enum VertexDirection implements IDirection{
 		East.opposite = West;
 		SouthEast.opposite = NorthWest;
 		SouthWest.opposite = NorthEast;
+
+		West.serverString = "W";
+		NorthWest.serverString = "NW";
+		NorthEast.serverString = "NE";
+		East.serverString = "E";
+		SouthEast.serverString = "SE";
+		SouthWest.serverString = "SW";
 	}
 
 	public VertexDirection getOppositeDirection() {
 		return opposite;
+	}
+
+	public String getServerString()
+	{
+		return serverString;
 	}
 
 	public static VertexDirection getDirectionFromServerString(String direction) {

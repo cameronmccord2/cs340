@@ -4,18 +4,18 @@ import client.models.exceptions.InvalidTranslatorModelException;
 
 public class TRVertexObject implements IModelValid {
 	protected Integer owner;
-	protected TREdgeLocation location;
-	
+	protected TRVertexLocation location;
+
 	public Integer getOwner() {
 		return owner;
 	}
 	public void setOwner(Integer owner) {
 		this.owner = owner;
 	}
-	public TREdgeLocation getLocation() {
+	public TRVertexLocation getLocation() {
 		return location;
 	}
-	public void setLocation(TREdgeLocation location) {
+	public void setLocation(TRVertexLocation location) {
 		this.location = location;
 	}
 	@Override
