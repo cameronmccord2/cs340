@@ -2,6 +2,12 @@ package server.main;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import server.facades.DummyGameFacade;
 import server.facades.DummyGamesFacade;
@@ -24,7 +30,7 @@ import server.modelFacade.ServerModelFacade;
 
 import com.sun.net.httpserver.HttpServer;
 
-
+@SuppressWarnings({"unused"})
 public class Server {
 
 	private static int SERVER_PORT_NUMBER;
@@ -35,6 +41,33 @@ public class Server {
 	private GameHandler gameHandler;
 	private MovesHandler movesHandler;
 	private UserHandler userHandler;
+	
+	private static Logger logger;
+	static
+	{
+		try
+		{
+			Level logLevel = Level.OFF;
+			
+			logger = Logger.getLogger("Server");
+			logger.setLevel(logLevel);
+			logger.setUseParentHandlers(false);
+			
+			Handler consoleHandler = new ConsoleHandler();
+			consoleHandler.setLevel(logLevel);
+			consoleHandler.setFormatter(new SimpleFormatter());
+			logger.addHandler(consoleHandler);
+			
+			FileHandler fileHandler = new FileHandler("server_log.txt", false);
+			fileHandler.setLevel(logLevel);
+			fileHandler.setFormatter(new SimpleFormatter());
+			logger.addHandler(fileHandler);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 	
 	private Server() {
 		SERVER_PORT_NUMBER = 8081;
@@ -125,7 +158,8 @@ public class Server {
 		server.createContext("/moves/maritimeTrade", movesHandler);
 		server.createContext("/moves/discardCards", movesHandler);
 		
-		System.out.println("server started");
+//		System.out.println("server started");
+		logger.info("Server started");
 		server.start();
 	}
 }
