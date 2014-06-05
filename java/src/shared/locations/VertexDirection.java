@@ -26,7 +26,7 @@ public enum VertexDirection implements IDirection{
 		return opposite;
 	}
 
-	public String getServerString()
+	public String asServerString()
 	{
 		return serverString;
 	}

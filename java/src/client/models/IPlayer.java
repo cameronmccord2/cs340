@@ -1,6 +1,7 @@
 package client.models;
 
 import java.util.List;
+import java.util.Map;
 
 import shared.definitions.HexType;
 import client.data.PlayerInfo;
@@ -104,5 +105,9 @@ public interface IPlayer extends IParticipant {
 	boolean canBuildRoad(IRoadSegment segment);
 
 	ResourceCard drawRandomResourceCard();
+	
+	Map<IDevelopmentCard, Integer> getOldDevCards();
+	
+	Map<IDevelopmentCard, Integer> getNewDevCards();
 
 }

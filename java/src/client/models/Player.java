@@ -22,11 +22,14 @@ public class Player extends Participant implements IPlayer {
 	/** The player info. */
 	protected PlayerInfo playerInfo;
 
-	  protected int soldiers;
-	  protected int victoryPoints;
-	  protected int monuments;
-	  protected boolean playedDevCard;
-	  protected boolean discarded;
+    protected int soldiers;
+    protected int victoryPoints;
+    protected int monuments;
+    protected boolean playedDevCard;
+    protected boolean discarded;
+    
+    protected Map<IDevelopmentCard, Integer> oldDevCards;
+    protected Map<IDevelopmentCard, Integer> newDevCards;
 
 	/**
 	 * Instantiates a new player.
@@ -304,5 +307,17 @@ public class Player extends Participant implements IPlayer {
 		}
 
 		return currentType;
+	}
+
+	@Override
+	public Map<IDevelopmentCard, Integer> getOldDevCards()
+	{
+		return oldDevCards;
+	}
+
+	@Override
+	public Map<IDevelopmentCard, Integer> getNewDevCards()
+	{
+		return newDevCards;
 	}
 }

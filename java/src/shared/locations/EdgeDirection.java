@@ -5,6 +5,7 @@ public enum EdgeDirection implements IDirection {
 	NorthWest, North, NorthEast, SouthEast, South, SouthWest;
 
 	private EdgeDirection opposite;
+	private String serverString;
 
 	static {
 		NorthWest.opposite = SouthEast;
@@ -13,10 +14,21 @@ public enum EdgeDirection implements IDirection {
 		SouthEast.opposite = NorthWest;
 		South.opposite = North;
 		SouthWest.opposite = NorthEast;
+		
+		NorthWest.serverString = "NW";
+		North.serverString = "N";
+		NorthEast.serverString = "NE";
+		SouthEast.serverString = "SE";
+		South.serverString = "S";
+		SouthWest.serverString = "SW";
 	}
 
 	public EdgeDirection getOppositeDirection() {
 		return opposite;
+	}
+	
+	public String asServerString() {
+		return serverString;
 	}
 
 	public static EdgeDirection getDirectionFromServerString(String direction) {

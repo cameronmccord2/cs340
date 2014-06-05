@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.DevCardType;
+import shared.definitions.PortType;
 import shared.locations.*;
 import client.data.PlayerInfo;
 import client.models.*;
@@ -172,7 +173,12 @@ public class ModelJsonConverter
 		trPlayer.setRoads(player.getRoads().size());
 		TRParticipant particiant = toTRObject((IParticipant)player);
 		trPlayer.setResources(particiant.getResources());
-//		player.get
+		
+		// TODO: Fix this part
+		// THESE NEED TO BE REPLACED, BUT THE IPlayer INTERFACE
+		// NEEDS TO BE UPDATED!
+		trPlayer.setNewDevCards(null);
+		trPlayer.setOldDevCards(null);
 		return trPlayer;
 	}
 
@@ -187,6 +193,14 @@ public class ModelJsonConverter
 	public static TRPort toTRObject(IPort port)
 	{
 		TRPort trPort = new TRPort();
+		ILocation location = port.getLocation();
+		IDirection direction = location.getDirection();
+		trPort.setLocation(toTRObject(location.getHexLocation()));
+		trPort.setDirection(direction.asServerString());
+		trPort.setRatio(new Integer(port.getExchangeRate()));
+		PortType type = port.getPortType();
+		if(!type.equals(PortType.THREE))
+			trPort.setResource(type.toString().toLowerCase());
 		return trPort;
 	}
 
@@ -201,7 +215,22 @@ public class ModelJsonConverter
 	public static TRRoad toTRObject(IRoadSegment segment)
 	{
 		TRRoad road = new TRRoad();
+		ILocation location = segment.getLocation();
+		road.setLocation(toTRObject((EdgeLocation)location));
+		IPlayer player = segment.getPlayer();
+		PlayerInfo info = player.getPlayerInfo();
+		road.setOwner(new Integer(info.getPlayerIndex()));
 		return road;
+	}
+
+	private static TREdgeLocation toTRObject(EdgeLocation location)
+	{
+		TREdgeLocation edge = new TREdgeLocation();
+		HexLocation hexLoc = location.getHexLocation();
+		edge.setX(new Integer(hexLoc.getX()));
+		edge.setY(new Integer(hexLoc.getY()));
+		edge.setDirection(location.getDirection().asServerString());
+		return edge;
 	}
 
 	public static TRVertexObject[] toTRObject(ISettlement[] settlements)
@@ -227,7 +256,7 @@ public class ModelJsonConverter
 		TRVertexLocation location = new TRVertexLocation();
 		location.setX(new Integer(vertex.getHexLocation().getX()));
 		location.setY(new Integer(vertex.getHexLocation().getY()));
-		location.setDirection(vertex.getDirection().getServerString());
+		location.setDirection(vertex.getDirection().asServerString());
 		return location;
 	}
 }
