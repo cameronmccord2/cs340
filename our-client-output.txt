@@ -1,0 +1,13 @@
+Buildfile: /users/guest/c/cwc223/cs340/build.xml
+
+init:
+
+compile:
+
+package:
+
+client:
+     [java] game cookie: catan.game=42;Path=/;
+     [java] Type: SETTLEMENT
+     [java] false
+     [java] true
