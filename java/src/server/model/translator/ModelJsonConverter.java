@@ -11,8 +11,21 @@ import client.data.PlayerInfo;
 import client.models.*;
 import client.models.translator.*;
 
+/**
+ * This class is a static library for converting our model objects
+ * into Transfer objects compatible with Gson.  It relies heavily
+ * on method overloading.  There is only one method for this class
+ * called toTRObject().
+ * 
+ * @author Craig Call
+ *
+ */
 public class ModelJsonConverter
 {
+	/**
+	 * @param game
+	 * @return
+	 */
 	public static ClientModel toTRObject(IGame game)
 	{
 		ClientModel model = new ClientModel();
@@ -30,6 +43,10 @@ public class ModelJsonConverter
 		return model;
 	}
 
+	/**
+	 * @param catanMap
+	 * @return
+	 */
 	public static TRMap toTRObject(ICatanMap catanMap)
 	{
 		TRMap map = new TRMap();
@@ -48,6 +65,10 @@ public class ModelJsonConverter
 		return map;
 	}
 
+	/**
+	 * @param hexes
+	 * @return
+	 */
 	public static TRHex[] toTRObject(IHex[] hexes)
 	{
 		TRHex[] trHexes = new TRHex[hexes.length];
@@ -56,6 +77,10 @@ public class ModelJsonConverter
 		return trHexes;
 	}
 
+	/**
+	 * @param hex
+	 * @return
+	 */
 	public static TRHex toTRObject(IHex hex)
 	{
 		TRHex trHex = new TRHex();
@@ -65,6 +90,10 @@ public class ModelJsonConverter
 		return trHex;
 	}
 
+	/**
+	 * @param hex
+	 * @return
+	 */
 	public static TRHexLocation toTRObject(HexLocation hex)
 	{
 		TRHexLocation trHexLocation = new TRHexLocation();
@@ -73,6 +102,10 @@ public class ModelJsonConverter
 		return trHexLocation;
 	}
 
+	/**
+	 * @param robber
+	 * @return
+	 */
 	public static TRHexLocation toTRObject(IRobber robber)
 	{
 		TRHexLocation hexLocation = new TRHexLocation();
@@ -83,6 +116,10 @@ public class ModelJsonConverter
 		return hexLocation;
 	}
 
+	/**
+	 * @param participant
+	 * @return
+	 */
 	public static TRParticipant toTRObject(IParticipant participant)
 	{
 		TRParticipant trParticipant = new TRParticipant();
@@ -93,6 +130,10 @@ public class ModelJsonConverter
 		return trParticipant;
 	}
 
+	/**
+	 * @param devCardList
+	 * @return
+	 */
 	public static TRDevCardList toTRObject(DevCardList devCardList)
 	{
 		TRDevCardList devcards = new TRDevCardList();
@@ -105,6 +146,10 @@ public class ModelJsonConverter
 		return devcards;
 	}
 
+	/**
+	 * @param resourceList
+	 * @return
+	 */
 	public static TRResourceList toTRObject(ResourceList resourceList)
 	{
 		TRResourceList resources = new TRResourceList();
@@ -117,6 +162,10 @@ public class ModelJsonConverter
 		return resources;
 	}
 
+	/**
+	 * @param turnTracker
+	 * @return
+	 */
 	public static TRTurnTracker toTRObject(TurnTracker turnTracker)
 	{
 		TRTurnTracker tracker = new TRTurnTracker();
@@ -127,6 +176,10 @@ public class ModelJsonConverter
 		return tracker;
 	}
 
+	/**
+	 * @param messageLine
+	 * @return
+	 */
 	public static TRMessageLine toTRObject(MessageLine messageLine)
 	{
 		TRMessageLine line = new TRMessageLine();
@@ -135,6 +188,10 @@ public class ModelJsonConverter
 		return line;
 	}
 
+	/**
+	 * @param messageList
+	 * @return
+	 */
 	public static TRMessageList toTRObject(MessageList messageList)
 	{
 		TRMessageList messages = new TRMessageList();
@@ -147,6 +204,10 @@ public class ModelJsonConverter
 		return messages;
 	}
 
+	/**
+	 * @param players
+	 * @return
+	 */
 	public static TRPlayer[] toTRObject(IPlayer[] players)
 	{
 		TRPlayer[] trPlayers = new TRPlayer[players.length];
@@ -155,6 +216,10 @@ public class ModelJsonConverter
 		return trPlayers;
 	}
 
+	/**
+	 * @param player
+	 * @return
+	 */
 	public static TRPlayer toTRObject(IPlayer player)
 	{
 		TRPlayer trPlayer = new TRPlayer();
@@ -182,6 +247,10 @@ public class ModelJsonConverter
 		return trPlayer;
 	}
 
+	/**
+	 * @param ports
+	 * @return
+	 */
 	public static TRPort[] toTRObject(IPort[] ports)
 	{
 		TRPort[] trPorts = new TRPort[ports.length];
@@ -190,6 +259,10 @@ public class ModelJsonConverter
 		return trPorts;
 	}
 
+	/**
+	 * @param port
+	 * @return
+	 */
 	public static TRPort toTRObject(IPort port)
 	{
 		TRPort trPort = new TRPort();
@@ -204,6 +277,10 @@ public class ModelJsonConverter
 		return trPort;
 	}
 
+	/**
+	 * @param segments
+	 * @return
+	 */
 	public static TRRoad[] toTRObject(IRoadSegment[] segments)
 	{
 		TRRoad[] roads = new TRRoad[segments.length];
@@ -212,6 +289,10 @@ public class ModelJsonConverter
 		return roads;
 	}
 
+	/**
+	 * @param segment
+	 * @return
+	 */
 	public static TRRoad toTRObject(IRoadSegment segment)
 	{
 		TRRoad road = new TRRoad();
@@ -223,7 +304,11 @@ public class ModelJsonConverter
 		return road;
 	}
 
-	private static TREdgeLocation toTRObject(EdgeLocation location)
+	/**
+	 * @param location
+	 * @return
+	 */
+	public static TREdgeLocation toTRObject(EdgeLocation location)
 	{
 		TREdgeLocation edge = new TREdgeLocation();
 		HexLocation hexLoc = location.getHexLocation();
@@ -233,6 +318,10 @@ public class ModelJsonConverter
 		return edge;
 	}
 
+	/**
+	 * @param settlements
+	 * @return
+	 */
 	public static TRVertexObject[] toTRObject(ISettlement[] settlements)
 	{
 		TRVertexObject[] vSettlements = new TRVertexObject[settlements.length];
@@ -241,6 +330,10 @@ public class ModelJsonConverter
 		return vSettlements;
 	}
 
+	/**
+	 * @param settlement
+	 * @return
+	 */
 	public static TRVertexObject toTRObject(ISettlement settlement)
 	{
 		TRVertexObject vObject = new TRVertexObject();
@@ -251,6 +344,10 @@ public class ModelJsonConverter
 		return vObject;
 	}
 
+	/**
+	 * @param vertex
+	 * @return
+	 */
 	public static TRVertexLocation toTRObject(VertexLocation vertex)
 	{
 		TRVertexLocation location = new TRVertexLocation();
