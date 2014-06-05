@@ -51,6 +51,9 @@ public class Command implements ICommand, ITestCommand {
 			return response.substring(8);
 		else if(response.equals("CreateDone"))
 			return "Success";
+		else if(response.equals("Failed")){
+			return "Failed to login";
+		}
 		else{
 			return response;
 		}
