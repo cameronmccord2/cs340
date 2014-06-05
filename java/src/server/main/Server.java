@@ -84,7 +84,6 @@ public class Server {
 		else if(args.length == 2){
 			new Server(args[0]).run();
 		}
-		
 	}
 	
 	private void run() {
