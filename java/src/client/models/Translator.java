@@ -129,7 +129,7 @@ public class Translator {
 				resourceCards.put(ResourceCard.WOOD, resources.getWood());
 				newPlayer.setResourceCards(resourceCards);
 
-				Map<IDevelopmentCard, Integer> developmentCards = new HashMap<IDevelopmentCard, Integer>();
+				Map<IDevelopmentCard, Integer> developmentCards = new HashMap<>();
 				TRDevCardList newDevCards = p.getNewDevCards();
 	//			TRDevCardList oldDevCards = p.getOldDevCards();
 				developmentCards.put(DevelopmentCard.MONOPOLY, newDevCards.getMonopoly());

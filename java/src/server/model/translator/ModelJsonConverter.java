@@ -171,14 +171,14 @@ public class ModelJsonConverter
 		trPlayer.setSoldiers(player.getSoldiers());
 		trPlayer.setVictoryPoints(player.getVictoryPoints());
 		trPlayer.setRoads(player.getRoads().size());
-		TRParticipant particiant = toTRObject((IParticipant)player);
-		trPlayer.setResources(particiant.getResources());
+		TRParticipant participant = toTRObject((IParticipant)player);
+		trPlayer.setResources(participant.getResources());
 		
 		// TODO: Fix this part
 		// THESE NEED TO BE REPLACED, BUT THE IPlayer INTERFACE
 		// NEEDS TO BE UPDATED!
-		trPlayer.setNewDevCards(null);
-		trPlayer.setOldDevCards(null);
+		trPlayer.setNewDevCards(participant.getDevCards());
+//		trPlayer.setOldDevCards(null);
 		return trPlayer;
 	}
 
