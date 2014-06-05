@@ -3,6 +3,7 @@ package server.model.translator;
 import java.util.Collection;
 import java.util.Map;
 
+import shared.definitions.DevCardType;
 import shared.locations.*;
 import client.data.PlayerInfo;
 import client.models.*;
@@ -32,13 +33,16 @@ public class ModelJsonConverter
 		TRMap map = new TRMap();
 		Collection<ICity> cities = catanMap.getCities();
 		map.setCities(toTRObject(cities.toArray(new ICity[cities.size()])));
-		map.setHexes(null);
+		Collection<IHex> hexes = catanMap.getTerrainHexes();
+		map.setHexes(toTRObject(hexes.toArray(new IHex[hexes.size()])));
 		Collection<ISettlement> settlements = catanMap.getSettlements();
 		map.setSettlements(toTRObject(settlements.toArray(new ISettlement[settlements.size()])));
-		map.setPorts(null);
+		Collection<IPort> ports = catanMap.getPorts();
+		map.setPorts(toTRObject(ports.toArray(new IPort[ports.size()])));
 		map.setRadius(catanMap.getRadius());
-		map.setRoads(null);
-		map.setRobber(null);
+		Collection<IRoadSegment> roads = catanMap.getRoads();
+		map.setRoads(toTRObject(roads.toArray(new IRoadSegment[roads.size()])));
+		map.setRobber(toTRObject(catanMap.getRobber()));
 		return map;
 	}
 
@@ -67,6 +71,16 @@ public class ModelJsonConverter
 		return trHexLocation;
 	}
 
+	public static TRHexLocation toTRObject(IRobber robber)
+	{
+		TRHexLocation hexLocation = new TRHexLocation();
+		ILocation location = robber.getLocation();
+		HexLocation robberHex = location.getHexLocation();
+		hexLocation.setX(new Integer(robberHex.getX()));
+		hexLocation.setY(new Integer(robberHex.getY()));
+		return hexLocation;
+	}
+
 	public static TRBank toTRObject(IBank bank)
 	{
 		TRBank trBank = new TRBank();
@@ -80,13 +94,20 @@ public class ModelJsonConverter
 	public static TRDevCardList toTRObject(DevCardList devCardList)
 	{
 		TRDevCardList devcards = new TRDevCardList();
-
+		Map<IDevelopmentCard, Integer> devMap = devCardList.getDevcards();
+		devcards.setMonopoly(devMap.get(DevCardType.MONOPOLY));
+		devcards.setMonument(devMap.get(DevCardType.MONUMENT));
+		devcards.setRoadBuilding(devMap.get(DevCardType.ROAD_BUILD));
+		devcards.setSoldier(devMap.get(DevCardType.SOLDIER));
+		devcards.setYearOfPlenty(devMap.get(DevCardType.YEAR_OF_PLENTY));
 		return devcards;
 	}
 
 	public static TRResourceList toTRObject(ResourceList resourceList)
 	{
 		TRResourceList resources = new TRResourceList();
+		Map<IResourceCard, Integer> resourceMap = resourceList.getResources();
+//		resources.setBrick(resourceMap.get(Resour))
 		return resources;
 	}
 
@@ -122,10 +143,26 @@ public class ModelJsonConverter
 		return trPlayer;
 	}
 
+	public static TRPort[] toTRObject(IPort[] ports)
+	{
+		TRPort[] trPorts = new TRPort[ports.length];
+		for(int i = 0; i < ports.length; i++)
+			trPorts[i] = toTRObject(ports[i]);
+		return trPorts;
+	}
+
 	public static TRPort toTRObject(IPort port)
 	{
 		TRPort trPort = new TRPort();
 		return trPort;
+	}
+
+	public static TRRoad[] toTRObject(IRoadSegment[] segments)
+	{
+		TRRoad[] roads = new TRRoad[segments.length];
+		for(int i = 0; i < segments.length; i++)
+			roads[i] = toTRObject(segments[i]);
+		return roads;
 	}
 
 	public static TRRoad toTRObject(IRoadSegment segment)

@@ -40,7 +40,7 @@ public class CatanMap implements ICatanMap
 	{
 		this(null);
 	}
-	
+
 	public CatanMap(IProxy proxy)
 	{
 		this.hexMap = new HashMap<>();
@@ -50,7 +50,7 @@ public class CatanMap implements ICatanMap
 		this.portMap = new HashMap<>();
 		this.robber = null;
 		this.radius = 3;
-		
+
 		this.proxy = proxy;
 
 		this.initializeOceanHexes();
@@ -138,7 +138,7 @@ public class CatanMap implements ICatanMap
 		oceanMap.put(new HexLocation(3,-1), new Hex(new HexLocation(3,-1)));
 		oceanMap.put(new HexLocation(3,-2), new Hex(new HexLocation(3,-2)));
 		oceanMap.put(new HexLocation(3,-3), new Hex(new HexLocation(3,-3)));
-		
+
 		hexes.putAll(oceanMap);
 	}
 
@@ -182,7 +182,7 @@ public class CatanMap implements ICatanMap
 	{
 		this.proxy = proxy;
 	}
-	
+
 	@Override
 	public IProxy getProxy()
 	{
@@ -197,7 +197,7 @@ public class CatanMap implements ICatanMap
 	{
 		if(catanMap.get(segment.getLocation()) != null)
 			return false;
-		
+
 		IFacade facade = proxy.getFacade();
 		try
 		{
@@ -246,7 +246,7 @@ public class CatanMap implements ICatanMap
 		}
 		catch(CantFindGameModelException e)
 		{
-			
+
 		}
 		return false;
 	}
@@ -262,14 +262,14 @@ public class CatanMap implements ICatanMap
 	{
 		if(catanMap.get(settlement.getLocation()) != null)
 			return false;
-		
+
 		IFacade facade = proxy.getFacade();
-		
+
 		try
 		{
 			boolean canPlace = true;
 			String state = facade.getCurrentState();
-			
+
 			HexLocation hex = settlement.getLocation().getHexLocation();
 			if(Math.abs(hex.getX()) > radius || Math.abs(hex.getY()) > radius)
 				return false;
@@ -299,7 +299,7 @@ public class CatanMap implements ICatanMap
 		{
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
@@ -422,6 +422,12 @@ public class CatanMap implements ICatanMap
 	public Collection<IHex> getHexes()
 	{
 		return hexes.values();
+	}
+
+	@Override
+	public Collection<IHex> getTerrainHexes()
+	{
+		return hexMap.values();
 	}
 
 	@Override

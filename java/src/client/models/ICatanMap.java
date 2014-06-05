@@ -20,6 +20,7 @@ public interface ICatanMap
 	public IPiece distanceRule(IPiece piece);
 
 	public Collection<IHex> getHexes();
+	public Collection<IHex> getTerrainHexes();
 	public void addHex(IHex hex);
 
 	public Collection<IPort> getPorts();
@@ -46,6 +47,6 @@ public interface ICatanMap
 	public void placeInitialRoadSegment(IRoadSegment segment) throws InvalidLocationException;
 	public void placeInitialCity(ICity city) throws InvalidLocationException;
 	public Collection<IPiece> getSettlementsAroundHex(HexLocation hex);
-	
+
 	public void setupNewMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts);
 }
