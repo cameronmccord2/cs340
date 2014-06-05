@@ -24,7 +24,7 @@ public class ModelJsonConverter
 {
 	/**
 	 * @param game
-	 * @return
+	 * @return A ClientModel Transfer Object
 	 */
 	public static ClientModel toTRObject(IGame game)
 	{
@@ -45,7 +45,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param catanMap
-	 * @return
+	 * @return A TRMap Transfer Object
 	 */
 	public static TRMap toTRObject(ICatanMap catanMap)
 	{
@@ -67,7 +67,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param hexes
-	 * @return
+	 * @return A TRHex Transfer Object Array
 	 */
 	public static TRHex[] toTRObject(IHex[] hexes)
 	{
@@ -79,7 +79,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param hex
-	 * @return
+	 * @return A TRHex Transfer Object
 	 */
 	public static TRHex toTRObject(IHex hex)
 	{
@@ -92,7 +92,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param hex
-	 * @return
+	 * @return A TRHexLocation Transfer Object
 	 */
 	public static TRHexLocation toTRObject(HexLocation hex)
 	{
@@ -104,7 +104,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param robber
-	 * @return
+	 * @return A TRHexLocation Transfer Object
 	 */
 	public static TRHexLocation toTRObject(IRobber robber)
 	{
@@ -118,7 +118,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param participant
-	 * @return
+	 * @return A TRParticipant Transfer Object
 	 */
 	public static TRParticipant toTRObject(IParticipant participant)
 	{
@@ -132,7 +132,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param devCardList
-	 * @return
+	 * @return A TRDevCardList Transfer Object
 	 */
 	public static TRDevCardList toTRObject(DevCardList devCardList)
 	{
@@ -148,7 +148,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param resourceList
-	 * @return
+	 * @return A TRResourceList Transfer Object
 	 */
 	public static TRResourceList toTRObject(ResourceList resourceList)
 	{
@@ -164,7 +164,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param turnTracker
-	 * @return
+	 * @return A TRTurnTracker Transfer Object
 	 */
 	public static TRTurnTracker toTRObject(TurnTracker turnTracker)
 	{
@@ -178,7 +178,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param messageLine
-	 * @return
+	 * @return A TRMessageLine Transfer Object
 	 */
 	public static TRMessageLine toTRObject(MessageLine messageLine)
 	{
@@ -190,7 +190,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param messageList
-	 * @return
+	 * @return A TRMessageList Transfer Object
 	 */
 	public static TRMessageList toTRObject(MessageList messageList)
 	{
@@ -206,7 +206,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param players
-	 * @return
+	 * @return A TRPlayer Transfer Object Array
 	 */
 	public static TRPlayer[] toTRObject(IPlayer[] players)
 	{
@@ -218,7 +218,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param player
-	 * @return
+	 * @return A TRPlayer Transfer Object
 	 */
 	public static TRPlayer toTRObject(IPlayer player)
 	{
@@ -249,7 +249,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param ports
-	 * @return
+	 * @return A TRPort Transfer Object Array
 	 */
 	public static TRPort[] toTRObject(IPort[] ports)
 	{
@@ -261,7 +261,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param port
-	 * @return
+	 * @return A TRMap Transfer Object
 	 */
 	public static TRPort toTRObject(IPort port)
 	{
@@ -279,7 +279,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param segments
-	 * @return
+	 * @return A TRRoad Transfer Object Array
 	 */
 	public static TRRoad[] toTRObject(IRoadSegment[] segments)
 	{
@@ -291,7 +291,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param segment
-	 * @return
+	 * @return A TRRoad Transfer Object
 	 */
 	public static TRRoad toTRObject(IRoadSegment segment)
 	{
@@ -306,7 +306,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param location
-	 * @return
+	 * @return A TREdgeLocation Transfer Object
 	 */
 	public static TREdgeLocation toTRObject(EdgeLocation location)
 	{
@@ -320,7 +320,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param settlements
-	 * @return
+	 * @return A TRVertexObject Transfer Object Array
 	 */
 	public static TRVertexObject[] toTRObject(ISettlement[] settlements)
 	{
@@ -332,7 +332,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param settlement
-	 * @return
+	 * @return A TRVertexObject Transfer Object
 	 */
 	public static TRVertexObject toTRObject(ISettlement settlement)
 	{
@@ -346,7 +346,7 @@ public class ModelJsonConverter
 
 	/**
 	 * @param vertex
-	 * @return
+	 * @return A TRVertexLocation Transfer Object
 	 */
 	public static TRVertexLocation toTRObject(VertexLocation vertex)
 	{
