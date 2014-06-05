@@ -1,8 +1,5 @@
 package client.communication;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import client.base.Controller;
 import client.models.interfaces.ICatanModelObserver;
 import client.models.interfaces.IProxy;

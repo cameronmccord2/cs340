@@ -3,7 +3,6 @@ package client.models.interfaces;
 import java.util.List;
 import java.util.Map;
 
-import shared.definitions.HexType;
 import client.data.PlayerInfo;
 import client.models.ResourceCard;
 

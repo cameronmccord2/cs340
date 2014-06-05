@@ -4,7 +4,6 @@
 package server.facades;
 
 import server.commands.CommandResponse;
-import server.modelFacade.IServerModelFacade;
 import server.models.UserAttributes;
 
 /**

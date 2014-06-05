@@ -185,6 +185,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.decideTradeState();
 	}
 
+	/*
 	private void restrictTotalCountForResourceType(ResourceType resource) {
 
 		try{
@@ -209,7 +210,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		} catch (CantFindGameModelException e) {
 		}
 	}
-
+	*/
+	
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
 		this.sendTypes.remove(resource);
@@ -224,7 +226,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		this.tradeOverlay.setResourceAmountChangeEnabled(resource, true, false);
 //			}
 //		} catch (CantFindPlayerException | CantFindGameModelException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 
