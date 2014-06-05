@@ -1,5 +1,8 @@
 package server.model.translator;
 
+import java.util.Collection;
+import java.util.Map;
+
 import shared.locations.*;
 import client.data.PlayerInfo;
 import client.models.*;
@@ -27,9 +30,11 @@ public class ModelJsonConverter
 	public static TRMap toTRObject(ICatanMap catanMap)
 	{
 		TRMap map = new TRMap();
-		map.setCities(null);
+		Collection<ICity> cities = catanMap.getCities();
+		map.setCities(toTRObject(cities.toArray(new ICity[cities.size()])));
 		map.setHexes(null);
-		map.setSettlements(null);
+		Collection<ISettlement> settlements = catanMap.getSettlements();
+		map.setSettlements(toTRObject(settlements.toArray(new ISettlement[settlements.size()])));
 		map.setPorts(null);
 		map.setRadius(catanMap.getRadius());
 		map.setRoads(null);
@@ -40,25 +45,49 @@ public class ModelJsonConverter
 	public static TRHex[] toTRObject(IHex[] hexes)
 	{
 		TRHex[] trHexes = new TRHex[hexes.length];
+		for(int i = 0; i < hexes.length; i++)
+			trHexes[i] = toTRObject(hexes[i]);
 		return trHexes;
 	}
 
 	public static TRHex toTRObject(IHex hex)
 	{
 		TRHex trHex = new TRHex();
+		trHex.setNumber(hex.getHexNumber());
+		trHex.setLocation(toTRObject(hex.getLocation()));
+		trHex.setResource(hex.getHexType().toString().toLowerCase());
 		return trHex;
 	}
 
 	public static TRHexLocation toTRObject(HexLocation hex)
 	{
 		TRHexLocation trHexLocation = new TRHexLocation();
+		trHexLocation.setX(new Integer(hex.getX()));
+		trHexLocation.setY(new Integer(hex.getY()));
 		return trHexLocation;
 	}
 
 	public static TRBank toTRObject(IBank bank)
 	{
 		TRBank trBank = new TRBank();
+		ResourceList resourceList = new ResourceList(bank.getResourceCards());
+		DevCardList devCardList = new DevCardList(bank.getDevelopmentCards());
+		trBank.setDevCards(toTRObject(devCardList));
+		trBank.setResources(toTRObject(resourceList));
 		return trBank;
+	}
+
+	public static TRDevCardList toTRObject(DevCardList devCardList)
+	{
+		TRDevCardList devcards = new TRDevCardList();
+
+		return devcards;
+	}
+
+	public static TRResourceList toTRObject(ResourceList resourceList)
+	{
+		TRResourceList resources = new TRResourceList();
+		return resources;
 	}
 
 	public static TRTurnTracker toTRObject(TurnTracker turnTracker)
@@ -105,6 +134,14 @@ public class ModelJsonConverter
 		return road;
 	}
 
+	public static TRVertexObject[] toTRObject(ISettlement[] settlements)
+	{
+		TRVertexObject[] vSettlements = new TRVertexObject[settlements.length];
+		for(int i = 0; i < settlements.length; i++)
+			vSettlements[i] = toTRObject(settlements[i]);
+		return vSettlements;
+	}
+
 	public static TRVertexObject toTRObject(ISettlement settlement)
 	{
 		TRVertexObject vObject = new TRVertexObject();
@@ -113,11 +150,6 @@ public class ModelJsonConverter
 		vObject.setOwner(info.getPlayerIndex());
 		vObject.setLocation(toTRObject((VertexLocation)settlement.getLocation()));
 		return vObject;
-	}
-
-	public static TRVertexObject toTRObject(ICity city)
-	{
-		return toTRObject((ISettlement)city);
 	}
 
 	public static TRVertexLocation toTRObject(VertexLocation vertex)
