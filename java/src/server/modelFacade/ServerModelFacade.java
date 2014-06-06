@@ -29,8 +29,6 @@ public class ServerModelFacade implements IServerModelFacade {
 			IGame game = gameList.getGameById(ua.getGameId());
 			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(game));
 			System.out.println("model: " + modelJson);
-			// Since we probably updated the game model, add version
-			game.setModelVersion( game.getModelVersion() + 1);
 			return new ServerFacadeResponse(false, modelJson);
 		} catch (InvalidUserAttributesException e) {
 			e.printStackTrace();

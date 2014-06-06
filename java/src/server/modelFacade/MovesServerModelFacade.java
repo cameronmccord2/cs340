@@ -76,6 +76,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			developmentCards.put( draw, developmentCards.get(draw) + 1);
 			player.setDevelopmentCards(developmentCards);
 			player.deductResources(DevelopmentCard.getResourceCost());
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -112,6 +113,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			resourceCards.put(ResourceCard.BRICK, resourceCards.get(ResourceCard.BRICK) - discardNum);
 
 			player.setResourceCards(resourceCards);
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -130,6 +132,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else
 				game.getTurnTracker().setCurrentTurn(ft.getPlayerIndex() + 1);
 			game.getTurnTracker().setStatus("Rolling");
+			game.setModelVersion( game.getModelVersion() + 1);
 		} catch (InvalidUserAttributesException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -158,6 +161,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
 			}
 			game.setCurrentTrade(null);
+			game.setModelVersion( game.getModelVersion() + 1);
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -178,6 +182,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				player.decrementResourceByCount(trade.getInputResource(), trade.getRatio());
 				player.incrementResourceByCount(trade.getOutputResource(), 1);
 			}
+			game.setModelVersion( game.getModelVersion() + 1);
 			
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -195,6 +200,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				return new ServerFacadeResponse(false, "There is already a trade in progress, this mussn't be allowed to happen: " + game.getCurrentTrade().toString());
 
 			game.setCurrentTrade(new TRTradeOffer(ot));
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -246,6 +252,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else {
 				throw new InvalidLocationException();
 			}
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -273,6 +280,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else {
 				throw new InvalidLocationException();
 			}
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -329,6 +337,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else {
 				throw new InvalidLocationException();
 			}
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -358,6 +367,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else {
 				throw new InvalidLocationException();
 			}
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -373,6 +383,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			game.getChat().addLine(new MessageLine(game.getPlayerForPlayerIndex(sc.getPlayerIndex()).getPlayerInfo().getName(), sc.getContent()));
 
+			game.setModelVersion( game.getModelVersion() + 1);
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -408,6 +419,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			// Give all matche resources to player
 			Map<IResourceCard, Integer> playerCards = player.getResourceCards();
 			playerCards.put( resource, playerCards.get(resource) + lootCount );
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -440,6 +452,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			{
 				throw new GameModelException();
 			}
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -475,6 +488,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			// Add resource to player's hand
 			player.incrementResourceByCount(HexType.valueOf(drawnCard.getName()), 1);
 
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -521,18 +535,19 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 						break;
 					default:
 						break;
-					
+
 					}
 					p.incrementResourceByCount(hex.getHexType(), count);
 					game.getBank().decrementResourceByCount(hex.getHexType(), count);
 				}
 			}else
 				System.out.println("bank doesnt have enough");
-			
+
 			if(sr.getNumber() == 7){
 				game.getTurnTracker().setStatus("Robbing");
 			}else
 				game.getTurnTracker().setStatus("Playing");
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -572,6 +587,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			int numSoldierCards = player.getDevelopmentCards().get(DevelopmentCard.SOLDIER);
 			player.getDevelopmentCards().put(DevelopmentCard.SOLDIER, numSoldierCards - 1);
 
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -614,6 +630,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else
 				throw new GameModelException();
 
+			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
