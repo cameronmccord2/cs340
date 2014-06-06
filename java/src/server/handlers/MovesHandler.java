@@ -4,14 +4,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import server.commands.CommandResponse;
 import server.facades.ICommandCreationFacade;
 import server.facades.IMovesFacade;
 import server.models.UserAttributes;
+import client.models.ReturnedUser;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -46,7 +51,16 @@ public class MovesHandler implements HttpHandler {
 		s.close();
 		is.close();
 
-		UserAttributes ua = new UserAttributes();
+		Gson gson = new Gson();
+		Map<String, List<String>> map = exchange.getRequestHeaders();
+		List<String> setCookie = map.get("Cookie");
+		String temp = setCookie.get(0);
+		temp = temp.substring(11, temp.length());
+		String decoded = URLDecoder.decode(temp, "UTF-8");
+		String[] pieces = decoded.split("; catan.game=");
+		ReturnedUser rUser = gson.fromJson(pieces[0], ReturnedUser.class);
+		UserAttributes ua = new UserAttributes(rUser); //set user
+		ua.setGameId(Integer.parseInt(pieces[1]));
 		CommandResponse response = null;
 
 		switch(finalPiece){

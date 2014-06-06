@@ -89,6 +89,8 @@ public class GameList {
 	}
 
 	public IGame getGameById(Integer gameId) throws InvalidUserAttributesException {
+		System.out.println(gameId);
+		System.out.println(this.games.toString());
 		for (IGame game : this.games) {
 			if(game.getGameInfo().getId() == gameId.intValue())
 				return game;
