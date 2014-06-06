@@ -64,7 +64,7 @@ public class Bank extends Participant implements IBank {
 		developmentCards.put(DevelopmentCard.YEAR_OF_PLENTY,2);
 		developmentCards.put(DevelopmentCard.ROAD_BUILD,2);
 		developmentCards.put(DevelopmentCard.MONOPOLY,2);
-		developmentCards.put(DevelopmentCard.MONUMENT,2);
+		developmentCards.put(DevelopmentCard.MONUMENT,5);
 		developmentCards.put(DevelopmentCard.SOLDIER,14);
 
 		resourceCards.put(ResourceCard.SHEEP,19);

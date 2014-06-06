@@ -29,4 +29,13 @@ public class DevCardList
 		this.devcards = devcards;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DevCardList [devcards=");
+		builder.append(devcards);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

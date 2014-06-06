@@ -17,6 +17,10 @@ public class Robber extends Piece implements IRobber
 		HexLocation hex = new HexLocation(robber.getX(), robber.getY());
 		this.location = new DefaultLocation(hex, null);
 	}
+	
+	public Robber(HexLocation robber) {
+		this.location = new DefaultLocation(robber,null);
+	}
 
 	public void setLocation(HexLocation hexLocation) {
 		location.setHexLocation(hexLocation);

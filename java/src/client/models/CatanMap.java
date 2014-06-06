@@ -16,6 +16,7 @@ import client.models.interfaces.IRoadSegment;
 import client.models.interfaces.IRobber;
 import client.models.interfaces.ISettlement;
 import client.models.interfaces.InvalidLocationException;
+import client.models.translator.TRHexLocation;
 import shared.definitions.PieceType;
 import shared.locations.*;
 
