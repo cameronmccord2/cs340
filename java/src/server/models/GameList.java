@@ -60,10 +60,11 @@ public class GameList {
 		players.add(player1);
 		players.add(player2);
 		players.add(player3);
+		players.add(player4);
 		newGame.setPlayers(players.toArray(new IPlayer[players.size()]));
 		
 		newGame.setVersion(0);
-		newGame.setModelVersion(-1);
+		newGame.setModelVersion(0);
 		
 		//init the bank
 		Bank newBank = new Bank();
@@ -82,7 +83,7 @@ public class GameList {
 		newGame.setTurnTracker(tt);
 		
 		newGame.setWinner(-1);
-		newGame.setCurrentTrade(new TRTradeOffer());
+		newGame.setCurrentTrade(null);
 		
 		games.add(newGame);
 	}

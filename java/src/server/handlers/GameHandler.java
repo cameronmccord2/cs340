@@ -69,6 +69,8 @@ public class GameHandler implements HttpHandler {
 					ua = new UserAttributes(rUser); //set user
 					ua.setGameId(Integer.parseInt(pieces[1]));
 					response = this.commandFacade.getGameModel(json, ua);
+					System.out.println(response.getResponse());
+					System.out.println("me");
 				}
 				break;
 			case "reset":

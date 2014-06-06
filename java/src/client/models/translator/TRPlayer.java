@@ -23,10 +23,9 @@ public class TRPlayer implements IModelValid
 	  
 	@Override
 	public void validate() throws InvalidTranslatorModelException{
-		if(resources == null || this.oldDevCards == null || this.newDevCards == null)
+		if(resources == null || this.newDevCards == null)
 			throw new InvalidTranslatorModelException(this.toString());
 		this.resources.validate();
-		this.oldDevCards.validate();
 		this.newDevCards.validate();
 
 		if(this.color == null ||

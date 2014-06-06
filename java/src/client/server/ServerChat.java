@@ -70,6 +70,19 @@ public class ServerChat implements ICommandParams{
 		this.content = content;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ServerChat [type=");
+		builder.append(type);
+		builder.append(", playerIndex=");
+		builder.append(playerIndex);
+		builder.append(", content=");
+		builder.append(content);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	
 	
 }
