@@ -2,7 +2,14 @@ package server.models;
 
 import java.util.ArrayList;
 
-import client.models.*;
+import client.models.Bank;
+import client.models.CatanMap;
+import client.models.Game;
+import client.models.MessageList;
+import client.models.Player;
+import client.models.RoadSegment;
+import client.models.Settlement;
+import client.models.TurnTracker;
 import client.models.interfaces.*;
 import server.models.exceptions.InvalidUserAttributesException;
 import shared.definitions.CatanColor;
@@ -86,31 +93,44 @@ public class GameList {
 		// Default Game, set default pieces
 		// Doesn't belong here, but we have less than an hour to turn in something that can run...
 		try {
-			IRoadSegment segment = new RoadSegment();
+			IRoadSegment segment1a = new RoadSegment();
+			IRoadSegment segment1b = new RoadSegment();
+			segment1a.setPlayer(player1);
+			segment1b.setPlayer(player1);
+			segment1a.setLocation(new EdgeLocation(new HexLocation(-2,1), EdgeDirection.SouthEast));
+			segment1b.setLocation(new EdgeLocation(new HexLocation(-1,2), EdgeDirection.South));
+			newGame.getMap().placeInitialRoadSegment(segment1a);
+			newGame.getMap().placeInitialRoadSegment(segment1b);
 
-			segment.setPlayer(player1);
-			segment.setLocation(new EdgeLocation(new HexLocation(-2,1), EdgeDirection.SouthEast));
-			newGame.getMap().placeInitialRoadSegment(segment);
-			segment.setLocation(new EdgeLocation(new HexLocation(-1,2), EdgeDirection.South));
-			newGame.getMap().placeInitialRoadSegment(segment);
 
-			segment.setPlayer(player2);
-			segment.setLocation(new EdgeLocation(new HexLocation(0,2), EdgeDirection.North));
-			newGame.getMap().placeInitialRoadSegment(segment);
-			segment.setLocation(new EdgeLocation(new HexLocation(0,-2), EdgeDirection.South));
-			newGame.getMap().placeInitialRoadSegment(segment);
+			IRoadSegment segment2a = new RoadSegment();
+			IRoadSegment segment2b = new RoadSegment();
+			segment2a.setPlayer(player2);
+			segment2b.setPlayer(player2);
+			segment2a.setLocation(new EdgeLocation(new HexLocation(0,2), EdgeDirection.North));
+			segment2b.setLocation(new EdgeLocation(new HexLocation(0,-2), EdgeDirection.South));
+			newGame.getMap().placeInitialRoadSegment(segment2a);
+			newGame.getMap().placeInitialRoadSegment(segment2b);
 
-			segment.setPlayer(player3);
-			segment.setLocation(new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
-			newGame.getMap().placeInitialRoadSegment(segment);
-			segment.setLocation(new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast));
-			newGame.getMap().placeInitialRoadSegment(segment);
 
-			segment.setPlayer(player4);
-			segment.setLocation(new EdgeLocation(new HexLocation(2,-1), EdgeDirection.South));
-			newGame.getMap().placeInitialRoadSegment(segment);
-			segment.setLocation(new EdgeLocation(new HexLocation(2,0), EdgeDirection.NorthWest));
-			newGame.getMap().placeInitialRoadSegment(segment);
+			IRoadSegment segment3a = new RoadSegment();
+			IRoadSegment segment3b = new RoadSegment();
+			segment3a.setPlayer(player3);
+			segment3b.setPlayer(player3);
+			segment3a.setLocation(new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
+			segment3b.setLocation(new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast));
+			newGame.getMap().placeInitialRoadSegment(segment3a);
+			newGame.getMap().placeInitialRoadSegment(segment3b);
+
+
+			IRoadSegment segment4a = new RoadSegment();
+			IRoadSegment segment4b = new RoadSegment();
+			segment4a.setPlayer(player4);
+			segment4b.setPlayer(player4);
+			segment4a.setLocation(new EdgeLocation(new HexLocation(2,-1), EdgeDirection.North));
+			segment4b.setLocation(new EdgeLocation(new HexLocation(2,0), EdgeDirection.NorthWest));
+			newGame.getMap().placeInitialRoadSegment(segment4a);
+			newGame.getMap().placeInitialRoadSegment(segment4b);
 
 			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthEast),player1));
 			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(-1,2), VertexDirection.SouthEast),player1));
