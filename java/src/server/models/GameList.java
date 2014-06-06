@@ -75,7 +75,7 @@ public class GameList {
 		TurnTracker tt = new TurnTracker();
 		tt.setCurrentTurn(0);
 		//tt.setStatus("FirstRound");
-		tt.setStatus("Playing");
+		tt.setStatus("Rolling");
 		tt.setLongestRoad(-1);
 		tt.setLargestArmy(-1);
 		newGame.setTurnTracker(tt);
