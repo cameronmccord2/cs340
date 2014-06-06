@@ -139,7 +139,7 @@ public interface IMovesServerModelFacade {
 	 * @param userAttributes the user attributes
 	 * @return the ServerFacadeResponse indicating success or failure
 	 */
-	public ServerFacadeResponse roll(ICommandParams params, UserAttributes userAttributes);
+	public ServerFacadeResponse rollNumber(ICommandParams params, UserAttributes userAttributes);
 	
 	/**
 	 * Soldier dev card command

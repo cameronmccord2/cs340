@@ -484,14 +484,14 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 	}
 
 	@Override
-	public ServerFacadeResponse roll(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse rollNumber(ICommandParams params, UserAttributes userAttributes) {
 		ServerRoll sr = (ServerRoll)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			Collection<IHex> hexes = game.getMap().getHexes();
 			IHex hex = null;
 			for (IHex h : hexes) {
-				if(h.getHexNumber() == sr.getNumber()){
+				if(h.getHexNumber() != null && h.getHexNumber() == sr.getNumber()){
 					hex = h;
 					break;
 				}
