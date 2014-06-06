@@ -84,6 +84,7 @@ public class GamesHandler implements HttpHandler {
 					response = this.commandFacade.joinGame(json, ua);
 					Headers headers = exchange.getResponseHeaders();
 					headers.add("Set-cookie", "catan.game=" + response.getResponse() + ";Path=/;");
+					response.setResponse("Success");
 				}
 				break;
 			case "save":

@@ -227,6 +227,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 		ServerJoinGame join = new ServerJoinGame(selectedGame.getId(), color.toString().toLowerCase());
 		ServerResponse sr = this.proxy.postGamesJoin(join);
+		System.out.println("sr: " + sr.getJson());
 		if(sr.getJson().equals("Success"))
 		{
 			// If join succeeded

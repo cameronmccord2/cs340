@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import server.modelFacade.IServerModelFacade;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 
 /**
@@ -37,27 +38,40 @@ public class Command implements ICommand, ITestCommand {
 								   IllegalArgumentException,
 								   InvocationTargetException {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
-		String response = (String) method.invoke(this.facade, this.commandParams, this.userAttributes);
+		ServerFacadeResponse response = (ServerFacadeResponse) method.invoke(this.facade, this.commandParams, this.userAttributes);
+
+		if(response.equals("Success")){
 		
-		if(response.equals("Success"))
 			return this.facade.getJsonGameModelString(this.userAttributes);
-		else if(response.equals("Register Success"))
+		}
+		else if(response.equals("Register Success")){
+			
 			return "Success";
-		else if(response.substring(0,5).equals("Login"))
+		}
+		else if(response.substring(0,5).equals("Login")){
+			
 			return response.substring(6);
-		else if(response.substring(0,8).equals("GetGames"))
+		}
+		else if(response.substring(0,8).equals("GetGames")){
+			
 			return response.substring(8);
-		else if(response.substring(0,8).equals("JoinGame"))
+		}
+		else if(response.substring(0,8).equals("JoinGame")){
+			
 			return response.substring(8);
-		else if(response.equals("CreateDone"))
+		}
+		else if(response.equals("CreateDone")){
+			
 			return "Success";
+		}
 		else if(response.equals("Failed")){
+			
 			return "Failed to login";
 		}
 		else{
+			
 			return response;
 		}
-		
 	}
 	
 	public String getMethodName() {
