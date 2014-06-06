@@ -37,6 +37,18 @@ public abstract class Participant implements IParticipant {
 	public Participant(){
 		this.developmentCards = new HashMap<IDevelopmentCard, Integer>();
 		this.resourceCards = new HashMap<IResourceCard, Integer>();
+
+		developmentCards.put(DevelopmentCard.MONOPOLY, 0);
+		developmentCards.put(DevelopmentCard.MONUMENT, 0);
+		developmentCards.put(DevelopmentCard.ROAD_BUILD, 0);
+		developmentCards.put(DevelopmentCard.SOLDIER, 0);
+		developmentCards.put(DevelopmentCard.YEAR_OF_PLENTY, 0);
+
+		resourceCards.put(ResourceCard.BRICK, 0);
+		resourceCards.put(ResourceCard.ORE, 0);
+		resourceCards.put(ResourceCard.WHEAT, 0);
+		resourceCards.put(ResourceCard.WOOD, 0);
+		resourceCards.put(ResourceCard.SHEEP, 0);
 	}
 
 	/* (non-Javadoc)
