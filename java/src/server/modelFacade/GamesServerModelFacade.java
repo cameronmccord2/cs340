@@ -4,41 +4,42 @@
 package server.modelFacade;
 
 import server.commands.ICommandParams;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 
 public class GamesServerModelFacade implements IGamesServerModelFacade {
 
 
 	@Override
-	public String listGames(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse listGames(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public String createGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse createGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public String joinGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse joinGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public String loadGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse loadGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public String saveGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse saveGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}

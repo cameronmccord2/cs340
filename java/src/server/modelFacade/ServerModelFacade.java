@@ -12,6 +12,7 @@ import server.models.FinishTurn;
 import server.models.GameList;
 import server.models.Login;
 import server.models.Register;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
 import server.models.exceptions.InvalidUserAttributesException;
@@ -115,14 +116,14 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String listGames(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse listGames(ICommandParams params, UserAttributes ua) {
 		ArrayList<GameServer> gInfos = gameList.getGameInfoList();
 		Gson gson = new Gson();
-		return "GetGames" + gson.toJson(gInfos);
+		return new ServerFacadeResponse(false, gson.toJson(gInfos));
 	}
 
 	@Override
-	public String createGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse createGame(ICommandParams params, UserAttributes ua) {
 		//create a new default game
 		CreateGame cGame = (CreateGame)params;
 		
@@ -165,11 +166,11 @@ public class ServerModelFacade implements IServerModelFacade {
 		
 		gameList.addGame(newGame);
 
-		return "CreateDone";
+		return new ServerFacadeResponse(false, "Success");
 	}
 
 	@Override
-	public String joinGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse joinGame(ICommandParams params, UserAttributes ua) {
 		ServerJoinGame info = (ServerJoinGame)params;
 		gameList.setCurrentUserChecking(ua.getPlayerID());
 		int temp = gameList.checkForPlayer(info.getId());
@@ -177,19 +178,19 @@ public class ServerModelFacade implements IServerModelFacade {
 			//create a new player for the game
 			GameInfo gInfo = gameList.getGInfo();
 			PlayerInfo newPlayer = new PlayerInfo(ua.getPlayerID(),gInfo.getPlayers().size(),ua.getusername(), CatanColor.RED);
-			return "JoinGame" + gameList.addPlayer(newPlayer);
+			return new ServerFacadeResponse(false, "" + gameList.addPlayer(newPlayer));
 		}else
-			return "JoinGame" + temp;
+			return new ServerFacadeResponse(false, "" + temp);
 	}
 
 	@Override
-	public String loadGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse loadGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String saveGame(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse saveGame(ICommandParams params, UserAttributes ua) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -709,15 +710,15 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String login(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse login(ICommandParams params, UserAttributes ua) {
 		Login loggingInUser = (Login)params;
-		return userManager.login(loggingInUser);
+		return new ServerFacadeResponse(false, userManager.login(loggingInUser));
 	}
 
 	@Override
-	public String register(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse register(ICommandParams params, UserAttributes ua) {
 		Register newUser = (Register)params;
-		return userManager.register(newUser);
+		return new ServerFacadeResponse(false,userManager.register(newUser));
 	}
 
 	public GameList getGameList() {

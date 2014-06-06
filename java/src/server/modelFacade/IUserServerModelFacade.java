@@ -1,6 +1,7 @@
 package server.modelFacade;
 
 import server.commands.ICommandParams;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 
 public interface IUserServerModelFacade {
@@ -12,7 +13,7 @@ public interface IUserServerModelFacade {
 	 * @param ua the user attributes, null here
 	 * @return the string "Success"
 	 */
-	public String login(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse login(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Registers the requesting user as a game participant
@@ -21,6 +22,6 @@ public interface IUserServerModelFacade {
 	 * @param ua the user attributes, null here
 	 * @return the string "Success"
 	 */
-	public String register(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse register(ICommandParams params, UserAttributes ua);
 	
 }

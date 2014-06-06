@@ -1,6 +1,7 @@
 package server.modelFacade;
 
 import server.commands.ICommandParams;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 
 public interface IGamesServerModelFacade {
@@ -12,7 +13,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the games in the server
 	 */
-	public String listGames(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse listGames(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Creates the game based on the flags in the json
@@ -21,7 +22,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the game model
 	 */
-	public String createGame(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse createGame(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Join game that already exists
@@ -30,7 +31,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the json string of the game model
 	 */
-	public String joinGame(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse joinGame(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Load game from a file indicated in the json
@@ -39,7 +40,7 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the string saying "Success"
 	 */
-	public String loadGame(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse loadGame(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Saves the game to the specified filename
@@ -48,6 +49,6 @@ public interface IGamesServerModelFacade {
 	 * @param ua the user attributes from the requesting user
 	 * @return the string "Success"
 	 */
-	public String saveGame(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse saveGame(ICommandParams params, UserAttributes ua);
 	
 }
