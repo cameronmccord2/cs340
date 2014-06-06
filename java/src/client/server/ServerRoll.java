@@ -64,7 +64,7 @@ public class ServerRoll implements ICommandParams{
 
 	@Override
 	public void validate() throws CommandParamNotValidException {
-		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0)
+		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0 || !this.type.equals("roll"))
 			throw new CommandParamNotValidException("type musnt be null or of length zero and player index must be greater than zero: " + this.toString());
 		if(this.number < 2 || this.number > 12)
 			throw new CommandParamNotValidException("the rolled number must be 2 <= number <= 12");

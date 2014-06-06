@@ -82,7 +82,7 @@ public class DiscardedCards implements ICommandParams
 
 	@Override
 	public void validate() throws CommandParamNotValidException {
-		if(this.type == null || this.type.length() == 0 || !this.type.equals("discardedCards") || this.playerIndex < 0 || this.discardedCards == null)
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("discardCards") || this.playerIndex < 0 || this.discardedCards == null)
 				throw new CommandParamNotValidException("type musnt be null or of length zero and must equal discardedCards, player index must be greater than zero and discarded cards mussnt be null: " + this.toString());
 		try {
 			this.discardedCards.validate();

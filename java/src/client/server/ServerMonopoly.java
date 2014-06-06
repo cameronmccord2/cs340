@@ -22,7 +22,7 @@ public class ServerMonopoly implements ICommandParams{
 	}
 	@Override
 	public void validate() throws CommandParamNotValidException {
-		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("monopoly") || this.playerIndex < 0)
 			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
 		if(this.resource == null || this.resource.length() == 0)
 			throw new CommandParamNotValidException("resource cant be null or of length zero: " + this.toString());

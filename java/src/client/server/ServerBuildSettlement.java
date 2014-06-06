@@ -27,7 +27,7 @@ public class ServerBuildSettlement implements ICommandParams{
 	}
 	@Override
 	public void validate() throws CommandParamNotValidException {
-		if(this.type == null || this.type.length() == 0 || !this.type.equals("maritimeTrade") || this.playerIndex < 0)
+		if(this.type == null || this.type.length() == 0 || !this.type.equals("buildSettlement") || this.playerIndex < 0)
 			throw new CommandParamNotValidException("Type musnt be null, length zero, or not equal to 'maritimeTrade', player index must be greater than zero: " + this.toString());
 		if(this.vertexLocation == null)
 			throw new CommandParamNotValidException("Vertex location cant be null" + this.toString());

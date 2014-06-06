@@ -77,7 +77,7 @@ public class AcceptTrade implements ICommandParams{
 	
 	@Override
 	public void validate() throws CommandParamNotValidException {
-		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0)
+		if(this.type == null || this.type.length() == 0 || this.playerIndex < 0 || !type.equals("acceptTrade"))
 			throw new CommandParamNotValidException("type musnt be null or of length zero and player index must be greater than zero: " + this.toString());
 	}
 	

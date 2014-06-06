@@ -43,6 +43,19 @@ public class GameServer{
 	public void setPlayers(PlayerServer[] players) {
 		this.players = players;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GameServer [title=");
+		builder.append(title);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", players=");
+		builder.append(players);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 	
