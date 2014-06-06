@@ -93,12 +93,17 @@ public class GameList {
 		// Default Game, set default pieces
 		// Doesn't belong here, but we have less than an hour to turn in something that can run...
 		try {
+			player1.setVictoryPoints(2);
+			player2.setVictoryPoints(2);
+			player3.setVictoryPoints(2);
+			player4.setVictoryPoints(2);
+
 			IRoadSegment segment1a = new RoadSegment();
 			IRoadSegment segment1b = new RoadSegment();
 			segment1a.setPlayer(player1);
 			segment1b.setPlayer(player1);
 			segment1a.setLocation(new EdgeLocation(new HexLocation(-2,1), EdgeDirection.SouthEast));
-			segment1b.setLocation(new EdgeLocation(new HexLocation(-1,2), EdgeDirection.South));
+			segment1b.setLocation(new EdgeLocation(new HexLocation(-1, 2), EdgeDirection.South));
 			newGame.getMap().placeInitialRoadSegment(segment1a);
 			newGame.getMap().placeInitialRoadSegment(segment1b);
 
@@ -108,7 +113,7 @@ public class GameList {
 			segment2a.setPlayer(player2);
 			segment2b.setPlayer(player2);
 			segment2a.setLocation(new EdgeLocation(new HexLocation(0,2), EdgeDirection.North));
-			segment2b.setLocation(new EdgeLocation(new HexLocation(0,-2), EdgeDirection.South));
+			segment2b.setLocation(new EdgeLocation(new HexLocation(0, -2), EdgeDirection.South));
 			newGame.getMap().placeInitialRoadSegment(segment2a);
 			newGame.getMap().placeInitialRoadSegment(segment2b);
 
@@ -118,7 +123,7 @@ public class GameList {
 			segment3a.setPlayer(player3);
 			segment3b.setPlayer(player3);
 			segment3a.setLocation(new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
-			segment3b.setLocation(new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast));
+			segment3b.setLocation(new EdgeLocation(new HexLocation(0, 0), EdgeDirection.SouthEast));
 			newGame.getMap().placeInitialRoadSegment(segment3a);
 			newGame.getMap().placeInitialRoadSegment(segment3b);
 
@@ -128,7 +133,7 @@ public class GameList {
 			segment4a.setPlayer(player4);
 			segment4b.setPlayer(player4);
 			segment4a.setLocation(new EdgeLocation(new HexLocation(2,-1), EdgeDirection.North));
-			segment4b.setLocation(new EdgeLocation(new HexLocation(2,0), EdgeDirection.NorthWest));
+			segment4b.setLocation(new EdgeLocation(new HexLocation(2, 0), EdgeDirection.NorthWest));
 			newGame.getMap().placeInitialRoadSegment(segment4a);
 			newGame.getMap().placeInitialRoadSegment(segment4b);
 
