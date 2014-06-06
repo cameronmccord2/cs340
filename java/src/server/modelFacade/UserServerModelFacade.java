@@ -10,10 +10,10 @@ import client.models.UserManager;
 
 public class UserServerModelFacade extends ServerModelFacade implements IUserServerModelFacade {
 	
-	public UserServerModelFacade() {
-		super();
+	public UserServerModelFacade(GameList gameList) {
+		super(gameList);
 	}
-	
+
 	@Override
 	public ServerFacadeResponse login(ICommandParams params, UserAttributes ua) {
 		Login loggingInUser = (Login)params;

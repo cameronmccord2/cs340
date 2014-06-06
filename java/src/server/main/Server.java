@@ -32,6 +32,7 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.ServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
+import server.models.GameList;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -105,12 +106,13 @@ public class Server {
 		// use the default executor
 		server.setExecutor(null); 
 		
+		GameList gameList = new GameList();
 		
 		// Facades
-		IServerModelFacade movesModelFacade = new MovesServerModelFacade();
-		IServerModelFacade userModelFacade = new UserServerModelFacade();
-		IServerModelFacade gameModelFacade = new GameServerModelFacade();
-		IServerModelFacade gamesModelFacade = new GamesServerModelFacade();
+		IServerModelFacade movesModelFacade = new MovesServerModelFacade(gameList);
+		IServerModelFacade userModelFacade = new UserServerModelFacade(gameList);
+		IServerModelFacade gameModelFacade = new GameServerModelFacade(gameList);
+		IServerModelFacade gamesModelFacade = new GamesServerModelFacade(gameList);
 		
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 		

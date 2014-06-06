@@ -27,6 +27,7 @@ public class GameList {
 
 	public GameList(){
 		super();
+		System.out.println("called again");
 		this.games = new ArrayList<>();
 		
 		//create practice game
@@ -85,7 +86,7 @@ public class GameList {
 		newGame.setWinner(-1);
 		newGame.setCurrentTrade(null);
 		
-		games.add(newGame);
+		this.games.add(newGame);
 	}
 
 	public IGame getGameById(Integer gameId) throws InvalidUserAttributesException {
@@ -100,7 +101,7 @@ public class GameList {
 	
 	public ArrayList<GameServer> getGameInfoList(){
 		ArrayList<GameServer> gInfos = new ArrayList<>();
-		for(Game g : games){
+		for(Game g : this.games){
 			ArrayList<PlayerServer> players = new ArrayList<>();
 			for(PlayerInfo p :g.getGameInfo().getPlayers()){
 				PlayerServer ps = new PlayerServer(p.getColor().toString(),p.getName(),p.getId());
@@ -122,7 +123,7 @@ public class GameList {
 	}
 	
 	public int checkForPlayer(int gameId){
-		for(Game g : games){
+		for(Game g : this.games){
 			gInfo = g.getGameInfo();
 			selectedGame = g;
 			if(gInfo.getId() == gameId){
@@ -145,10 +146,11 @@ public class GameList {
 	}
 	
 	public void addGame(Game newGame){
-		games.add(newGame);
+		this.games.add(newGame);
 	}
 	
 	public ArrayList<Game> getGames(){
-		return games;
+		System.out.println(this.games.toString());
+		return this.games;
 	}
 }

@@ -21,15 +21,15 @@ import client.server.ServerJoinGame;
 import com.google.gson.Gson;
 
 import server.commands.ICommandParams;
+import server.models.GameList;
 import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 import shared.definitions.CatanColor;
 
 public class GamesServerModelFacade extends ServerModelFacade implements IGamesServerModelFacade 
 {
-
-	public GamesServerModelFacade() {
-		super();
+	public GamesServerModelFacade(GameList gameList) {
+		super(gameList);
 	}
 
 	@Override
@@ -81,10 +81,10 @@ public class GamesServerModelFacade extends ServerModelFacade implements IGamesS
 		newGame.setTurnTracker(tt);
 		
 		newGame.setWinner(-1);
-		newGame.setCurrentTrade(new TRTradeOffer());
+		newGame.setCurrentTrade(null);
 		
 		gameList.addGame(newGame);
-
+System.out.println(gameList.getGames().toString());
 		return new ServerFacadeResponse(false, "Success");
 	}
 

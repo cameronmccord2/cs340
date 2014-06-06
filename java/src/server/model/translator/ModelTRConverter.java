@@ -50,6 +50,8 @@ public class ModelTRConverter
 		model.setPlayers(toTRObject(game.getPlayers()));
 		model.setTradeOffer(game.getCurrentTrade());
 		model.setTurnTracker(toTRObject(game.getTurnTracker()));
+		if(game.getModelVersion() == null)
+			game.setModelVersion(0);
 		model.setVersion(game.getModelVersion().intValue());
 		model.setWinner(game.getWinner().intValue());
 		return model;
@@ -223,8 +225,10 @@ public class ModelTRConverter
 	public static TRPlayer[] toTRObject(IPlayer[] players)
 	{
 		TRPlayer[] trPlayers = new TRPlayer[players.length];
-		for(int i = 0; i < players.length; i++)
-			trPlayers[i] = toTRObject(players[i]);
+		for(int i = 0; i < players.length; i++){
+			if(players[i] != null)
+				trPlayers[i] = toTRObject(players[i]);
+		}
 		return trPlayers;
 	}
 

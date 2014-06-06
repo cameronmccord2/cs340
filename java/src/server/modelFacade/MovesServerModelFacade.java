@@ -5,6 +5,7 @@ import java.util.Map;
 
 import server.commands.ICommandParams;
 import server.models.FinishTurn;
+import server.models.GameList;
 import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 import server.models.exceptions.GameModelException;
@@ -54,12 +55,11 @@ import client.server.ServerYearofPlenty;
 
 public class MovesServerModelFacade extends ServerModelFacade implements IMovesServerModelFacade
 {
-
-	public MovesServerModelFacade() 
-	{
-		super();
-	}
 	
+	public MovesServerModelFacade(GameList gameList) {
+		super(gameList);
+	}
+
 	@Override
 	public ServerFacadeResponse buyDevCard(ICommandParams params, UserAttributes userAttributes) 
 	{

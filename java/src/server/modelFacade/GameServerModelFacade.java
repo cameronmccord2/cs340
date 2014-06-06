@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import server.commands.ICommandParams;
 import server.model.translator.ModelTRConverter;
+import server.models.GameList;
 import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 import server.models.exceptions.InvalidUserAttributesException;
@@ -13,12 +14,10 @@ import server.models.exceptions.InvalidUserAttributesException;
 public class GameServerModelFacade extends ServerModelFacade implements IGameServerModelFacade
 {
 	
-	
-	public GameServerModelFacade()
-	{
-		super();
+	public GameServerModelFacade(GameList gameList) {
+		super(gameList);
 	}
-	
+
 	/**
 	 * Gets the list of commands that have been executed for the specified game.
 	 *
