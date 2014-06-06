@@ -2,16 +2,21 @@ package server.modelFacade;
 
 import javax.naming.OperationNotSupportedException;
 
-import server.commands.ICommandParams;
-import server.models.UserAttributes;
+import com.google.gson.Gson;
 
-public class GameServerModelFacade implements IGameServerModelFacade
+import server.commands.ICommandParams;
+import server.model.translator.ModelTRConverter;
+import server.models.ServerFacadeResponse;
+import server.models.UserAttributes;
+import server.models.exceptions.InvalidUserAttributesException;
+
+public class GameServerModelFacade extends ServerModelFacade implements IGameServerModelFacade
 {
 	
 	
 	public GameServerModelFacade()
 	{
-		
+		super();
 	}
 	
 	/**
@@ -23,10 +28,16 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	 * @return	The JSON game model string of the requested model
 	 */
 	@Override
-	public String getJsonGameModelString(UserAttributes ua)
-	{
-		String jsonResult = "";
-		return jsonResult;
+	public String getJsonGameModelString(UserAttributes ua) {
+		Gson gson = new Gson();
+		try {
+			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(gameList.getGameById(ua.getGameId())));
+			System.out.println("model: " + modelJson);
+			return modelJson;
+		} catch (InvalidUserAttributesException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**
@@ -41,10 +52,10 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	 * 			JSON string.
 	 */
 	@Override
-	public String getCommands(ICommandParams params, UserAttributes ua)
+	public ServerFacadeResponse getCommands(ICommandParams params, UserAttributes ua)
 	{
-		String jsonResult = "";
-		return jsonResult;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	/**
@@ -59,10 +70,10 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	 * @return	The string "Success" or an error
 	 */
 	@Override
-	public String runCommands(ICommandParams params, UserAttributes ua)
+	public ServerFacadeResponse runCommands(ICommandParams params, UserAttributes ua)
 	{
-		String jsonResult = "Success";
-		return jsonResult;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	/**
@@ -76,20 +87,20 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	 * @return	The string "Success" 
 	 */
 	@Override
-	public String reset(ICommandParams params, UserAttributes ua)
+	public ServerFacadeResponse reset(ICommandParams params, UserAttributes ua)
 	{
-		String jsonResult = "Success";
-		return jsonResult;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public String listAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException
+	public ServerFacadeResponse listAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException
 	{
 		throw new OperationNotSupportedException();
 	}
 
 	@Override
-	public String addAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException
+	public ServerFacadeResponse addAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException
 	{
 		throw new OperationNotSupportedException();
 	}

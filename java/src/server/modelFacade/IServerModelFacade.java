@@ -5,7 +5,7 @@ package server.modelFacade;
  *
  * @author scottdaly
  */
-public interface IServerModelFacade extends IGameServerModelFacade, IGamesServerModelFacade, IMovesServerModelFacade, IUserServerModelFacade {
+public interface IServerModelFacade {
 	
 	
 	

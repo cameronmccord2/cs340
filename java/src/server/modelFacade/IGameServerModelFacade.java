@@ -3,17 +3,18 @@ package server.modelFacade;
 import javax.naming.OperationNotSupportedException;
 
 import server.commands.ICommandParams;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 
 public interface IGameServerModelFacade {
 
 	/**
-	 * Gets the JSON game model string for the requested game.
+	 * Gets the JSON game model ServerFacadeResponse for the requested game.
 	 *
 	 * @param	ua
 	 * 				The user attributes indicating which game to get.
 	 * 
-	 * @return	The JSON game model string of the requested model
+	 * @return	The JSON game model ServerFacadeResponse of the requested model
 	 */
 	public String getJsonGameModelString(UserAttributes ua);
 	
@@ -27,7 +28,7 @@ public interface IGameServerModelFacade {
 	 * 
 	 * @return	The commands executed in this game
 	 */
-	public String getCommands(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse getCommands(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Run commands that are in the format that the getCommands end point returns. Allows replaying of events.
@@ -37,9 +38,9 @@ public interface IGameServerModelFacade {
 	 * @param	ua
 	 * 				the user attributes from the requesting user
 	 * 
-	 * @return	The string "Success" or an error
+	 * @return	The ServerFacadeResponse "Success" or an error
 	 */
-	public String runCommands(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse runCommands(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Resets the game model to the create game state.
@@ -49,9 +50,9 @@ public interface IGameServerModelFacade {
 	 * @param	ua
 	 * 				The user attributes from the requesting user
 	 * 
-	 * @return	The string "Success"
+	 * @return	The ServerFacadeResponse "Success"
 	 */
-	public String reset(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse reset(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Lists all of the available 
@@ -63,7 +64,7 @@ public interface IGameServerModelFacade {
 	 * 
 	 * @throws	OperationNotSupportedException
 	 */
-	public String listAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException;
+	public ServerFacadeResponse listAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException;
 	
 	/**
 	 * This
@@ -75,5 +76,5 @@ public interface IGameServerModelFacade {
 	 * 
 	 * @throws	OperationNotSupportedException
 	 */
-	public String addAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException;
+	public ServerFacadeResponse addAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException;
 }
