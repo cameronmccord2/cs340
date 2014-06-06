@@ -1,6 +1,7 @@
 package server.modelFacade;
 
 import server.commands.ICommandParams;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 
 /**
@@ -10,6 +11,6 @@ import server.models.UserAttributes;
  */
 public interface IServerModelFacade {
 	
-	public String getJsonGameModelString(ICommandParams params, UserAttributes ua);
+	public ServerFacadeResponse getJsonGameModelString(ICommandParams params, UserAttributes ua);
 	
 }

@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import server.commands.ICommandParams;
 import server.model.translator.ModelTRConverter;
 import server.models.GameList;
+import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 import server.models.exceptions.InvalidUserAttributesException;
 import client.models.UserManager;
@@ -21,7 +22,7 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 	
 	@Override
-	public String getJsonGameModelString(ICommandParams params, UserAttributes ua) {
+	public ServerFacadeResponse getJsonGameModelString(ICommandParams params, UserAttributes ua) {
 		
 		Gson gson = new Gson();
 		System.out.println("inside server model facade");
@@ -30,10 +31,10 @@ public class ServerModelFacade implements IServerModelFacade {
 			System.out.println("doing stuff");
 			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(game));
 			System.out.println("model: " + modelJson);
-			return modelJson;
+			return new ServerFacadeResponse(false, modelJson);
 		} catch (InvalidUserAttributesException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ServerFacadeResponse(false, "Getting game model failed");
 	}
 }

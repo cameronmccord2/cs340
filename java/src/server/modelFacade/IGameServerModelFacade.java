@@ -8,16 +8,6 @@ import server.models.UserAttributes;
 
 public interface IGameServerModelFacade {
 
-	/**
-	 * Gets the JSON game model ServerFacadeResponse for the requested game.
-	 *
-	 * @param	ua
-	 * 				The user attributes indicating which game to get.
-	 * 
-	 * @return	The JSON game model ServerFacadeResponse of the requested model
-	 */
-	public String getJsonGameModelString(ICommandParams params, UserAttributes ua);
-
 	
 	/**
 	 * Gets the list of commands that have been executed for the specified game.
