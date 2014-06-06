@@ -24,6 +24,7 @@ public class ServerModelFacade implements IServerModelFacade {
 	public String getJsonGameModelString(ICommandParams params, UserAttributes ua) {
 		
 		Gson gson = new Gson();
+		System.out.println("inside server model facade");
 		try {
 			IGame game = gameList.getGameById(ua.getGameId());
 			System.out.println("doing stuff");
