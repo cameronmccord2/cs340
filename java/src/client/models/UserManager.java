@@ -29,16 +29,16 @@ public class UserManager {
 	public String login(Login loggingInUser) {
 		for(User u : users){
 			if(u.getname().equals(loggingInUser.getUser())){
-				return "Login " + u.getPlayerID();
+				return "" + u.getPlayerID();
 			}
 		}
-		return "Failed";
+		return "Failed. User not found.";
 	}
 
 	public String register(Register simpleUser) {
 		User newUser = new User(simpleUser.getUser(),simpleUser.getPassword(),users.size());
 		users.add(newUser);
-		return "Register Success";
+		return "Success";
 	}
 	
 	public ArrayList<User> getUsers(){

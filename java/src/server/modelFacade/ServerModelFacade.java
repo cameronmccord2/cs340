@@ -8,6 +8,7 @@ import server.models.GameList;
 import server.models.UserAttributes;
 import server.models.exceptions.InvalidUserAttributesException;
 import client.models.UserManager;
+import client.models.interfaces.IGame;
 
 public class ServerModelFacade implements IServerModelFacade {
 
@@ -19,11 +20,14 @@ public class ServerModelFacade implements IServerModelFacade {
 		this.gameList = new GameList();
 	}
 	
+	@Override
 	public String getJsonGameModelString(ICommandParams params, UserAttributes ua) {
-
+		
 		Gson gson = new Gson();
 		try {
-			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(gameList.getGameById(ua.getGameId())));
+			IGame game = gameList.getGameById(ua.getGameId());
+			System.out.println("doing stuff");
+			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(game));
 			System.out.println("model: " + modelJson);
 			return modelJson;
 		} catch (InvalidUserAttributesException e) {
