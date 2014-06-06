@@ -151,16 +151,37 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				TRResourceList offer = game.getCurrentTrade().getOffer();
 				Map<IResourceCard, Integer> sender = game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).getResourceCards();
 				Map<IResourceCard, Integer> receiver = game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).getResourceCards();
-				sender.put(ResourceCard.BRICK, sender.get(ResourceCard.BRICK) + offer.getBrick());
-				receiver.put(ResourceCard.BRICK, receiver.get(ResourceCard.BRICK) + offer.getBrick());
-				sender.put(ResourceCard.ORE, sender.get(ResourceCard.ORE) + offer.getBrick());
-				receiver.put(ResourceCard.ORE, receiver.get(ResourceCard.ORE) + offer.getBrick());
-				sender.put(ResourceCard.WOOD, sender.get(ResourceCard.WOOD) + offer.getBrick());
-				receiver.put(ResourceCard.WOOD, receiver.get(ResourceCard.WOOD) + offer.getBrick());
-				sender.put(ResourceCard.SHEEP, sender.get(ResourceCard.SHEEP) + offer.getBrick());
-				receiver.put(ResourceCard.SHEEP, receiver.get(ResourceCard.SHEEP) + offer.getBrick());
-				sender.put(ResourceCard.WHEAT, sender.get(ResourceCard.WHEAT) + offer.getBrick());
-				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
+				if(offer.getBrick() < 0)
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).incrementResourceByCount("brick", offer.getBrick());
+				else
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).incrementResourceByCount("brick", offer.getBrick());
+				if(offer.getOre() < 0)
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).incrementResourceByCount("ore", offer.getOre());
+				else
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).incrementResourceByCount("ore", offer.getOre());
+				if(offer.getWood() < 0)
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).incrementResourceByCount("wood", offer.getWood());
+				else
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).incrementResourceByCount("wood", offer.getWood());
+				if(offer.getSheep() < 0)
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).incrementResourceByCount("sheep", offer.getSheep());
+				else
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).incrementResourceByCount("sheep", offer.getSheep());
+				if(offer.getWheat() < 0)
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getSender()).incrementResourceByCount("wheat", offer.getWheat());
+				else
+					game.getPlayerForPlayerIndex(game.getCurrentTrade().getReceiver()).incrementResourceByCount("wheat", offer.getWheat());
+				
+//				sender.put(ResourceCard.BRICK, sender.get(ResourceCard.BRICK) + offer.getBrick());
+//				receiver.put(ResourceCard.BRICK, receiver.get(ResourceCard.BRICK) + offer.getBrick());
+//				sender.put(ResourceCard.ORE, sender.get(ResourceCard.ORE) + offer.getBrick());
+//				receiver.put(ResourceCard.ORE, receiver.get(ResourceCard.ORE) + offer.getBrick());
+//				sender.put(ResourceCard.WOOD, sender.get(ResourceCard.WOOD) + offer.getBrick());
+//				receiver.put(ResourceCard.WOOD, receiver.get(ResourceCard.WOOD) + offer.getBrick());
+//				sender.put(ResourceCard.SHEEP, sender.get(ResourceCard.SHEEP) + offer.getBrick());
+//				receiver.put(ResourceCard.SHEEP, receiver.get(ResourceCard.SHEEP) + offer.getBrick());
+//				sender.put(ResourceCard.WHEAT, sender.get(ResourceCard.WHEAT) + offer.getBrick());
+//				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
 			}
 			game.setCurrentTrade(null);
 			game.setModelVersion( game.getModelVersion() + 1);
