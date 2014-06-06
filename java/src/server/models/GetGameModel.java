@@ -8,7 +8,13 @@ public class GetGameModel implements ICommandParams {
 	protected Integer modelVersion;
 	
 	public GetGameModel(String json) {
-		this.modelVersion = Integer.parseInt(json);
+		if(json.length() > 0)
+			this.modelVersion = Integer.parseInt(json);
+		this.modelVersion = 0;
+	}
+
+	public GetGameModel(Integer gameId) {
+		this.modelVersion = 0;
 	}
 
 	@Override
