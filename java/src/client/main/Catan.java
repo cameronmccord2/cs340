@@ -125,7 +125,6 @@ public class Catan extends JFrame
 					@Override
 					public void execute()
 					{
-						System.out.println("in execute");
 						poller = new Poller(proxy);
 //						poller = new Thread(new Poller(proxy));
 //						System.out.println("after created");
@@ -133,9 +132,7 @@ public class Catan extends JFrame
 //						System.out.println("after start");
 //						poller.startTimer();
 						playerWaitingController.start();
-						System.out.println("after start 2");
 //						proxy.getGameModel();
-						System.out.println("End of execute");
 					}
 				});
 				joinView.setController(joinController);

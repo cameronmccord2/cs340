@@ -255,7 +255,6 @@ public class Proxy implements IProxy {
 		Map<String, List<String>> map = connection.getHeaderFields();
 		List<String> setCookie = map.get("Set-cookie");
 		gameId = setCookie.get(0);
-		System.out.println("game cookie: " + gameId);
 //		System.out.println(gameId);// catan.game=0;Path=/;
 		gameId = gameId.substring(0, gameId.length() - 8);
 //		System.out.println(gameId);//catan.game=0
@@ -312,7 +311,6 @@ public class Proxy implements IProxy {
 	private Integer getVersionForGameId(Integer gameId) throws InvalidGameModelException {
 		for (IGame g : this.games) {
 			if(g.getGameInfo().getId() == gameId){
-				System.out.println(g.getModelVersion());
 				return g.getModelVersion();
 			}
 		}
