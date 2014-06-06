@@ -1,6 +1,8 @@
 package server.modelFacade;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import server.commands.ICommandParams;
@@ -489,21 +491,40 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			Collection<IHex> hexes = game.getMap().getHexes();
-			IHex hex = null;
+			List<IHex> hexesFound = new ArrayList<>();
 			for (IHex h : hexes) {
 				if(h.getHexNumber() != null && h.getHexNumber() == sr.getNumber()){
-					hex = h;
-					break;
+					hexesFound.add(h);
 				}
 			}
-			if(hex == null)
-				return new ServerFacadeResponse(false, "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString());
 
-			Collection<IPiece> cities = game.getMap().getSettlementsAroundHex(hex.getLocation());
-			System.out.println(cities);
-			int countRequired = cities.size();
-			if(game.getBank().hasEnoughResources(hex.getHexType(), countRequired)){
-				game.getBank().decrementResourceByCount(hex.getHexType(), countRequired);
+			Collection<IPiece> cities = new ArrayList<>();
+			int resourcesRequired = 0;
+			for (IHex iHex : hexesFound) {
+				cities.addAll(game.getMap().getSettlementsAroundHex(iHex.getLocation()));
+			}
+			
+			for (IPiece p : cities) {
+				switch(p.getPieceType()){
+				case CITY:
+					resourcesRequired += 2;
+					break;
+				case ROAD:
+					break;
+				case ROBBER:
+					break;
+				case SETTLEMENT:
+					resourcesRequired += 1;
+					break;
+				default:
+					break;
+				
+				}
+			}
+
+			int countRequired = resourcesRequired;
+			if(game.getBank().hasEnoughResources(hexesFound.get(0).getHexType(), countRequired)){
+				game.getBank().decrementResourceByCount(hexesFound.get(0).getHexType(), countRequired);
 				for (IPiece c : cities) {
 					IPlayer p = c.getPlayer();
 					System.out.println(p);
@@ -523,8 +544,8 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 						break;
 					
 					}
-					p.incrementResourceByCount(hex.getHexType(), count);
-					game.getBank().decrementResourceByCount(hex.getHexType(), count);
+					p.incrementResourceByCount(hexesFound.get(0).getHexType(), count);
+					game.getBank().decrementResourceByCount(hexesFound.get(0).getHexType(), count);
 				}
 			}else
 				System.out.println("bank doesnt have enough");
