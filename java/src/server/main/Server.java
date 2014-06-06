@@ -25,8 +25,13 @@ import server.handlers.GameHandler;
 import server.handlers.GamesHandler;
 import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
+import server.modelFacade.GameServerModelFacade;
+import server.modelFacade.GamesServerModelFacade;
+import server.modelFacade.IMovesServerModelFacade;
 import server.modelFacade.IServerModelFacade;
+import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.ServerModelFacade;
+import server.modelFacade.UserServerModelFacade;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -101,16 +106,19 @@ public class Server {
 		server.setExecutor(null); 
 		
 		
-		// Facade
-		IServerModelFacade modelFacade = new ServerModelFacade();
+		// Facades
+		IServerModelFacade movesModelFacade = new MovesServerModelFacade();
+		IServerModelFacade userModelFacade = new UserServerModelFacade();
+		IServerModelFacade gameModelFacade = new GameServerModelFacade();
+		IServerModelFacade gamesModelFacade = new GamesServerModelFacade();
 		
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 		
 		//comment the following 4 lines if you want to use the dummyfacades
-		IUserFacade userFacade = new UserFacade(modelFacade);
-		IGamesFacade gamesFacade = new GamesFacade(modelFacade);
-		IGameFacade gameFacade = new GameFacade(modelFacade);
-		IMovesFacade movesFacade = new MovesFacade(modelFacade);
+		IUserFacade userFacade = new UserFacade(userModelFacade);
+		IGamesFacade gamesFacade = new GamesFacade(gamesModelFacade);
+		IGameFacade gameFacade = new GameFacade(gameModelFacade);
+		IMovesFacade movesFacade = new MovesFacade(movesModelFacade);
 		
 		//un-comment the following lines if you want to use the dummyfacades
 //		IUserFacade userFacade = new DummyUserFacade();

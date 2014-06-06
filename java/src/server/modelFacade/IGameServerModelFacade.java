@@ -16,7 +16,7 @@ public interface IGameServerModelFacade {
 	 * 
 	 * @return	The JSON game model ServerFacadeResponse of the requested model
 	 */
-	public String getJsonGameModelString(UserAttributes ua);
+	public String getJsonGameModelString(ICommandParams params, UserAttributes ua);
 	
 	/**
 	 * Gets the list of commands that have been executed for the specified game.

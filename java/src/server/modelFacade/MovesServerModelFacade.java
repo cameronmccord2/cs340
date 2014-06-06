@@ -52,14 +52,17 @@ import client.server.ServerRoll;
 import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
 
-public class MovesServerModelFacade extends ServerModelFacade implements IMovesServerModelFacade {
+public class MovesServerModelFacade extends ServerModelFacade implements IMovesServerModelFacade
+{
 
-	public MovesServerModelFacade() {
+	public MovesServerModelFacade() 
+	{
 		super();
 	}
 	
 	@Override
-	public ServerFacadeResponse buyDevCard(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse buyDevCard(ICommandParams params, UserAttributes userAttributes) 
+	{
 
 		BuyDevCard devCard = (BuyDevCard) params;
 

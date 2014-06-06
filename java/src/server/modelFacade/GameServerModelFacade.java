@@ -20,27 +20,6 @@ public class GameServerModelFacade extends ServerModelFacade implements IGameSer
 	}
 	
 	/**
-	 * Gets the JSON game model string for the requested game.
-	 *
-	 * @param	ua
-	 * 				the user attributes indicating which game to get.
-	 * 
-	 * @return	The JSON game model string of the requested model
-	 */
-	@Override
-	public String getJsonGameModelString(UserAttributes ua) {
-		Gson gson = new Gson();
-		try {
-			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(gameList.getGameById(ua.getGameId())));
-			System.out.println("model: " + modelJson);
-			return modelJson;
-		} catch (InvalidUserAttributesException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	/**
 	 * Gets the list of commands that have been executed for the specified game.
 	 *
 	 * @param	json
