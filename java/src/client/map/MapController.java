@@ -61,6 +61,8 @@ public class MapController extends Controller implements IMapController,
 	private IRoadSegment firstSegment;
 	private IRoadSegment secondSegment;
 
+	private boolean hasPlacedFirstRoad;
+
 	public MapController(IMapView view, IRobView robView)
 	{
 		super(view);
@@ -673,10 +675,22 @@ public class MapController extends Controller implements IMapController,
 		{
 			initFromModel();
 			initRobber();
+			/*
+			IFacade facade = this.proxy.getFacade();
+
+			facade.g
+			System.out.println("ROUND:: " + facade.getTurnTracker().getStatus());
+			if(facade.isMyTurn() && facade.getTurnTracker().getStatus().equals("FirstRound")) {
+				System.out.println("Time to place a road!");
+				if( ! this.getView().isOverlayShowing())
+					this.getView().startDrop(PieceType.ROAD, null, false);
+				System.out.println("Modal should be open...");
+			}
+			*/
 		}
 		catch(Exception e)
 		{
-			System.out.println("Error initializing Map Data from Model");
+			System.out.println("Error initializing Map Data from Model: \n" + e.getLocalizedMessage());
 		}
 	}
 
