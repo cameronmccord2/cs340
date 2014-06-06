@@ -15,15 +15,15 @@ public class ServerModelFacade implements IServerModelFacade {
 
 	protected UserManager userManager;
 	protected GameList gameList;
-	
-	public ServerModelFacade(GameList gameList2) {
+
+	public ServerModelFacade(GameList gameList) {
 		this.userManager = new UserManager();
-		this.gameList = gameList2;
+		this.gameList = gameList;
 	}
 
 	@Override
 	public ServerFacadeResponse getJsonGameModelString(ICommandParams params, UserAttributes ua) {
-		
+
 		Gson gson = new Gson();
 		try {
 			IGame game = gameList.getGameById(ua.getGameId());
