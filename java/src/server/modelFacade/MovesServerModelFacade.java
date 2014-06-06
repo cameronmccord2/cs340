@@ -500,14 +500,34 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				return new ServerFacadeResponse(false, "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString());
 
 			Collection<IPiece> cities = game.getMap().getSettlementsAroundHex(hex.getLocation());
-
+			System.out.println(cities);
 			int countRequired = cities.size();
 			if(game.getBank().hasEnoughResources(hex.getHexType(), countRequired)){
 				game.getBank().decrementResourceByCount(hex.getHexType(), countRequired);
 				for (IPiece c : cities) {
-					c.getPlayer().decrementResourceByCount(hex.getHexType(), 1);
+					IPlayer p = c.getPlayer();
+					System.out.println(p);
+					int count = 0;
+					switch(c.getPieceType()){
+					case CITY:
+						count = 2;
+						break;
+					case ROAD:
+						break;
+					case ROBBER:
+						break;
+					case SETTLEMENT:
+						count = 1;
+						break;
+					default:
+						break;
+					
+					}
+					p.incrementResourceByCount(hex.getHexType(), count);
+					game.getBank().decrementResourceByCount(hex.getHexType(), count);
 				}
-			}
+			}else
+				System.out.println("bank doesnt have enough");
 			
 			if(sr.getNumber() == 7){
 				game.getTurnTracker().setStatus("Robbing");

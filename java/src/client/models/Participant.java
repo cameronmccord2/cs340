@@ -123,7 +123,7 @@ public abstract class Participant implements IParticipant {
 	@Override
 	public boolean hasEnoughResources(HexType hexType, int countRequired) {
 		ResourceCard rc = HexType.getResourceCardForHexType(hexType);
-		return (this.getResourceCards().get(rc) < countRequired);
+		return (this.getResourceCards().get(rc) > countRequired);
 	}
 
 	@Override
