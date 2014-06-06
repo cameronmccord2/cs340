@@ -23,7 +23,7 @@ public class GameServerModelFacade implements IGameServerModelFacade
 	 * @return	The JSON game model string of the requested model
 	 */
 	@Override
-	public String getJsonGameModelString(UserAttributes ua)
+	public String getJsonGameModelString(ICommandParams noUse, UserAttributes ua)
 	{
 		String jsonResult = "";
 		return jsonResult;

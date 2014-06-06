@@ -15,7 +15,7 @@ public interface IGameServerModelFacade {
 	 * 
 	 * @return	The JSON game model string of the requested model
 	 */
-	public String getJsonGameModelString(UserAttributes ua);
+	String getJsonGameModelString(ICommandParams noUse, UserAttributes ua);
 	
 	/**
 	 * Gets the list of commands that have been executed for the specified game.
@@ -76,4 +76,6 @@ public interface IGameServerModelFacade {
 	 * @throws	OperationNotSupportedException
 	 */
 	public String addAI(ICommandParams params, UserAttributes ua) throws OperationNotSupportedException;
+
+	
 }

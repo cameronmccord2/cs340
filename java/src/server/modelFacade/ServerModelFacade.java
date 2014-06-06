@@ -85,11 +85,13 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String getJsonGameModelString(UserAttributes ua) {
+	public String getJsonGameModelString(ICommandParams noUse, UserAttributes ua) {
 		Gson gson = new Gson();
 		System.out.println("inside server model facade");
 		try {
-			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(gameList.getGameById(ua.getGameId())));
+			IGame game = gameList.getGameById(ua.getGameId());
+			System.out.println("doing stuff");
+			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(game));
 			System.out.println("model: " + modelJson);
 			return modelJson;
 		} catch (InvalidUserAttributesException e) {

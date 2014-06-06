@@ -40,7 +40,7 @@ public class Command implements ICommand, ITestCommand {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
 		ServerFacadeResponse response = (ServerFacadeResponse) method.invoke(this.facade, this.commandParams, this.userAttributes);
 		if(response.isReturnGameModel()){
-			return this.facade.getJsonGameModelString(this.userAttributes);
+			return this.facade.getJsonGameModelString(null, this.userAttributes);
 		}
 		else{
 			return response.getOtherResponse();
