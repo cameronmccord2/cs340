@@ -3,8 +3,7 @@ package client.login;
 import client.base.Controller;
 import client.base.IAction;
 import client.misc.IMessageView;
-import client.models.IProxy;
-import client.models.Proxy;
+import client.models.interfaces.IProxy;
 import client.server.User;
 
 

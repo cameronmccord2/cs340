@@ -4,6 +4,18 @@ import java.util.*;
 
 import client.data.PlayerInfo;
 import client.models.exceptions.CantFindGameModelException;
+import client.models.interfaces.ICatanMap;
+import client.models.interfaces.ICity;
+import client.models.interfaces.IFacade;
+import client.models.interfaces.IHex;
+import client.models.interfaces.IPiece;
+import client.models.interfaces.IPlayer;
+import client.models.interfaces.IPort;
+import client.models.interfaces.IProxy;
+import client.models.interfaces.IRoadSegment;
+import client.models.interfaces.IRobber;
+import client.models.interfaces.ISettlement;
+import client.models.interfaces.InvalidLocationException;
 import shared.definitions.PieceType;
 import shared.locations.*;
 

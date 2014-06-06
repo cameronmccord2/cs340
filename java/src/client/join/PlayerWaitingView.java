@@ -2,7 +2,6 @@ package client.join;
 
 import java.util.*;
 import java.awt.*;
-import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -19,14 +18,14 @@ import client.utils.*;
 public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView {
 
 	private final int LABEL_TEXT_SIZE = 40;
-	private final int BUTTON_TEXT_SIZE = 28;
-	private final int AI_TEXT_SIZE = 20;
+	//private final int BUTTON_TEXT_SIZE = 28;
+	//private final int AI_TEXT_SIZE = 20;
 	private final int BORDER_WIDTH = 10;
 	private final int NUMBER_OF_PLAYERS = 4;
 
 	private JLabel label;
-	private JButton addAiButton;
-	private JPanel aiPanel;
+	//private JButton addAiButton;
+	//private JPanel aiPanel;
 	private JPanel center;
 	private SpinnerListModel aiModel;
 	private JSpinner aiChoices;

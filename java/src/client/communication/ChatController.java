@@ -1,9 +1,9 @@
 package client.communication;
 
 import client.base.Controller;
-import client.models.ICatanModelObserver;
-import client.models.IProxy;
 import client.models.exceptions.CantFindGameModelException;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IProxy;
 import client.server.ServerChat;
 
 

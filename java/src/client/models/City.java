@@ -3,6 +3,8 @@ package client.models;
 import java.util.Collection;
 import java.util.HashSet;
 
+import client.models.interfaces.ICity;
+import client.models.interfaces.IPlayer;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.locations.VertexLocation;

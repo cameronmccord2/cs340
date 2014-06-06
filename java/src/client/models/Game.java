@@ -5,6 +5,10 @@ package client.models;
 
 import server.models.exceptions.GameModelException;
 import client.data.GameInfo;
+import client.models.interfaces.IBank;
+import client.models.interfaces.ICatanMap;
+import client.models.interfaces.IGame;
+import client.models.interfaces.IPlayer;
 import client.models.translator.TRTradeOffer;
 
 /**

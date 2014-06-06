@@ -3,14 +3,13 @@ package client.maritime;
 import shared.definitions.*;
 import client.base.*;
 import client.data.PlayerInfo;
-import client.models.ICatanModelObserver;
-import client.models.IFacade;
-import client.models.IPlayer;
-import client.models.IProxy;
-import client.models.MaritimeTrade;
 import client.models.ResourceCard;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
+import client.models.interfaces.ICatanModelObserver;
+import client.models.interfaces.IFacade;
+import client.models.interfaces.IPlayer;
+import client.models.interfaces.IProxy;
 import client.server.MaritimeTradeOff;
 
 
@@ -144,7 +143,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		this.setGiveResource(this.sendResource);
 		this.decideTradeState();
 	}
-
+	/*
 	private String printArray(ResourceType[] enabledGetResources2) {
 		StringBuilder sb = new StringBuilder();
 		for (ResourceType r : enabledGetResources2) {
@@ -155,7 +154,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		}
 		return sb.toString();
 	}
-
+	*/
 	@Override
 	public void unsetGiveValue() {
 		this.sendResource = null;

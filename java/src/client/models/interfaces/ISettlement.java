@@ -1,4 +1,4 @@
-package client.models;
+package client.models.interfaces;
 
 public interface ISettlement extends IPiece
 {

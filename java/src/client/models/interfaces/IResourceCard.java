@@ -1,4 +1,4 @@
-package client.models;
+package client.models.interfaces;
 
 import shared.definitions.ResourceType;
 

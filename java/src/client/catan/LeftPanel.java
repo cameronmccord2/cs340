@@ -11,7 +11,7 @@ import client.communication.ChatController;
 import client.communication.ChatView;
 import client.communication.GameHistoryController;
 import client.communication.GameHistoryView;
-import client.models.IProxy;
+import client.models.interfaces.IProxy;
 import client.turntracker.TurnTrackerController;
 import client.turntracker.TurnTrackerView;
 

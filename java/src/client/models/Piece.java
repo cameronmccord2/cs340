@@ -1,5 +1,7 @@
 package client.models;
 
+import client.models.interfaces.IPiece;
+import client.models.interfaces.IPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.ILocation;

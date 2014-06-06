@@ -1,7 +1,9 @@
-package client.models;
+package client.models.interfaces;
 
 import java.util.List;
 
+import client.models.ReturnedUser;
+import client.models.ServerResponse;
 import client.server.AcceptTrade;
 import client.server.BuyDevCard;
 import client.server.CreateGame;

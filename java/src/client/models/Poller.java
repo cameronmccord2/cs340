@@ -3,6 +3,8 @@ package client.models;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import client.models.interfaces.IProxy;
+
 /**
  * Object that generates a timer and will trigger the Proxy after a period of time to pull new data
  * @author Scott Daly

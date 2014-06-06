@@ -8,6 +8,9 @@ import shared.locations.HexLocation;
 
 import java.util.*;
 
+import client.models.interfaces.ICatanMap;
+import client.models.interfaces.IMapBuilder;
+
 public class MapBuilder implements IMapBuilder {
 
 	/**

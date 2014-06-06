@@ -2,6 +2,9 @@ package client.models;
 
 import java.util.Collection;
 
+import client.models.interfaces.IPlayer;
+import client.models.interfaces.IRoad;
+import client.models.interfaces.IRoadSegment;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;

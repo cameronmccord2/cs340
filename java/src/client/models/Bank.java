@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
+import client.models.interfaces.IBank;
+import client.models.interfaces.IDevelopmentCard;
+import client.models.interfaces.IResourceCard;
+import client.models.interfaces.ITrade;
 import client.models.translator.TRDevCardList;
 import client.models.translator.TRResourceList;
 import shared.definitions.DevCardType;

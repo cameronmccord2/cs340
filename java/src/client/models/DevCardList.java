@@ -3,6 +3,8 @@ package client.models;
 import java.util.HashMap;
 import java.util.Map;
 
+import client.models.interfaces.IDevelopmentCard;
+
 public class DevCardList
 {
 	private Map<IDevelopmentCard, Integer> devcards;

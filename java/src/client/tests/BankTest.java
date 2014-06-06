@@ -25,7 +25,7 @@ public class BankTest {
 	public void testEmptyBank() {
 
 		boolean drawDevCard = bank.canDrawDevCard();
-		assertFalse( "canDrawDevCard returned true in Empty bank", drawDevCard );
+		assertFalse("canDrawDevCard returned true in Empty bank", drawDevCard );
 
 		boolean drawResourceCard = bank.canDrawResource(ResourceCard.BRICK);
 		assertFalse("canDrawResource(BRICK) returned true in Empty bank", drawResourceCard);

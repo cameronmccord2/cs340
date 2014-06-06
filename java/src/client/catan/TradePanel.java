@@ -12,7 +12,7 @@ import client.maritime.MaritimeTradeController;
 import client.maritime.MaritimeTradeOverlay;
 import client.maritime.MaritimeTradeView;
 import client.misc.WaitView;
-import client.models.IProxy;
+import client.models.interfaces.IProxy;
 
 @SuppressWarnings("serial")
 public class TradePanel extends JPanel

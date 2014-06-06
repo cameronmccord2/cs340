@@ -3,6 +3,8 @@ package client.models;
 import java.util.Collection;
 import java.util.HashSet;
 
+import client.models.interfaces.IPlayer;
+import client.models.interfaces.IRoadSegment;
 import client.models.translator.TRRoad;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;

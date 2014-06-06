@@ -1,7 +1,10 @@
-package client.models;
+package client.models.interfaces;
 
 import server.models.exceptions.GameModelException;
 import client.data.GameInfo;
+import client.models.MessageLine;
+import client.models.MessageList;
+import client.models.TurnTracker;
 import client.models.translator.TRTradeOffer;
 
 /**

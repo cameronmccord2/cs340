@@ -2,6 +2,10 @@ package client.models;
 
 import java.util.Map;
 
+import client.models.interfaces.IDomesticTrade;
+import client.models.interfaces.IParticipant;
+import client.models.interfaces.IResourceCard;
+
 /**
  * The Class DomesticTrade.
  */

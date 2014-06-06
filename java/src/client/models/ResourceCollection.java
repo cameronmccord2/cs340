@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import client.models.exceptions.CantFindGameModelException;
+import client.models.interfaces.IProxy;
+import client.models.interfaces.IResourceCard;
 import client.models.translator.TRResourceList;
 import shared.definitions.ResourceType;
 

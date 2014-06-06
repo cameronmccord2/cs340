@@ -1,4 +1,4 @@
-package client.models;
+package client.models.interfaces;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,8 @@ import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 import client.communication.LogEntry;
 import client.data.PlayerInfo;
+import client.models.ResourceCard;
+import client.models.TurnTracker;
 import client.models.exceptions.CantFindGameModelException;
 import client.models.exceptions.CantFindPlayerException;
 import client.models.translator.TRTradeOffer;
