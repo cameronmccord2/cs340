@@ -302,8 +302,8 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 
 			IRoadSegment segment = new RoadSegment(road, player);
 
-			if(game.getMap().canPlaceRoad(segment)) {
-				game.getMap().placeRoadSegment(segment);
+			if(game.getMap().canPlaceRoad(segment, true)) {
+				game.getMap().placeRoadSegment(segment, true);
 				player.deductResources(RoadSegment.getResourceCost());
 			}
 			else {

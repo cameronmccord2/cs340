@@ -52,4 +52,7 @@ public interface ICatanMap
 	boolean canPlaceSettlement(ISettlement settlement, boolean serverVersion);
 	void placeSettlement(ISettlement settlement, boolean isServer)
 			throws InvalidLocationException;
+	boolean canPlaceRoad(IRoadSegment segment, boolean isServer);
+	void placeRoadSegment(IRoadSegment segment, boolean isServer)
+			throws InvalidLocationException;
 }

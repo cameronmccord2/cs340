@@ -201,15 +201,22 @@ public class CatanMap implements ICatanMap
 	{
 		return this.proxy;
 	}
+	
+	@Override
+	public boolean canPlaceRoad(IRoadSegment segment){
+		return this.canPlaceRoad(segment, false);
+	}
 
 	/**
 	 *
 	 */
 	@Override
-	public boolean canPlaceRoad(IRoadSegment segment)
+	public boolean canPlaceRoad(IRoadSegment segment, boolean isServer)
 	{
 		if(catanMap.get(segment.getLocation()) != null)
 			return false;
+		if(isServer)
+			return true;
 
 		IFacade facade = proxy.getFacade();
 		try
@@ -468,12 +475,18 @@ public class CatanMap implements ICatanMap
 		}
 		return roads;
 	}
+	
 
 	@Override
-	public void placeRoadSegment(IRoadSegment segment)
+	public void placeRoadSegment(IRoadSegment segment) throws InvalidLocationException{
+		this.placeRoadSegment(segment, false);
+	}
+
+	@Override
+	public void placeRoadSegment(IRoadSegment segment, boolean isServer)
 			throws InvalidLocationException
 	{
-		if(!canPlaceRoad(segment))
+		if(!canPlaceRoad(segment, isServer))
 			throw new InvalidLocationException();
 		catanMap.put(segment.getLocation(), segment);
 	}
