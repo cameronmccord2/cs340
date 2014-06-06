@@ -38,6 +38,8 @@ public class MapBuilder implements IMapBuilder {
 
 				hex.setHexNumber(currentNum);
 			}
+			else
+				map.setRobber(new Robber(hex.getLocation()));
 
 			map.addHex(hex);
 		}
