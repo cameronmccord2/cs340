@@ -196,7 +196,7 @@ public class ServerModelFacade implements IServerModelFacade {
 	}
 
 	@Override
-	public String buyDevCard(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse buyDevCard(ICommandParams params, UserAttributes userAttributes) {
 
 		BuyDevCard devCard = (BuyDevCard) params;
 
@@ -212,14 +212,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			player.deductResources(DevelopmentCard.getResourceCost());
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
 
-		return "Success";
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String discardCards(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse discardCards(ICommandParams params, UserAttributes userAttributes) {
 
 		DiscardedCards discard = (DiscardedCards)params;
 		int discardNum = 0;
@@ -248,13 +248,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			player.setResourceCards(resourceCards);
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String finishTurn(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse finishTurn(ICommandParams params, UserAttributes userAttributes) {
 		FinishTurn ft = (FinishTurn)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
@@ -264,13 +265,14 @@ public class ServerModelFacade implements IServerModelFacade {
 				game.getTurnTracker().setCurrentTurn(ft.getPlayerIndex() + 1);
 			game.getTurnTracker().setStatus("Rolling");
 		} catch (InvalidUserAttributesException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 	
 	@Override
-	public String acceptTrade(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse acceptTrade(ICommandParams params, UserAttributes userAttributes) {
 		AcceptTrade at = (AcceptTrade)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
@@ -290,16 +292,15 @@ public class ServerModelFacade implements IServerModelFacade {
 				receiver.put(ResourceCard.WHEAT, receiver.get(ResourceCard.WHEAT) + offer.getBrick());
 			}
 			game.setCurrentTrade(null);
-		} catch (InvalidUserAttributesException e) {
-			return e.getLocalizedMessage();
-		} catch (GameModelException e) {
-			return e.getLocalizedMessage();
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String maritimeTradeOff(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse maritimeTradeOff(ICommandParams params, UserAttributes userAttributes) {
 
 		MaritimeTradeOff trade = (MaritimeTradeOff) params;
 		try {
@@ -312,32 +313,32 @@ public class ServerModelFacade implements IServerModelFacade {
 				player.incrementResourceByCount(trade.getOutputResource(), 1);
 			}
 			
-		} catch (InvalidUserAttributesException e) {
-			return e.getLocalizedMessage();
-		} catch (GameModelException e) {
-			return e.getLocalizedMessage();
+		} catch (InvalidUserAttributesException | GameModelException e) {
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String offerTrade(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse offerTrade(ICommandParams params, UserAttributes userAttributes) {
 		OfferTrade ot = (OfferTrade)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			if(game.getCurrentTrade() != null)
-				return "There is already a trade in progress, this mussn't be allowed to happen: " + game.getCurrentTrade().toString();
+				return new ServerFacadeResponse(false, "There is already a trade in progress, this mussn't be allowed to happen: " + game.getCurrentTrade().toString());
 
 			game.setCurrentTrade(new TRTradeOffer(ot));
 
 		} catch (InvalidUserAttributesException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String roadBuilding(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse roadBuilding(ICommandParams params, UserAttributes userAttributes) {
 
 		RoadBuilding roadData = (RoadBuilding) params;
 
@@ -381,13 +382,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String buildCity(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse buildCity(ICommandParams params, UserAttributes userAttributes) {
 		ServerBuildCity cityData = (ServerBuildCity) params;
 
 		try {
@@ -407,13 +409,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String buildRoad(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse buildRoad(ICommandParams params, UserAttributes userAttributes) {
 
 		ServerBuildRoad roadData = (ServerBuildRoad) params;
 
@@ -442,13 +445,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String buildSettlement(ICommandParams params,
+	public ServerFacadeResponse buildSettlement(ICommandParams params,
 			UserAttributes userAttributes) {
 
 		ServerBuildSettlement settlementData = (ServerBuildSettlement) params;
@@ -470,26 +474,28 @@ public class ServerModelFacade implements IServerModelFacade {
 			}
 
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String sendChat(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse sendChat(ICommandParams params, UserAttributes userAttributes) {
 		ServerChat sc = (ServerChat)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			game.getChat().addLine(new MessageLine(game.getPlayerForPlayerIndex(sc.getPlayerIndex()).getPlayerInfo().getName(), sc.getContent()));
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String monopoly(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse monopoly(ICommandParams params, UserAttributes userAttributes) {
 
 		ServerMonopoly monopoly = (ServerMonopoly)params;
 
@@ -518,13 +524,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			playerCards.put( resource, playerCards.get(resource) + lootCount );
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String monument(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse monument(ICommandParams params, UserAttributes userAttributes) {
 
 		ServerMonument monument = (ServerMonument)params;
 
@@ -549,14 +556,14 @@ public class ServerModelFacade implements IServerModelFacade {
 			}
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
 
-		return "Success";
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String robPlayer(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse robPlayer(ICommandParams params, UserAttributes userAttributes) {
 
 		ServerRobPlayer rob = (ServerRobPlayer) params;
 
@@ -584,15 +591,14 @@ public class ServerModelFacade implements IServerModelFacade {
 
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
 
-
-		return "Success";
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String roll(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse roll(ICommandParams params, UserAttributes userAttributes) {
 		ServerRoll sr = (ServerRoll)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
@@ -605,7 +611,7 @@ public class ServerModelFacade implements IServerModelFacade {
 				}
 			}
 			if(hex == null)
-				return "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString();
+				return new ServerFacadeResponse(false, "Cannot find hex by the number: " + sr.getNumber() + ", hexes: " + hexes.toString());
 
 			Collection<IPiece> cities = game.getMap().getSettlementsAroundHex(hex.getLocation());
 
@@ -623,13 +629,14 @@ public class ServerModelFacade implements IServerModelFacade {
 				game.getTurnTracker().setStatus("Playing");
 
 		} catch (InvalidUserAttributesException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-		return "Success";
+
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
-	public String soldier(ICommandParams params, UserAttributes userAttributes) {
+	public ServerFacadeResponse soldier(ICommandParams params, UserAttributes userAttributes) {
 
 		ServerSoldier soldier = (ServerSoldier)params;
 
@@ -661,15 +668,15 @@ public class ServerModelFacade implements IServerModelFacade {
 
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
 
-		return "Success";
+		return new ServerFacadeResponse(true, null);
 
 	}
 
 	@Override
-	public String yearOfPlenty(ICommandParams params,
+	public ServerFacadeResponse yearOfPlenty(ICommandParams params,
 			UserAttributes userAttributes) {
 
 		ServerYearofPlenty yop = (ServerYearofPlenty)params;
@@ -703,10 +710,10 @@ public class ServerModelFacade implements IServerModelFacade {
 
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
-			return e.getLocalizedMessage();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
 
-		return "Success";
+		return new ServerFacadeResponse(true, null);
 	}
 
 	@Override
