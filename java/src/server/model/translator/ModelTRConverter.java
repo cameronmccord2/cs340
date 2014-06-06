@@ -150,11 +150,11 @@ public class ModelTRConverter
 	{
 		TRDevCardList devcards = new TRDevCardList();
 		Map<IDevelopmentCard, Integer> devMap = devCardList.getDevcards();
-		devcards.setMonopoly(devMap.get(DevCardType.MONOPOLY));
-		devcards.setMonument(devMap.get(DevCardType.MONUMENT));
-		devcards.setRoadBuilding(devMap.get(DevCardType.ROAD_BUILD));
-		devcards.setSoldier(devMap.get(DevCardType.SOLDIER));
-		devcards.setYearOfPlenty(devMap.get(DevCardType.YEAR_OF_PLENTY));
+		devcards.setMonopoly(devMap.get(DevelopmentCard.MONOPOLY));
+		devcards.setMonument(devMap.get(DevelopmentCard.MONUMENT));
+		devcards.setRoadBuilding(devMap.get(DevelopmentCard.ROAD_BUILD));
+		devcards.setSoldier(devMap.get(DevelopmentCard.SOLDIER));
+		devcards.setYearOfPlenty(devMap.get(DevelopmentCard.YEAR_OF_PLENTY));
 		return devcards;
 	}
 
