@@ -53,6 +53,7 @@ public class GameHandler implements HttpHandler {
 		switch(finalPiece){
 			case "model":
 				if(requestMethod.equals("GET")){
+					System.out.println("get game model handler");
 					response = this.commandFacade.getGameModel(json, ua);
 				}
 				break;

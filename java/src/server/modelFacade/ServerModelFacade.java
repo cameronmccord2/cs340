@@ -87,6 +87,7 @@ public class ServerModelFacade implements IServerModelFacade {
 	@Override
 	public String getJsonGameModelString(UserAttributes ua) {
 		Gson gson = new Gson();
+		System.out.println("inside server model facade");
 		try {
 			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(gameList.getGameById(ua.getGameId())));
 			System.out.println("model: " + modelJson);

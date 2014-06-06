@@ -311,8 +311,10 @@ public class Proxy implements IProxy {
 
 	private Integer getVersionForGameId(Integer gameId) throws InvalidGameModelException {
 		for (IGame g : this.games) {
-			if(g.getGameInfo().getId() == gameId)
+			if(g.getGameInfo().getId() == gameId){
+				System.out.println(g.getModelVersion());
 				return g.getModelVersion();
+			}
 		}
 		throw new InvalidGameModelException("Couldnt find the requested game: " + gameId + " in the game list: " + this.games.toString());
 	}

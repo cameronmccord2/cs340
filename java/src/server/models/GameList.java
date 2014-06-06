@@ -63,6 +63,7 @@ public class GameList {
 		newGame.setPlayers(players.toArray(new IPlayer[players.size()]));
 		
 		newGame.setVersion(0);
+		newGame.setModelVersion(-1);
 		
 		//init the bank
 		Bank newBank = new Bank();

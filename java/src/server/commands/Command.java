@@ -45,38 +45,6 @@ public class Command implements ICommand, ITestCommand {
 		else{
 			return response.getOtherResponse();
 		}
-//		if(response.equals("Success")){
-//		
-//			return this.facade.getJsonGameModelString(this.userAttributes);
-//		}
-//		else if(response.equals("Register Success")){
-//			
-//			return "Success";
-//		}
-//		else if(response.substring(0,5).equals("Login")){
-//			
-//			return response.substring(6);
-//		}
-//		else if(response.substring(0,8).equals("GetGames")){
-//			
-//			return response.substring(8);
-//		}
-//		else if(response.substring(0,8).equals("JoinGame")){
-//			
-//			return response.substring(8);
-//		}
-//		else if(response.equals("CreateDone")){
-//			
-//			return "Success";
-//		}
-//		else if(response.equals("Failed")){
-//			
-//			return "Failed to login";
-//		}
-//		else{
-//			
-//			return response;
-//		}
 	}
 	
 	public String getMethodName() {
