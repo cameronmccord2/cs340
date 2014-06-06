@@ -264,6 +264,10 @@ public class CatanMap implements ICatanMap
 		return false;
 	}
 
+	@Override
+	public boolean canPlaceSettlement(ISettlement settlement){
+		return this.canPlaceSettlement(settlement, false);
+	}
 	/**
 	 *
 	 *
@@ -271,10 +275,13 @@ public class CatanMap implements ICatanMap
 	 *				The ISettlement to be placed on the map.
 	 */
 	@Override
-	public boolean canPlaceSettlement(ISettlement settlement)
+	public boolean canPlaceSettlement(ISettlement settlement, boolean serverVersion)
 	{
 		if(catanMap.get(settlement.getLocation()) != null)
 			return false;
+		if(serverVersion){
+			return true;
+		}
 
 		IFacade facade = proxy.getFacade();
 
@@ -495,12 +502,16 @@ public class CatanMap implements ICatanMap
 		}
 		return settlements;
 	}
-
 	@Override
 	public void placeSettlement(ISettlement settlement)
+			throws InvalidLocationException{
+		this.placeSettlement(settlement, false);
+	}
+	@Override
+	public void placeSettlement(ISettlement settlement, boolean isServer)
 			throws InvalidLocationException
 	{
-		if(!canPlaceSettlement(settlement))
+		if(!canPlaceSettlement(settlement, isServer))
 			throw new InvalidLocationException();
 		catanMap.put(settlement.getLocation(), settlement);
 	}

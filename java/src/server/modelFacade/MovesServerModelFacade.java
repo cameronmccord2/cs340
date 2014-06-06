@@ -331,8 +331,8 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 
 			Settlement settlement = new Settlement(new VertexLocation(settlementData.getVertexLocation()), player);
 
-			if(game.getMap().canPlaceSettlement(settlement)) {
-				game.getMap().placeSettlement(settlement);
+			if(game.getMap().canPlaceSettlement(settlement, true)) {
+				game.getMap().placeSettlement(settlement, true);
 				player.deductResources(Settlement.getResourceCost());
 			}
 			else {

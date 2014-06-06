@@ -49,4 +49,7 @@ public interface ICatanMap
 	public Collection<IPiece> getSettlementsAroundHex(HexLocation hex);
 
 	public void setupNewMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts);
+	boolean canPlaceSettlement(ISettlement settlement, boolean serverVersion);
+	void placeSettlement(ISettlement settlement, boolean isServer)
+			throws InvalidLocationException;
 }
