@@ -34,6 +34,13 @@ public class MapView extends PanelView implements IMapView
 	{
 		return (IMapController)super.getController();
 	}
+
+	@Override
+	public boolean isOverlayShowing() {
+		if(overlay == null)
+			return false;
+		return overlay.isModalShowing();
+	}
 	
 	@Override
 	public void setController(IController controller)

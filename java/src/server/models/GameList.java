@@ -2,21 +2,17 @@ package server.models;
 
 import java.util.ArrayList;
 
+import client.models.*;
+import client.models.interfaces.*;
 import server.models.exceptions.InvalidUserAttributesException;
 import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
-import client.models.Bank;
-import client.models.CatanMap;
-import client.models.Game;
-import client.models.MessageList;
-import client.models.Player;
-import client.models.TurnTracker;
-import client.models.interfaces.IGame;
-import client.models.interfaces.IPlayer;
 import client.models.translator.TRTradeOffer;
 import client.server.GameServer;
 import client.server.PlayerServer;
+import shared.definitions.PieceType;
+import shared.locations.*;
 
 public class GameList {
 	
@@ -77,14 +73,60 @@ public class GameList {
 		//set turn tracker
 		TurnTracker tt = new TurnTracker();
 		tt.setCurrentTurn(0);
-		tt.setStatus("FirstRound");
+		//tt.setStatus("FirstRound");
+		tt.setStatus("Playing");
 		tt.setLongestRoad(-1);
 		tt.setLargestArmy(-1);
 		newGame.setTurnTracker(tt);
 		
 		newGame.setWinner(-1);
 		newGame.setCurrentTrade(null);
-		
+
+		// Default Game, set default pieces
+		// Doesn't belong here, but we have less than an hour to turn in something that can run...
+		try {
+			IRoadSegment segment = new RoadSegment();
+
+			segment.setPlayer(player1);
+			segment.setLocation(new EdgeLocation(new HexLocation(-2,1), EdgeDirection.SouthEast));
+			newGame.getMap().placeInitialRoadSegment(segment);
+			segment.setLocation(new EdgeLocation(new HexLocation(-1,2), EdgeDirection.South));
+			newGame.getMap().placeInitialRoadSegment(segment);
+
+			segment.setPlayer(player2);
+			segment.setLocation(new EdgeLocation(new HexLocation(0,2), EdgeDirection.North));
+			newGame.getMap().placeInitialRoadSegment(segment);
+			segment.setLocation(new EdgeLocation(new HexLocation(0,-2), EdgeDirection.South));
+			newGame.getMap().placeInitialRoadSegment(segment);
+
+			segment.setPlayer(player3);
+			segment.setLocation(new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
+			newGame.getMap().placeInitialRoadSegment(segment);
+			segment.setLocation(new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast));
+			newGame.getMap().placeInitialRoadSegment(segment);
+
+			segment.setPlayer(player4);
+			segment.setLocation(new EdgeLocation(new HexLocation(2,-1), EdgeDirection.South));
+			newGame.getMap().placeInitialRoadSegment(segment);
+			segment.setLocation(new EdgeLocation(new HexLocation(2,0), EdgeDirection.NorthWest));
+			newGame.getMap().placeInitialRoadSegment(segment);
+
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthEast),player1));
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(-1,2), VertexDirection.SouthEast),player1));
+
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(0,2), VertexDirection.NorthEast),player2));
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(0,-2), VertexDirection.SouthWest),player2));
+
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast),player3));
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(0,0), VertexDirection.SouthEast),player3));
+
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(2,-1), VertexDirection.NorthEast),player4));
+			newGame.getMap().placeInitialSettlement(new Settlement(new VertexLocation(new HexLocation(2,0), VertexDirection.NorthWest),player4));
+
+		} catch (InvalidLocationException e) {
+			e.printStackTrace();
+		}
+
 		games.add(newGame);
 	}
 
