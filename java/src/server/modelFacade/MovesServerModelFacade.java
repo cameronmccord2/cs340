@@ -305,6 +305,26 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			if(game.getMap().canPlaceRoad(segment, true)) {
 				game.getMap().placeRoadSegment(segment, true);
 				player.deductResources(RoadSegment.getResourceCost());
+				
+				// If we ever get first second round to work in the client:
+//				if(game.getTurnTracker().getCurrentTurn() == 3 && game.getTurnTracker().getStatus().equals("FirstRound")){
+//					System.out.println("changing to second");
+//					game.getTurnTracker().setCurrentTurn(3);
+//					game.getTurnTracker().setStatus("SecondRound");
+//				}else if(player.getPlayerInfo().getPlayerIndex() == 0 && game.getTurnTracker().getStatus().equals("SecondRound")){
+//					// done
+//					System.out.println("done");
+//					game.getTurnTracker().setStatus("Playing");
+//					game.getTurnTracker().setCurrentTurn(0);
+//				}else if(game.getTurnTracker().getStatus().equals("FirstRound")){
+//					System.out.println("in first");
+//					game.getTurnTracker().setCurrentTurn(player.getPlayerInfo().getPlayerIndex() + 1);
+//				}else if(game.getTurnTracker().getStatus().equals("SecondRound")){
+//					System.out.println("in second");
+//					game.getTurnTracker().setCurrentTurn(player.getPlayerInfo().getPlayerIndex() - 1);
+//				}else{
+//					System.out.println("NOEN:LKJ:LJK:LKJ");
+//				}
 			}
 			else {
 				throw new InvalidLocationException();
