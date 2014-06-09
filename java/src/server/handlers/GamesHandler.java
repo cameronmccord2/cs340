@@ -67,6 +67,7 @@ public class GamesHandler implements HttpHandler {
 					//ua is blank for creating games
 					UserAttributes ua = new UserAttributes();
 					response = this.commandFacade.createGame(json, ua);
+					System.out.println("create game response: " + response.getResponse() + "...." + response.getResponseCode());
 				}
 				break;
 			case "join":

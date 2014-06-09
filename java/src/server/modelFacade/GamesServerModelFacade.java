@@ -5,6 +5,11 @@ package server.modelFacade;
 
 import java.util.ArrayList;
 
+import server.commands.ICommandParams;
+import server.models.GameList;
+import server.models.ServerFacadeResponse;
+import server.models.UserAttributes;
+import shared.definitions.CatanColor;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.models.Bank;
@@ -13,18 +18,12 @@ import client.models.Game;
 import client.models.MessageList;
 import client.models.TurnTracker;
 import client.models.interfaces.IPlayer;
-import client.models.translator.TRTradeOffer;
 import client.server.CreateGame;
 import client.server.GameServer;
+import client.server.PlayerServer;
 import client.server.ServerJoinGame;
 
 import com.google.gson.Gson;
-
-import server.commands.ICommandParams;
-import server.models.GameList;
-import server.models.ServerFacadeResponse;
-import server.models.UserAttributes;
-import shared.definitions.CatanColor;
 
 public class GamesServerModelFacade extends ServerModelFacade implements IGamesServerModelFacade 
 {
@@ -84,8 +83,13 @@ public class GamesServerModelFacade extends ServerModelFacade implements IGamesS
 		newGame.setCurrentTrade(null);
 		
 		gameList.addGame(newGame);
-System.out.println(gameList.getGames().toString());
-		return new ServerFacadeResponse(false, "Success");
+		
+		PlayerServer[] players = new PlayerServer[4]; 
+		GameServer gs = new GameServer(cGame.getName(),gInfo.getId(),players);
+		Gson gson = new Gson();
+		String jsonCreatedGame = gson.toJson(gs);
+
+		return new ServerFacadeResponse(false, jsonCreatedGame);
 	}
 
 	@Override
