@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import client.models.Resource;
+import client.models.ResourceCard;
 import shared.definitions.HexType;
 
 // TODO: Auto-generated Javadoc
@@ -66,5 +67,7 @@ public interface IParticipant {
 	void decrementResourceByCount(String outputResource, int countRequired);
 	
 	void incrementResourceByCount(String inputResource, int ratio);
+
+	void incrementResourceByCount(ResourceCard brick, Integer brick2);
 
 }

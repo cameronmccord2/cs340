@@ -1,5 +1,6 @@
 package client.models;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import client.models.interfaces.IDevelopmentCard;
 import client.models.interfaces.IParticipant;
 import client.models.interfaces.IResourceCard;
+import client.models.interfaces.ITrade;
 import shared.definitions.HexType;
 
 /**
@@ -153,5 +155,11 @@ public abstract class Participant implements IParticipant {
 	public void incrementResourceByCount(String resource, int count) {
 		Integer finalCount = count + this.getResourceCards().get(ResourceCard.valueOf(resource.toUpperCase()));
 		this.getResourceCards().put((IResourceCard)ResourceCard.valueOf(resource.toUpperCase()), finalCount);
+	}
+
+	@Override
+	public void incrementResourceByCount(ResourceCard card, Integer count) {
+		Integer finalCount = count + this.getResourceCards().get(card);
+		this.getResourceCards().put(card, finalCount);
 	}
 }
