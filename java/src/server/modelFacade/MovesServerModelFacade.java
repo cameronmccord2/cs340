@@ -525,6 +525,8 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 		ServerRoll sr = (ServerRoll)params;
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
+			IPlayer player = game.getPlayerForPlayerIndex(game.getTurnTracker().getCurrentTurn());
+			game.getLog().addLine(new MessageLine(player.getPlayerInfo().getName(), player.getPlayerInfo().getName() + " just rolled a " + sr.getNumber()));
 			Collection<IHex> hexes = game.getMap().getHexes();
 			List<IHex> hexesFound = new ArrayList<>();
 			for (IHex h : hexes) {
@@ -593,6 +595,9 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 
 		} catch (InvalidUserAttributesException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
+		} catch (GameModelException e) {
+			e.printStackTrace();
+			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
 
 		return new ServerFacadeResponse(true, null);
@@ -606,7 +611,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			IPlayer player = game.getPlayerForPlayerIndex(soldier.getPlayerIndex());
-
+			game.getLog().addLine(new MessageLine(player.getPlayerInfo().getName(), player.getPlayerInfo().getName() + " played a soldier card"));
 			// Move the Robber to the new location
 			int x = soldier.getLocation().getX();
 			int y = soldier.getLocation().getY();
