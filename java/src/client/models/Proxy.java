@@ -195,6 +195,7 @@ public class Proxy implements IProxy {
 
 	@Override
 	public List<IGame> getGamesList(){
+		System.out.println("getting games list");
 		ServerResponse sr = doGet("/games/list", false, false);
 		List<GameServer> games = gson.fromJson(sr.getJson(), new TypeToken<List<GameServer>>(){}.getType());
 		List<IGame> list = new ArrayList<IGame>();

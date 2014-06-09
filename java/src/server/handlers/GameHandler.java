@@ -85,7 +85,7 @@ public class GameHandler implements HttpHandler {
 				}
 				break;
 			default:
-				response = new CommandResponse("Invaid endpoing requested", "403");
+				response = new CommandResponse("Invaid endpoint requested", "403");
 		}
 		
 		///prepare responseBody

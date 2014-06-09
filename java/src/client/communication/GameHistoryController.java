@@ -43,7 +43,6 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 	@Override
 	public void update() {
-		System.out.println("hist update");
 		initFromModel();	
 	}
 	

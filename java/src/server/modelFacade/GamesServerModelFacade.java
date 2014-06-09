@@ -98,7 +98,7 @@ System.out.println(gameList.getGames().toString());
 		{
 			//create a new player for the game
 			GameInfo gInfo = gameList.getGInfo();
-			PlayerInfo newPlayer = new PlayerInfo(ua.getPlayerID(),gInfo.getPlayers().size(),ua.getusername(), CatanColor.RED);
+			PlayerInfo newPlayer = new PlayerInfo(ua.getPlayerID(),gInfo.getPlayers().size(),ua.getusername(), CatanColor.getColorForName(info.getColor()));
 			return new ServerFacadeResponse(false, "" + gameList.addPlayer(newPlayer));
 		}
 		else

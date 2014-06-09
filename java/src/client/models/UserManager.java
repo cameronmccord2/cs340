@@ -28,17 +28,17 @@ public class UserManager {
 
 	public String login(Login loggingInUser) {
 		for(User u : users){
-			if(u.getname().equals(loggingInUser.getUser())){
+			if(u.getname().equals(loggingInUser.getUser()) && u.getPassword().equals(loggingInUser.getPassword())){
 				return "" + u.getPlayerID();
 			}
 		}
-		return "Failed. User not found.";
+		return "-1";
 	}
 
 	public String register(Register simpleUser) {
 		User newUser = new User(simpleUser.getUser(),simpleUser.getPassword(),users.size());
 		users.add(newUser);
-		return "Success";
+		return "" + users.size();
 	}
 	
 	public ArrayList<User> getUsers(){

@@ -47,11 +47,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		try {
 			IPlayer[] players = this.proxy.getFacade().getPlayers();
 			if(players.length > 0){
-				for(int i = 0; i < 4; i++){
+				for(int i = 0; i < players.length; i++){
 					IPlayer p = players[i];
 					if(!initialized[i])
 					{
-						System.out.println("initializing player: " + p.getPlayerInfo().getName() + ", " + p.getPlayerInfo().getColor().toString());
 						this.getView().initializePlayer(p.getPlayerInfo().getPlayerIndex(), p.getPlayerInfo().getName(), p.getPlayerInfo().getColor());
 						initialized[i] = true;
 					}
