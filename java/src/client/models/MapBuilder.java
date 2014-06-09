@@ -125,7 +125,7 @@ public class MapBuilder implements IMapBuilder {
 	private List<Hex> getDefaultMapLocations() {
 
 		// This order matters, as it is the order of the hexes in
-		// a default game, layed out in concentric clockwise circles
+		// a default game, laid out in concentric clockwise circles
 		// from the northwest
 
 		// Outer Ring of Default Tiles
@@ -170,15 +170,15 @@ public class MapBuilder implements IMapBuilder {
 		// This order matters - These are the port locations in a default game
 		// clockwise from the northwest.
 		return Arrays.asList(
-			new EdgeLocation( new HexLocation(-3,0), EdgeDirection.SouthEast),
-			new EdgeLocation( new HexLocation(-1,-2), EdgeDirection.South),
-			new EdgeLocation( new HexLocation(1,-3), EdgeDirection.South),
-			new EdgeLocation( new HexLocation(3,-3), EdgeDirection.SouthWest),
-			new EdgeLocation( new HexLocation(3,-1), EdgeDirection.NorthWest),
-			new EdgeLocation( new HexLocation(2,1), EdgeDirection.NorthWest),
-			new EdgeLocation( new HexLocation(0,3), EdgeDirection.North),
-			new EdgeLocation( new HexLocation(-2,3), EdgeDirection.NorthEast),
-			new EdgeLocation( new HexLocation(-3,2), EdgeDirection.NorthEast)
+			new EdgeLocation( new HexLocation(0,-3), EdgeDirection.South),//3:1
+			new EdgeLocation( new HexLocation(2,-3), EdgeDirection.SouthWest), //sheep
+			new EdgeLocation( new HexLocation(3,-2), EdgeDirection.SouthWest), //3:1
+			new EdgeLocation( new HexLocation(3,0), EdgeDirection.NorthWest), //3:1
+			new EdgeLocation( new HexLocation(1,2), EdgeDirection.North), //brick
+			new EdgeLocation( new HexLocation(-1,3), EdgeDirection.North), //lumber
+			new EdgeLocation( new HexLocation(-3,3), EdgeDirection.NorthEast), //3:1
+			new EdgeLocation( new HexLocation(-3,1), EdgeDirection.SouthEast), //grain
+			new EdgeLocation( new HexLocation(-2,-1), EdgeDirection.SouthEast) //ore
 		);
 	}
 
