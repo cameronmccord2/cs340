@@ -55,6 +55,9 @@ public class RollController extends Controller implements IRollController, ICata
 			Integer playerIndex = facade.getCurrentUserIndex();
 
 			int rolledResult = (int) (2 + (Math.random() * 11));
+
+			rolledResult = 7;
+
 			ServerRoll serverRoll = new ServerRoll("rollNumber", playerIndex, rolledResult);
 	   		ServerResponse response = proxy.movesRollNumber(serverRoll);
 

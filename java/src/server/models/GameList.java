@@ -18,6 +18,7 @@ import client.data.PlayerInfo;
 import client.models.translator.TRTradeOffer;
 import client.server.GameServer;
 import client.server.PlayerServer;
+import shared.definitions.HexType;
 import shared.definitions.PieceType;
 import shared.locations.*;
 
@@ -98,6 +99,12 @@ public class GameList {
 			player3.setVictoryPoints(2);
 			player4.setVictoryPoints(2);
 
+			player1.incrementResourceByCount(HexType.ORE,10);
+			player1.incrementResourceByCount(HexType.WHEAT,10);
+			player1.incrementResourceByCount(HexType.WOOD,10);
+			player1.incrementResourceByCount(HexType.SHEEP,10);
+			player1.incrementResourceByCount(HexType.BRICK,10);
+
 			IRoadSegment segment1a = new RoadSegment();
 			IRoadSegment segment1b = new RoadSegment();
 			segment1a.setPlayer(player1);
@@ -157,8 +164,8 @@ public class GameList {
 	}
 
 	public IGame getGameById(Integer gameId) throws InvalidUserAttributesException {
-		System.out.println(gameId);
-		System.out.println(this.games.toString());
+		//System.out.println(gameId);
+		//System.out.println(this.games.toString());
 		for (IGame game : this.games) {
 			if(game.getGameInfo().getId() == gameId.intValue())
 				return game;

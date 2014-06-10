@@ -141,7 +141,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			else
 				game.getTurnTracker().setCurrentTurn(ft.getPlayerIndex() + 1);
 			game.getTurnTracker().setStatus("Rolling");
-			game.setModelVersion( game.getModelVersion() + 1);
+			game.setModelVersion(game.getModelVersion() + 1);
 			game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " finished their turn."));
 		} catch (InvalidUserAttributesException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -343,10 +343,13 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 
 			IRoadSegment segment = new RoadSegment(road, player);
 
+
 			if(game.getMap().canPlaceRoad(segment, true)) {
+
 				game.getMap().placeRoadSegment(segment, true);
 				player.deductResources(RoadSegment.getResourceCost());
 				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " built a road."));
+
 				// If we ever get first second round to work in the client:
 //				if(game.getTurnTracker().getCurrentTurn() == 3 && game.getTurnTracker().getStatus().equals("FirstRound")){
 //					System.out.println("changing to second");
@@ -453,7 +456,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			// Give all matche resources to player
 			Map<IResourceCard, Integer> playerCards = player.getResourceCards();
 			playerCards.put( resource, playerCards.get(resource) + lootCount );
-			game.setModelVersion( game.getModelVersion() + 1);
+			game.setModelVersion(game.getModelVersion() + 1);
 			game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " played a Monopoly card."));
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
@@ -501,7 +504,6 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 	public ServerFacadeResponse robPlayer(ICommandParams params, UserAttributes userAttributes) {
 
 		ServerRobPlayer rob = (ServerRobPlayer) params;
-
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			IPlayer player = game.getPlayerForPlayerIndex(rob.getPlayerIndex());
@@ -526,6 +528,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 
 			game.setModelVersion( game.getModelVersion() + 1);
 			game.getLog().addLine(new MessageLine(victim.getPlayerInfo().getName(), victim.getPlayerInfo().getName() + " was robbed."));
+
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -537,6 +540,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 	public ServerFacadeResponse rollNumber(ICommandParams params, UserAttributes userAttributes) {
 		ServerRoll sr = (ServerRoll)params;
 		try {
+
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			IPlayer player = game.getPlayerForPlayerIndex(game.getTurnTracker().getCurrentTurn());
 			game.getLog().addLine(new MessageLine(player.getPlayerInfo().getName(), player.getPlayerInfo().getName() + " just rolled a " + sr.getNumber()));
@@ -553,7 +557,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			for (IHex iHex : hexesFound) {
 				cities.addAll(game.getMap().getSettlementsAroundHex(iHex.getLocation()));
 			}
-			
+
 			for (IPiece p : cities) {
 				switch(p.getPieceType()){
 				case CITY:
@@ -573,11 +577,16 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			}
 
 			int countRequired = resourcesRequired;
-			if(game.getBank().hasEnoughResources(hexesFound.get(0).getHexType(), countRequired)){
+
+			// Short Circuit in even of 7 being rolled (hexesFound.size() = 0)
+			if(hexesFound.size() > 0 && game.getBank().hasEnoughResources(hexesFound.get(0).getHexType(), countRequired)){
+
 				game.getBank().decrementResourceByCount(hexesFound.get(0).getHexType(), countRequired);
+
 				for (IPiece c : cities) {
+
 					IPlayer p = c.getPlayer();
-					System.out.println(p);
+
 					int count = 0;
 					switch(c.getPieceType()){
 					case CITY:
@@ -596,19 +605,23 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 					}
 					p.incrementResourceByCount(hexesFound.get(0).getHexType(), count);
 					game.getBank().decrementResourceByCount(hexesFound.get(0).getHexType(), count);
+
 				}
-			}else
-				System.out.println("bank doesnt have enough");
+			}
 
 			if(sr.getNumber() == 7){
 				game.getTurnTracker().setStatus("Robbing");
 			}else
 				game.getTurnTracker().setStatus("Playing");
+
+
 			game.setModelVersion( game.getModelVersion() + 1);
 
 		} catch (InvalidUserAttributesException e) {
+
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		} catch (GameModelException e) {
+
 			e.printStackTrace();
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -624,7 +637,6 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 		try {
 			IGame game = this.gameList.getGameById(userAttributes.getGameId());
 			IPlayer player = game.getPlayerForPlayerIndex(soldier.getPlayerIndex());
-			game.getLog().addLine(new MessageLine(player.getPlayerInfo().getName(), player.getPlayerInfo().getName() + " played a soldier card"));
 			// Move the Robber to the new location
 			int x = soldier.getLocation().getX();
 			int y = soldier.getLocation().getY();
@@ -648,6 +660,10 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			player.getDevelopmentCards().put(DevelopmentCard.SOLDIER, numSoldierCards - 1);
 
 			game.setModelVersion( game.getModelVersion() + 1);
+				String playerName = player.getPlayerInfo().getName();
+			String victimName = victim.getPlayerInfo().getName();
+
+			game.getLog().addLine(new MessageLine(playerName, playerName + " played a soldier card and robbed " + victimName + "."));
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
