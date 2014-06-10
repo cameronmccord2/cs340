@@ -120,7 +120,14 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-
+		IGame game;
+		try {
+			game = this.gameList.getGameById(userAttributes.getGameId());
+			game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " just discarded."));
+		} catch (InvalidUserAttributesException e) {
+			e.printStackTrace();
+		}
+		
 		return new ServerFacadeResponse(true, null);
 	}
 
@@ -135,10 +142,11 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				game.getTurnTracker().setCurrentTurn(ft.getPlayerIndex() + 1);
 			game.getTurnTracker().setStatus("Rolling");
 			game.setModelVersion( game.getModelVersion() + 1);
+			game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " finished their turn."));
 		} catch (InvalidUserAttributesException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
-
+		
 		return new ServerFacadeResponse(true, null);
 	}
 	
@@ -271,6 +279,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			if(map.canPlaceRoad(segment1) && map.canPlaceRoad(segment2)) {
 				map.placeRoadSegment(segment1);
 				map.placeRoadSegment(segment2);
+				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " played a Road Building card."));
 			}
 			else {
 				throw new InvalidLocationException();
@@ -299,12 +308,13 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			if(game.getMap().canPlaceCity(city)) {
 				game.getMap().placeCity(city);
 				player.deductResources(RoadSegment.getResourceCost());
+				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " built a city."));
 			}
 			else {
 				throw new InvalidLocationException();
 			}
 			game.setModelVersion( game.getModelVersion() + 1);
-
+			
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -336,7 +346,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			if(game.getMap().canPlaceRoad(segment, true)) {
 				game.getMap().placeRoadSegment(segment, true);
 				player.deductResources(RoadSegment.getResourceCost());
-				
+				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " built a road."));
 				// If we ever get first second round to work in the client:
 //				if(game.getTurnTracker().getCurrentTurn() == 3 && game.getTurnTracker().getStatus().equals("FirstRound")){
 //					System.out.println("changing to second");
@@ -361,7 +371,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				throw new InvalidLocationException();
 			}
 			game.setModelVersion( game.getModelVersion() + 1);
-
+			
 		} catch (InvalidUserAttributesException | InvalidLocationException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -386,6 +396,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			if(game.getMap().canPlaceSettlement(settlement, true)) {
 				game.getMap().placeSettlement(settlement, true);
 				player.deductResources(Settlement.getResourceCost());
+				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " built a settlement."));
 			}
 			else {
 				throw new InvalidLocationException();
@@ -443,6 +454,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			Map<IResourceCard, Integer> playerCards = player.getResourceCards();
 			playerCards.put( resource, playerCards.get(resource) + lootCount );
 			game.setModelVersion( game.getModelVersion() + 1);
+			game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " played a Monopoly card."));
 
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
@@ -470,6 +482,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 
 				// Give the player a point for a job well done
 				player.setVictoryPoints( player.getVictoryPoints() + 1 );
+				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " played a Monument card."));
 			}
 			else
 			{
@@ -512,7 +525,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 			player.incrementResourceByCount(HexType.valueOf(drawnCard.getName()), 1);
 
 			game.setModelVersion( game.getModelVersion() + 1);
-
+			game.getLog().addLine(new MessageLine(victim.getPlayerInfo().getName(), victim.getPlayerInfo().getName() + " was robbed."));
 		} catch (InvalidUserAttributesException | GameModelException e) {
 			return new ServerFacadeResponse(false, e.getLocalizedMessage());
 		}
@@ -673,6 +686,7 @@ public class MovesServerModelFacade extends ServerModelFacade implements IMovesS
 				playerCards.put( resource2, playerCards.get(resource2) + 1 );
 
 				player.setResourceCards(playerCards);
+				game.getLog().addLine(new MessageLine(userAttributes.getusername(), userAttributes.getusername() + " played a Year of Plenty card."));
 			}
 			else
 				throw new GameModelException();
