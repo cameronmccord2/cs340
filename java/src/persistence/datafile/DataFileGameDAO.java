@@ -1,4 +1,4 @@
-package persistence.dataFile;
+package persistence.datafile;
 
 import client.models.interfaces.IGame;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * The Class dataFileGameDAO.
  */
-public class dataFileGameDAO {
+public class DataFileGameDAO {
 	
 	/**
 	 * Write a new game to a dataFile. Extracts the gameId from the game and saves the

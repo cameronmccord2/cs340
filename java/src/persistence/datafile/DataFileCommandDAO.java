@@ -1,4 +1,4 @@
-package persistence.dataFile;
+package persistence.datafile;
 
 import server.commands.ICommand;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * The Class dataFileCommandDAO.
  */
-public class dataFileCommandDAO {
+public class DataFileCommandDAO {
 
 	/**
 	 * Gets the commands for game id.

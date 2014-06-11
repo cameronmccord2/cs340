@@ -1,4 +1,4 @@
-package persistence.dataFile;
+package persistence.datafile;
 
 import client.models.User;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * The Class dataFileUserDAO.
  */
-public class dataFileUserDAO {
+public class DataFileUserDAO {
 
 	/**
 	 * Insert User as a new datafile in the following format:

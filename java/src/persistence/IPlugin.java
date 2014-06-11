@@ -14,6 +14,7 @@ import client.models.interfaces.IParticipant;
  * @author Craig Call
  *
  */
+@SuppressWarnings({"unused"})
 public interface IPlugin
 {   
 	
@@ -23,6 +24,13 @@ public interface IPlugin
 	 * @param user the user to save
 	 */
 	public void addUser(User user);
+	
+	/**
+	 * Adds a game to the list of games to be saved.
+	 * 
+	 * @param game	The game to be added
+	 */
+	public void createGame(IGame game);
 
 	/**
 	 * Gets the users that have been registered with this persistent store
