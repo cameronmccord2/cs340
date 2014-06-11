@@ -1,7 +1,8 @@
-package persistance;
+package persistance.sqlite;
 
 import java.util.List;
 
+import persistance.IPlugin;
 import server.commands.ICommand;
 import client.models.User;
 import client.models.interfaces.IGame;
@@ -42,7 +43,7 @@ public class SQLitePlugin implements IPlugin {
 	 * @return the users that this store has had registered
 	 */
 	@Override
-	public List<IParticipant> getRegisteredUsers(){
+	public List<User> getRegisteredUsers(){
 		return null;
 	}
 	

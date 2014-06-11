@@ -29,7 +29,7 @@ public interface IPlugin
 	 *
 	 * @return the users that this store has had registered
 	 */
-	public List<IParticipant> getRegisteredUsers();
+	public List<User> getRegisteredUsers();
 
 	/**
 	 * Gets the games that have been saved to this persistent store
