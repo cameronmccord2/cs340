@@ -15,6 +15,7 @@ client.maritime
 client.misc
 client.models
 client.models.exceptions
+client.models.interfaces
 client.models.observer
 client.models.translator
 client.points
@@ -24,11 +25,18 @@ client.server
 client.tests
 client.turntracker
 client.utils
+persistance
+persistance.exceptions
+persistance.sqlite
 server.commands
+server.commands.exceptions
 server.facades
 server.handlers
 server.main
+server.model.translator
 server.modelFacade
 server.models
+server.models.exceptions
+server.tests
 shared.definitions
 shared.locations
