@@ -10,7 +10,10 @@ public class PluginManager {
 	
 	
 	/**
-	 * Parses the config file based on the persistence type
+	 * Parses the config file based on the persistence type.
+	 * 
+	 * Parse file will contain the following information: path, name of plugin, name of plugin class
+	 * 
 	 * @param persistanceType that is specified from the command line.
 	 */
 	public void parseConfig(String persistanceType){
