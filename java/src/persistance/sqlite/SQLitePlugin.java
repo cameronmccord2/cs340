@@ -30,7 +30,7 @@ public class SQLitePlugin implements IPlugin {
 	 * Adds the command to the game in the sqlite db. This will keep up to n commands, as specified in the constructor. A snapshot of the game will be made every n commands.
 	 *
 	 * @param command the command to add. If null then we will assume this is a new game and will save it as a new game
-	 * @param Igame the game to add the command to
+	 * @param game the game to add the command to
 	 */
 	@Override
 	public void addCommandToGame(ICommand command, IGame game){
