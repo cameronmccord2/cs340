@@ -11,17 +11,17 @@ import server.commands.exceptions.CommandParamNotValidException;
  * @author scottdaly
  *
  */
-public class User implements ICommandParams{
+public class UserCommandParams implements ICommandParams{
 	
 	private String username;
 	private String password;
 	
-	public User(String user, String password) {
+	public UserCommandParams(String user, String password) {
 		this.username = user;
 		this.password = password;
 	}
 
-	public User() {
+	public UserCommandParams() {
 		// TODO Auto-generated constructor stub
 	}
 

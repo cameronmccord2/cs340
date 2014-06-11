@@ -46,7 +46,7 @@ import client.server.ServerRobPlayer;
 import client.server.ServerRoll;
 import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
-import client.server.User;
+import client.server.UserCommandParams;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -163,7 +163,7 @@ public class Proxy implements IProxy {
 	}
 
 	@Override
-	public ServerResponse postUserLogin(User user){
+	public ServerResponse postUserLogin(UserCommandParams user){
 		ServerResponse sr =  doPost("/user/login", gson.toJson(user), false, false);
 		if(sr.getResponseCode() == 200){
 			Map<String, List<String>> map = connection.getHeaderFields();
@@ -188,7 +188,7 @@ public class Proxy implements IProxy {
 	}
 
 	@Override
-	public ServerResponse postUserRegister(User user){
+	public ServerResponse postUserRegister(UserCommandParams user){
 		ServerResponse sr =  doPost("/user/register", gson.toJson(user), false, false);
 		return sr;
 	}

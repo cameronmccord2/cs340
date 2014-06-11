@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import client.models.Proxy;
 import client.server.ServerJoinGame;
-import client.server.User;
+import client.server.UserCommandParams;
 
 public class ClientTestsToStart {
 
@@ -20,7 +20,7 @@ public class ClientTestsToStart {
 	@Test
 	public void test() {
 		//TEST LOGIN ENDPOINT
-		User user1 = new User("Sam","sam");
+		UserCommandParams user1 = new UserCommandParams("Sam","sam");
 		assertEquals("Success",proxy.postUserLogin(user1));
 		
 		//TEST JOIN GAME

@@ -1,8 +1,8 @@
 package server.models;
 
-import client.server.User;
+import client.server.UserCommandParams;
 
-public class Register extends User {
+public class Register extends UserCommandParams {
 
 	public Register(String username, String password){
 		super(username, password);

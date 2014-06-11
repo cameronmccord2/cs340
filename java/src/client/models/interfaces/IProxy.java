@@ -24,7 +24,7 @@ import client.server.ServerRobPlayer;
 import client.server.ServerRoll;
 import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
-import client.server.User;
+import client.server.UserCommandParams;
 
 public interface IProxy {
 
@@ -32,13 +32,13 @@ public interface IProxy {
 	 * calls the user login method on the server 
 	 * @param the User object that is being logged in. Holds the username and password
 	 */
-	public ServerResponse postUserLogin(User user);
+	public ServerResponse postUserLogin(UserCommandParams user);
 
 	/**
 	 * this calls the method on the server to register a new user
 	 * @param the User object that will be registered
 	 */
-	public ServerResponse postUserRegister(User user);
+	public ServerResponse postUserRegister(UserCommandParams user);
 
 	/**
 	 * This will retrieve all current games on the server

@@ -35,7 +35,7 @@ import client.server.ServerRoll;
 import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
 import client.server.Spot;
-import client.server.User;
+import client.server.UserCommandParams;
 
 
 public class ProxyTest {
@@ -60,11 +60,11 @@ public class ProxyTest {
 	@Test
 	public void test() {
 		//TEST LOGIN ENDPOINT (works)
-		User user1 = new User("Sam","sam");
+		UserCommandParams user1 = new UserCommandParams("Sam","sam");
 		assertEquals("Success",dummyProxy.postUserLogin(user1).getJson());
 		
 		//TEST REGISTER ENDPOINT (works)
-		User user3 = new User("Scott","scottiscool");
+		UserCommandParams user3 = new UserCommandParams("Scott","scottiscool");
 		assertEquals("Success",dummyProxy.postUserRegister(user3).getJson());
 	
 		//TEST GET GAMES LIST (Cameron??)

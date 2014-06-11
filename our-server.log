@@ -1,0 +1,322 @@
+Buildfile: /users/guest/c/cwc223/cs340/build.xml
+
+init:
+
+compile:
+
+package:
+
+our-server:
+     [java] called again
+     [java] Games Handler in use
+     [java] Games Handler in use
+     [java] [Game [gameInfo=GameInfo [id=42, title=Star Trek, randomTiles=false, randomNumbers=false, randomPorts=false, players=[PlayerInfo [id=0, playerIndex=0, name=Kirk, color=YELLOW], PlayerInfo [id=1, playerIndex=1, name=Spock, color=BLUE], PlayerInfo [id=2, playerIndex=2, name=McCoy, color=ORANGE], PlayerInfo [id=3, playerIndex=3, name=Uhura, color=RED]]], 
+     [java] 	map=CatanMap [hexMap={HexLocation [x=0, y=-2]=Hex [location=HexLocation [x=0, y=-2], hexNumber=11, type=WOOD], HexLocation [x=1, y=-2]=Hex [location=HexLocation [x=1, y=-2], hexNumber=12, type=SHEEP], HexLocation [x=1, y=-1]=Hex [location=HexLocation [x=1, y=-1], hexNumber=5, type=BRICK], HexLocation [x=2, y=-2]=Hex [location=HexLocation [x=2, y=-2], hexNumber=9, type=WHEAT], HexLocation [x=2, y=-1]=Hex [location=HexLocation [x=2, y=-1], hexNumber=10, type=SHEEP], HexLocation [x=2, y=0]=Hex [location=HexLocation [x=2, y=0], hexNumber=8, type=WHEAT], HexLocation [x=1, y=1]=Hex [location=HexLocation [x=1, y=1], hexNumber=3, type=ORE], HexLocation [x=0, y=2]=Hex [location=HexLocation [x=0, y=2], hexNumber=6, type=WOOD], HexLocation [x=0, y=1]=Hex [location=HexLocation [x=0, y=1], hexNumber=9, type=SHEEP], HexLocation [x=1, y=0]=Hex [location=HexLocation [x=1, y=0], hexNumber=4, type=WOOD], HexLocation [x=-1, y=2]=Hex [location=HexLocation [x=-1, y=2], hexNumber=2, type=WHEAT], HexLocation [x=0, y=0]=Hex [location=HexLocation [x=0, y=0], hexNumber=11, type=WHEAT], HexLocation [x=-2, y=2]=Hex [location=HexLocation [x=-2, y=2], hexNumber=5, type=ORE], HexLocation [x=0, y=-1]=Hex [location=HexLocation [x=0, y=-1], hexNumber=6, type=ORE], HexLocation [x=-2, y=1]=Hex [location=HexLocation [x=-2, y=1], hexNumber=8, type=BRICK], HexLocation [x=-2, y=0]=Hex [location=HexLocation [x=-2, y=0], hexNumber=null, type=DESERT], HexLocation [x=-1, y=-1]=Hex [location=HexLocation [x=-1, y=-1], hexNumber=4, type=BRICK], HexLocation [x=-1, y=1]=Hex [location=HexLocation [x=-1, y=1], hexNumber=10, type=SHEEP], HexLocation [x=-1, y=0]=Hex [location=HexLocation [x=-1, y=0], hexNumber=3, type=WOOD]}, catanMap={EdgeLocation [hexLoc=HexLocation [x=0, y=2], dir=North]=RoadSegment [player=1, color=null, location=EdgeLocation [hexLoc=HexLocation [x=0, y=2], dir=North], getPieceType()=ROAD], EdgeLocation [hexLoc=HexLocation [x=2, y=-1], dir=North]=RoadSegment [player=3, color=null, location=EdgeLocation [hexLoc=HexLocation [x=2, y=-1], dir=North], getPieceType()=ROAD], VertexLocation [hexLoc=HexLocation [x=2, y=0], dir=NorthWest]=Settlement: [pointValue=1
+     [java] 			 playerId=3
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=2, y=0], dir=NorthWest]
+     [java] 			 , EdgeLocation [hexLoc=HexLocation [x=0, y=-1], dir=North]=RoadSegment [player=1, color=null, location=EdgeLocation [hexLoc=HexLocation [x=0, y=-2], dir=South], getPieceType()=ROAD], VertexLocation [hexLoc=HexLocation [x=-1, y=3], dir=NorthEast]=Settlement: [pointValue=1
+     [java] 			 playerId=0
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=-1, y=2], dir=SouthEast]
+     [java] 			 , VertexLocation [hexLoc=HexLocation [x=-2, y=2], dir=NorthEast]=Settlement: [pointValue=1
+     [java] 			 playerId=0
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=-2, y=1], dir=SouthEast]
+     [java] 			 , VertexLocation [hexLoc=HexLocation [x=0, y=2], dir=NorthEast]=Settlement: [pointValue=1
+     [java] 			 playerId=1
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=0, y=2], dir=NorthEast]
+     [java] 			 , EdgeLocation [hexLoc=HexLocation [x=-1, y=1], dir=NorthWest]=RoadSegment [player=0, color=null, location=EdgeLocation [hexLoc=HexLocation [x=-2, y=1], dir=SouthEast], getPieceType()=ROAD], VertexLocation [hexLoc=HexLocation [x=2, y=-1], dir=NorthEast]=Settlement: [pointValue=1
+     [java] 			 playerId=3
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=2, y=-1], dir=NorthEast]
+     [java] 			 , VertexLocation [hexLoc=HexLocation [x=0, y=1], dir=NorthEast]=Settlement: [pointValue=1
+     [java] 			 playerId=2
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=0, y=0], dir=SouthEast]
+     [java] 			 , VertexLocation [hexLoc=HexLocation [x=0, y=0], dir=NorthEast]=Settlement: [pointValue=1
+     [java] 			 playerId=2
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=0, y=-1], dir=SouthEast]
+     [java] 			 , EdgeLocation [hexLoc=HexLocation [x=1, y=-1], dir=NorthWest]=RoadSegment [player=2, color=null, location=EdgeLocation [hexLoc=HexLocation [x=0, y=-1], dir=SouthEast], getPieceType()=ROAD], EdgeLocation [hexLoc=HexLocation [x=2, y=0], dir=NorthWest]=RoadSegment [player=3, color=null, location=EdgeLocation [hexLoc=HexLocation [x=2, y=0], dir=NorthWest], getPieceType()=ROAD], EdgeLocation [hexLoc=HexLocation [x=1, y=0], dir=NorthWest]=RoadSegment [player=2, color=null, location=EdgeLocation [hexLoc=HexLocation [x=0, y=0], dir=SouthEast], getPieceType()=ROAD], EdgeLocation [hexLoc=HexLocation [x=-1, y=3], dir=North]=RoadSegment [player=0, color=null, location=EdgeLocation [hexLoc=HexLocation [x=-1, y=2], dir=South], getPieceType()=ROAD], VertexLocation [hexLoc=HexLocation [x=0, y=-1], dir=NorthWest]=Settlement: [pointValue=1
+     [java] 			 playerId=1
+     [java] 			 location=VertexLocation [hexLoc=HexLocation [x=0, y=-2], dir=SouthWest]
+     [java] 			 }, portMap={EdgeLocation [hexLoc=HexLocation [x=-2, y=-1], dir=SouthEast]=client.models.Port@19451392, EdgeLocation [hexLoc=HexLocation [x=0, y=-3], dir=South]=client.models.Port@607e334, EdgeLocation [hexLoc=HexLocation [x=-3, y=3], dir=NorthEast]=client.models.Port@6fd56e03, EdgeLocation [hexLoc=HexLocation [x=2, y=-3], dir=SouthWest]=client.models.Port@2529c051, EdgeLocation [hexLoc=HexLocation [x=1, y=2], dir=North]=client.models.Port@581118e6, EdgeLocation [hexLoc=HexLocation [x=3, y=-2], dir=SouthWest]=client.models.Port@4a79d135, EdgeLocation [hexLoc=HexLocation [x=-3, y=1], dir=SouthEast]=client.models.Port@39614c6, EdgeLocation [hexLoc=HexLocation [x=-1, y=3], dir=North]=client.models.Port@722dd500, EdgeLocation [hexLoc=HexLocation [x=3, y=0], dir=NorthWest]=client.models.Port@1efb2d90}, radius=3], 
+     [java] 	players=[Lclient.models.interfaces.IPlayer;@7c6c58d3, 
+     [java] 	modelVersion=0, 
+     [java] 	bank=Bank [developmentCards={ROAD_BUILD=2, YEAR_OF_PLENTY=2, MONOPOLY=2, SOLDIER=14, MONUMENT=5}, resourceCards={WOOD=19, SHEEP=19, WHEAT=19, ORE=19, BRICK=19}]]]
+     [java] Games Handler in use
+     [java] Games Handler in use
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Games Handler in use
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Moves Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Moves Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Moves Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Moves Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Moves Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started
+     [java] Game Handler started

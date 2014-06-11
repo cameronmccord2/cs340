@@ -4,7 +4,7 @@ import client.base.Controller;
 import client.base.IAction;
 import client.misc.IMessageView;
 import client.models.interfaces.IProxy;
-import client.server.User;
+import client.server.UserCommandParams;
 
 
 /**
@@ -64,7 +64,7 @@ public class LoginController extends Controller implements ILoginController {
 	@Override
 	public void signIn() {
 		
-		User user = new User(((ILoginView) super.getView()).getLoginUsername(), ((ILoginView) super.getView()).getLoginPassword());
+		UserCommandParams user = new UserCommandParams(((ILoginView) super.getView()).getLoginUsername(), ((ILoginView) super.getView()).getLoginPassword());
 		if(proxy.postUserLogin(user).getJson().equals("Success")){
 			// If log in succeeded
 			if(getLoginView().isModalShowing())
@@ -81,7 +81,7 @@ public class LoginController extends Controller implements ILoginController {
 
 	@Override
 	public void register() {
-		User user = new User(((ILoginView) super.getView()).getRegisterUsername(), ((ILoginView) super.getView()).getRegisterPassword());
+		UserCommandParams user = new UserCommandParams(((ILoginView) super.getView()).getRegisterUsername(), ((ILoginView) super.getView()).getRegisterPassword());
 		if(proxy.postUserRegister(user).getJson().equals("Success")){
 			// If register succeeded, log them in
 			proxy.postUserLogin(user);

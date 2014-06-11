@@ -35,7 +35,7 @@ import client.server.ServerRoll;
 import client.server.ServerSoldier;
 import client.server.ServerYearofPlenty;
 import client.server.Spot;
-import client.server.User;
+import client.server.UserCommandParams;
 
 public class EndpointTests {
 	
@@ -51,10 +51,10 @@ public class EndpointTests {
 		System.out.println("test started");
 		
 		//TEST LOGIN ENDPOINT
-		assertEquals(200,proxy.postUserLogin(new User("Sam","sam")).getResponseCode());
+		assertEquals(200,proxy.postUserLogin(new UserCommandParams("Sam","sam")).getResponseCode());
 		
 		//TEST REGISTER ENDPOINT
-		assertEquals(200,proxy.postUserRegister(new User("Scott","scottiscool")).getResponseCode());
+		assertEquals(200,proxy.postUserRegister(new UserCommandParams("Scott","scottiscool")).getResponseCode());
 				
 		//TEST GET GAMES ENDPOINT
 		assertEquals(3, proxy.getGamesList().size());
