@@ -1,8 +1,8 @@
-package persistance.dataFile;
+package persistence.dataFile;
 
 import client.models.User;
 import client.models.interfaces.IGame;
-import persistance.IPlugin;
+import persistence.IPlugin;
 import server.commands.ICommand;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package persistance.dataFile;
+package persistence.dataFile;
 
 import client.models.interfaces.IGame;
 

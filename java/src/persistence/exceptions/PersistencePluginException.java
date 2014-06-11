@@ -1,4 +1,4 @@
-package persistance.exceptions;
+package persistence.exceptions;
 
 public class PersistencePluginException extends Exception {
 

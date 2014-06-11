@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 /**
  * This is called from the server.java and takes a parameter as to which persistence model to use.

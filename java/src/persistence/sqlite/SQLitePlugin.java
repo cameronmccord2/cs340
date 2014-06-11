@@ -1,8 +1,8 @@
-package persistance.sqlite;
+package persistence.sqlite;
 
 import java.util.List;
 
-import persistance.IPlugin;
+import persistence.IPlugin;
 import server.commands.ICommand;
 import client.models.User;
 import client.models.interfaces.IGame;

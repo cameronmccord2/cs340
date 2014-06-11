@@ -1,4 +1,4 @@
-package persistance.sqlite;
+package persistence.sqlite;
 
 import java.sql.Connection;
 import java.util.List;
