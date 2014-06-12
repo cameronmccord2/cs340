@@ -1,4 +1,4 @@
-package persistence.dataFile;
+package persistence.datafile;
 
 import client.models.User;
 import client.models.interfaces.IGame;
@@ -7,13 +7,13 @@ import server.commands.ICommand;
 
 import java.util.List;
 
-public class dataFilePlugin implements IPlugin {
+public class DataFilePlugin implements IPlugin {
 	
 	private Integer n;
 	
 	public dataFilePlugin(){}
 
-	public dataFilePlugin(Integer n){
+	public DataFilePlugin(Integer n){
 		this.n = n;
 	}
 
@@ -96,5 +96,12 @@ public class dataFilePlugin implements IPlugin {
 	@Override
 	public List<ICommand> getCommandsForGameId(Integer gameId){
 		return null;
+	}
+
+	@Override
+	public void createGame(IGame game)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -69,4 +69,11 @@ public class SQLitePlugin implements IPlugin {
 	public List<ICommand> getCommandsForGameId(Integer gameId){
 		return null;
 	}
+
+	@Override
+	public void createGame(IGame game)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }
