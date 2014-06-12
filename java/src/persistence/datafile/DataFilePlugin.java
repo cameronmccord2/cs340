@@ -10,6 +10,8 @@ import java.util.List;
 public class DataFilePlugin implements IPlugin {
 	
 	private Integer n;
+	
+	public DataFilePlugin(){}
 
 	public DataFilePlugin(Integer n){
 		this.n = n;
@@ -40,7 +42,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public void addUser(User user) {
-
+		System.out.println("inside plugin");
 	}
 	
 	/**

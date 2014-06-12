@@ -9,10 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import server.facades.DummyGameFacade;
-import server.facades.DummyGamesFacade;
-import server.facades.DummyMovesFacade;
-import server.facades.DummyUserFacade;
+import persistence.IPlugin;
+import persistence.PluginManager;
 import server.facades.GameFacade;
 import server.facades.GamesFacade;
 import server.facades.IGameFacade;
@@ -27,10 +25,8 @@ import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
 import server.modelFacade.GameServerModelFacade;
 import server.modelFacade.GamesServerModelFacade;
-import server.modelFacade.IMovesServerModelFacade;
 import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
-import server.modelFacade.ServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
 
@@ -89,6 +85,7 @@ public class Server {
 	
 	public static void main(String[] args) {
 		
+<<<<<<< HEAD
 		// TODO: Add PluginLoader functionality to this
 		try {
     		Server server;
@@ -108,6 +105,22 @@ public class Server {
     		server.run();
 		} catch(IllegalArgumentException e) {
 			System.out.println(USAGE_STATEMENT);
+=======
+		//CRAIG:
+		//we need to decide what the exact string will be typed into command line
+		//for right now for testing purposes I'm just saying 'sql' and 'file'
+		
+		PluginManager pm = new PluginManager();
+		pm.parseConfig();
+		IPlugin plugin = pm.initPersistance("sql");
+		
+		//check if port number is specified
+		if(args.length == 0){
+			new Server().run();
+		}
+		else if(args.length == 2){
+			new Server(args[0]).run();
+>>>>>>> 77df9eb1bb8ec65ec1e8fbe04831de727da94b8e
 		}
 		
 //		check if port number is specified
