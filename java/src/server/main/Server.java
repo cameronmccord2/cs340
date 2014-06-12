@@ -41,6 +41,11 @@ public class Server {
 
 	private static int SERVER_PORT_NUMBER;
 	private static final int MAX_WAITING_CONNECTIONS = 10;
+	private static final String USAGE_STATEMENT = 
+    	  "USAGE:\n"
+    	+ "\tserver.Server [port]\n"
+    	+ "\t\tor\n"
+    	+ "\tserver.Server [persistence-type] [commands-between-checkpoints] [port]";
 	
 	private HttpServer server;
 	private GamesHandler gamesHandler;
@@ -83,13 +88,45 @@ public class Server {
 	}
 	
 	public static void main(String[] args) {
-		//check if port number is specified
-		if(args.length == 0){
-			new Server().run();
+		
+		// TODO: Add PluginLoader functionality to this
+		try {
+    		Server server;
+    		switch(args.length) {
+    			case 0:
+    				server = new Server();
+    				break;
+    			case 1:
+    				server = new Server(args[0]);
+    				break;
+    			case 3:
+    				server = new Server(args[2]);
+    				break;
+    			default:
+    				throw new IllegalArgumentException();
+    		}
+    		server.run();
+		} catch(IllegalArgumentException e) {
+			System.out.println(USAGE_STATEMENT);
 		}
-		else if(args.length == 2){
-			new Server(args[0]).run();
-		}
+		
+//		check if port number is specified
+//		if(args.length == 0)
+//		{
+//			new Server().run();
+//		}
+//		else if(args.length == 1)
+//		{
+//			new Server(args[0]).run();
+//		}
+//		else if(args.length == 3)
+//		{
+//			new Server(args[2]).run();
+//		}
+//		else
+//		{
+//			System.out.println(USAGE_STATEMENT);
+//		}
 	}
 	
 	private void run() {

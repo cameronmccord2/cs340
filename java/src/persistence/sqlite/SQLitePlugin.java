@@ -8,6 +8,7 @@ import client.models.User;
 import client.models.interfaces.IGame;
 import client.models.interfaces.IParticipant;
 
+@SuppressWarnings({"unused"})
 public class SQLitePlugin implements IPlugin {
 	
 	private Integer n;
@@ -24,6 +25,13 @@ public class SQLitePlugin implements IPlugin {
 	@Override
 	public void addUser(User user) {
 
+	}
+
+	@Override
+	public void createGame(IGame game)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
@@ -66,12 +74,5 @@ public class SQLitePlugin implements IPlugin {
 	@Override
 	public List<ICommand> getCommandsForGameId(Integer gameId){
 		return null;
-	}
-
-	@Override
-	public void createGame(IGame game)
-	{
-		// TODO Auto-generated method stub
-		
 	}
 }

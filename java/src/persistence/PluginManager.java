@@ -16,21 +16,21 @@ public class PluginManager {
 	 * 
 	 * @param persistanceType that is specified from the command line.
 	 */
-	public void parseConfig(String persistanceType){
+	public void parseConfig(String configFile) {
 		
 	}
 	
 	/**
 	 * Calls initialize on the persistence object in order to start connections to storages
 	 */
-	public void initPersistance(){
+	public void initPersistence(String persistenceType) {
 		
 	}
 	
 	/**
 	 * Returns the newly created persistence object to be passed to the Server Model Facade
 	 */
-	public void getPersistanceObject(){
+	public void getPersistenceObject() {
 		
 	}
 
