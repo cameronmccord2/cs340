@@ -1,2 +1,2 @@
-dataFile persistence.dataFile dataFilePlugin
+dataFile persistence.dataFile DataFilePlugin
 sql persistence.sqlite SQLitePlugin 

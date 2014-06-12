@@ -11,7 +11,7 @@ public class DataFilePlugin implements IPlugin {
 	
 	private Integer n;
 	
-	public dataFilePlugin(){}
+	public DataFilePlugin(){}
 
 	public DataFilePlugin(Integer n){
 		this.n = n;
