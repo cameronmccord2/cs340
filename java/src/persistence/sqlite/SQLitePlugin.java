@@ -11,6 +11,8 @@ import client.models.interfaces.IParticipant;
 public class SQLitePlugin implements IPlugin {
 	
 	private Integer n;
+	
+	public SQLitePlugin(){}
 
 	public SQLitePlugin(Integer n){
 		this.n = n;

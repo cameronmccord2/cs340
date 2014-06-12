@@ -9,10 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import server.facades.DummyGameFacade;
-import server.facades.DummyGamesFacade;
-import server.facades.DummyMovesFacade;
-import server.facades.DummyUserFacade;
+import persistence.IPlugin;
+import persistence.PluginManager;
 import server.facades.GameFacade;
 import server.facades.GamesFacade;
 import server.facades.IGameFacade;
@@ -27,10 +25,8 @@ import server.handlers.MovesHandler;
 import server.handlers.UserHandler;
 import server.modelFacade.GameServerModelFacade;
 import server.modelFacade.GamesServerModelFacade;
-import server.modelFacade.IMovesServerModelFacade;
 import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
-import server.modelFacade.ServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
 
@@ -83,6 +79,15 @@ public class Server {
 	}
 	
 	public static void main(String[] args) {
+		
+		//CRAIG:
+		//we need to decide what the exact string will be typed into command line
+		//for right now for testing purposes I'm just saying 'sql' and 'file'
+		
+		PluginManager pm = new PluginManager();
+		pm.parseConfig();
+		IPlugin plugin = pm.initPersistance("sql");
+		
 		//check if port number is specified
 		if(args.length == 0){
 			new Server().run();

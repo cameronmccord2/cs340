@@ -31,7 +31,6 @@ public class GameList {
 
 	public GameList(){
 		super();
-		System.out.println("called again");
 		this.games = new ArrayList<>();
 		
 		//create practice game
