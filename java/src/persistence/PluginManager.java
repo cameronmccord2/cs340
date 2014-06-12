@@ -21,7 +21,7 @@ public class PluginManager {
 	private IPlugin plugin;
 	private HashMap<String, ArrayList<String>> map;
 	
-<<<<<<< HEAD
+	public PluginManager(){}
 	/**
 	 * Parses the config file based on the persistence type.
 	 * 
@@ -32,20 +32,12 @@ public class PluginManager {
 	public void parseConfig(String configFile) {
 		
 	}
-=======
-	public PluginManager(){}
->>>>>>> 77df9eb1bb8ec65ec1e8fbe04831de727da94b8e
-	
 	
 	/** 
 	 * Parse file will contain the following information: name of plugin, path, name of plugin class
 	 */
-<<<<<<< HEAD
-	public void initPersistence(String persistenceType) {
-		
-=======
 	@SuppressWarnings("resource")
-	public void parseConfig(){
+	public void parseConfig() {
 		File configFile = new File("config.txt");
 		map = new HashMap<>();
 		try {
@@ -61,22 +53,21 @@ public class PluginManager {
 			System.out.println("error reading config file");
 			e.printStackTrace();
 		}
->>>>>>> 77df9eb1bb8ec65ec1e8fbe04831de727da94b8e
 	}
 	
 	/**
 	 * Calls initialize on the persistence object in order to start connections to storages
 	 */
-<<<<<<< HEAD
 	public void getPersistenceObject() {
 		
-=======
+	}
+		
 	@SuppressWarnings("rawtypes")
-	public IPlugin initPersistance(String persistanceType){
+	public IPlugin initPersistence(String persistenceType){
 		Class c = null;
 		try{
-			String path = map.get(persistanceType).get(0);
-			String className = map.get(persistanceType).get(1);
+			String path = map.get(persistenceType).get(0);
+			String className = map.get(persistenceType).get(1);
 			c = Class.forName(path + "." + className);
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
@@ -93,7 +84,6 @@ public class PluginManager {
 			System.out.println("problem creating new plugin object in plugin manager");
 		}
 		return plugin;
->>>>>>> 77df9eb1bb8ec65ec1e8fbe04831de727da94b8e
 	}
 
 }
