@@ -58,8 +58,8 @@ public class PluginManager {
 	/**
 	 * Calls initialize on the persistence object in order to start connections to storages
 	 */
-	public void getPersistenceObject() {
-		
+	public IPlugin getPersistenceObject() {
+		return plugin;
 	}
 		
 	@SuppressWarnings("rawtypes")

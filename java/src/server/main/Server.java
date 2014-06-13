@@ -147,7 +147,7 @@ public class Server {
 
 		// use the default executor
 		server.setExecutor(null); 
-		
+		//pass plugin into first layer facades and pass instance of server model facade into plugin
 		GameList gameList = new GameList();
 		
 		// Facades
