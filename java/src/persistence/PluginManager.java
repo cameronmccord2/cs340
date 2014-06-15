@@ -96,7 +96,6 @@ public class PluginManager {
 		if(plugin == null){
 			System.out.println("problem creating new plugin object in plugin manager");
 		}
-		plugin.addUser(new User("sam","sam",0));
 		return plugin;
 	}
 

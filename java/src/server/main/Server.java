@@ -91,8 +91,6 @@ public class Server {
 		
 		PluginManager pm = new PluginManager();
 		pm.parseConfig();
-		System.out.println(args[0]);
-		IPlugin plugin = pm.initPersistence(args[0]);
 		
 		// TODO: Add PluginLoader functionality to this
 		try {
@@ -106,6 +104,7 @@ public class Server {
     				break;
     			case 3:
     				server = new Server(args[2]);
+    				IPlugin plugin = pm.initPersistence(args[0]);
     				break;
     			default:
     				throw new IllegalArgumentException();

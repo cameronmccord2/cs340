@@ -12,8 +12,15 @@ import client.models.interfaces.IParticipant;
 public class SQLitePlugin implements IPlugin {
 	
 	private Integer n;
+	private SqliteCommandDAO commandDAO;
+	private SqliteGameDAO gameDAO;
+	private SqliteUserDAO userDAO;
 	
-	public SQLitePlugin(){}
+	public SQLitePlugin(){
+		commandDAO = new SqliteCommandDAO();
+		gameDAO = new SqliteGameDAO();
+		userDAO = new SqliteUserDAO();
+	}
 
 	public SQLitePlugin(Integer n){
 		this.n = n;
