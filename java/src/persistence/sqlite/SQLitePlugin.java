@@ -26,7 +26,7 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public void addUser(User user) {
-
+		
 	}
 
 	@Override

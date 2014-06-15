@@ -2,6 +2,8 @@ package persistence;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -62,19 +64,30 @@ public class PluginManager {
 		return plugin;
 	}
 		
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "resource" })
 	public IPlugin initPersistence(String persistenceType){
-		Class c = null;
-		try{
-			String path = map.get(persistenceType).get(0);
-			String className = map.get(persistenceType).get(1);
-			c = Class.forName(path + "." + className);
-		}catch(ClassNotFoundException e){
+		
+		//open jar file and load class needed
+		File jar = new File(map.get(persistenceType).get(0));
+		URI uri = jar.toURI();
+		Class cls = null;
+		try {
+			URL url = uri.toURL();
+			URL[] urls = new URL[]{url};
+			ClassLoader cl = new URLClassLoader(urls);
+			try {
+				cls = cl.loadClass(map.get(persistenceType).get(1));
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
+		
+		//cast class found in the jar file to IPlugin
 		plugin = null;
 		try{
-			plugin = (IPlugin)c.newInstance();
+			plugin = (IPlugin)cls.newInstance();
 		}catch(InstantiationException e){
 			e.printStackTrace();
 		}catch(IllegalAccessException e){
@@ -83,6 +96,7 @@ public class PluginManager {
 		if(plugin == null){
 			System.out.println("problem creating new plugin object in plugin manager");
 		}
+		plugin.addUser(new User("sam","sam",0));
 		return plugin;
 	}
 

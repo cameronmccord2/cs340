@@ -91,7 +91,8 @@ public class Server {
 		
 		PluginManager pm = new PluginManager();
 		pm.parseConfig();
-		IPlugin plugin = pm.initPersistence("sql");
+		System.out.println(args[0]);
+		IPlugin plugin = pm.initPersistence(args[0]);
 		
 		// TODO: Add PluginLoader functionality to this
 		try {
