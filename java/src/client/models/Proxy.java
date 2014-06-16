@@ -143,7 +143,6 @@ public class Proxy implements IProxy {
 		if(version == null){
 			version = -1;
 		}
-		System.out.println("version: " + version);
 		if(cm.getVersion() != version.intValue() || version.intValue() == 0){
 			IGame g = null;
 			try {
@@ -345,6 +344,7 @@ public class Proxy implements IProxy {
 	@Override
 	public ServerResponse movesRollNumber(ServerRoll roll){
 		ServerResponse sr = doPost("/moves/rollNumber", gson.toJson(roll), true, true);
+			System.out.println("sr: " + sr);
 		saveGameModel(sr.getJson());
 		return sr;
 	}

@@ -61,6 +61,7 @@ public class UserHandler implements HttpHandler {
 			case "login":
 				if(requestMethod.equals("POST")){
 					response = this.commandFacade.login(json, ua);
+					System.out.println("there");
 					if(!response.getResponse().equals("-1")){
 						Gson gson = new Gson();
 						Login tempUser = gson.fromJson(json, Login.class); //convert json to Login object
@@ -108,6 +109,7 @@ public class UserHandler implements HttpHandler {
 				response = new CommandResponse("Invaid endpoint requested", "403");
 	    }
 
+		System.out.println(response.toString());
 		//prepare responseBody
 		if(response.getResponseCode().equals("200")){
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);

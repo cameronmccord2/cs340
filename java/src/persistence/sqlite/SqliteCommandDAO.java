@@ -82,6 +82,7 @@ public class SqliteCommandDAO {
 	 * @param gameId the game id to save the command for
 	 */
 	public void saveCommandForGameId(ICommandParams command, Integer gameId){
+		System.out.println("adding command: " + command.toString());
 		final String sql = "INSERT INTO commands (gameId, commandData) VALUES (?, ?)";
 		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);

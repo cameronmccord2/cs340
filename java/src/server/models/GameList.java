@@ -164,12 +164,14 @@ public class GameList {
 	}
 
 	public IGame getGameById(Integer gameId) throws InvalidUserAttributesException {
-		//System.out.println(gameId);
-		//System.out.println(this.games.toString());
+		System.out.println("in getbyid");
+		System.out.println(gameId);
+//		System.out.println(this.games.toString());
 		for (IGame game : this.games) {
 			if(game.getGameInfo().getId() == gameId.intValue())
 				return game;
 		}
+		System.out.println("No");
 		throw new InvalidUserAttributesException("Game cant be located by id: " + gameId);
 	}
 	

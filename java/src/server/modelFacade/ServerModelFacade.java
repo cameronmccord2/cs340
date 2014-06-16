@@ -29,9 +29,11 @@ public class ServerModelFacade implements IServerModelFacade {
 
 		Gson gson = new Gson();
 		try {
+			System.out.println("getting game model: " + params.toString());
 			IGame game = gameList.getGameById(ua.getGameId());
 			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(game));
-			//System.out.println("model: " + modelJson);
+//			System.out.println("model: " + modelJson);
+			
 			return new ServerFacadeResponse(false, modelJson);
 		} catch (InvalidUserAttributesException e) {
 			e.printStackTrace();
@@ -41,11 +43,19 @@ public class ServerModelFacade implements IServerModelFacade {
 	
 	@Override
 	public IGame getGameById(Integer id){
+		System.out.println("gid1");
 		try {
-			return gameList.getGameById(id);
+			if(gameList == null)
+				System.out.println("is null");
+			System.out.println("not null");
+			IGame game = gameList.getGameById(id);
+			System.out.println(game);
+			return game;
 		} catch (InvalidUserAttributesException e) {
+			System.out.println("gid2");
 			e.printStackTrace();
 		}
+		System.out.println("gid3");
 		return null;
 	}
 
