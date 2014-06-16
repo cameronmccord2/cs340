@@ -1,9 +1,12 @@
 package client.models.translator;
 
+import java.io.Serializable;
+
 import client.models.exceptions.InvalidTranslatorModelException;
 import client.server.OfferTrade;
 
-public class TRTradeOffer implements IModelValid {
+public class TRTradeOffer implements IModelValid, Serializable {
+	
 	protected Integer sender;
 	protected Integer receiver;
 	protected TRResourceList offer;

@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,7 +19,7 @@ import shared.definitions.ResourceType;
 /**
  * The Class Bank.
  */
-public class Bank extends Participant implements IBank {
+public class Bank extends Participant implements IBank, Serializable {
 
 	/**
 	 * Instantiates a new bank.

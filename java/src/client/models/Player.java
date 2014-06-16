@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.*;
 
 import client.data.PlayerInfo;
@@ -15,7 +16,7 @@ import shared.definitions.ResourceType;
 /**
  * The Class Player.
  */
-public class Player extends Participant implements IPlayer {
+public class Player extends Participant implements IPlayer, Serializable {
 
 	static Integer ROLL_COUNT = 2;
 	/** The settlements. */

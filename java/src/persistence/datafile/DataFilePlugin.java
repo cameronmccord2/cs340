@@ -104,4 +104,10 @@ public class DataFilePlugin implements IPlugin {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateGame(IGame game) {
+		// TODO Auto-generated method stub
+		
+	}
 }

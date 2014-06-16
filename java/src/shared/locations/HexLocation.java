@@ -1,10 +1,16 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 /**
  * Represents the location of a hex on a hex map
  */
-public class HexLocation{
+public class HexLocation implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5481434772510664897L;
 	private int x;
 	private int y;
 	

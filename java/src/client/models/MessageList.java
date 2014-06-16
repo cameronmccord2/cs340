@@ -1,9 +1,10 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageList {
+public class MessageList  implements Serializable {
 	protected List<MessageLine> lines;
 	
 	public MessageList(){

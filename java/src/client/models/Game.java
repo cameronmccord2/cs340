@@ -3,6 +3,8 @@
  */
 package client.models;
 
+import java.io.Serializable;
+
 import server.models.exceptions.GameModelException;
 import client.data.GameInfo;
 import client.models.interfaces.IBank;
@@ -16,8 +18,12 @@ import client.models.translator.TRTradeOffer;
  * @author scottdaly
  *
  */
-public class Game implements IGame{
+public class Game implements IGame, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3609149875581296918L;
 	private GameInfo gameInfo;
 	private ICatanMap map;
 	private IPlayer[] players;

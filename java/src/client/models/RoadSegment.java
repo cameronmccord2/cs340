@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -12,7 +13,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
-public class RoadSegment extends Piece implements IRoadSegment
+public class RoadSegment extends Piece implements IRoadSegment, Serializable
 {
 	private static Collection<Resource> cost;
 	static

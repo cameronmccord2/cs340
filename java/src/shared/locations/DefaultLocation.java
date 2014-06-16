@@ -1,7 +1,13 @@
 package shared.locations;
 
-public class DefaultLocation implements ILocation
+import java.io.Serializable;
+
+public class DefaultLocation implements ILocation, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7778185721824277645L;
 	protected HexLocation hexLocation;
 	protected IDirection direction;
 

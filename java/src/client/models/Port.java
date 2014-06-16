@@ -1,5 +1,7 @@
 package client.models;
 
+import java.io.Serializable;
+
 import client.models.interfaces.IPort;
 import client.models.translator.TRPort;
 import shared.definitions.PortType;
@@ -8,7 +10,7 @@ import shared.locations.HexLocation;
 import shared.locations.EdgeLocation;
 import shared.locations.ILocation;
 
-public class Port implements IPort {
+public class Port implements IPort, Serializable {
 
 	protected HexLocation hexLocation;
 	protected ILocation location;

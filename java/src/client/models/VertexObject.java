@@ -3,6 +3,8 @@
  */
 package client.models;
 
+import java.io.Serializable;
+
 import shared.locations.EdgeLocation;
 
 /**
@@ -10,7 +12,7 @@ import shared.locations.EdgeLocation;
  * @author scottdaly
  *
  */
-public class VertexObject {
+public class VertexObject  implements Serializable {
 	private int owner;
 	private EdgeLocation location;
 	

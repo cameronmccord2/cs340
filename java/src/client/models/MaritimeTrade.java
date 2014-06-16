@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import client.exceptions.InvalidTradeException;
@@ -10,7 +11,7 @@ import client.models.interfaces.IResourceCard;
 /**
  * The Class MaritimeTrade.
  */
-public class MaritimeTrade extends Trade implements IMaritimeTrade {
+public class MaritimeTrade extends Trade implements IMaritimeTrade, Serializable {
 	
 	/** The send ratio. */
 	private Integer sendRatio = 0;

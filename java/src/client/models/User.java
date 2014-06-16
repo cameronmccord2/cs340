@@ -1,7 +1,13 @@
 package client.models;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2166392048484053108L;
 	private String name;
 	private String password;
 	private int playerID;
@@ -52,6 +58,19 @@ public class User {
 	 */
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [name=");
+		builder.append(name);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", playerID=");
+		builder.append(playerID);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

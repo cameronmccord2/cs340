@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.*;
 
 import client.data.PlayerInfo;
@@ -36,8 +37,12 @@ import shared.locations.*;
  */
 
 @SuppressWarnings({"unused"})
-public class CatanMap implements ICatanMap
+public class CatanMap implements ICatanMap, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4740013228429240110L;
 	private Map<HexLocation, IHex> hexMap;
 	private Map<HexLocation, IHex> oceanMap;
 	private Map<HexLocation, IHex> hexes;

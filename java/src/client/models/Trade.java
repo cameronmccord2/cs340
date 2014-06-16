@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import client.models.interfaces.IParticipant;
@@ -9,7 +10,7 @@ import client.models.interfaces.ITrade;
 /**
  * The Class Trade.
  */
-public abstract class Trade implements ITrade {
+public abstract class Trade implements ITrade, Serializable {
 	
 	/** The from. */
 	protected IParticipant from;

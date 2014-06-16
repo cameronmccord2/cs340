@@ -1,5 +1,7 @@
 package client.data;
 
+import java.io.Serializable;
+
 import shared.definitions.*;
 
 /**
@@ -14,8 +16,12 @@ import shared.definitions.*;
  * </ul>
  * 
  */
-public class PlayerInfo
+public class PlayerInfo  implements Serializable 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6866642869931317949L;
 	private int id;
 	private int playerIndex;
 	private String name;

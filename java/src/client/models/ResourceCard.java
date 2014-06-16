@@ -1,12 +1,14 @@
 package client.models;
 
+import java.io.Serializable;
+
 import client.models.interfaces.IResourceCard;
 import shared.definitions.ResourceType;
 
 /**
  * Created by Daniel on 5/13/14.
  */
-public enum ResourceCard implements IResourceCard {
+public enum ResourceCard implements IResourceCard, Serializable {
 
 	WOOD {
 

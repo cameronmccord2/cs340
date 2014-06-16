@@ -3,6 +3,8 @@
  */
 package client.models;
 
+import java.io.Serializable;
+
 import shared.locations.EdgeLocation;
 
 /**
@@ -10,7 +12,7 @@ import shared.locations.EdgeLocation;
  * @author scottdaly
  *
  */
-public class EdgeValue {
+public class EdgeValue  implements Serializable {
 	private int owner;
 	private EdgeLocation location;
 	

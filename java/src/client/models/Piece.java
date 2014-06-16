@@ -1,12 +1,14 @@
 package client.models;
 
+import java.io.Serializable;
+
 import client.models.interfaces.IPiece;
 import client.models.interfaces.IPlayer;
 import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import shared.locations.ILocation;
 
-public abstract class Piece implements IPiece
+public abstract class Piece implements IPiece, Serializable
 {
 	protected IPlayer player;
 	protected CatanColor color;

@@ -1,12 +1,14 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 import client.models.translator.TREdgeLocation;
 
 
 /**
  * Represents the location of an edge on a hex map
  */
-public class EdgeLocation implements ILocation{
+public class EdgeLocation implements ILocation, Serializable{
 
 	private HexLocation hexLocation;
 	private EdgeDirection direction;

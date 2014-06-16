@@ -1,8 +1,10 @@
 package client.models;
 
+import java.io.Serializable;
+
 import client.models.translator.TRMessageLine;
 
-public class MessageLine{
+public class MessageLine implements Serializable {
 	protected String message;
 	protected String source;
 	

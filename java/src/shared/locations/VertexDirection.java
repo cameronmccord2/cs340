@@ -1,6 +1,8 @@
 package shared.locations;
 
-public enum VertexDirection implements IDirection{
+import java.io.Serializable;
+
+public enum VertexDirection implements IDirection, Serializable {
 	West, NorthWest, NorthEast, East, SouthEast, SouthWest;
 
 	private VertexDirection opposite;

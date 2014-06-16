@@ -1,8 +1,10 @@
 package client.models;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceType;
 
-public class Resource
+public class Resource implements Serializable 
 {
 	private ResourceType type;
 	private int amount;

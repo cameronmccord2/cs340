@@ -61,4 +61,6 @@ public interface IPlugin
 	 * @param Igame the game to add the command to
 	 */
 	public void addCommandToGame(ICommand command, IGame game);
+
+	void updateGame(IGame game);
 }

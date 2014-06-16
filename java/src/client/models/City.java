@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -13,7 +14,7 @@ import shared.locations.VertexLocation;
  * @author Craig Call
  *
  */
-public class City extends Settlement implements ICity
+public class City extends Settlement implements ICity, Serializable
 {
 	private static Collection<Resource> cost;
 	static

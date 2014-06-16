@@ -1,5 +1,7 @@
 package client.models;
 
+import java.io.Serializable;
+
 import client.models.translator.TRTurnTracker;
 
 
@@ -7,7 +9,7 @@ import client.models.translator.TRTurnTracker;
  * Why are you using the Integer class instead of the
  * int primative type?
  */
-public class TurnTracker {
+public class TurnTracker  implements Serializable {
 	protected Integer currentTurn;
 	protected String status;
 	protected Integer longestRoad;

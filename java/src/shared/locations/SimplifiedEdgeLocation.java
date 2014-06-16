@@ -1,11 +1,13 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 /**
  * SimplifiedEdgeLocation contains a subset of the data contained in a complete EdgeLocation.
  * The subset is determined by the information required by the Catan Server, as this class will
  * be serialized as JSON and the output will be just what the server needs.
  */
-public class SimplifiedEdgeLocation {
+public class SimplifiedEdgeLocation  implements Serializable {
 	int x;
 	int y;
 	String direction;

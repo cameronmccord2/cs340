@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -13,7 +14,7 @@ import shared.locations.ILocation;
  * @author Craig Call
  *
  */
-public class Settlement extends Piece implements ISettlement
+public class Settlement extends Piece implements ISettlement, Serializable
 {
 	protected int pointValue;
 	private static Collection<Resource> cost;

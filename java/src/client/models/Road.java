@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import client.models.interfaces.IPlayer;
@@ -15,7 +16,7 @@ import shared.locations.ILocation;
  *
  */
 @SuppressWarnings({"unused"})
-public class Road implements IRoad
+public class Road implements IRoad, Serializable
 {
 	private CatanColor color;
 	private IPlayer player;

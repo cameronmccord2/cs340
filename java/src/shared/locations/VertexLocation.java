@@ -1,12 +1,14 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 import client.models.translator.TRVertexLocation;
 
 
 /**
  * Represents the location of a vertex on a hex map
  */
-public class VertexLocation implements ILocation {
+public class VertexLocation implements ILocation, Serializable {
 
 	private HexLocation hexLocation;
 	private VertexDirection direction;

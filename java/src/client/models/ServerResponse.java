@@ -1,6 +1,8 @@
 package client.models;
 
-public class ServerResponse  {
+import java.io.Serializable;
+
+public class ServerResponse  implements Serializable  {
 	
 	private String json;
 	private int responseCode;

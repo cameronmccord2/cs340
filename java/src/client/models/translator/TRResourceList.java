@@ -1,8 +1,10 @@
 package client.models.translator;
 
+import java.io.Serializable;
+
 import client.models.exceptions.InvalidTranslatorModelException;
 
-public class TRResourceList implements IModelValid
+public class TRResourceList implements IModelValid, Serializable
 {
 	protected Integer wood;
 	protected Integer brick;

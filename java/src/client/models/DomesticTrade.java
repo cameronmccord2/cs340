@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import client.models.interfaces.IDomesticTrade;
@@ -9,7 +10,7 @@ import client.models.interfaces.IResourceCard;
 /**
  * The Class DomesticTrade.
  */
-public class DomesticTrade extends Trade implements IDomesticTrade {
+public class DomesticTrade extends Trade implements IDomesticTrade, Serializable {
 
 	/**
 	 * Instantiates a new domestic trade.

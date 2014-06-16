@@ -1,6 +1,11 @@
 package persistence.sqlite;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 import persistence.IPlugin;
 import server.commands.ICommand;
@@ -15,8 +20,10 @@ public class SQLitePlugin implements IPlugin {
 	private SqliteCommandDAO commandDAO;
 	private SqliteGameDAO gameDAO;
 	private SqliteUserDAO userDAO;
+	protected DataSource dataSource;
 	
 	public SQLitePlugin(){
+		//    DriverManager.getConnection("jdbc:sqlite:test.db")
 		commandDAO = new SqliteCommandDAO();
 		gameDAO = new SqliteGameDAO();
 		userDAO = new SqliteUserDAO();
@@ -25,7 +32,7 @@ public class SQLitePlugin implements IPlugin {
 	public SQLitePlugin(Integer n){
 		this.n = n;
 	}
-
+	
 	/**
 	 * Adds the supplied user to the sqlite database. If it already exists then it gets updated in the db
 	 *
@@ -33,14 +40,12 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public void addUser(User user) {
-		
+		this.userDAO.upsertUser(user);
 	}
 
 	@Override
-	public void createGame(IGame game)
-	{
-		// TODO Auto-generated method stub
-		
+	public void createGame(IGame game) {
+		this.gameDAO.insertNewGame(game);
 	}
 	
 	/**
@@ -51,7 +56,7 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public void addCommandToGame(ICommand command, IGame game){
-		
+		this.commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
 	}
 	
 	/**
@@ -61,7 +66,7 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public List<User> getRegisteredUsers(){
-		return null;
+		return this.userDAO.getAllUsers();
 	}
 	
 	/**
@@ -71,7 +76,7 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public List<IGame> getGames(){
-		return null;
+		return this.gameDAO.getAllGames();
 	}
 	
 	/**
@@ -82,6 +87,10 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public List<ICommand> getCommandsForGameId(Integer gameId){
-		return null;
+		return this.commandDAO.getCommandsForGameId(gameId);
+	}
+	
+	@Override public void updateGame(IGame game){
+		this.gameDAO.updateGame(game);
 	}
 }

@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import shared.definitions.HexType;
 /**
  * The Class Participant.
  */
-public abstract class Participant implements IParticipant {
+public abstract class Participant implements IParticipant, Serializable {
 
 	/** The development cards. */
 	protected Map<IDevelopmentCard, Integer> developmentCards;

@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -7,7 +8,7 @@ import client.models.interfaces.IDevelopmentCard;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
-public enum DevelopmentCard implements IDevelopmentCard {
+public enum DevelopmentCard implements IDevelopmentCard, Serializable {
 
 	SOLDIER {
 		@Override

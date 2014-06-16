@@ -1,11 +1,13 @@
 package client.models;
 
+import java.io.Serializable;
+
 import client.models.interfaces.IHex;
 import client.models.translator.TRHex;
 import shared.locations.*;
 import shared.definitions.*;
 
-public class Hex implements IHex
+public class Hex implements IHex, Serializable
 {
 	private HexLocation location;
 	private Integer hexNumber;

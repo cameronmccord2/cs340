@@ -1,5 +1,6 @@
 package client.data;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -14,8 +15,12 @@ import java.util.*;
  * </ul>
  * 
  */
-public class GameInfo {
+public class GameInfo implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8685416104973601017L;
 	private int id;
 	private String title;
 	private boolean randomTiles, randomNumbers, randomPorts;

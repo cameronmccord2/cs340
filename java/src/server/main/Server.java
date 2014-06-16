@@ -29,6 +29,7 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
+import client.models.User;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -91,25 +92,28 @@ public class Server {
 		
 		PluginManager pm = new PluginManager();
 		pm.parseConfig();
-		
+		System.out.println("here");
 		// TODO: Add PluginLoader functionality to this
+		IPlugin plugin = null;
 		try {
     		Server server;
     		switch(args.length) {
     			case 0:
     				server = new Server();
+    				System.out.println("Remove this because it is just for testing");
+    				plugin = pm.initPersistence("sql");
     				break;
     			case 1:
     				server = new Server(args[0]);
     				break;
     			case 3:
     				server = new Server(args[2]);
-    				IPlugin plugin = pm.initPersistence(args[0]);
+    				plugin = pm.initPersistence(args[0]);
     				break;
     			default:
     				throw new IllegalArgumentException();
     		}
-    		server.run();
+    		server.run(plugin);
 		} catch(IllegalArgumentException e) {
 			System.out.println(USAGE_STATEMENT);
 		}
@@ -134,7 +138,13 @@ public class Server {
 //		}
 	}
 	
-	private void run() {
+	private void run(IPlugin plugin) {
+		
+		plugin.addUser(new User("Cameron", "cameron", 1));
+		plugin.addUser(new User("Cameron", "cameron", 2));
+		plugin.addUser(new User("Cameron", "cameron", 4));
+		plugin.addUser(new User("Cameron", "cameron", 3));
+		System.out.println(plugin.getRegisteredUsers().toString());
 		
 		try {
 			server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER),

@@ -1,5 +1,6 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import client.models.interfaces.IResourceCard;
 import client.models.translator.TRResourceList;
 import shared.definitions.ResourceType;
 
-public class ResourceCollection {
+public class ResourceCollection  implements Serializable {
 	
 
 	private Integer wood;

@@ -3,12 +3,14 @@
  */
 package client.models;
 
+import java.io.Serializable;
+
 /**
  * This is the object that is returned from the server when the user logs in
  * @author scottdaly
  *
  */
-public class ReturnedUser{
+public class ReturnedUser implements Serializable {
 	private String name;
 	private String password;
 	private int playerID;

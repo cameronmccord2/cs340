@@ -1,5 +1,7 @@
 package client.models;
 
+import java.io.Serializable;
+
 import shared.definitions.PieceType;
 import shared.locations.DefaultLocation;
 import shared.locations.HexLocation;
@@ -10,7 +12,7 @@ import client.models.translator.TRHexLocation;
  * @author scottdaly
  *
  */
-public class Robber extends Piece implements IRobber
+public class Robber extends Piece implements IRobber, Serializable
 {
 
 	public Robber(TRHexLocation robber) {

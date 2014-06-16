@@ -1,11 +1,12 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import client.models.interfaces.IResourceCard;
 
-public class ResourceList
+public class ResourceList implements Serializable 
 {
 	private Map<IResourceCard, Integer> resources;
 

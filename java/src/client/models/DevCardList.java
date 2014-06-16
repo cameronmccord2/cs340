@@ -1,11 +1,12 @@
 package client.models;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import client.models.interfaces.IDevelopmentCard;
 
-public class DevCardList
+public class DevCardList implements Serializable 
 {
 	private Map<IDevelopmentCard, Integer> devcards;
 

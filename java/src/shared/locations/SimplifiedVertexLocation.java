@@ -1,5 +1,7 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 import server.commands.ICommandParams;
 import server.commands.exceptions.CommandParamNotValidException;
 
@@ -8,7 +10,7 @@ import server.commands.exceptions.CommandParamNotValidException;
  * The subset is determined by the information required by the Catan Server, as this class will
  * be serialized as JSON and the output will be just what the server needs.
  */
-public class SimplifiedVertexLocation implements ICommandParams {
+public class SimplifiedVertexLocation implements ICommandParams, Serializable {
 
 	private int x;
 	private int y;
