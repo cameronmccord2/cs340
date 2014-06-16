@@ -40,19 +40,30 @@ public class DataFileGameDAO {
 	public void insertNewGame(IGame game){
 		int gameId = game.getGameInfo().getId();
 
-		String filename = String.format(gameFilenameFormat, gameId, "beginning");
+		String beginningFilename = String.format(gameFilenameFormat, gameId, "beginning");
+		String currentFilename = String.format(gameFilenameFormat, gameId, "current");
 
-		File dataFile = new File(filename);
+		File beginningFile = new File(beginningFilename);
+		File currentFile = new File(currentFilename);
 
+		OutputStream os;
+		OutputStream buffer;
+		ObjectOutput output;
+		
 		// No need to check if game exists, we'll just overwrite it anyway
 		try {
-			OutputStream os = new FileOutputStream(dataFile, false);
-			OutputStream buffer = new BufferedOutputStream(os);
-			ObjectOutput output = new ObjectOutputStream(buffer);
-			dataFile.createNewFile();
-
+			os = new FileOutputStream(beginningFile, false);
+			buffer = new BufferedOutputStream(os);
+			output = new ObjectOutputStream(buffer);
+			beginningFile.createNewFile();
 			output.writeObject(game);
-
+			output.close();
+			
+			os = new FileOutputStream(currentFilename, false);
+			buffer = new BufferedOutputStream(os);
+			output = new ObjectOutputStream(buffer);
+			currentFile.createNewFile();
+			output.writeObject(game);
 			output.close();
 
 		} catch (IOException e) {
@@ -109,7 +120,7 @@ public class DataFileGameDAO {
 		gameFile = new File(filename);
 		gameFile.delete();
 	}
-	
+
 	/**
 	 * Gets the all games found in the dataFiles
 	 *
@@ -122,8 +133,7 @@ public class DataFileGameDAO {
 
 		for (File dataFile : new File(gamesDir).listFiles()) {
 
-			// TODO Check if a current game exists before returning the beginning game
-			if (dataFile.isFile()) {
+			if (dataFile.isFile() && dataFile.getPath().contains("current")) {
 				try {
 					gameData = Files.readAllBytes(Paths.get(dataFile.getPath()));
 					ByteArrayInputStream bis = new ByteArrayInputStream(gameData);
@@ -140,5 +150,58 @@ public class DataFileGameDAO {
 
 		return gamesList;
 
+	}
+	
+	/**
+	 * Gets Game by ID
+	 *
+	 * @param String "current" or "beginning" type of game to get
+	 * @return List of all games found.
+	 */
+	public IGame getGameById(int id, String gameState){
+
+		byte[] gameData;
+
+		for (File dataFile : new File(gamesDir).listFiles()) {
+
+			String path = dataFile.getPath();
+			if (dataFile.isFile() && path.contains("state"+gameState) && path.contains("gameId"+id)) {
+				try {
+					gameData = Files.readAllBytes(Paths.get(path));
+					ByteArrayInputStream bis = new ByteArrayInputStream(gameData);
+					ObjectInput in = new ObjectInputStream(bis);
+					IGame game = (IGame)in.readObject();
+
+					return game;
+
+				} catch (IOException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
+
+	}
+	
+	/**
+	 * Deletes all games
+	 *
+	 * @param String "current" or "beginning" type of game to get
+	 * @return List of all games found.
+	 */
+	public void clear(){
+
+		for (File dataFile : new File(gamesDir).listFiles()) {
+
+			if (dataFile.isFile()) {
+				String filename;
+				File gameFile;
+
+				filename = dataFile.getPath();
+				gameFile = new File(filename);
+				gameFile.delete();
+			}
+		}
 	}
 }

@@ -113,13 +113,12 @@ public class SQLitePlugin implements IPlugin {
 	@Override
 	public void clear()
 	{
-		String dropTables = "DROP TABLE IF EXISTS";
+		this.gameDAO.clear();
 	}
 
 	@Override
 	public IGame getGameById(int gameId)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.gameDAO.getNewGameByGameId(gameId);
 	}
 }

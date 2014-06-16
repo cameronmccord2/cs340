@@ -15,6 +15,10 @@ public class DataFilePlugin implements IPlugin {
 	private static File usersDirectory;
 	private static File gamesDirectory;
 	private static File commandsDirectory;
+	
+	private DataFileUserDAO userDAO;
+	private DataFileCommandDAO commandDAO;
+	private DataFileGameDAO gameDAO;
 
 	static {
 		try {
@@ -37,24 +41,9 @@ public class DataFilePlugin implements IPlugin {
 
 	public DataFilePlugin(Integer n){
 		this.n = n;
-	}
-
-	/**
-	 * Private utility function for reading files by filename
-	 * @param filename
-	 * @return
-	 */
-	private String readFile(String filename) {
-		return null;
-	}
-
-	/**
-	 * Private utility function for writing files by filename
-	 * @param filename
-	 * @return
-	 */
-	private String writeFile(String filename) {
-		return null;
+		userDAO = new DataFileUserDAO();
+		commandDAO = new DataFileCommandDAO();
+		gameDAO = new DataFileGameDAO();
 	}
 
 	/**
@@ -64,7 +53,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public void addUser(User user) {
-		System.out.println("inside plugin");
+		userDAO.upsertUser(user);
 	}
 
 	/**
@@ -86,7 +75,7 @@ public class DataFilePlugin implements IPlugin {
 	 * @return IGame contains all game model data
 	 */
 	public IGame getGameById(int id) {
-		return null;
+		return gameDAO.getGameById(id, "current");
 	}
 
 	/**
@@ -96,7 +85,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public List<User> getRegisteredUsers(){
-		return null;
+		return userDAO.getAllUsers();
 	}
 
 	/**
@@ -106,7 +95,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public List<IGame> getGames(){
-		return null;
+		return gameDAO.getAllGames();
 	}
 
 	/**
@@ -123,26 +112,24 @@ public class DataFilePlugin implements IPlugin {
 	@Override
 	public void createGame(IGame game)
 	{
-		// TODO Auto-generated method stub
+		gameDAO.insertNewGame(game);
 
 	}
 
 	@Override
 	public void updateGame(IGame game) {
-		// TODO Auto-generated method stub
+		gameDAO.updateGame(game);
 
 	}
 
 	@Override
 	public IGame getNewGameByGameId(Integer gameId) {
-		// TODO Auto-generated method stub
-		return null;
+		return gameDAO.getGameById(gameId, "beginning");
 	}
 
 	@Override
 	public void clear()
 	{
-		// TODO Auto-generated method stub
-
+		gameDAO.clear();
 	}
 }

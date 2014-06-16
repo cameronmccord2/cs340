@@ -116,6 +116,22 @@ public class SqliteGameDAO {
 	}
 
 	/**
+	 * Clear all games - drop table.
+	 *
+	 * @param connection the connection to talk to the sqlite db on
+	 */
+	public void clear(){
+		final String sql = "DROP TABLE IF EXISTS games";
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Gets the all games in this sqlite db
 	 *
 	 * @return all the games in the sqlite store
@@ -172,6 +188,32 @@ public class SqliteGameDAO {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public IGame getGameByGameId(Integer gameId) {
+		final String sql = "SELECT * FROM games where id = ?";
+		IGame result = null;
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
+			statement.setInt(1, gameId);
+
+			ResultSet resultSet = statement.executeQuery();
+
+			while(resultSet.next()){
+				byte[] b = resultSet.getBytes("currentGameData");
+				ByteArrayInputStream bis = new ByteArrayInputStream(b);
+				ObjectInput in = new ObjectInputStream(bis);
+				result = (IGame)in.readObject();
+			}
+			resultSet.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return result;
