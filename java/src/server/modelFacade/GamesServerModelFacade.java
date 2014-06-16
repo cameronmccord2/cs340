@@ -5,6 +5,7 @@ package server.modelFacade;
 
 import java.util.ArrayList;
 
+import persistence.IPlugin;
 import server.commands.ICommandParams;
 import server.models.GameList;
 import server.models.ServerFacadeResponse;
@@ -27,8 +28,11 @@ import com.google.gson.Gson;
 
 public class GamesServerModelFacade extends ServerModelFacade implements IGamesServerModelFacade 
 {
-	public GamesServerModelFacade(GameList gameList) {
+	private IPlugin plugin;
+
+	public GamesServerModelFacade(GameList gameList, IPlugin plugin) {
 		super(gameList);
+		this.plugin = plugin;
 	}
 
 	@Override
@@ -83,6 +87,8 @@ public class GamesServerModelFacade extends ServerModelFacade implements IGamesS
 		newGame.setCurrentTrade(null);
 		
 		gameList.addGame(newGame);
+		
+		this.plugin.createGame(newGame);
 		
 		PlayerServer[] players = new PlayerServer[4]; 
 		GameServer gs = new GameServer(cGame.getName(),gInfo.getId(),players);

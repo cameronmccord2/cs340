@@ -163,7 +163,7 @@ public class Server {
 		IServerModelFacade movesModelFacade = new MovesServerModelFacade(gameList);
 		IServerModelFacade userModelFacade = new UserServerModelFacade(gameList);
 		IServerModelFacade gameModelFacade = new GameServerModelFacade(gameList);
-		IServerModelFacade gamesModelFacade = new GamesServerModelFacade(gameList);
+		IServerModelFacade gamesModelFacade = new GamesServerModelFacade(gameList, plugin);
 		
 		List<User> userss = plugin.getRegisteredUsers();
 		if(userss.size() > 0)
@@ -187,7 +187,10 @@ public class Server {
 //		plugin.createGame(gameList.getGames().get(0));
 //		System.out.println(plugin.getGames().toString());
 //		System.out.println(plugin.getNewGameByGameId(gameList.getGames().get(0).getGameInfo().getId()));
-
+		
+//		System.out.println(gameList.getGames().toString());
+//		System.out.println(userss.toString());
+		
 		//un-comment the following lines if you want to use the dummyfacades
 //		IUserFacade userFacade = new DummyUserFacade();
 //		IGamesFacade gamesFacade = new DummyGamesFacade();
