@@ -99,15 +99,16 @@ public class Server {
 		IPlugin plugin = pm.initPersistence("sql");
 		try {
     		Server server;
+    		System.out.println("length: " + args.length);
     		switch(args.length) {
     			case 0:
     				server = new Server();
-    				System.out.println("Remove this because it is just for testing");
     				break;
     			case 1:
     				server = new Server(args[0]);
     				break;
     			case 3:
+    				System.out.println("right");
     				server = new Server(args[2]);
     				plugin = pm.initPersistence(args[0]);
     				plugin.setN(Integer.parseInt(args[1]));

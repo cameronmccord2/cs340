@@ -96,6 +96,7 @@ public class DataFileCommandDAO
 			output.close();
 
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}

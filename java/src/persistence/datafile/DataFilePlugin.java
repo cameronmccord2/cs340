@@ -37,7 +37,9 @@ public class DataFilePlugin implements IPlugin {
 
 	private Integer n;
 
-	public DataFilePlugin(){}
+	public DataFilePlugin(){
+		this(5);
+	}
 
 	public DataFilePlugin(Integer n){
 		this.n = n;
@@ -95,6 +97,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public List<IGame> getGames(){
+		
 		return gameDAO.getAllGames();
 	}
 
