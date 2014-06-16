@@ -229,9 +229,10 @@ public class GameList {
 	}
 
 	public void setGames(List<IGame> gameList) {
-		this.games = new ArrayList<>();
-		for (IGame g : gameList) {
-			this.games.add((Game) g);
-		}
+		this.games = gameList;
+//		this.games = new ArrayList<>();
+//		for (IGame g : gameList) {
+//			this.games.add((Game) g);
+//		}
 	}
 }
