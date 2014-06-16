@@ -48,16 +48,22 @@ public class Command implements ICommand, ITestCommand, Serializable {
 		if(response.isReturnGameModel()){
 			// run persistence
 			
-			
+			System.out.println("persistence");
 			if(this.plugin != null){
+				System.out.println("getting game");
 				IGame game = this.facade.getGameById(this.userAttributes.getGameId());
 				if(game == null)
 					throw new RuntimeException("Couldn't get the game by id: " + this.userAttributes.getGameId());
+				else
+					System.out.println("game not null");
 				this.plugin.addCommandToGame(this.commandParams, game);
+				System.out.println("command added");
 			}
+			System.out.println("erturning");
 			return this.facade.getJsonGameModelString(null, this.userAttributes).getOtherResponse();
 		}
 		else{
+			System.out.println("other, length: " + response.getOtherResponse().length() + ", " + response.getOtherResponse());
 			return response.getOtherResponse();
 		}
 	}

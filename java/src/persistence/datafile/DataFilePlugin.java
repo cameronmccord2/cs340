@@ -139,4 +139,10 @@ public class DataFilePlugin implements IPlugin {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setN(int parseInt) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -101,6 +101,7 @@ public class MovesFacade extends CommandCreationFacade implements IMovesFacade{
 	public CommandResponse rollNumber(String json, UserAttributes ua) {
 		Gson gson = new Gson();
 		ServerRoll params = gson.fromJson(json, ServerRoll.class);
+		System.out.println("before generix");
 		return this.genericCommandCreate(params, ua, false, plugin);
 	}
 

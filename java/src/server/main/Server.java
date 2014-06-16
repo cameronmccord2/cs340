@@ -30,6 +30,7 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
+import server.models.exceptions.InvalidUserAttributesException;
 import client.models.User;
 import client.models.interfaces.IGame;
 
@@ -109,6 +110,7 @@ public class Server {
     			case 3:
     				server = new Server(args[2]);
     				plugin = pm.initPersistence(args[0]);
+    				plugin.setN(Integer.parseInt(args[1]));
     				break;
     			default:
     				throw new IllegalArgumentException();
@@ -156,6 +158,12 @@ public class Server {
 		List<IGame> games = plugin.getGames();
 		if(games.size() > 0)
 			gameList.setGames(games);
+		else{
+			System.out.println("no games");
+			for (IGame iGame : gameList.getGames()) {
+				plugin.createGame(iGame);
+			}
+		}
 		
 		
 
@@ -164,6 +172,11 @@ public class Server {
 		IServerModelFacade userModelFacade = new UserServerModelFacade(gameList);
 		IServerModelFacade gameModelFacade = new GameServerModelFacade(gameList);
 		IServerModelFacade gamesModelFacade = new GamesServerModelFacade(gameList, plugin);
+		
+		plugin.addUser(new User("Kirk", "kirk", 0));
+		plugin.addUser(new User("Spock", "spock", 1));
+		plugin.addUser(new User("McCoy", "mccoy", 2));
+		plugin.addUser(new User("Uhura", "uhura", 3));
 		
 		List<User> userss = plugin.getRegisteredUsers();
 		if(userss.size() > 0)

@@ -22,6 +22,7 @@ public class UserFacade extends CommandCreationFacade implements IUserFacade{
 	public CommandResponse login(String json, UserAttributes ua) {
 		Gson gson = new Gson();
 		Login params = gson.fromJson(json, Login.class);
+		System.out.println("before generic");
 		return this.genericCommandCreate(params, ua, false, plugin);
 	}
 

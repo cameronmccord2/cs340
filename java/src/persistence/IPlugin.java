@@ -71,4 +71,6 @@ public interface IPlugin
 	void clear();
 
 	IGame getNowGameById(Integer gameId);
+
+	public void setN(int parseInt);
 }

@@ -27,4 +27,13 @@ public class GetGameModel implements ICommandParams {
 		return "getJsonGameModelString";
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GetGameModel [modelVersion=");
+		builder.append(modelVersion);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

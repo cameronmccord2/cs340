@@ -20,11 +20,7 @@ public class SQLitePlugin implements IPlugin {
 	protected DataSource dataSource;
 
 	public SQLitePlugin(){
-		//    DriverManager.getConnection("jdbc:sqlite:test.db")
-		commandDAO = new SqliteCommandDAO();
-		gameDAO = new SqliteGameDAO();
-		userDAO = new SqliteUserDAO();
-		nCounter = 0;
+		this(5);
 	}
 
 	public SQLitePlugin(Integer n){
@@ -58,12 +54,20 @@ public class SQLitePlugin implements IPlugin {
 	 */
 	@Override
 	public void addCommandToGame(ICommandParams command, IGame game){
+		System.out.println("adding in plugin");
 		this.commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
+		System.out.println("added");
 		nCounter = this.commandDAO.countCommandsForGameId(game.getGameInfo().getId());
+		System.out.println("counted");
+		System.out.println("nc: " + nCounter);
+		System.out.println("n: " + n);
 		if(nCounter % n == 0){
+			System.out.println("updating game");
 			this.gameDAO.updateGame(game);
 		}
+		System.out.println("save now");
 		this.gameDAO.saveNow(game);
+		System.out.println("saved now");
 	}
 
 	/**
@@ -120,5 +124,10 @@ public class SQLitePlugin implements IPlugin {
 	public IGame getGameById(int gameId)
 	{
 		return this.gameDAO.getNewGameByGameId(gameId);
+	}
+
+	@Override
+	public void setN(int parseInt) {
+		this.n = parseInt;
 	}
 }

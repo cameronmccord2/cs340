@@ -71,7 +71,9 @@ public class MovesHandler implements HttpHandler {
 				break;
 			case "rollNumber":
 				if(requestMethod.equals("POST")){
+					System.out.println("rolling post");
 					response = this.commandFacade.rollNumber(json, ua);
+					System.out.println("resp: " + response);
 				}
 				break;
 			case "robPlayer":

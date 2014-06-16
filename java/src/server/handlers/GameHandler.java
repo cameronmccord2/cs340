@@ -58,6 +58,7 @@ public class GameHandler implements HttpHandler {
 		switch(finalPiece){
 			case "model":
 				if(requestMethod.equals("GET")){
+					System.out.println("handle get model");
 					Gson gson = new Gson();
 					Map<String, List<String>> map = exchange.getRequestHeaders();
 					List<String> setCookie = map.get("Cookie");
@@ -69,7 +70,7 @@ public class GameHandler implements HttpHandler {
 					ua = new UserAttributes(rUser); //set user
 					ua.setGameId(Integer.parseInt(pieces[1]));
 					response = this.commandFacade.getGameModel(json, ua);
-					//System.out.println(response.getResponse());
+					System.out.println(response.getResponseCode() + ", " + response.getResponse());
 				}
 				break;
 			case "reset":
