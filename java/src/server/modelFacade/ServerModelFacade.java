@@ -29,7 +29,7 @@ public class ServerModelFacade implements IServerModelFacade {
 
 		Gson gson = new Gson();
 		try {
-			System.out.println("getting game model: " + params.toString());
+			System.out.println("getting game model: " + params);
 			IGame game = gameList.getGameById(ua.getGameId());
 			String modelJson =  gson.toJson(ModelTRConverter.toTRObject(game));
 //			System.out.println("model: " + modelJson);
