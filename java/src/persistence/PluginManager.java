@@ -19,23 +19,23 @@ import client.models.User;
  *
  */
 public class PluginManager {
-	
+
 	private IPlugin plugin;
 	private HashMap<String, ArrayList<String>> map;
-	
+
 	public PluginManager(){}
 	/**
 	 * Parses the config file based on the persistence type.
-	 * 
+	 *
 	 * Parse file will contain the following information: path, name of plugin, name of plugin class
-	 * 
-	 * @param persistanceType that is specified from the command line.
+	 *
+	 * @param configFile that is specified from the command line.
 	 */
 	public void parseConfig(String configFile) {
-		
+
 	}
-	
-	/** 
+
+	/**
 	 * Parse file will contain the following information: name of plugin, path, name of plugin class
 	 */
 	@SuppressWarnings("resource")
@@ -56,17 +56,17 @@ public class PluginManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Calls initialize on the persistence object in order to start connections to storages
 	 */
 	public IPlugin getPersistenceObject() {
 		return plugin;
 	}
-		
+
 	@SuppressWarnings({ "rawtypes", "resource" })
 	public IPlugin initPersistence(String persistenceType){
-		
+
 		//open jar file and load class needed
 		File jar = new File(map.get(persistenceType).get(0));
 		URI uri = jar.toURI();
@@ -83,7 +83,7 @@ public class PluginManager {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		
+
 		//cast class found in the jar file to IPlugin
 		plugin = null;
 		try{

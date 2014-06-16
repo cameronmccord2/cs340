@@ -25,9 +25,10 @@ client.server
 client.tests
 client.turntracker
 client.utils
-persistance
-persistance.exceptions
-persistance.sqlite
+persistence
+persistence.datafile
+persistence.exceptions
+persistence.sqlite
 server.commands
 server.commands.exceptions
 server.facades
