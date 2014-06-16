@@ -25,7 +25,7 @@ import shared.locations.*;
 
 public class GameList {
 	
-	private ArrayList<Game> games;
+	private List<IGame> games;
 	private int playerID;
 	private Game selectedGame;
 	private GameInfo gInfo;
@@ -175,7 +175,7 @@ public class GameList {
 	
 	public ArrayList<GameServer> getGameInfoList(){
 		ArrayList<GameServer> gInfos = new ArrayList<>();
-		for(Game g : this.games){
+		for(IGame g : this.games){
 			ArrayList<PlayerServer> players = new ArrayList<>();
 			for(PlayerInfo p :g.getGameInfo().getPlayers()){
 				PlayerServer ps = new PlayerServer(p.getColor().toString(),p.getName(),p.getId());
@@ -197,9 +197,9 @@ public class GameList {
 	}
 	
 	public int checkForPlayer(int gameId){
-		for(Game g : this.games){
+		for(IGame g : this.games){
 			gInfo = g.getGameInfo();
-			selectedGame = g;
+			selectedGame = (Game)g;
 			if(gInfo.getId() == gameId){
 				for(PlayerInfo p : gInfo.getPlayers()){
 					if(p.getId() == this.playerID){
@@ -219,19 +219,20 @@ public class GameList {
 		return gInfo.getId();
 	}
 	
-	public void addGame(Game newGame){
+	public void addGame(IGame newGame){
 		this.games.add(newGame);
 	}
 	
-	public ArrayList<Game> getGames(){
+	public List<IGame> getGames(){
 		System.out.println(this.games.toString());
 		return this.games;
 	}
 
-	public void setGames(List<IGame> gamess) {
-		this.games = new ArrayList<>();
-		for (IGame g : gamess) {
-			this.games.add((Game) g);
-		}
+	public void setGames(List<IGame> gameList) {
+		this.games = gameList;
+//		this.games = new ArrayList<>();
+//		for (IGame g : gameList) {
+//			this.games.add((Game) g);
+//		}
 	}
 }
