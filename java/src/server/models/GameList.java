@@ -1,6 +1,7 @@
 package server.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import client.models.Bank;
 import client.models.CatanMap;
@@ -225,5 +226,12 @@ public class GameList {
 	public ArrayList<Game> getGames(){
 		System.out.println(this.games.toString());
 		return this.games;
+	}
+
+	public void setGames(List<IGame> gamess) {
+		this.games = new ArrayList<>();
+		for (IGame g : gamess) {
+			this.games.add((Game) g);
+		}
 	}
 }

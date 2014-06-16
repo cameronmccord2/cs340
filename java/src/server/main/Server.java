@@ -2,6 +2,7 @@ package server.main;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -29,7 +30,7 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
-import client.models.User;
+import client.models.interfaces.IGame;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -151,6 +152,11 @@ public class Server {
 		server.setExecutor(null);
 		//pass plugin into first layer facades and pass instance of server model facade into plugin
 		GameList gameList = new GameList();
+		List<IGame> gamess = plugin.getGames();
+		if(gamess.size() > 0)
+			gameList.setGames(gamess);
+		
+		
 
 		// Facades
 		IServerModelFacade movesModelFacade = new MovesServerModelFacade(gameList);
