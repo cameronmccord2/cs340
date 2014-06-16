@@ -1,8 +1,20 @@
 package persistence.datafile;
 
-import server.commands.ICommand;
+import server.commands.ICommandParams;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,10 +23,19 @@ import java.util.List;
 public class DataFileCommandDAO
 {
 	private static File destDirectory = new File("datafile");
+	private String commandFilenameFormat;
+	private String commandsDir;
+	private static int commandId;
 	static {
 		try {
 			destDirectory.mkdir();
 		} catch(Exception e){}
+	}
+	
+	public DataFileCommandDAO () {
+		commandId = 0;
+		commandsDir = "commands";
+		commandFilenameFormat = commandsDir + File.separator + "commandGameId%dcommandIndex%d.catanGameData";
 	}
 
 	/**
@@ -23,8 +44,29 @@ public class DataFileCommandDAO
 	 * @param gameId the game id
 	 * @return the commands for game id
 	 */
-	public List<ICommand> getCommandsForGameId(Integer gameId){
-		return null;
+	public List<ICommandParams> getCommandsForGameId(Integer gameId){
+		
+		List<ICommandParams> commandsList = new ArrayList<>();
+		byte[] commandData;
+
+		for (File dataFile : new File(commandsDir).listFiles()) {
+
+			if (dataFile.isFile() && dataFile.getPath().contains("commandGameId"+gameId)) {
+				try {
+					commandData = Files.readAllBytes(Paths.get(dataFile.getPath()));
+					ByteArrayInputStream bis = new ByteArrayInputStream(commandData);
+					ObjectInput in = new ObjectInputStream(bis);
+					ICommandParams command = (ICommandParams)in.readObject();
+
+					commandsList.add(command);
+
+				} catch (IOException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return commandsList;
+
 	}
 
 	/**
@@ -37,8 +79,25 @@ public class DataFileCommandDAO
 	 * @param command the command to save
 	 * @param gameId the game id to save the command for
 	 */
-	public void saveCommandForGameId(ICommand command, Integer gameId){
+	public void saveCommandForGameId(ICommandParams command, Integer gameId){
 
+		String filename = String.format(commandFilenameFormat, gameId, commandId++);
+
+		File commandDataFile = new File(filename);
+
+		try {
+			OutputStream os = new FileOutputStream(commandDataFile, true);
+			OutputStream buffer = new BufferedOutputStream(os);
+			ObjectOutput output = new ObjectOutputStream(buffer);
+			commandDataFile.createNewFile();
+
+			output.writeObject(command);
+
+			output.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -47,17 +106,19 @@ public class DataFileCommandDAO
 	 * @param gameId the game id
 	 * @return the count of the current commands for a game
 	 */
-	public Integer countCommandsForGameId(Integer gameId){
-		return null;
-	}
-
-	/**
-	 * Delete oldest x commands for the game by id.
-	 *
-	 * @param count the count to delete
-	 * @param gameId the game id
-	 */
-	public void deleteOldestXCommandsForGameId(Integer count, Integer gameId){
+	public Integer countCommandsForGameId(Integer gameId)
+	{
+		int count = 0;
+		
+		for (File dataFile : new File(commandsDir).listFiles()) 
+		{
+			if (dataFile.isFile() && dataFile.getPath().contains("commandGameId"+gameId)) 
+			{
+				count ++;
+			}
+		}
+		
+		return count;
 
 	}
 }

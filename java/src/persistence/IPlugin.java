@@ -52,7 +52,7 @@ public interface IPlugin
 	 * @param gameId the gameId to get the commands for
 	 * @return the commands for gameId
 	 */
-	public List<ICommand> getCommandsForGameId(Integer gameId);
+	public List<ICommandParams> getCommandsForGameId(Integer gameId);
 
 	/**
 	 * Adds the command to the game. This will keep up to n commands, as specified in the constructor. A snapshot of the game will be made every n commands.
