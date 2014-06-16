@@ -41,6 +41,7 @@ public class PluginManager {
 	@SuppressWarnings("resource")
 	public void parseConfig() {
 		File configFile = new File("config.txt");
+		System.out.println("CONFIG: " + configFile.getAbsoluteFile());
 		map = new HashMap<>();
 		try {
 			Scanner scanner = new Scanner(configFile);

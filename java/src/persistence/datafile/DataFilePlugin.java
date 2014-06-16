@@ -44,6 +44,7 @@ public class DataFilePlugin implements IPlugin {
 		userDAO = new DataFileUserDAO();
 		commandDAO = new DataFileCommandDAO();
 		gameDAO = new DataFileGameDAO();
+		System.out.println("Datafile Loaded");
 	}
 
 	/**
