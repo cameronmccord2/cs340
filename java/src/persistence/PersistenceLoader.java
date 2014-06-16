@@ -5,7 +5,15 @@ import java.util.List;
 import client.models.Game;
 import client.models.interfaces.IGame;
 
-
+/**
+ * Now that I think about it, we really don't need this class. It is
+ * a level of abstraction that is unnecessary.  We just need to call
+ * the proper methods on the IPlugin object after starting our server
+ * and then pass them in to the proper classes to load.
+ *
+ * @author craig
+ *
+ */
 public class PersistenceLoader
 {
 	private IPlugin plugin;
@@ -15,23 +23,9 @@ public class PersistenceLoader
 		this.plugin = plugin;
 	}
 
-	public IGame loadGame(Integer gameId)
+	public IGame loadGame(int gameId)
 	{
-		IGame game = null;
-		if(gameId == null)
-			game = new Game();
-		else
-		{
-			for(IGame g : loadGames())
-			{
-				if(g.getGameInfo().getId() == gameId.intValue())
-				{
-					game = g;
-					break;
-				}
-			}
-		}
-		return game;
+		return plugin.getGameById(gameId);
 	}
 
 	public List<IGame> loadGames()

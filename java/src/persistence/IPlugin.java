@@ -66,5 +66,7 @@ public interface IPlugin
 
 	IGame getNewGameByGameId(Integer gameId);
 
+	IGame getGameById(int gameId);
+
 	void clear();
 }

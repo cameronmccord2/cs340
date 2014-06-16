@@ -115,4 +115,11 @@ public class SQLitePlugin implements IPlugin {
 	{
 		String dropTables = "DROP TABLE IF EXISTS";
 	}
+
+	@Override
+	public IGame getGameById(int gameId)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
