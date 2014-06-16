@@ -1,2 +1,2 @@
 dataFile DataFile.jar persistence.datafile.DataFilePlugin
-sql SQLStorage.jar persistence.sqlite.SQLitePlugin 
+sql sqlStore.jar persistence.sqlite.SQLitePlugin 

@@ -104,22 +104,22 @@ public class SqliteCommandDAO {
 		}
 	}
 	
-	/**
-	 * Count commands for game id.
-	 * @param gameId the game id
-	 *
-	 * @return the count of the current commands for a game
-	 */
-	private Integer countCommandsForGameId(Integer gameId){
-		return null;
-	}
-	
-	/**
-	 * Delete oldest x commands for the game by id.
-	 * @param count the count to delete
-	 * @param gameId the game id
-	 */
-	private void deleteOldestXCommandsForGameId(Integer count, Integer gameId){
-		
-	}
+//	/**
+//	 * Count commands for game id.
+//	 * @param gameId the game id
+//	 *
+//	 * @return the count of the current commands for a game
+//	 */
+//	private Integer countCommandsForGameId(Integer gameId){
+//		return null;
+//	}
+//	
+//	/**
+//	 * Delete oldest x commands for the game by id.
+//	 * @param count the count to delete
+//	 * @param gameId the game id
+//	 */
+//	private void deleteOldestXCommandsForGameId(Integer count, Integer gameId){
+//		
+//	}
 }
