@@ -167,14 +167,16 @@ public class Server {
 		IGameFacade gameFacade = new GameFacade(gameModelFacade);
 		IMovesFacade movesFacade = new MovesFacade(movesModelFacade);
 		
-		plugin.addUser(new User("Cameron", "cameron", 1));
-		plugin.addUser(new User("Cameron", "cameron", 2));
-		plugin.addUser(new User("Cameron", "cameron", 4));
-		plugin.addUser(new User("Cameron", "cameron", 3));
-		System.out.println(plugin.getRegisteredUsers().toString());
-		plugin.createGame(gameList.getGames().get(0));
-		System.out.println(plugin.getGames().toString());
-		System.out.println(plugin.getNewGameByGameId(gameList.getGames().get(0).getGameInfo().getId()));
+		
+		// Un-comment to test the persistence plugins
+//		plugin.addUser(new User("Cameron", "cameron", 1));
+//		plugin.addUser(new User("Cameron", "cameron", 2));
+//		plugin.addUser(new User("Cameron", "cameron", 4));
+//		plugin.addUser(new User("Cameron", "cameron", 3));
+//		System.out.println(plugin.getRegisteredUsers().toString());
+//		plugin.createGame(gameList.getGames().get(0));
+//		System.out.println(plugin.getGames().toString());
+//		System.out.println(plugin.getNewGameByGameId(gameList.getGames().get(0).getGameInfo().getId()));
 		
 		//un-comment the following lines if you want to use the dummyfacades
 //		IUserFacade userFacade = new DummyUserFacade();
