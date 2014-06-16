@@ -34,7 +34,7 @@ public class GameFacade extends CommandCreationFacade implements IGameFacade{
 		try {
 			GetCommands gc = new GetCommands();
 			gc.validate();
-			ICommand c = new Command(gc.getType(), gc, ua, this.facade, false);
+			ICommand c = new Command(gc.getType(), gc, ua, this.facade, false, null);
 			String response = c.execute();
 			return new CommandResponse(response, "200");
 			

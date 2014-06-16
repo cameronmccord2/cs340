@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import client.models.interfaces.IGame;
 import persistence.IPlugin;
 import server.modelFacade.IServerModelFacade;
 import server.models.ServerFacadeResponse;
@@ -46,6 +47,14 @@ public class Command implements ICommand, ITestCommand, Serializable {
 		ServerFacadeResponse response = (ServerFacadeResponse) method.invoke(this.facade, this.commandParams, this.userAttributes);
 		if(response.isReturnGameModel()){
 			// run persistence
+			
+			
+			if(this.plugin != null){
+				IGame game = this.facade.getGameById(this.userAttributes.getGameId());
+				if(game == null)
+					throw new RuntimeException("Couldn't get the game by id: " + this.userAttributes.getGameId());
+				this.plugin.addCommandToGame(this.commandParams, game);
+			}
 			return this.facade.getJsonGameModelString(null, this.userAttributes).getOtherResponse();
 		}
 		else{

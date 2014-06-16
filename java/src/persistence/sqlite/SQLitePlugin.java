@@ -10,7 +10,6 @@ import server.commands.ICommandParams;
 import client.models.User;
 import client.models.interfaces.IGame;
 
-@SuppressWarnings({"unused"})
 public class SQLitePlugin implements IPlugin {
 
 	public static final String dbPath = "jdbc:sqlite:team1Catan.db";

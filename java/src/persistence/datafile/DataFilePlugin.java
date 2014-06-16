@@ -133,4 +133,10 @@ public class DataFilePlugin implements IPlugin {
 	{
 		gameDAO.clear();
 	}
+
+	@Override
+	public IGame getNowGameById(Integer gameId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

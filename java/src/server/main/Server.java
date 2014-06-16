@@ -29,6 +29,8 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
+import client.models.User;
+
 import com.sun.net.httpserver.HttpServer;
 
 public class Server {
@@ -165,7 +167,7 @@ public class Server {
 		IMovesFacade movesFacade = new MovesFacade(movesModelFacade, plugin);
 
 
-		// Un-comment to test the persistence plugins
+//		// Un-comment to test the persistence plugins
 //		plugin.addUser(new User("Cameron", "cameron", 1));
 //		plugin.addUser(new User("Cameron", "cameron", 2));
 //		plugin.addUser(new User("Cameron", "cameron", 4));
