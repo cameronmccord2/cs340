@@ -11,6 +11,12 @@ import client.models.interfaces.IGame;
 @SuppressWarnings({"unused"})
 public class DataFilePlugin implements IPlugin {
 
+	public static final String PARENT_DIRECTORY = "datafile";
+	public static final String PARENT_PREFIX = PARENT_DIRECTORY + File.separator;
+	public static final String USERS_DIRECTORY = "users";
+	public static final String GAMES_DIRECTORY = "games";
+	public static final String COMMANDS_DIRECTORY = "commands";
+	
 	private static File parentDestinationDirectory;
 	private static File usersDirectory;
 	private static File gamesDirectory;
@@ -22,12 +28,12 @@ public class DataFilePlugin implements IPlugin {
 
 	static {
 		try {
-			parentDestinationDirectory = new File("datafile");
+			parentDestinationDirectory = new File(PARENT_DIRECTORY);
 			parentDestinationDirectory.mkdir();
 
-			usersDirectory = new File(parentDestinationDirectory, "users");
-			gamesDirectory = new File(parentDestinationDirectory, "games");
-			commandsDirectory = new File(parentDestinationDirectory, "commands");
+			usersDirectory = new File(parentDestinationDirectory, USERS_DIRECTORY);
+			gamesDirectory = new File(parentDestinationDirectory, GAMES_DIRECTORY);
+			commandsDirectory = new File(parentDestinationDirectory, COMMANDS_DIRECTORY);
 
 			usersDirectory.mkdir();
 			gamesDirectory.mkdir();

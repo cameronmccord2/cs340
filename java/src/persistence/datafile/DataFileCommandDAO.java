@@ -22,20 +22,17 @@ import java.util.List;
  */
 public class DataFileCommandDAO
 {
-	private static File destDirectory = new File("datafile");
-	private String commandFilenameFormat;
-	private String commandsDir;
-	private static int commandId;
-	static {
-		try {
-			destDirectory.mkdir();
-		} catch(Exception e){}
-	}
+	private static final String COMMANDS_DIR = DataFilePlugin.PARENT_PREFIX + 
+											  DataFilePlugin.COMMANDS_DIRECTORY + 
+											  File.separator;
+	
+	private static final String commandFilenameFormat = COMMANDS_DIR + 
+														"commandGameId%dcommandIndex%d.catanGameData";
+	
+	private int commandId;
 	
 	public DataFileCommandDAO () {
 		commandId = 0;
-		commandsDir = "commands";
-		commandFilenameFormat = commandsDir + File.separator + "commandGameId%dcommandIndex%d.catanGameData";
 	}
 
 	/**
@@ -49,7 +46,7 @@ public class DataFileCommandDAO
 		List<ICommandParams> commandsList = new ArrayList<>();
 		byte[] commandData;
 
-		for (File dataFile : new File(commandsDir).listFiles()) {
+		for (File dataFile : new File(COMMANDS_DIR).listFiles()) {
 
 			if (dataFile.isFile() && dataFile.getPath().contains("commandGameId"+gameId)) {
 				try {
@@ -111,7 +108,7 @@ public class DataFileCommandDAO
 	{
 		int count = 0;
 		
-		for (File dataFile : new File(commandsDir).listFiles()) 
+		for (File dataFile : new File(COMMANDS_DIR).listFiles()) 
 		{
 			if (dataFile.isFile() && dataFile.getPath().contains("commandGameId"+gameId)) 
 			{
