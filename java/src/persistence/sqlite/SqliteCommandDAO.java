@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.commands.Command;
-import server.commands.ICommand;
 import server.commands.ICommandParams;
 
 /**
@@ -50,9 +48,9 @@ public class SqliteCommandDAO {
 	 *
 	 * @return the commands for game id
 	 */
-	public List<ICommand> getCommandsForGameId(Integer gameId){
+	public List<ICommandParams> getCommandsForGameId(Integer gameId){
 		final String sql = "select * from commands where gameid = ?";
-		List<ICommand> results = new ArrayList<>();
+		List<ICommandParams> results = new ArrayList<>();
 		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
 			ResultSet resultSet = statement.executeQuery();
@@ -60,7 +58,7 @@ public class SqliteCommandDAO {
 				byte[] b = resultSet.getBytes("commandData");
 				ByteArrayInputStream bis = new ByteArrayInputStream(b);
 				ObjectInput in = new ObjectInputStream (bis);
-				Command c = (Command)in.readObject();
+				ICommandParams c = (ICommandParams)in.readObject();
 				results.add(c);
 			}
 			resultSet.close();

@@ -153,9 +153,9 @@ public class Server {
 		server.setExecutor(null);
 		//pass plugin into first layer facades and pass instance of server model facade into plugin
 		GameList gameList = new GameList();
-		List<IGame> gamess = plugin.getGames();
-		if(gamess.size() > 0)
-			gameList.setGames(gamess);
+		List<IGame> games = plugin.getGames();
+		if(games.size() > 0)
+			gameList.setGames(games);
 		
 		
 

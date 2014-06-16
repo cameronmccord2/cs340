@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import persistence.IPlugin;
-import server.commands.ICommand;
 import server.commands.ICommandParams;
 import client.models.User;
 import client.models.interfaces.IGame;
@@ -66,7 +65,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public void addCommandToGame(ICommandParams command, IGame game){
-
+		commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
 	}
 
 	/**
@@ -106,8 +105,8 @@ public class DataFilePlugin implements IPlugin {
 	 * @return the commands for gameId
 	 */
 	@Override
-	public List<ICommand> getCommandsForGameId(Integer gameId){
-		return null;
+	public List<ICommandParams> getCommandsForGameId(Integer gameId){
+		return commandDAO.getCommandsForGameId(gameId);
 	}
 
 	@Override

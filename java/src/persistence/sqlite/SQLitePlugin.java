@@ -94,7 +94,7 @@ public class SQLitePlugin implements IPlugin {
 	 * @return the commands for gameId
 	 */
 	@Override
-	public List<ICommand> getCommandsForGameId(Integer gameId){
+	public List<ICommandParams> getCommandsForGameId(Integer gameId){
 		return this.commandDAO.getCommandsForGameId(gameId);
 	}
 
