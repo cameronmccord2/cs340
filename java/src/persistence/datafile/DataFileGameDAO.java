@@ -130,24 +130,25 @@ public class DataFileGameDAO {
 
 		List<IGame> gamesList = new ArrayList<>();
 		byte[] gameData;
-
+		System.out.println("asdf");
 		for (File dataFile : new File(gamesDir).listFiles()) {
-
+			System.out.println("asdf2");
 			if (dataFile.isFile() && dataFile.getPath().contains("current")) {
+				System.out.println("asdf3");
 				try {
+					System.out.println("try");
 					gameData = Files.readAllBytes(Paths.get(dataFile.getPath()));
 					ByteArrayInputStream bis = new ByteArrayInputStream(gameData);
 					ObjectInput in = new ObjectInputStream(bis);
 					IGame game = (IGame)in.readObject();
-
 					gamesList.add(game);
-
+					System.out.println("finished");
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-
+		System.out.println("returning: " + gamesList);
 		return gamesList;
 
 	}
