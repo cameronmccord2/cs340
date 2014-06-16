@@ -5,9 +5,31 @@ import client.models.interfaces.IGame;
 import persistence.IPlugin;
 import server.commands.ICommand;
 
+import java.io.File;
 import java.util.List;
 
+@SuppressWarnings({"unused"})
 public class DataFilePlugin implements IPlugin {
+
+	private static File parentDestinationDirectory;
+	private static File usersDirectory;
+	private static File gamesDirectory;
+	private static File commandsDirectory;
+
+	static {
+		try {
+			parentDestinationDirectory = new File("datafile");
+			parentDestinationDirectory.mkdir();
+
+			usersDirectory = new File(parentDestinationDirectory, "users");
+			gamesDirectory = new File(parentDestinationDirectory, "games");
+			commandsDirectory = new File(parentDestinationDirectory, "commands");
+
+			usersDirectory.mkdir();
+			gamesDirectory.mkdir();
+			commandsDirectory.mkdir();
+		} catch (Exception e){}
+	}
 
 	private Integer n;
 
