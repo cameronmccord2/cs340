@@ -1,6 +1,7 @@
 package client.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import server.models.Login;
 import server.models.Register;
@@ -8,7 +9,7 @@ import server.models.Register;
 
 public class UserManager {
 	
-	private ArrayList<User> users;
+	private List<User> users;
 
 	public UserManager(){
 		this.users = new ArrayList<>();
@@ -42,7 +43,11 @@ public class UserManager {
 	}
 	
 	public ArrayList<User> getUsers(){
-		return users;
+		return null;
+	}
+
+	public void setUsers(List<User> userss) {
+		this.users = userss;
 	}
 	
 

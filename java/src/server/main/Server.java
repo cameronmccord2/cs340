@@ -30,6 +30,7 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
+import client.models.User;
 import client.models.interfaces.IGame;
 
 import com.sun.net.httpserver.HttpServer;
@@ -163,6 +164,10 @@ public class Server {
 		IServerModelFacade userModelFacade = new UserServerModelFacade(gameList);
 		IServerModelFacade gameModelFacade = new GameServerModelFacade(gameList);
 		IServerModelFacade gamesModelFacade = new GamesServerModelFacade(gameList);
+		
+		List<User> userss = plugin.getRegisteredUsers();
+		if(userss.size() > 0)
+			userModelFacade.setUsers(userss);
 
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 

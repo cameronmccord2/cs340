@@ -1,5 +1,7 @@
 package server.modelFacade;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 
 import server.commands.ICommandParams;
@@ -8,6 +10,7 @@ import server.models.GameList;
 import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
 import server.models.exceptions.InvalidUserAttributesException;
+import client.models.User;
 import client.models.UserManager;
 import client.models.interfaces.IGame;
 
@@ -44,5 +47,10 @@ public class ServerModelFacade implements IServerModelFacade {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void setUsers(List<User> userss) {
+		this.userManager.setUsers(userss);
 	}
 }

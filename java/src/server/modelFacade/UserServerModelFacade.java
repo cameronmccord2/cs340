@@ -33,13 +33,13 @@ public class UserServerModelFacade extends ServerModelFacade implements IUserSer
 	public void setGameList(GameList gameList) {
 		this.gameList = gameList;
 	}
-
-	public UserManager getUserManager() {
-		return userManager;
-	}
-
-	public void setUserManager(UserManager userManager) {
-		this.userManager = userManager;
-	}
+//
+//	public UserManager getUserManager() {
+//		return userManager;
+//	}
+//
+//	public void setUserManager(UserManager userManager) {
+//		this.userManager = userManager;
+//	}
 	
 }
