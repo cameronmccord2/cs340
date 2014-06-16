@@ -1,5 +1,6 @@
 package server.commands;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -12,12 +13,12 @@ import server.models.UserAttributes;
  * @author scottdaly
  *
  */
-public class Command implements ICommand, ITestCommand {
+public class Command implements ICommand, ITestCommand, Serializable {
 	
 	protected String methodName;
 	protected ICommandParams commandParams;
 	protected UserAttributes userAttributes;
-	protected IServerModelFacade facade;
+	protected transient IServerModelFacade facade;
 	protected boolean keepInHistory;
 
 	public Command(String methodName,

@@ -1,5 +1,7 @@
 package server.models;
 
+import java.io.Serializable;
+
 import client.models.ReturnedUser;
 import client.models.User;
 
@@ -11,7 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
  * @author scottdaly
  *
  */
-public class UserAttributes {
+public class UserAttributes implements Serializable{
 	
 	protected String username;
 	protected String password;

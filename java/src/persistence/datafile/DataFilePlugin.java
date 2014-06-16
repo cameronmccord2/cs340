@@ -110,4 +110,10 @@ public class DataFilePlugin implements IPlugin {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public IGame getNewGameByGameId(Integer gameId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

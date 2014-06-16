@@ -7,7 +7,6 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 import client.models.interfaces.IGame;
 
@@ -106,7 +103,7 @@ public class SqliteGameDAO {
 	 * @param gameId the game id to delete
 	 */
 	private void deleteGameById(Integer gameId){
-		final String sql = "DELETE FROM games WHERE gameId = ?";
+		final String sql = "DELETE FROM games WHERE id = ?";
 		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
 			
@@ -136,6 +133,8 @@ public class SqliteGameDAO {
 				IGame g = (IGame)in.readObject();
 				results.add(g);
 			}
+			resultSet.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,6 +162,8 @@ public class SqliteGameDAO {
 				ObjectInput in = new ObjectInputStream(bis);
 				result = (IGame)in.readObject();
 			}
+			resultSet.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

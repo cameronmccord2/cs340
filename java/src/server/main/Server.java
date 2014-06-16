@@ -33,7 +33,6 @@ import client.models.User;
 
 import com.sun.net.httpserver.HttpServer;
 
-@SuppressWarnings({"unused"})
 public class Server {
 
 	private static int SERVER_PORT_NUMBER;
@@ -140,12 +139,6 @@ public class Server {
 	
 	private void run(IPlugin plugin) {
 		
-		plugin.addUser(new User("Cameron", "cameron", 1));
-		plugin.addUser(new User("Cameron", "cameron", 2));
-		plugin.addUser(new User("Cameron", "cameron", 4));
-		plugin.addUser(new User("Cameron", "cameron", 3));
-		System.out.println(plugin.getRegisteredUsers().toString());
-		
 		try {
 			server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER),
 											MAX_WAITING_CONNECTIONS);
@@ -173,6 +166,15 @@ public class Server {
 		IGamesFacade gamesFacade = new GamesFacade(gamesModelFacade);
 		IGameFacade gameFacade = new GameFacade(gameModelFacade);
 		IMovesFacade movesFacade = new MovesFacade(movesModelFacade);
+		
+		plugin.addUser(new User("Cameron", "cameron", 1));
+		plugin.addUser(new User("Cameron", "cameron", 2));
+		plugin.addUser(new User("Cameron", "cameron", 4));
+		plugin.addUser(new User("Cameron", "cameron", 3));
+		System.out.println(plugin.getRegisteredUsers().toString());
+		plugin.createGame(gameList.getGames().get(0));
+		System.out.println(plugin.getGames().toString());
+		System.out.println(plugin.getNewGameByGameId(gameList.getGames().get(0).getGameInfo().getId()));
 		
 		//un-comment the following lines if you want to use the dummyfacades
 //		IUserFacade userFacade = new DummyUserFacade();
@@ -221,6 +223,7 @@ public class Server {
 		
 //		System.out.println("server started");
 		logger.info("Server started");
+		System.out.println("Server started");
 		server.start();
 	}
 }

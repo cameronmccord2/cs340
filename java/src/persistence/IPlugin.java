@@ -63,4 +63,6 @@ public interface IPlugin
 	public void addCommandToGame(ICommand command, IGame game);
 
 	void updateGame(IGame game);
+
+	IGame getNewGameByGameId(Integer gameId);
 }

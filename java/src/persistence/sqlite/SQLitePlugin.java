@@ -17,6 +17,7 @@ import client.models.interfaces.IParticipant;
 public class SQLitePlugin implements IPlugin {
 	
 	private Integer n;
+	private Integer nCounter;
 	private SqliteCommandDAO commandDAO;
 	private SqliteGameDAO gameDAO;
 	private SqliteUserDAO userDAO;
@@ -27,10 +28,15 @@ public class SQLitePlugin implements IPlugin {
 		commandDAO = new SqliteCommandDAO();
 		gameDAO = new SqliteGameDAO();
 		userDAO = new SqliteUserDAO();
+		nCounter = 0;
 	}
 
 	public SQLitePlugin(Integer n){
 		this.n = n;
+		commandDAO = new SqliteCommandDAO();
+		gameDAO = new SqliteGameDAO();
+		userDAO = new SqliteUserDAO();
+		nCounter = 0;
 	}
 	
 	/**
@@ -57,6 +63,10 @@ public class SQLitePlugin implements IPlugin {
 	@Override
 	public void addCommandToGame(ICommand command, IGame game){
 		this.commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
+		nCounter++;
+		if(nCounter % n == 0){
+			this.gameDAO.updateGame(game);
+		}
 	}
 	
 	/**
@@ -92,5 +102,10 @@ public class SQLitePlugin implements IPlugin {
 	
 	@Override public void updateGame(IGame game){
 		this.gameDAO.updateGame(game);
+	}
+	
+	@Override
+	public IGame getNewGameByGameId(Integer gameId){
+		return this.gameDAO.getNewGameByGameId(gameId);
 	}
 }

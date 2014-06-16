@@ -1,5 +1,7 @@
 package server.commands;
 
+import java.io.Serializable;
+
 import server.commands.exceptions.CommandParamNotValidException;
 
 /**
@@ -7,7 +9,7 @@ import server.commands.exceptions.CommandParamNotValidException;
  *
  * @author scottdaly
  */
-public interface ICommandParams
+public interface ICommandParams extends Serializable
 {
 	public void validate() throws CommandParamNotValidException;
 	
