@@ -8,9 +8,9 @@ import server.commands.ICommand;
 import java.util.List;
 
 public class DataFilePlugin implements IPlugin {
-	
+
 	private Integer n;
-	
+
 	public DataFilePlugin(){}
 
 	public DataFilePlugin(Integer n){
@@ -44,7 +44,7 @@ public class DataFilePlugin implements IPlugin {
 	public void addUser(User user) {
 		System.out.println("inside plugin");
 	}
-	
+
 	/**
 	 * Adds the command to the game in dataFile. This will keep up to n commands, as specified in the constructor.
 	 * A snapshot of the game will be made every n commands.
@@ -54,7 +54,7 @@ public class DataFilePlugin implements IPlugin {
 	 */
 	@Override
 	public void addCommandToGame(ICommand command, IGame game){
-		
+
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class DataFilePlugin implements IPlugin {
 	public List<User> getRegisteredUsers(){
 		return null;
 	}
-	
+
 	/**
 	 * Gets the games that have been saved to dataFiles
 	 *
@@ -86,7 +86,7 @@ public class DataFilePlugin implements IPlugin {
 	public List<IGame> getGames(){
 		return null;
 	}
-	
+
 	/**
 	 * Gets the commands for game by the id that have been saved to dataFiles.
 	 *
@@ -102,18 +102,25 @@ public class DataFilePlugin implements IPlugin {
 	public void createGame(IGame game)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void updateGame(IGame game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public IGame getNewGameByGameId(Integer gameId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void clear()
+	{
+		// TODO Auto-generated method stub
+
 	}
 }

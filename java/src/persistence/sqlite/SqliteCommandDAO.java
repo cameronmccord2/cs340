@@ -22,7 +22,7 @@ import server.commands.ICommand;
  * The Class SqliteCommandDAO.
  */
 public class SqliteCommandDAO {
-	
+
 	public SqliteCommandDAO(){
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -31,12 +31,12 @@ public class SqliteCommandDAO {
 		}
 		this.createTable();
 	}
-	
+
 	private void createTable(){
 		final String sql = "create table if not exists commands (id INTEGER PRIMARY KEY, gameId NUMBER, commandData BLOB)";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class SqliteCommandDAO {
 	public List<ICommand> getCommandsForGameId(Integer gameId){
 		final String sql = "select * from commands where gameid = ?";
 		List<ICommand> results = new ArrayList<>();
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
@@ -63,7 +63,7 @@ public class SqliteCommandDAO {
 				results.add(c);
 			}
 			resultSet.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class SqliteCommandDAO {
 		}
 		return results;
 	}
-	
+
 	/**
 	 * Save command for game id.
 	 * @param command the command to save
@@ -84,7 +84,7 @@ public class SqliteCommandDAO {
 	 */
 	public void saveCommandForGameId(ICommand command, Integer gameId){
 		final String sql = "INSERT INTO commands (gameId, commandData) VALUES (?, ?)";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutput out = new ObjectOutputStream(bos);
@@ -92,9 +92,9 @@ public class SqliteCommandDAO {
 			statement.setBytes(2, bos.toByteArray());
 			out.close();
 			bos.close();
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,7 +103,7 @@ public class SqliteCommandDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 //	/**
 //	 * Count commands for game id.
 //	 * @param gameId the game id
@@ -113,13 +113,13 @@ public class SqliteCommandDAO {
 //	private Integer countCommandsForGameId(Integer gameId){
 //		return null;
 //	}
-//	
+//
 //	/**
 //	 * Delete oldest x commands for the game by id.
 //	 * @param count the count to delete
 //	 * @param gameId the game id
 //	 */
 //	private void deleteOldestXCommandsForGameId(Integer count, Integer gameId){
-//		
+//
 //	}
 }

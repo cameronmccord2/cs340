@@ -21,7 +21,7 @@ import client.models.interfaces.IGame;
  * The Class SqliteGameDAO.
  */
 public class SqliteGameDAO {
-	
+
 	public SqliteGameDAO(){
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -30,18 +30,18 @@ public class SqliteGameDAO {
 		}
 		this.createTable();
 	}
-	
+
 	private void createTable(){
 		final String sql = "create table if not exists games (id INTEGER PRIMARY KEY, currentGameData BLOB, beginningGameData BLOB)";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Insert new game into the sqlite db. This will save the game under the new game column.
 	 * @param game the game to insert
@@ -49,7 +49,7 @@ public class SqliteGameDAO {
 	public void insertNewGame(IGame game){
 		this.deleteGameById(game.getGameInfo().getId());
 		final String sql = "INSERT INTO games (id, beginningGameData, currentGameData) VALUES (?, ?, ?)";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, game.getGameInfo().getId());
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutput out = new ObjectOutputStream(bos);
@@ -58,9 +58,9 @@ public class SqliteGameDAO {
 			statement.setBytes(3, bos.toByteArray());
 			out.close();
 			bos.close();
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,14 +69,14 @@ public class SqliteGameDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Updates the game on the sqlite db
 	 * @param game the game to update
 	 */
 	public void updateGame(IGame game){
 		final String sql = "UPDATE games SET currentGameData = ? WHERE id = ?";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutput out = new ObjectOutputStream(bos);
 			out.writeObject(game);
@@ -84,9 +84,9 @@ public class SqliteGameDAO {
 			out.close();
 			bos.close();
 			statement.setInt(2, game.getGameInfo().getId());
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class SqliteGameDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Delete game by id.
 	 *
@@ -104,17 +104,17 @@ public class SqliteGameDAO {
 	 */
 	private void deleteGameById(Integer gameId){
 		final String sql = "DELETE FROM games WHERE id = ?";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Gets the all games in this sqlite db
 	 *
@@ -123,8 +123,8 @@ public class SqliteGameDAO {
 	public List<IGame> getAllGames(){
 		final String sql = "SELECT * FROM games";
 		List<IGame> results = new ArrayList<>();
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
-			
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
+
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				byte[] b = resultSet.getBytes("currentGameData");
@@ -134,7 +134,7 @@ public class SqliteGameDAO {
 				results.add(g);
 			}
 			resultSet.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,15 +147,15 @@ public class SqliteGameDAO {
 		}
 		return results;
 	}
-	
+
 	public IGame getNewGameByGameId(Integer gameId){
 		final String sql = "SELECT * FROM games where id = ?";
 		IGame result = null;
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
-			
+
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			while(resultSet.next()){
 				byte[] b = resultSet.getBytes("beginningGameData");
 				ByteArrayInputStream bis = new ByteArrayInputStream(b);
@@ -163,7 +163,7 @@ public class SqliteGameDAO {
 				result = (IGame)in.readObject();
 			}
 			resultSet.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

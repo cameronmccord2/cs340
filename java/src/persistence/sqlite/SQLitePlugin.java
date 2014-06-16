@@ -15,14 +15,15 @@ import client.models.interfaces.IParticipant;
 
 @SuppressWarnings({"unused"})
 public class SQLitePlugin implements IPlugin {
-	
+
+	public static final String dbPath = "jdbc:sqlite:team1Catan.db";
 	private Integer n;
 	private Integer nCounter;
 	private SqliteCommandDAO commandDAO;
 	private SqliteGameDAO gameDAO;
 	private SqliteUserDAO userDAO;
 	protected DataSource dataSource;
-	
+
 	public SQLitePlugin(){
 		//    DriverManager.getConnection("jdbc:sqlite:test.db")
 		commandDAO = new SqliteCommandDAO();
@@ -38,7 +39,7 @@ public class SQLitePlugin implements IPlugin {
 		userDAO = new SqliteUserDAO();
 		nCounter = 0;
 	}
-	
+
 	/**
 	 * Adds the supplied user to the sqlite database. If it already exists then it gets updated in the db
 	 *
@@ -53,7 +54,7 @@ public class SQLitePlugin implements IPlugin {
 	public void createGame(IGame game) {
 		this.gameDAO.insertNewGame(game);
 	}
-	
+
 	/**
 	 * Adds the command to the game in the sqlite db. This will keep up to n commands, as specified in the constructor. A snapshot of the game will be made every n commands.
 	 *
@@ -68,7 +69,7 @@ public class SQLitePlugin implements IPlugin {
 			this.gameDAO.updateGame(game);
 		}
 	}
-	
+
 	/**
 	 * Gets the users that have been registered with this sqlite db
 	 *
@@ -78,7 +79,7 @@ public class SQLitePlugin implements IPlugin {
 	public List<User> getRegisteredUsers(){
 		return this.userDAO.getAllUsers();
 	}
-	
+
 	/**
 	 * Gets the games that have been saved to this sqlite db
 	 *
@@ -88,7 +89,7 @@ public class SQLitePlugin implements IPlugin {
 	public List<IGame> getGames(){
 		return this.gameDAO.getAllGames();
 	}
-	
+
 	/**
 	 * Gets the commands for game by the id that have been saved in this sqlite db.
 	 *
@@ -99,13 +100,19 @@ public class SQLitePlugin implements IPlugin {
 	public List<ICommand> getCommandsForGameId(Integer gameId){
 		return this.commandDAO.getCommandsForGameId(gameId);
 	}
-	
+
 	@Override public void updateGame(IGame game){
 		this.gameDAO.updateGame(game);
 	}
-	
+
 	@Override
 	public IGame getNewGameByGameId(Integer gameId){
 		return this.gameDAO.getNewGameByGameId(gameId);
+	}
+
+	@Override
+	public void clear()
+	{
+		String dropTables = "DROP TABLE IF EXISTS";
 	}
 }

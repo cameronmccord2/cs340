@@ -10,24 +10,24 @@ import client.models.interfaces.IParticipant;
 /**
  * This will need to be updated. But I figured we could start making the
  * interfaces we would be using.
- * 
+ *
  * @author Craig Call
  *
  */
 @SuppressWarnings({"unused"})
 public interface IPlugin
-{   
-	
+{
+
 	/**
 	 * Adds the supplied user to the persistent store
 	 *
 	 * @param user the user to save
 	 */
 	public void addUser(User user);
-	
+
 	/**
 	 * Adds a game to the list of games to be saved.
-	 * 
+	 *
 	 * @param game	The game to be added
 	 */
 	public void createGame(IGame game);
@@ -65,4 +65,6 @@ public interface IPlugin
 	void updateGame(IGame game);
 
 	IGame getNewGameByGameId(Integer gameId);
+
+	void clear();
 }

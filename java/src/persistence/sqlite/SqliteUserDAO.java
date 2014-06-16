@@ -21,7 +21,7 @@ import client.models.User;
  * The Class SqliteUserDAO.
  */
 public class SqliteUserDAO {
-	
+
 	public SqliteUserDAO(){
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -30,12 +30,12 @@ public class SqliteUserDAO {
 		}
 		this.createTable();
 	}
-	
+
 	private void createTable(){
 		final String sql = "create table if not exists users (id INTEGER PRIMARY KEY, playerData BLOB)";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,10 +52,10 @@ public class SqliteUserDAO {
 		this.deleteUser(user);
 		this.insertUser(user);
 	}
-	
+
 	private void insertUser(User user) {
 		final String sql = "INSERT INTO users (id, playerData) VALUES (?, ?)";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, user.getPlayerID());
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutput out = new ObjectOutputStream(bos);
@@ -63,9 +63,9 @@ public class SqliteUserDAO {
 			statement.setBytes(2, bos.toByteArray());
 			out.close();
 			bos.close();
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,11 +77,11 @@ public class SqliteUserDAO {
 
 	private void deleteUser(User user) {
 		final String sql = "DELETE FROM users WHERE id = ?";
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, user.getPlayerID());
-			
+
 			statement.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,8 +97,8 @@ public class SqliteUserDAO {
 	public List<User> getAllUsers(){
 		final String sql = "SELECT * FROM users";
 		List<User> results = new ArrayList<>();
-		try(Connection connection = DriverManager.getConnection("jdbc:sqlite:team1Catan.db"); PreparedStatement statement = connection.prepareStatement(sql);){
-			
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
+
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				byte[] b = resultSet.getBytes("playerData");
@@ -108,7 +108,7 @@ public class SqliteUserDAO {
 				results.add(u);
 			}
 			resultSet.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
