@@ -52,6 +52,7 @@ public class DataFilePlugin implements IPlugin {
 		userDAO = new DataFileUserDAO();
 		commandDAO = new DataFileCommandDAO();
 		gameDAO = new DataFileGameDAO();
+		System.out.println("Datafile Loaded");
 	}
 
 	/**
@@ -74,6 +75,7 @@ public class DataFilePlugin implements IPlugin {
 	@Override
 	public void addCommandToGame(ICommandParams command, IGame game){
 		commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
+		gameDAO.updateGame(game);
 	}
 
 	/**
