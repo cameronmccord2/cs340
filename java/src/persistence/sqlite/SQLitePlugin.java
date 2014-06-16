@@ -1,17 +1,14 @@
 package persistence.sqlite;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import persistence.IPlugin;
 import server.commands.ICommand;
+import server.commands.ICommandParams;
 import client.models.User;
 import client.models.interfaces.IGame;
-import client.models.interfaces.IParticipant;
 
 @SuppressWarnings({"unused"})
 public class SQLitePlugin implements IPlugin {
@@ -62,12 +59,13 @@ public class SQLitePlugin implements IPlugin {
 	 * @param game the game to add the command to
 	 */
 	@Override
-	public void addCommandToGame(ICommand command, IGame game){
+	public void addCommandToGame(ICommandParams command, IGame game){
 		this.commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
-		nCounter++;
+		nCounter = this.commandDAO.countCommandsForGameId(game.getGameInfo().getId());
 		if(nCounter % n == 0){
 			this.gameDAO.updateGame(game);
 		}
+		this.gameDAO.saveNow(game);
 	}
 
 	/**
@@ -110,6 +108,10 @@ public class SQLitePlugin implements IPlugin {
 		return this.gameDAO.getNewGameByGameId(gameId);
 	}
 
+	@Override
+	public IGame getNowGameById(Integer gameId){
+		return this.gameDAO.getNowGameById(gameId);
+	}
 	@Override
 	public void clear()
 	{

@@ -3,9 +3,9 @@ package persistence;
 import java.util.List;
 
 import server.commands.ICommand;
+import server.commands.ICommandParams;
 import client.models.User;
 import client.models.interfaces.IGame;
-import client.models.interfaces.IParticipant;
 
 /**
  * This will need to be updated. But I figured we could start making the
@@ -60,7 +60,7 @@ public interface IPlugin
 	 * @param command the command to add. If null then we will assume this is a new game and will save it as a new game
 	 * @param Igame the game to add the command to
 	 */
-	public void addCommandToGame(ICommand command, IGame game);
+	public void addCommandToGame(ICommandParams command, IGame game);
 
 	void updateGame(IGame game);
 

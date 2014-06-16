@@ -17,6 +17,7 @@ import java.util.List;
 
 import server.commands.Command;
 import server.commands.ICommand;
+import server.commands.ICommandParams;
 
 /**
  * The Class SqliteCommandDAO.
@@ -82,7 +83,7 @@ public class SqliteCommandDAO {
 	 * @param command the command to save
 	 * @param gameId the game id to save the command for
 	 */
-	public void saveCommandForGameId(ICommand command, Integer gameId){
+	public void saveCommandForGameId(ICommandParams command, Integer gameId){
 		final String sql = "INSERT INTO commands (gameId, commandData) VALUES (?, ?)";
 		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
 			statement.setInt(1, gameId);
@@ -104,15 +105,29 @@ public class SqliteCommandDAO {
 		}
 	}
 
-//	/**
-//	 * Count commands for game id.
-//	 * @param gameId the game id
-//	 *
-//	 * @return the count of the current commands for a game
-//	 */
-//	private Integer countCommandsForGameId(Integer gameId){
-//		return null;
-//	}
+	/**
+	 * Count commands for game id.
+	 * @param gameId the game id
+	 *
+	 * @return the count of the current commands for a game
+	 */
+	protected Integer countCommandsForGameId(Integer gameId){
+		final String sql = "select count(*) count from commands where gameid = ?";
+		int count = 0;
+		try(Connection connection = DriverManager.getConnection(SQLitePlugin.dbPath); PreparedStatement statement = connection.prepareStatement(sql);){
+			statement.setInt(1, gameId);
+			ResultSet resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				count = resultSet.getInt("count");
+			}
+			resultSet.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
 //
 //	/**
 //	 * Delete oldest x commands for the game by id.

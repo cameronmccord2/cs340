@@ -1,12 +1,13 @@
 package persistence.datafile;
 
-import client.models.User;
-import client.models.interfaces.IGame;
-import persistence.IPlugin;
-import server.commands.ICommand;
-
 import java.io.File;
 import java.util.List;
+
+import persistence.IPlugin;
+import server.commands.ICommand;
+import server.commands.ICommandParams;
+import client.models.User;
+import client.models.interfaces.IGame;
 
 @SuppressWarnings({"unused"})
 public class DataFilePlugin implements IPlugin {
@@ -75,7 +76,7 @@ public class DataFilePlugin implements IPlugin {
 	 * @param game the game to add the command to
 	 */
 	@Override
-	public void addCommandToGame(ICommand command, IGame game){
+	public void addCommandToGame(ICommandParams command, IGame game){
 
 	}
 

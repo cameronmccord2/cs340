@@ -35,4 +35,14 @@ public class ServerModelFacade implements IServerModelFacade {
 		}
 		return new ServerFacadeResponse(false, "Getting game model failed");
 	}
+	
+	@Override
+	public IGame getGameById(Integer id){
+		try {
+			return gameList.getGameById(id);
+		} catch (InvalidUserAttributesException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

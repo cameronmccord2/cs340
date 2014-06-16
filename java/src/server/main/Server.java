@@ -29,8 +29,6 @@ import server.modelFacade.IServerModelFacade;
 import server.modelFacade.MovesServerModelFacade;
 import server.modelFacade.UserServerModelFacade;
 import server.models.GameList;
-import client.models.User;
-
 import com.sun.net.httpserver.HttpServer;
 
 public class Server {
@@ -161,10 +159,10 @@ public class Server {
 		//ICommandCreationFacade commandFacade = new CommandCreationFacade(modelFacade);// send modelFacade into this constructor
 
 		//comment the following 4 lines if you want to use the dummyfacades
-		IUserFacade userFacade = new UserFacade(userModelFacade);
+		IUserFacade userFacade = new UserFacade(userModelFacade, plugin);
 		IGamesFacade gamesFacade = new GamesFacade(gamesModelFacade);
 		IGameFacade gameFacade = new GameFacade(gameModelFacade);
-		IMovesFacade movesFacade = new MovesFacade(movesModelFacade);
+		IMovesFacade movesFacade = new MovesFacade(movesModelFacade, plugin);
 
 
 		// Un-comment to test the persistence plugins

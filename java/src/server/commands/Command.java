@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import persistence.IPlugin;
 import server.modelFacade.IServerModelFacade;
 import server.models.ServerFacadeResponse;
 import server.models.UserAttributes;
@@ -20,17 +21,20 @@ public class Command implements ICommand, ITestCommand, Serializable {
 	protected UserAttributes userAttributes;
 	protected transient IServerModelFacade facade;
 	protected boolean keepInHistory;
+	protected IPlugin plugin;
 
 	public Command(String methodName,
 	               ICommandParams commandParams,
 	               UserAttributes userAttributes,
 	               IServerModelFacade facade,
-	               boolean keepInHistory) {
+	               boolean keepInHistory,
+	               IPlugin plugin) {
 		this.methodName = methodName;
 		this.commandParams = commandParams;
 		this.userAttributes = userAttributes;
 		this.facade = facade;
 		this.keepInHistory = keepInHistory;
+		this.plugin = plugin;
 	}
 	
 	public String execute() throws NoSuchMethodException,
@@ -41,6 +45,7 @@ public class Command implements ICommand, ITestCommand, Serializable {
 		Method method = this.facade.getClass().getMethod(this.methodName, new Class[] {ICommandParams.class, UserAttributes.class});
 		ServerFacadeResponse response = (ServerFacadeResponse) method.invoke(this.facade, this.commandParams, this.userAttributes);
 		if(response.isReturnGameModel()){
+			// run persistence
 			return this.facade.getJsonGameModelString(null, this.userAttributes).getOtherResponse();
 		}
 		else{
