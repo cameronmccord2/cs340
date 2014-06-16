@@ -2,12 +2,20 @@ package persistence.datafile;
 
 import server.commands.ICommand;
 
+import java.io.File;
 import java.util.List;
 
 /**
  * The Class dataFileCommandDAO.
  */
-public class DataFileCommandDAO {
+public class DataFileCommandDAO
+{
+	private static File destDirectory = new File("datafile");
+	static {
+		try {
+			destDirectory.mkdir();
+		} catch(Exception e){}
+	}
 
 	/**
 	 * Gets the commands for game id.
@@ -18,7 +26,7 @@ public class DataFileCommandDAO {
 	public List<ICommand> getCommandsForGameId(Integer gameId){
 		return null;
 	}
-	
+
 	/**
 	 * Save command for game id in the following format:
 	 * filename: commands/gameId.dat
@@ -30,9 +38,9 @@ public class DataFileCommandDAO {
 	 * @param gameId the game id to save the command for
 	 */
 	public void saveCommandForGameId(ICommand command, Integer gameId){
-		
+
 	}
-	
+
 	/**
 	 * Count commands for game id.
 	 *
@@ -42,7 +50,7 @@ public class DataFileCommandDAO {
 	public Integer countCommandsForGameId(Integer gameId){
 		return null;
 	}
-	
+
 	/**
 	 * Delete oldest x commands for the game by id.
 	 *
@@ -50,6 +58,6 @@ public class DataFileCommandDAO {
 	 * @param gameId the game id
 	 */
 	public void deleteOldestXCommandsForGameId(Integer count, Integer gameId){
-		
+
 	}
 }

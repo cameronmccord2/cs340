@@ -1,10 +1,11 @@
 package client.models.translator;
 
+//import java.io.Serializable;
 import java.util.Arrays;
 
 import client.models.exceptions.InvalidTranslatorModelException;
 
-public class ClientModel implements IModelValid{
+public class ClientModel implements IModelValid {
    protected TRMap map;
    protected TRPlayer[] players;
    protected TRMessageList log;

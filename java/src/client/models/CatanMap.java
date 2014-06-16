@@ -36,13 +36,13 @@ import shared.locations.*;
  *
  */
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings({"unused", "serial"})
 public class CatanMap implements ICatanMap, Serializable
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4740013228429240110L;
+//	There is no actual need for the serialVersionUID.  It is just if
+//	we ever change the structure of the model in between serializing
+//	and deserializing.
+//	private static final long serialVersionUID = -4740013228429240110L;
 	private Map<HexLocation, IHex> hexMap;
 	private Map<HexLocation, IHex> oceanMap;
 	private Map<HexLocation, IHex> hexes;
@@ -206,7 +206,7 @@ public class CatanMap implements ICatanMap, Serializable
 	{
 		return this.proxy;
 	}
-	
+
 	@Override
 	public boolean canPlaceRoad(IRoadSegment segment){
 		return this.canPlaceRoad(segment, false);
@@ -480,7 +480,7 @@ public class CatanMap implements ICatanMap, Serializable
 		}
 		return roads;
 	}
-	
+
 
 	@Override
 	public void placeRoadSegment(IRoadSegment segment) throws InvalidLocationException{

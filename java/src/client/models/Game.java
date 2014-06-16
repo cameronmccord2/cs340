@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package client.models;
 
@@ -18,12 +18,11 @@ import client.models.translator.TRTradeOffer;
  * @author scottdaly
  *
  */
-public class Game implements IGame, Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3609149875581296918L;
+@SuppressWarnings("serial")
+public class Game implements IGame, Serializable
+{
+//	There is no need for this.
+//	private static final long serialVersionUID = -3609149875581296918L;
 	private GameInfo gameInfo;
 	private ICatanMap map;
 	private IPlayer[] players;
@@ -34,13 +33,13 @@ public class Game implements IGame, Serializable{
 	private TurnTracker turnTracker;
 	private Integer winner;
 	private TRTradeOffer currentTrade;
-	
+
 	private int version;
-	
+
 	public Game() {
-		
+
 	}
-	
+
 	public Game(GameInfo gameInfo, ICatanMap map, IPlayer[] players){
 		this.gameInfo = gameInfo;
 		this.map = map;
@@ -87,7 +86,7 @@ public class Game implements IGame, Serializable{
 	public void setPlayers(IPlayer[] players) {
 		this.players = players;
 	}
-	
+
 	public void addPlayer(Player player){
 		int count = 0;
 		for(int i = 0; i < this.getPlayers().length; i++) {
@@ -143,12 +142,12 @@ public class Game implements IGame, Serializable{
 	public void setChat(MessageList chat) {
 		this.chat = chat;
 	}
-	
+
 	@Override
 	public void addChat(MessageLine line){
 		this.chat.addLine(line);
 	}
-	
+
 	@Override
 	public void addLog(MessageLine line){
 		this.log.addLine(line);
@@ -208,6 +207,6 @@ public class Game implements IGame, Serializable{
 		}
 		throw new GameModelException("Cant find player by index in this game: " + playerIndex);
 	}
-	
-	
+
+
 }
