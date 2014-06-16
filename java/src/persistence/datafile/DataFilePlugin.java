@@ -73,6 +73,7 @@ public class DataFilePlugin implements IPlugin {
 	@Override
 	public void addCommandToGame(ICommandParams command, IGame game){
 		commandDAO.saveCommandForGameId(command, game.getGameInfo().getId());
+		gameDAO.updateGame(game);
 	}
 
 	/**
